@@ -4,7 +4,8 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User
+from .models import User, Post
+from .utils import get_user_from_username
 
 
 def index(request):
@@ -61,3 +62,10 @@ def register(request):
         return HttpResponseRedirect(reverse("index"))
     else:
         return render(request, "network/register.html")
+
+
+def user(request, username):
+    user = get_user_from_username(username)
+    return render(request, "network/user.html", {
+        "user": user
+    })

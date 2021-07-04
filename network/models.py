@@ -26,8 +26,12 @@ class User(AbstractUser):
         related_name="users_who_liked"
     )
 
+    class Meta:
+        verbose_name = 'User'
+        verbose_name_plural = 'Users'
+
     def __str__(self):
-        return f"TODO user str"
+        return f"User {self.username}"
 
 class Post(models.Model):
     user = models.ForeignKey(
@@ -42,11 +46,12 @@ class Post(models.Model):
         default = "error: post initialized without text",
         max_length = 500
     )
+
     class Meta:
         get_latest_by = '-timestamp'
         ordering = ['-timestamp']
-        verbose_name = 'post'
-        verbose_name = 'posts'
+        verbose_name = 'Post'
+        verbose_name_plural = 'Posts'
 
     def __str(self):
-        return f"TODO post str"
+        return f"Post by {self.user} at {self.timestamp}"
