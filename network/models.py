@@ -1,5 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
+from sorl.thumbnail import ImageField, get_thumbnail
 
 
 class User(AbstractUser):
@@ -9,26 +10,33 @@ class User(AbstractUser):
         editable=True,
         help_text="Avatar",
         verbose_name="Avatar",
-        upload_to="uploads/avatars",
-        default="media/images/default/default_avatar.png", # OR DEFAULT TO NONE AND MAKE IT CONTEXTUAL IN VIEWS?
+        upload_to="avatars",
+        default="avatars/default/default_avatar.png", # OR DEFAULT TO NONE AND MAKE IT CONTEXTUAL IN VIEWS?
     )
     avatar_height = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
     avatar_width = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
     following = models.ManyToManyField(
         "User",
         # on_delete=models.CASCADE,
-        related_name="followed_by"
+        related_name="followed_by",
+        blank=True
     )
     # likes
     liked_posts = models.ManyToManyField(
         "Post",
-        # on_delete=models.CASCADE,
-        related_name="users_who_liked"
+        related_name="users_who_liked",
+        blank=True
     )
 
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
+
+    # TODO figure out how to make this work
+    # def save(self, *args, **kwargs):
+    #     if self.avatar:
+    #         self.avatar = get_thumbnail(self.avatar, '200x200', quality=80, format='JPEG')
+    #     super(User, self).save(*args, **kwargs)
 
     def __str__(self):
         return f"User {self.username}"

@@ -1,4 +1,6 @@
+from django import forms
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
@@ -7,6 +9,16 @@ from django.urls import reverse
 from .models import User, Post
 from .utils import get_user_from_username
 
+
+class NewPostForm(forms.Form):
+    post = forms.CharField(
+        label = "New Post",
+        max_length = 500,
+        required=True,
+        widget=forms.Textarea(attrs={
+            'rows':3
+        })
+    )
 
 def index(request):
     return render(request, "network/index.html")

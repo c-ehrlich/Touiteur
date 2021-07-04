@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
@@ -120,3 +121,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# where our uploaded files are located on the filesystem
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# url to access our uploaded files
+MEDIA_URL = '/media/'

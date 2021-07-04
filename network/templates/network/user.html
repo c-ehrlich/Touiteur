@@ -1,5 +1,15 @@
 {% extends "network/layout.html" %}
 
+{% block title %}
+    {{ user.username }}
+{% endblock %}
+
 {% block body %}
-    {{ user }}
+    {{ user.username }}<br>
+    <img src="{{ user.avatar.url }}"><br>
+    Posts: {{ user.posts.count }}<br>
+    Following: {{ user.following.count }}<br>
+    Followed by: {{ user.followed_by.count }}<br>
+    Likes: {{ user.liked_posts.count }}
+
 {% endblock %}
