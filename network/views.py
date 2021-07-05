@@ -1,21 +1,18 @@
+import json
 from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, Post
-from .utils import get_user_from_username
+from .utils import get_user_from_username, get_posts
 
 
-# +-----------------------------------------+
-# |           GLOBAL VARIABLES              |
-# +-----------------------------------------+
-# shouild probably factor these out in a more elegant way
-PAGINATION_POST_COUNT = 10
+
 
 
 # +-----------------------------------------+
@@ -23,7 +20,8 @@ PAGINATION_POST_COUNT = 10
 # +-----------------------------------------+
 
 class NewPostForm(forms.Form):
-    post = forms.CharField(
+    pass
+    post_text = forms.CharField(
         label = "New Post",
         max_length = 500,
         required=True,
@@ -39,9 +37,10 @@ class NewPostForm(forms.Form):
 
 def index(request):
     """RETURNS THE INDEX PAGE"""
-    posts = paginated_posts(request)
+    posts = get_posts(request)
     return render(request, "network/index.html", {
-        "posts": posts
+        "posts": posts,
+        "new_post_form": NewPostForm(auto_id=True)
     })
 
 
@@ -101,7 +100,7 @@ def register(request):
 def user(request, username):
     user = get_user_from_username(username)
     request.view_user = user
-    posts = paginated_posts(request, user)
+    posts = get_posts(request, username)
     return render(request, "network/user.html", {
         "view_user": user,
         "posts": posts
@@ -109,33 +108,23 @@ def user(request, username):
 
 
 # +-----------------------------------------+
-# |        VIEWS THAT RETURN DATA           |
+# |        VIEWS THAT RETURN JSON           |
 # +-----------------------------------------+
-# factor these out to utils or some other file?
+@login_required
+def compose(request):
+    data=json.loads(request.body)
+    text = data.get("text", "")
+    user=request.user
+    print("TEST: " + text)
+    post = Post(user=user, text=text)
+    return JsonResponse({"message": "Post sent successfully"}, status=201)
 
-# def paginated_posts(request):
-#     """RETURNS A PAGE OF POSTS FROM THE PUBLIC TIMELINE"""
-#     page = request.GET.get('page', 1)
-#     objects = Post.objects.all()
-#     p = Paginator(objects, PAGINATION_POST_COUNT)
-#     return p.page(page)
 
-
-# def paginated_posts(request, user):
-#     """RETURNS A PAGE OF POSTS FROM A USER"""
-#     page = request.GET.get('page', 1)
-#     objects = Post.objects.filter(user=user).all()
-#     p = Paginator(objects, PAGINATION_POST_COUNT)
-#     return p.page(page)
-
-def paginated_posts(request, user=None, page=1):
-    """RETURNS A PAGE OF POSTS FROM A USER"""
-    print(user)
-    print(type(user))
-    # page = request.GET.get('page', 1)
-    if user == None:
-        objects = Post.objects.all()
-    else:
-        objects = Post.objects.filter(user=user).all()
-    p = Paginator(objects, PAGINATION_POST_COUNT)
-    return p.page(page)
+# TODO this doesn't work. figure out how to implement this.
+# Options: 
+#     1. just always slice the data manually
+#     2. return a partial page and AJAX it in there
+def paginated_posts(request, username=None, page=1):
+    posts = get_posts(request, username, page)
+    # return JsonResponse([posts.serialize() for post in posts], safe=False)
+    # return JsonResponse(posts, safe=False)

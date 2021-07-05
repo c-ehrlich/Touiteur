@@ -1,9 +1,22 @@
 {% extends "network/layout.html" %}
+{% load static %}
+
 
 {% block body %}
+    <div id="compose-view">
+        <form id="compose-form">
+            {% csrf_token %}
+            {{ new_post_form }}
+            <input type="submit">
+        </form>
+    </div>
     {% for post in posts %}
         {{ post }}<br>
     {% empty %}
         No posts to display :(
     {% endfor %}
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/index.js' %}"></script>
 {% endblock %}
