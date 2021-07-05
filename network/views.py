@@ -11,8 +11,8 @@ from django.urls import reverse
 from .models import User, Post
 from .utils import get_user_from_username, get_posts
 
-
-
+# TODO temp imports remove later
+from django.views.decorators.csrf import csrf_exempt
 
 
 # +-----------------------------------------+
@@ -110,8 +110,10 @@ def user(request, username):
 # +-----------------------------------------+
 # |        VIEWS THAT RETURN JSON           |
 # +-----------------------------------------+
-@login_required
+# @login_required
+@csrf_exempt
 def compose(request):
+    print("~~~~~~~we are in the compose function~~~~~~~")
     data=json.loads(request.body)
     text = data.get("text", "")
     user=request.user

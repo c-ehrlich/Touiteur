@@ -5,8 +5,9 @@
 {% block body %}
     <div id="compose-view">
         <form id="compose-form">
-            {% csrf_token %}
-            {{ new_post_form }}
+            <!-- {% csrf_token %} -->
+            <!-- {{ new_post_form }} -->
+            <textarea class="form-control" id="post-text" placeholder="Text"></textarea>
             <input type="submit">
         </form>
     </div>

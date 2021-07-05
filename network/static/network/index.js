@@ -8,7 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Sends a post
 function send_post() {
-  text = document.querySelector('#post_text').value;
+  text = document.querySelector('#post-text').value;
   console.log(text);
   fetch('/compose', {
     method: 'POST',
@@ -16,5 +16,5 @@ function send_post() {
       text: text
     })
   })
-  .then(response => response.json());
+  // .then(response => response.json());
 }
