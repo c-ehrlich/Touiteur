@@ -12,6 +12,11 @@ PAGINATION_POST_COUNT = 10
 # +-----------------------------------------+
 # |          UTILITY FUNCTIONS              |
 # +-----------------------------------------+
+def get_post_from_id(id):
+    post = Post.objects.get(id=id)
+    return post
+
+
 def get_posts(request, username=None, page=1):
     """RETURNS A PAGE OF POSTS FROM A USER"""
     if username == None:

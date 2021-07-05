@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, Post
-from .utils import get_user_from_username, get_posts
+from .utils import get_user_from_username, get_post_from_id, get_posts
 
 # TODO temp imports remove later
 from django.views.decorators.csrf import csrf_exempt
@@ -68,6 +68,14 @@ def login_view(request):
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse("index"))
+
+
+def post(request, id):
+    post = get_post_from_id(id)
+    # TODO do something if it's a bad post
+    return render(request, "network/post.html", {
+        "post": post
+    })
 
 
 def register(request):
