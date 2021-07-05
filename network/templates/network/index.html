@@ -3,16 +3,19 @@
 
 
 {% block body %}
-    <div id="compose-view">
-        <form id="compose-form">
-            <!-- {% csrf_token %} -->
-            <!-- {{ new_post_form }} -->
-            <textarea class="form-control" id="post-text" placeholder="Text"></textarea>
-            <input type="submit">
-        </form>
-    </div>
+    {% if user.is_authenticated %}    
+        <div id="compose-view">
+            <form id="compose-form">
+                <!-- {% csrf_token %} -->
+                <!-- {{ new_post_form }} -->
+                <textarea class="form-control" id="post-text" placeholder="Text"></textarea>
+                <input type="submit">
+            </form>
+        </div>
+    {% endif %}
+
     {% for post in posts %}
-        {{ post }}<br>
+        <a href="{% url 'user' post.user.username %}">{{ post.user.username }}</a> ... {{ post }} | Likes: {{ post.users_who_liked.count }}<br>
     {% empty %}
         No posts to display :(
     {% endfor %}

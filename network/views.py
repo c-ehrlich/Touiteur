@@ -110,10 +110,9 @@ def user(request, username):
 # +-----------------------------------------+
 # |        VIEWS THAT RETURN JSON           |
 # +-----------------------------------------+
-# @login_required
+# TODO remove csrf_exempt here
 @csrf_exempt
 def compose(request):
-    print("~~~~~~~we are in the compose function~~~~~~~")
     data=json.loads(request.body)
     text = data.get("text", "")
     user=request.user
