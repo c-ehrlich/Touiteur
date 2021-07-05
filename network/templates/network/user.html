@@ -6,6 +6,7 @@
 
 {% block body %}
     {{ view_user.username }}<br>
+    {{ view_user.bio }}<br>
     <img src="{{ view_user.avatar.url }}"><br>
     Posts: {{ view_user.posts.count }}<br>
     Following: {{ view_user.following.count }}<br>
