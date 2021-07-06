@@ -12,7 +12,8 @@
             {% endif %}
             <!-- like button -->
             {% if post.user != user %}
-                <button class="post-like-button">Like</button>
+                <!-- TODO make sure the user hasn't liked the post yet -->
+                <button class="post-like-button" id="lb-{{ post.id }}">Like</button>
             {% endif %}
         {% endif %}
     </div>

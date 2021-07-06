@@ -15,7 +15,7 @@ urlpatterns = [
 
     # API Routes
     path("compose", views.compose, name="compose"),
-    path("paginated_posts/<str:username>/<int:page>", views.paginated_posts, name="paginated_posts")
+    path("like/<int:post_id>", views.like, name="like"),
 ] 
 
 if settings.DEBUG:

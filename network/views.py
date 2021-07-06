@@ -130,11 +130,16 @@ def compose(request):
     return JsonResponse({"message": "Post sent successfully"}, status=201)
 
 
-# TODO this doesn't work. figure out how to implement this.
-# Options: 
-#     1. just always slice the data manually
-#     2. return a partial page and AJAX it in there
-def paginated_posts(request, username=None, page=1):
-    posts = get_posts(request, username, page)
-    # return JsonResponse([posts.serialize() for post in posts], safe=False)
-    # return JsonResponse(posts, safe=False)
+@csrf_exempt
+def like(request, post_id):
+    if request.method == "PUT":
+        print("hi")
+        user = request.user
+        post = get_post_from_id(post_id)
+        user.liked_posts.add(post)
+        return HttpResponse(status=204)
+    else:
+        print("ERROR please only come here via PUT")
+        return JsonResponse({
+            "error": "GET request required."
+        }, status=400)

@@ -27,13 +27,22 @@ function edit_post(post_id) {
 // Likes a post
 function like_post(post_id) {
   console.log(`liking post ${post_id}`);
+  // TODO create a condition to ensure 1. the user is logged in 2. they're not trying to like their own post
+  fetch(`/like/${post_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      like: true
+    })
+  })
+  .then(() => {
+    // do something??? load a view? update that div?
+  })
 }
 
 
 // Sends a post
 function send_post() {
   text = document.querySelector('#post-text').value;
-  console.log(text);
   fetch('/compose', {
     method: 'POST',
     body: JSON.stringify({
