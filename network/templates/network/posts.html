@@ -1,5 +1,5 @@
 {% for post in posts %}
-    <div class="post-div">
+    <div class="post-div" id="post-div{{ post.id }}">
         <a href="{% url 'user' post.user.username %}">{{ post.user.username }}</a> 
         at <a href="{% url 'post' post.id %}">{{ post.timestamp }}</a>: 
         {{ post.text }} 
@@ -13,7 +13,11 @@
             <!-- like button -->
             {% if post.user != user %}
                 <!-- TODO make sure the user hasn't liked the post yet -->
-                <button class="post-like-button" id="lb-{{ post.id }}">Like</button>
+                {% if post in user.liked_posts.all %}
+                    <button class="post-unlike-button" id="ulb-{{ post.id }}">Unlike</button>
+                {% else %}
+                    <button class="post-like-button" id="lb-{{ post.id }}">Like</button>
+                {% endif %}
             {% endif %}
         {% endif %}
     </div>

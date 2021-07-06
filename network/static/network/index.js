@@ -15,6 +15,13 @@ document.addEventListener('DOMContentLoaded', function() {
       like_post(post_id);
     })
   })
+  document.querySelectorAll('.post-unlike-button').forEach(button => {
+    button.addEventListener('click', event => {
+      post_id = button.id.split("-")[1];
+      unlike_post(post_id);
+    })
+  })
+  // TODO condense like and unlike into the same button / eventlistener
 });
 
 
@@ -28,6 +35,7 @@ function edit_post(post_id) {
 function like_post(post_id) {
   console.log(`liking post ${post_id}`);
   // TODO create a condition to ensure 1. the user is logged in 2. they're not trying to like their own post
+  // TODO check if the post is currently liked
   fetch(`/like/${post_id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -35,7 +43,8 @@ function like_post(post_id) {
     })
   })
   .then(() => {
-    // do something??? load a view? update that div?
+    // update post like count
+    // switch to unlike button
   })
 }
 
@@ -50,4 +59,21 @@ function send_post() {
     })
   })
   // .then(response => response.json());
+}
+
+
+// Unlikes a post
+function unlike_post(post_id) {
+  console.log(`unliking post ${post_id}`);
+  // TODO create a condition to ensure 1. the user is logged in 2. they're not trying to like their own post
+  fetch(`/unlike/${post_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      like: false
+    })
+  })
+  .then(() => {
+    // update post like count
+    // switch to unlike button
+  })
 }

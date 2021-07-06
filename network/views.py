@@ -133,13 +133,37 @@ def compose(request):
 @csrf_exempt
 def like(request, post_id):
     if request.method == "PUT":
-        print("hi")
+        data = json.loads(request.body)
+        print(data)
+        print(data['like'])
         user = request.user
         post = get_post_from_id(post_id)
-        user.liked_posts.add(post)
-        return HttpResponse(status=204)
+        if data['like'] == True:
+            # print(f"true: {data.like}")
+            user.liked_posts.add(post)
+            return JsonResponse({"message": "Post liked successfully"}, status=201)
+        elif data['like'] == False:
+            # print(f"false: {data.like}")
+            user.liked_posts.remove(post)
+            return JsonResponse({"message": "Post unliked successfully"}, status=201)
+        # return HttpResponse(status=204)
     else:
         print("ERROR please only come here via PUT")
         return JsonResponse({
-            "error": "GET request required."
+            "error": "PUT request required."
+        }, status=400)
+
+
+@csrf_exempt
+def unlike(request, post_id):
+    if request.method == "PUT":
+        print(f"body: {request.body}")
+        user = request.user
+        post = get_post_from_id(post_id)
+        user.liked_posts.remove(post)
+        return JsonResponse({"message": "Post unliked successfully"}, status=201)
+    else:
+        print("ERROR please only come here via PUT")
+        return JsonResponse({
+            "error": "PUT request required."
         }, status=400)
