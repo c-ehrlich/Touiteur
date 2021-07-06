@@ -1,8 +1,21 @@
 {% for post in posts %}
-    <a href="{% url 'user' post.user.username %}">{{ post.user.username }}</a> 
-    at <a href="{% url 'post' post.id %}">{{ post.timestamp }}</a>: 
-    {{ post.text }} 
-    | Likes: {{ post.users_who_liked.count }}<br>
+    <div class="post-div">
+        <a href="{% url 'user' post.user.username %}">{{ post.user.username }}</a> 
+        at <a href="{% url 'post' post.id %}">{{ post.timestamp }}</a>: 
+        {{ post.text }} 
+        | Likes: {{ post.users_who_liked.count }}<br>
+
+        {% if user.is_authenticated %}
+            <!-- edit button -->
+            {% if post.user == user %}
+                <button class="post-edit-button">Edit</button>
+            {% endif %}
+            <!-- like button -->
+            {% if post.user != user %}
+                <button class="post-like-button">Like</button>
+            {% endif %}
+        {% endif %}
+    </div>
 {% empty %}
     No posts to display :(
 {% endfor %}
