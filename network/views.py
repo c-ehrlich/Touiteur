@@ -139,14 +139,21 @@ def like(request, post_id):
         user = request.user
         post = get_post_from_id(post_id)
         if data['like'] == True:
-            # print(f"true: {data.like}")
             user.liked_posts.add(post)
-            return JsonResponse({"message": "Post liked successfully"}, status=201)
+            return JsonResponse({
+                "message": "Post liked successfully",
+                "post_id": post_id,
+                "is_liked": True,
+                "like_count": post.users_who_liked.count(),
+                }, status=201)
         elif data['like'] == False:
-            # print(f"false: {data.like}")
             user.liked_posts.remove(post)
-            return JsonResponse({"message": "Post unliked successfully"}, status=201)
-        # return HttpResponse(status=204)
+            return JsonResponse({
+                "message": "Post unliked successfully",
+                "post_id": post_id,
+                "is_liked": False,
+                "like_count": post.users_who_liked.count(),
+                }, status=201)
     else:
         print("ERROR please only come here via PUT")
         return JsonResponse({

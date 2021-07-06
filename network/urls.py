@@ -16,7 +16,6 @@ urlpatterns = [
     # API Routes
     path("compose", views.compose, name="compose"),
     path("like/<int:post_id>", views.like, name="like"),
-    path("unlike/<int:post_id>", views.unlike, name="unlike"),
 ] 
 
 if settings.DEBUG:
