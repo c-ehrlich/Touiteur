@@ -17,8 +17,9 @@ def get_post_from_id(id):
     return post
 
 
-def get_posts(request, username=None, page=1):
+def get_posts(request, username=None):
     """RETURNS A PAGE OF POSTS FROM A USER"""
+    page = request.GET.get('page', 1)
     if username == None:
         objects = Post.objects.all()
     else:

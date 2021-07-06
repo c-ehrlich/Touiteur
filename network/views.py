@@ -40,7 +40,7 @@ def index(request):
     posts = get_posts(request)
     return render(request, "network/index.html", {
         "posts": posts,
-        "new_post_form": NewPostForm(auto_id=True)
+        "new_post_form": NewPostForm(auto_id=True),
     })
 
 

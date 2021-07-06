@@ -13,10 +13,10 @@
     Followed by: {{ view_user.followed_by.count }}<br>
     Likes: {{ view_user.liked_posts.count }}<br>
 
-    {% for post in posts %}
+    <!-- {% for post in posts %}
         {{ post }} | Likes: {{ post.users_who_liked.count }}<br>
     {% empty %}
         This user has not yet made any posts
-    {% endfor %}
-
+    {% endfor %} -->
+    {% include 'network/posts.html' %}
 {% endblock %}
