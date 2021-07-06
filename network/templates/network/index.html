@@ -14,12 +14,7 @@
         </div>
     {% endif %}
 
-    <!-- TODO: factor this out into JS? -->
-    {% for post in posts %}
-        {% include 'network/posts.html' %}
-    {% empty %}
-        No posts to display :(
-    {% endfor %}
+    <div id="posts-view"></div>
 {% endblock %}
 
 {% block script %}

@@ -130,6 +130,21 @@ def compose(request):
     return JsonResponse({"message": "Post sent successfully"}, status=201)
 
 
+def like(request, id):
+    # get necessary data
+    user = get_user_from_username(request.user.username)
+    try:
+        post = Post.objects.get(id=id)
+    except Post.DoesNotExist:
+        return JsonResponse({"error": "Post not found."}, status=404)
+
+    if request.method == "PUT":
+        print("we're putting!")
+        user.liked_posts.add(post.id)
+        user.save()
+        return HttpResponse(status=204)
+
+
 # TODO this doesn't work. figure out how to implement this.
 # Options: 
 #     1. just always slice the data manually
@@ -138,3 +153,14 @@ def paginated_posts(request, username=None, page=1):
     posts = get_posts(request, username, page)
     # return JsonResponse([posts.serialize() for post in posts], safe=False)
     # return JsonResponse(posts, safe=False)
+
+
+def posts_public(request):
+    post_list = Post.objects.all().values()
+    paginator = Paginator(post_list, 10)
+    posts = paginator.page(1)
+    print(posts)
+    print(type(posts))
+    print(list(posts))
+    return JsonResponse(list(posts), status=204, safe=False)
+    # return JsonResponse("{'posts': [{'1':'a'},{'2':'b'}]}", safe=False)

@@ -81,8 +81,8 @@ class User(AbstractUser):
             print(f"EXCEPTION: {str(e)}")
         super().save(*args, **kwargs)
 
-    def __str__(self):
-        return f"User {self.username}"
+    # def __str__(self):
+    #     return f"User {self.username}"
 
 
 class Post(models.Model):
