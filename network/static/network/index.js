@@ -1,7 +1,7 @@
 console.log("loading js")
 
 document.addEventListener('DOMContentLoaded', function() {
-  // add eventlistner to sent email
+  // add eventlistner to send post
   document.querySelector('#compose-form').onsubmit = send_post; 
 });
 

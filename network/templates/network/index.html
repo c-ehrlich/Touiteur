@@ -14,15 +14,10 @@
         </div>
     {% endif %}
 
-    <!-- TODO: factor this out into JS? -->
     {% for post in posts %}
-        <a href="{% url 'user' post.user.username %}">{{ post.user.username }}</a> 
-        at <a href="{% url 'post' post.id %}">{{ post.timestamp }}</a>: 
-        {{ post.text }} 
-        | Likes: {{ post.users_who_liked.count }}<br>
-    {% empty %}
-        No posts to display :(
+        <!-- {% include network/posts.html %} -->
     {% endfor %}
+
 {% endblock %}
 
 {% block script %}

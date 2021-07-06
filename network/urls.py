@@ -5,7 +5,9 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
+    # ------------
     # View Routes
+    # ------------
     path("", views.index, name="index"),
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
@@ -13,10 +15,11 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("user/<str:username>", views.user, name="user"),
 
+    # -----------
     # API Routes
+    # -----------
     path("compose", views.compose, name="compose"),
-    path("paginated_posts/<str:username>/<int:page>", views.paginated_posts, name="paginated_posts")
-] 
+]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

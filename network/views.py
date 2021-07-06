@@ -2,14 +2,18 @@ import json
 from django import forms
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.core import serializers
 from django.core.paginator import Paginator
+from django.core.serializers.json import DjangoJSONEncoder
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from rest_framework.pagination import PageNumberPagination
 
 from .models import User, Post
 from .utils import get_user_from_username, get_post_from_id, get_posts
+from .utils import get_posts_test # TODO temp
 
 # TODO temp imports remove later
 from django.views.decorators.csrf import csrf_exempt
@@ -37,7 +41,8 @@ class NewPostForm(forms.Form):
 
 def index(request):
     """RETURNS THE INDEX PAGE"""
-    posts = get_posts(request)
+    page_number = int(request.GET.get('page', 1))
+    posts = get_posts(request, None, page_number)
     return render(request, "network/index.html", {
         "posts": posts,
         "new_post_form": NewPostForm(auto_id=True)
@@ -129,12 +134,3 @@ def compose(request):
     post.save()
     return JsonResponse({"message": "Post sent successfully"}, status=201)
 
-
-# TODO this doesn't work. figure out how to implement this.
-# Options: 
-#     1. just always slice the data manually
-#     2. return a partial page and AJAX it in there
-def paginated_posts(request, username=None, page=1):
-    posts = get_posts(request, username, page)
-    # return JsonResponse([posts.serialize() for post in posts], safe=False)
-    # return JsonResponse(posts, safe=False)
