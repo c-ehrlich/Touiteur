@@ -8,7 +8,7 @@
         {% if user.is_authenticated %}
             <!-- edit button -->
             {% if post.user == user %}
-                <button class="post-edit-button">Edit</button>
+                <button class="post-edit-button" id="eb-{{ post.id }}">Edit</button>
             {% endif %}
             <!-- like button -->
             {% if post.user != user %}
