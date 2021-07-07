@@ -61,18 +61,20 @@ function edit_post_text(post_id) {
   const text_field = document.querySelector(`#post-text-${post_id}`);
   const original_text = text_field.innerHTML;
   text_field.innerHTML = "";
-  const text_edit_input = document.createElement('input');
-  text_edit_input.setAttribute('type', 'text');
+  const text_edit_input = document.createElement('textarea');
+  text_edit_input.setAttribute('rows', 1);
+  text_edit_input.setAttribute('maxlength', 500);
+  // TODO set textArea cols? Or give it a class and then do it in CSS?
+  // TODO give this textArea some classes
   text_edit_input.value = original_text;
   text_edit_input.id = `post-edit-input-${post_id}`;
-  // TODO give ths input some classes
-  text_field.append(text_edit_input);
-  // TODO this eventListener doesn't work! Investigate.
-  text_field.addEventListener('keypress', e => {
+  // TODO this eventListener doesn't work because enter makes a newline. Investigate.
+  text_edit_input.addEventListener('keypress', e => {
     if (e.key === 'Enter') {
       edit_post_submit(post_id, original_text);
     }
   }, { once: true } );
+  text_field.append(text_edit_input);
   text_edit_input.focus();
   // Turn the edit button into save button
   let save_button = document.querySelector(`#eb-${post_id}`);
