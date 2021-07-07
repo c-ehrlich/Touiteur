@@ -2,7 +2,7 @@
     <div class="post-div" id="post-div{{ post.id }}">
         <a href="{% url 'user' post.user.username %}">{{ post.user.username }}</a> 
         at <a href="{% url 'post' post.id %}">{{ post.timestamp }}</a>: 
-        {{ post.text }} 
+        <div id="post-text-{{ post.id }}">{{ post.text }}</div>
         | Likes: 
         <div id="post-likes-{{ post.id }}">{{ post.users_who_liked.count }}</div><br>
 

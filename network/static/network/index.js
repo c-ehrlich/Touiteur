@@ -6,8 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.post-edit-button').forEach(button => {
     button.addEventListener('click', event => {
       post_id = button.id.split("-")[1];
-      edit_post(post_id);
-    })
+      edit_post_text(post_id);
+    }, { once: true } );
   })
   document.querySelectorAll('.post-like-button').forEach(button => {
     button.addEventListener('click', event => {
@@ -25,15 +25,46 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Attempts to submit edited post
+function edit_post_submit(post_id, original_text) {
+  console.log(`submit edit on post ${post_id}`);
+  // attempt to change the value in db
+  // if successful, set text to input text
+  // if unsuccessful, set text to original_text
+  // either way, change button back into edit button and re-add eventlistener
+}
+
+
 // Edits a post
-function edit_post(post_id) {
-  console.log(`editing post ${post_id}`);
+function edit_post_text(post_id) {
+  console.log("edit post");
+  const text_field = document.querySelector(`#post-text-${post_id}`);
+  const original_text = text_field.innerHTML;
+  text_field.innerHTML = "";
+  const text_edit_input = document.createElement('input');
+  text_edit_input.setAttribute('type', 'text');
+  text_edit_input.value = original_text;
+  text_edit_input.id = `post-edit-input-${post_id}`;
+  // TODO give ths input some classes
+  text_field.append(text_edit_input);
+  text_field.addEventListener('keypress', e => {
+    if (e.key === 'Enter') {
+      edit_post_submit(post_id, original_text);
+    }
+  }, { once: true } );
+  text_edit_input.focus();
+  // Turn the edit button into save button
+  save_button = document.querySelector(`#eb-${post_id}`);
+  save_button.innerHTML = "Save";
+  save_button.addEventListener('click', event => {
+    edit_post_submit(post_id, original_text);
+  }, { once: true } );
+  // add edit_post_save function eventListener to button and textfield
 }
 
 
 // Likes a post
 function like_post(post_id) {
-  console.log(`liking post ${post_id}`);
   // TODO create a condition to ensure 1. the user is logged in 2. they're not trying to like their own post
   // TODO check if the post is currently liked
   fetch(`/like/${post_id}`, {
@@ -47,8 +78,6 @@ function like_post(post_id) {
     console.log(json);
     update_post_like_status(json);
   })
-    // update post like count
-    // switch to unlike button
 }
 
 
@@ -67,8 +96,8 @@ function send_post() {
 
 // Unlikes a post
 function unlike_post(post_id) {
-  console.log(`unliking post ${post_id}`);
   // TODO create a condition to ensure 1. the user is logged in 2. they're not trying to like their own post
+  // OR just do this in the django route
   fetch(`/like/${post_id}`, {
     method: 'PUT',
     body: JSON.stringify({
