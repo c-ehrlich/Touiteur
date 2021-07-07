@@ -8,6 +8,7 @@ import sys
 
 
 class User(AbstractUser):
+    # TODO don't use first/last name fiels, use a single 'name' field instead like twitter?
     avatar = models.ImageField(
         height_field="avatar_height",
         width_field="avatar_width",
@@ -27,7 +28,6 @@ class User(AbstractUser):
 
     following = models.ManyToManyField(
         "User",
-        # on_delete=models.CASCADE,
         related_name="followed_by",
         blank=True
     )

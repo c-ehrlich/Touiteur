@@ -118,7 +118,7 @@ def user(request, username):
 # +-----------------------------------------+
 # |        VIEWS THAT RETURN JSON           |
 # +-----------------------------------------+
-# TODO remove csrf_exempt here
+# TODO remove csrf_exempt here and everywhere
 @csrf_exempt
 def compose(request):
     data=json.loads(request.body)
@@ -131,11 +131,28 @@ def compose(request):
 
 
 @csrf_exempt
+def edit(request, post_id):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        new_text = data['new_text']
+        # TODO run some checks on new_text (length etc)?
+        post = get_post_from_id(post_id)
+        if request.user == post.user:
+            post.text = new_text
+            post.save()
+            return JsonResponse({
+                "message": "Post edited successfully",
+            }, status=201)
+        else:
+            return JsonResponse({
+                "message": "You are not authorized to edit this post",
+            }, status=400)
+
+
+@csrf_exempt
 def like(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)
-        print(data)
-        print(data['like'])
         user = request.user
         post = get_post_from_id(post_id)
         if data['like'] == True:
@@ -154,21 +171,6 @@ def like(request, post_id):
                 "is_liked": False,
                 "like_count": post.users_who_liked.count(),
                 }, status=201)
-    else:
-        print("ERROR please only come here via PUT")
-        return JsonResponse({
-            "error": "PUT request required."
-        }, status=400)
-
-
-@csrf_exempt
-def unlike(request, post_id):
-    if request.method == "PUT":
-        print(f"body: {request.body}")
-        user = request.user
-        post = get_post_from_id(post_id)
-        user.liked_posts.remove(post)
-        return JsonResponse({"message": "Post unliked successfully"}, status=201)
     else:
         print("ERROR please only come here via PUT")
         return JsonResponse({

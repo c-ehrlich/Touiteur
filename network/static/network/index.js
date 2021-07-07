@@ -28,6 +28,19 @@ document.addEventListener('DOMContentLoaded', function() {
 // Attempts to submit edited post
 function edit_post_submit(post_id, original_text) {
   console.log(`submit edit on post ${post_id}`);
+  const save_button = document.querySelector(`#eb-${post_id}`);
+  const text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
+  new_text = text_edit_input.value;
+  fetch(`/edit/${post_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      new_text: new_text
+    })
+  })
+  .then(response => response.json())
+  .then(json => {
+    console.log(json);
+  })
   // attempt to change the value in db
   // if successful, set text to input text
   // if unsuccessful, set text to original_text
