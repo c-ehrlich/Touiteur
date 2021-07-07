@@ -40,11 +40,18 @@ function edit_post_submit(post_id, original_text) {
   .then(response => response.json())
   .then(json => {
     console.log(json);
+    if (json.edited === true) {
+      document.querySelector(`#post-text-${post_id}`).innerHTML = new_text;
+    } else {
+      document.querySelector(`#post-text-${post_id}`).innerHTML = original_text;
+    }
+    let save_button = document.querySelector(`#eb-${post_id}`);
+    save_button.innerHTML = "Edit";
+    save_button.addEventListener('click', event => {
+      edit_post_text(post_id);
+    }, { once: true } );
   })
-  // attempt to change the value in db
-  // if successful, set text to input text
-  // if unsuccessful, set text to original_text
-  // either way, change button back into edit button and re-add eventlistener
+  // TODO: do this without 'original_text' variable - use JSON from backend instead
 }
 
 
@@ -60,6 +67,7 @@ function edit_post_text(post_id) {
   text_edit_input.id = `post-edit-input-${post_id}`;
   // TODO give ths input some classes
   text_field.append(text_edit_input);
+  // TODO this eventListener doesn't work! Investigate.
   text_field.addEventListener('keypress', e => {
     if (e.key === 'Enter') {
       edit_post_submit(post_id, original_text);
@@ -67,7 +75,7 @@ function edit_post_text(post_id) {
   }, { once: true } );
   text_edit_input.focus();
   // Turn the edit button into save button
-  save_button = document.querySelector(`#eb-${post_id}`);
+  let save_button = document.querySelector(`#eb-${post_id}`);
   save_button.innerHTML = "Save";
   save_button.addEventListener('click', event => {
     edit_post_submit(post_id, original_text);

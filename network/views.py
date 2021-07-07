@@ -135,17 +135,23 @@ def edit(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)
         new_text = data['new_text']
-        # TODO run some checks on new_text (length etc)?
+        if len(new_text) > 500:
+            return JsonResponse({
+                "message": "Maximum post length is 500 characters",
+                "edited": False,
+            }, status=400)
         post = get_post_from_id(post_id)
         if request.user == post.user:
             post.text = new_text
             post.save()
             return JsonResponse({
                 "message": "Post edited successfully",
+                "edited": True,
             }, status=201)
         else:
             return JsonResponse({
                 "message": "You are not authorized to edit this post",
+                "edited": False,
             }, status=400)
 
 
