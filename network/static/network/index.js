@@ -1,5 +1,3 @@
-console.log("loading js")
-
 document.addEventListener('DOMContentLoaded', function() {
   // add eventlistner to sent email
   document.querySelector('#compose-form').onsubmit = send_post; 
@@ -86,23 +84,6 @@ function edit_post_text(post_id) {
 }
 
 
-function follow(user_id) {
-  fetch(`/follow/${user_id}`, {
-    method: 'PUT',
-  })
-  .then(response => response.json())
-  .then(json => {
-    console.log(json);
-  })
-}
-
-
-// TODO temp test
-function testfn() {
-  console.log("test");
-}
-
-
 // Likes a post
 function like_post(post_id) {
   // TODO create a condition to ensure 1. the user is logged in 2. they're not trying to like their own post
@@ -173,3 +154,5 @@ function update_post_like_status(json) {
   }
   button_div.append(like_button);
 }
+
+console.log("loaded index js")

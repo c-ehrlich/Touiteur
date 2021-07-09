@@ -6,21 +6,24 @@
 {% endblock %}
 
 {% block body %}
-    {{ view_user.username }} ({{ view_user.id }})<br>
+    <div id="user-id">{{ view_user.id }}</div>
+    {{ view_user.username }}<br>
     {{ view_user.bio }}<br>
     <img src="{{ view_user.avatar.url }}"><br>
     Posts: {{ view_user.posts.count }}<br>
     Following: {{ view_user.following.count }}<br>
-    Followed by: {{ view_user.followed_by.count }}<br>
+    Followed by: <div id="follower-count">{{ view_user.followed_by.count }}</div><br>
     Likes: {{ view_user.liked_posts.count }}<br>
 
     <!-- TODO temp follow check logic -->
     {% if user != view_user %}
-        {% if view_user in user.following.all %}
-            {{ user }} is following {{ view_user }}
-        {% else %}
-            {{ user }} is not following {{ view_user }}
-        {% endif %}
+        <div id="follow-button-div">
+            {% if view_user in user.following.all %}
+                <button id="unfollow-button">Unfollow</button>
+            {% else %}
+                <button id="follow-button">Follow</button>
+            {% endif %}
+        </div>
     {% endif %}
 
     <!-- {% for post in posts %}
@@ -33,6 +36,7 @@
 
 
 {% block script %}
+    <script src="{% static 'network/user.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
 {% endblock %}
 

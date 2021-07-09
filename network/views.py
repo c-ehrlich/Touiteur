@@ -159,23 +159,34 @@ def edit(request, post_id):
 def follow(request, user_id):
     if request.method == "PUT":
         user = request.user
+        # user is trying to follow themselves
         if user_id == user.id:
             return JsonResponse({
                 "error": "You cannot follow your own account."
             }, status=400)
         else: 
+            data = json.loads(request.body)
             user_to_follow = User.objects.get(id=user_id) 
-            if user_to_follow in user.following.all():
-                print("you are currently following this user")
-                return JsonResponse({
-                    "message": "test remove follow"
-                }, status=201)
-            else:
+            # good follow request
+            if data['intent'] == 'follow' and user_to_follow not in user.following.all():
                 print("You are not currently following this user")
+                user.following.add(user_to_follow)
                 return JsonResponse({
-                    "message": "test add follow"
+                    "message": f"followed user {user_to_follow}"
                 }, status=201)
-
+            # good unfollow request
+            if data['intent'] == 'unfollow' and user_to_follow in user.following.all():
+                print("you are currently following this user")
+                user.following.remove(user_to_follow)
+                return JsonResponse({
+                    "message": f"unfollowed user {user_to_follow}"
+                }, status=201)
+            # We reach this page if the intent does not match the current follow status
+            print("follow intent does not match current follow state")
+            return JsonResponse({
+                "error": "follow intent does not match current follow state"
+            }, status=400)
+    # user did not make a put request
     else:
         return JsonResponse({
             "error": "PUT request required."
