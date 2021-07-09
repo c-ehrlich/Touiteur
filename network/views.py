@@ -156,6 +156,33 @@ def edit(request, post_id):
 
 
 @csrf_exempt
+def follow(request, user_id):
+    if request.method == "PUT":
+        user = request.user
+        if user_id == user.id:
+            return JsonResponse({
+                "error": "You cannot follow your own account."
+            }, status=400)
+        else: 
+            user_to_follow = User.objects.get(id=user_id) 
+            if user_to_follow in user.following.all():
+                print("you are currently following this user")
+                return JsonResponse({
+                    "message": "test remove follow"
+                }, status=201)
+            else:
+                print("You are not currently following this user")
+                return JsonResponse({
+                    "message": "test add follow"
+                }, status=201)
+
+    else:
+        return JsonResponse({
+            "error": "PUT request required."
+        }, status=400)
+
+
+@csrf_exempt
 def like(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)

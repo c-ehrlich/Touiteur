@@ -1,17 +1,27 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block title %}
     {{ view_user.username }}
 {% endblock %}
 
 {% block body %}
-    {{ view_user.username }}<br>
+    {{ view_user.username }} ({{ view_user.id }})<br>
     {{ view_user.bio }}<br>
     <img src="{{ view_user.avatar.url }}"><br>
     Posts: {{ view_user.posts.count }}<br>
     Following: {{ view_user.following.count }}<br>
     Followed by: {{ view_user.followed_by.count }}<br>
     Likes: {{ view_user.liked_posts.count }}<br>
+
+    <!-- TODO temp follow check logic -->
+    {% if user != view_user %}
+        {% if view_user in user.following.all %}
+            {{ user }} is following {{ view_user }}
+        {% else %}
+            {{ user }} is not following {{ view_user }}
+        {% endif %}
+    {% endif %}
 
     <!-- {% for post in posts %}
         {{ post }} | Likes: {{ post.users_who_liked.count }}<br>
@@ -20,3 +30,11 @@
     {% endfor %} -->
     {% include 'network/posts.html' %}
 {% endblock %}
+
+
+{% block script %}
+    <script src="{% static 'network/utils.js' %}"></script>
+{% endblock %}
+
+<!-- Follow button: hollow, maybe slight color change on hover -->
+<!-- Following button: filled, on hover: text changes to unfollow, color changes to red -->
