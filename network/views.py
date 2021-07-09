@@ -12,7 +12,7 @@ from .models import User, Post
 from .utils import get_user_from_username, get_post_from_id, get_posts
 
 # TODO temp imports remove later
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 
 # +-----------------------------------------+
@@ -119,7 +119,7 @@ def user(request, username):
 # |        VIEWS THAT RETURN JSON           |
 # +-----------------------------------------+
 # TODO remove csrf_exempt here and everywhere
-@csrf_exempt
+@csrf_protect
 def compose(request):
     data=json.loads(request.body)
     text = data.get("text", "")
@@ -130,7 +130,7 @@ def compose(request):
     return JsonResponse({"message": "Post sent successfully"}, status=201)
 
 
-@csrf_exempt
+@csrf_protect
 def edit(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)
@@ -155,6 +155,7 @@ def edit(request, post_id):
             }, status=400)
 
 
+@csrf_protect
 def follow(request, user_id):
     if request.method == "PUT":
         user = request.user
@@ -192,7 +193,7 @@ def follow(request, user_id):
         }, status=400)
 
 
-@csrf_exempt
+@csrf_protect
 def like(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)

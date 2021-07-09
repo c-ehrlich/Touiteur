@@ -33,7 +33,11 @@ function edit_post_submit(post_id, original_text) {
     method: 'PUT',
     body: JSON.stringify({
       new_text: new_text
-    })
+    }),
+    credentials: 'same-origin',
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken")
+    }
   })
   .then(response => response.json())
   .then(json => {
