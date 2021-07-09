@@ -9,7 +9,7 @@ from django.shortcuts import render
 from django.urls import reverse
 
 from .models import User, Post
-from .utils import get_user_from_username, get_post_from_id, get_posts
+from .utils import get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts
 
 # TODO temp imports remove later
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -34,6 +34,14 @@ class NewPostForm(forms.Form):
 # +-----------------------------------------+
 # |        VIEWS THAT RETURN PAGES          |
 # +-----------------------------------------+
+
+@login_required
+def following(request):
+    posts = get_posts_from_followed_accounts(request)
+    return render(request, "network/following.html", {
+        "posts": posts
+    })
+
 
 def index(request):
     """RETURNS THE INDEX PAGE"""

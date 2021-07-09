@@ -12,6 +12,14 @@ PAGINATION_POST_COUNT = 10
 # +-----------------------------------------+
 # |          UTILITY FUNCTIONS              |
 # +-----------------------------------------+
+def get_posts_from_followed_accounts(request):
+    page = request.GET.get('page', 1)
+    user = request.user
+    objects = Post.objects.filter(user__in=user.following.all())
+    p = Paginator(objects, PAGINATION_POST_COUNT)
+    return p.page(page)
+
+
 def get_post_from_id(id):
     post = Post.objects.get(id=id)
     return post
