@@ -8,6 +8,7 @@
 {% block body %}
     <div id="user-id">{{ view_user.id }}</div>
     {{ view_user.username }}<br>
+    {{ view_user.verbose_name }}<br>
     {{ view_user.bio }}<br>
     <img src="{{ view_user.avatar.url }}"><br>
     Posts: {{ view_user.posts.count }}<br>

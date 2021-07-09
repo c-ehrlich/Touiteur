@@ -21,6 +21,10 @@ class User(AbstractUser):
     avatar_height = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
     avatar_width = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
 
+    verbose_name = models.TextField(
+        default = "",
+        max_length = 100
+    )
     bio = models.TextField(
         default = f"This user has not entered a bio",
         max_length = 500

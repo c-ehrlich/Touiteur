@@ -155,7 +155,6 @@ def edit(request, post_id):
             }, status=400)
 
 
-@csrf_exempt
 def follow(request, user_id):
     if request.method == "PUT":
         user = request.user
