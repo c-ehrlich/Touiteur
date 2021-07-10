@@ -25,16 +25,17 @@
     flex-direction: row;
     border: 1px solid lightgrey;
     margin: 8px 8px 24px 8px;
-    padding: 16px;
+    padding: 12px;
     background-color: white;
 }
 
 #compose-view-avatar-div {
-    margin-right: 16px;
+    margin-right: 12px;
 }
 #compose-view-avatar-img {
     width: 64px;
     height: 64px;
+    border-radius: 100%;
 }
 
 #compose-view-body {
@@ -43,8 +44,12 @@
     width: 100%;
 }
 
+#compose-form-post-text {
+    margin-bottom: 8px;
+}
+
 #compose-form {
-    margin: 8px;
+    /* margin: 8px; */
 }
 
 #compose-form-submit-button-div {
@@ -79,16 +84,18 @@
     flex-direction: row;
     border: 1px solid lightgrey;
     margin: 0 8px 0 8px;
-    padding: 16px;
+    padding: 12px;
     background-color: white;
 }
 
 .profile-pic {
     width: 64px;
     height: 64px;
+    border-radius: 100%;
 }
 
 .post-content-div {
+    width: 100%;
     display: flex;
     flex-direction: column;
     margin-left: 16px;
@@ -120,9 +127,28 @@
     padding-right: 4px;
 }
 
+.post-timestamp-text {
+    color: grey;
+}
+
+.post-text {
+    margin-bottom: 8px;
+}
+
+.post-edit-input {
+    width: 100%;
+}
+
 .post-bottom-row-div {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+}
+
+.post-likes-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 @media (max-width: 500px) {

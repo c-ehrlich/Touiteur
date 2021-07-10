@@ -70,6 +70,7 @@ function edit_post_text(post_id) {
   // TODO give this textArea some classes
   text_edit_input.value = original_text;
   text_edit_input.id = `post-edit-input-${post_id}`;
+  text_edit_input.classList.add('post-edit-input');
   // TODO this eventListener doesn't work because enter makes a newline. Investigate.
   text_edit_input.addEventListener('keypress', e => {
     if (e.key === 'Enter') {

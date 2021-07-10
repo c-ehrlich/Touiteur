@@ -16,13 +16,15 @@
                     </a>
                     <div class="post-username-header-spacer"> · </div>
                     <div class="post-timestamp-div">
-                        <a href="{% url 'post' post.id %}">{{ post.timestamp }}</a>
+                        <a href="{% url 'post' post.id %}" class="post-timestamp-text">{{ post.timestamp }}</a>
                     </div>
                 </div>
-                <div id="post-text-{{ post.id }}">{{ post.text }}</div>
+                <div class="post-text" id="post-text-{{ post.id }}">{{ post.text }}</div>
                 <div class="post-bottom-row-div">
-                    <div>Likes:</div>
-                    <div id="post-likes-{{ post.id }}">{{ post.users_who_liked.count }}</div><br>
+                    <div class="post-likes-div">
+                        <div>♡</div>
+                        <div id="post-likes-{{ post.id }}">{{ post.users_who_liked.count }}</div>
+                    </div>
 
                     {% if user.is_authenticated %}
                         <!-- edit button -->
