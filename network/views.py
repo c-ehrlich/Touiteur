@@ -141,6 +141,10 @@ def user(request, username):
 def compose(request):
     data=json.loads(request.body)
     text = data.get("text", "")
+    if text == "":
+        return JsonResponse({
+            "message": "You can't submit an empty post"
+        }, status=400)
     user=request.user
     post = Post(user=user, text=text)
     post.save()
