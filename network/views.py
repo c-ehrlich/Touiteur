@@ -32,7 +32,10 @@ def account(request):
         if form.is_valid():
             form.save()
         else:
-            print("form data invalid")
+            return render(request, "network/account.html", {
+                "form": EditAccountForm(instance = user),
+                "message": "Form data is invalid"
+            })
         return render(request, "network/account.html", {
             "form": EditAccountForm(instance = user)
         })
