@@ -1,32 +1,48 @@
-{% for post in posts %}
-    <div class="post-div" id="post-div{{ post.id }}">
-        <a href="{% url 'user' post.user.username %}">@{{ post.user.username }}</a> 
-        at <a href="{% url 'post' post.id %}">{{ post.timestamp }}</a>: 
-        <div id="post-text-{{ post.id }}">{{ post.text }}</div>
-        | Likes: 
-        <div id="post-likes-{{ post.id }}">{{ post.users_who_liked.count }}</div><br>
-
-        {% if user.is_authenticated %}
-            <!-- edit button -->
-            {% if post.user == user %}
-                <button class="post-edit-button" id="eb-{{ post.id }}">Edit</button>
-            {% endif %}
-            <!-- like button -->
-            {% if post.user != user %}
-                <!-- TODO make sure the user hasn't liked the post yet -->
-                <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
-                    {% if post in user.liked_posts.all %}
-                        <button class="post-unlike-button" id="ulb-{{ post.id }}">Unlike</button>
-                    {% else %}
-                        <button class="post-like-button" id="lb-{{ post.id }}">Like</button>
-                    {% endif %}
+<div id="posts-all-container-div">
+    {% for post in posts %}
+        <div class="post-div" id="post-div{{ post.id }}">
+            <div class="post-avatar-div">
+                <img class="profile-pic" src="{{ post.user.avatar.url }}">
+            </div>
+            <div class="post-content-div">
+                <div class="post-username-header-div">
+                    <div class="post-username-header-displayname">
+                        {{ post.user.displayname }}
+                    </div>
+                    <div class="post-username-header-username">
+                        <a href="{% url 'user' post.user.username %}">@{{ post.user.username }}</a>
+                    </div>
                 </div>
-            {% endif %}
-        {% endif %}
-    </div>
-{% empty %}
-    No posts to display :(
-{% endfor %}
+                <div class="post-timestamp-div">
+                    <a href="{% url 'post' post.id %}">{{ post.timestamp }}</a>
+                </div>
+                <div id="post-text-{{ post.id }}">{{ post.text }}</div>
+                Likes:
+                <div id="post-likes-{{ post.id }}">{{ post.users_who_liked.count }}</div><br>
+
+                {% if user.is_authenticated %}
+                    <!-- edit button -->
+                    {% if post.user == user %}
+                        <button class="post-edit-button" id="eb-{{ post.id }}">Edit</button>
+                    {% endif %}
+                    <!-- like button -->
+                    {% if post.user != user %}
+                        <!-- TODO make sure the user hasn't liked the post yet -->
+                        <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
+                            {% if post in user.liked_posts.all %}
+                                <button class="post-unlike-button" id="ulb-{{ post.id }}">Unlike</button>
+                            {% else %}
+                                <button class="post-like-button" id="lb-{{ post.id }}">Like</button>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    {% empty %}
+        No posts to display :(
+    {% endfor %}
+</div>
 
 <!-- Pagination -->
 {% if posts.has_previous %}

@@ -3,19 +3,29 @@
 
 
 {% block body %}
-    {% if user.is_authenticated %}    
-        <div id="compose-view">
-            <form id="compose-form">
-                <!-- {% csrf_token %} -->
-                <!-- {{ new_post_form }} -->
-                <textarea class="form-control" id="post-text" placeholder="Text"></textarea>
-                <input type="submit">
-            </form>
-        </div>
-    {% endif %}
+    <div id="index-body-div">
+        {% if user.is_authenticated %}    
+            <div id="compose-view-outer">
+                <div id="compose-view">
+                    <div id="compose-view-avatar-div">
+                        <img id="compose-view-avatar-img" src="{{ request.user.avatar.url }}">
+                    </div>
+                    <div id="compose-view-body">
+                        <form id="compose-form">
+                            <!-- {% csrf_token %} -->
+                            <!-- {{ new_post_form }} -->
+                            <textarea class="form-control" id="post-text" placeholder="What's Happening?"></textarea>
+                            <div id="compose-form-submit-button-div">
+                                <input type="submit" id="compose-form-submit-button">
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
-    {% include 'network/posts.html' %}
-
+        {% include 'network/posts.html' %}
+    </div>
 {% endblock %}
 
 {% block script %}

@@ -1,4 +1,93 @@
+/* VARS */
+:root {
+    --item-width: 800px;
+    --item-max-width: 100%;
+}
+
+/* STUFF FOR INDEX.HTML */
+/* #index-body-div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+} */
+#compose-view-outer {
+    margin: auto;
+    width: var(--item-width);
+    max-width: var(--item-max-width);
+}
+#compose-view {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid grey;
+    margin: 8px 8px 32px 8px;
+    padding: 8px;
+}
+
+#compose-view-avatar-div {
+    margin-right: 16px;
+}
+#compose-view-avatar-img {
+    width: 64px;
+    height: 64px;
+}
+
+#compose-view-body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+#compose-form {
+    margin: 8px;
+}
+
+#compose-form-submit-button-div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+#compose-form-submit-button {
+    padding: 8px 16px 8px 16px;
+    border-radius: 32px;
+    font-weight: bold;
+    border-color: skyblue;
+    background-color: skyblue;
+    color: white;
+}
+
+#post-text {
+    width: 100%;
+    font-size: 24px;
+}
+
+/* STUFF FOR POSTS.HTML */
+#posts-all-container-div {
+    margin: auto;
+    width: var(--item-width);
+    max-width: var(--item-max-width);
+}
+
 .post-div {
+    display: flex;
+    flex-direction: row;
+    border: 1px solid grey;
+    margin: 8px;
+    padding: 8px;
+}
+
+.profile-pic {
+    width: 64px;
+    height: 64px;
+}
+
+.post-content-div {
+    display: flex;
+    flex-direction: column;
+}
+
+.post-username-header-div {
     display: flex;
     flex-direction: row;
 }
