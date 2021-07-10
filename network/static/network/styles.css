@@ -1,6 +1,6 @@
 /* VARS */
 :root {
-    --item-width: 800px;
+    --item-width: 600px;
     --item-max-width: 100%;
 }
 
@@ -11,6 +11,10 @@
     align-items: center;
     width: 100%;
 } */
+#index-body-div {
+    background-color: #e7eaef;
+}
+
 #compose-view-outer {
     margin: auto;
     width: var(--item-width);
@@ -19,9 +23,10 @@
 #compose-view {
     display: flex;
     flex-direction: row;
-    border: 1px solid grey;
-    margin: 8px 8px 32px 8px;
+    border: 1px solid lightgrey;
+    margin: 8px 8px 24px 8px;
     padding: 8px;
+    background-color: white;
 }
 
 #compose-view-avatar-div {
@@ -72,9 +77,10 @@
 .post-div {
     display: flex;
     flex-direction: row;
-    border: 1px solid grey;
-    margin: 8px;
+    border: 1px solid lightgrey;
+    margin: 0 8px 0 8px;
     padding: 8px;
+    background-color: white;
 }
 
 .profile-pic {
@@ -90,4 +96,12 @@
 .post-username-header-div {
     display: flex;
     flex-direction: row;
+}
+
+@media (max-width: 500px) {
+    #compose-view,
+    .post-div {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }
