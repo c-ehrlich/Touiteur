@@ -18,7 +18,7 @@ function follow(user_id) {
 
 // Sends a post
 function send_post() {
-  text = document.querySelector('#post-text').value;
+  text = document.querySelector('#compose-form-post-text').value;
   fetch('/compose', {
     method: 'POST',
     body: JSON.stringify({
