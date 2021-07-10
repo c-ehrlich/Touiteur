@@ -25,7 +25,7 @@
     flex-direction: row;
     border: 1px solid lightgrey;
     margin: 8px 8px 24px 8px;
-    padding: 8px;
+    padding: 16px;
     background-color: white;
 }
 
@@ -79,7 +79,7 @@
     flex-direction: row;
     border: 1px solid lightgrey;
     margin: 0 8px 0 8px;
-    padding: 8px;
+    padding: 16px;
     background-color: white;
 }
 
@@ -91,9 +91,36 @@
 .post-content-div {
     display: flex;
     flex-direction: column;
+    margin-left: 16px;
 }
 
 .post-username-header-div {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 4px;
+}
+
+.post-username-header-link {
+    display: flex;
+    flex-direction: row;
+}
+
+.post-username-header-displayname {
+    font-weight: bold;
+    color: black;
+}
+
+.post-username-header-username {
+    color: grey;
+    padding-left: 8px;
+}
+
+.post-username-header-spacer {
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.post-bottom-row-div {
     display: flex;
     flex-direction: row;
 }

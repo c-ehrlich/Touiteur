@@ -4,7 +4,7 @@
 
 {% block body %}
     <div id="index-body-div">
-        {% if user.is_authenticated %}    
+        {% if user.is_authenticated %}
             <div id="compose-view-outer">
                 <div id="compose-view">
                     <div id="compose-view-avatar-div">
@@ -14,7 +14,7 @@
                         <form id="compose-form">
                             <!-- {% csrf_token %} -->
                             <!-- {{ new_post_form }} -->
-                            <textarea class="form-control" id="post-text" placeholder="What's Happening?"></textarea>
+                            <textarea class="form-control" id="post-text" placeholder="What's Happening?" required=True></textarea>
                             <div id="compose-form-submit-button-div">
                                 <input type="submit" id="compose-form-submit-button">
                             </div>
