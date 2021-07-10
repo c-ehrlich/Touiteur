@@ -96,7 +96,10 @@ function like_post(post_id) {
     method: 'PUT',
     body: JSON.stringify({
       like: true
-    })
+    }),
+    headers: {
+        "X-CSRFToken": getCookie("csrftoken")
+    }
   })
   .then(response => response.json())
   .then(json => {
@@ -114,7 +117,10 @@ function unlike_post(post_id) {
     method: 'PUT',
     body: JSON.stringify({
       like: false
-    })
+    }),
+    headers: {
+        "X-CSRFToken": getCookie("csrftoken")
+    }
   })
   .then(response => response.json())
   .then(json => {

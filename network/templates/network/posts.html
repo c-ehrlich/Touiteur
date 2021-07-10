@@ -1,6 +1,6 @@
 {% for post in posts %}
     <div class="post-div" id="post-div{{ post.id }}">
-        <a href="{% url 'user' post.user.username %}">{{ post.user.username }}</a> 
+        <a href="{% url 'user' post.user.username %}">@{{ post.user.username }}</a> 
         at <a href="{% url 'post' post.id %}">{{ post.timestamp }}</a>: 
         <div id="post-text-{{ post.id }}">{{ post.text }}</div>
         | Likes: 

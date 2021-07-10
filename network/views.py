@@ -142,7 +142,6 @@ def compose(request):
     data=json.loads(request.body)
     text = data.get("text", "")
     user=request.user
-    print("TEST: " + text)
     post = Post(user=user, text=text)
     post.save()
     return JsonResponse({"message": "Post sent successfully"}, status=201)
