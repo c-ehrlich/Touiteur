@@ -8,32 +8,22 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from .models import User, Post
-from .utils import get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts
+from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm
+from network.models import User, Post
+from network.utils import get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts
 
 # TODO temp imports remove later
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 
 # +-----------------------------------------+
-# |                  FORMS                  |
-# +-----------------------------------------+
-
-class NewPostForm(forms.Form):
-    pass
-    post_text = forms.CharField(
-        label = "New Post",
-        max_length = 500,
-        required=True,
-        widget=forms.Textarea(attrs={
-            'rows':3
-        })
-    )
-
-
-# +-----------------------------------------+
 # |        VIEWS THAT RETURN PAGES          |
 # +-----------------------------------------+
+
+@login_required
+def account(request):
+    return render(request, "network/account.html")
+
 
 @login_required
 def following(request):
@@ -89,6 +79,7 @@ def post(request, id):
 def register(request):
     if request.method == "POST":
         username = request.POST["username"]
+        displayname = request.POST["displayname"]
         email = request.POST["email"]
 
         # Ensure password matches confirmation
@@ -102,6 +93,7 @@ def register(request):
         # Attempt to create new user
         try:
             user = User.objects.create_user(username, email, password)
+            user.displayname = displayname
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
@@ -110,7 +102,9 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("index"))
     else:
-        return render(request, "network/register.html")
+        return render(request, "network/register.html", {
+            "form": RegisterAccountForm()
+        })
 
 
 def user(request, username):

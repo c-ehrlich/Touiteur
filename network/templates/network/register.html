@@ -10,17 +10,36 @@
 
     <form action="{% url 'register' %}" method="post">
         {% csrf_token %}
+        {{ form.non_field.errors }}
         <div class="form-group">
-            <input class="form-control" autofocus type="text" name="username" placeholder="Username">
+            <!-- <input class="form-control" autofocus type="text" name="username" placeholder="Username"> -->
+            {{ form.username.errors }}
+            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+            {{ form.username }}
         </div>
         <div class="form-group">
-            <input class="form-control" type="email" name="email" placeholder="Email Address">
+            <!-- <input class="form-control" type="text" name="displayname" placeholder="Display Name"> -->
+            {{ form.displayname.errors }}
+            <label for="{{ form.displayname.id_for_label }}">{{ form.displayname.label }}</label>
+            {{ form.displayname }}
         </div>
         <div class="form-group">
-            <input class="form-control" type="password" name="password" placeholder="Password">
+            <!-- <input class="form-control" type="email" name="email" placeholder="Email Address"> -->
+            {{ form.email.errors }}
+            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+            {{ form.email }}
         </div>
         <div class="form-group">
-            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+            <!-- <input class="form-control" type="password" name="password" placeholder="Password"> -->
+            {{ form.password.errors }}
+            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+            {{ form.password }}
+        </div>
+        <div class="form-group">
+            <!-- <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password"> -->
+            {{ form.confirmation.errors }}
+            <label for="{{ form.confirmation.id_for_label }}">{{ form.confirmation.label }}</label>
+            {{ form.confirmation }}
         </div>
         <input class="btn btn-primary" type="submit" value="Register">
     </form>
