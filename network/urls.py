@@ -1,6 +1,8 @@
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path
+from django.urls import include, path
+
+import debug_toolbar
 
 from . import views
 
@@ -20,6 +22,9 @@ urlpatterns = [
     path("edit/<int:post_id>", views.edit, name="edit"),
     path("follow/<int:user_id>", views.follow, name="follow"),
     path("like/<int:post_id>", views.like, name="like"),
+
+    # Debug Routes
+    path('__debug__/', include(debug_toolbar.urls)),
 ] 
 
 if settings.DEBUG:

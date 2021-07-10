@@ -16,7 +16,12 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
+from django.conf.urls.static import static # usually you'd host them in aws or something
+from django.conf import settings
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("network.urls")),
 ]
+
+urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

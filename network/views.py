@@ -22,7 +22,20 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 @login_required
 def account(request):
-    return render(request, "network/account.html")
+    user = request.user
+    if request.method == "GET":
+        return render(request, "network/account.html", {
+            "form": EditAccountForm(instance = user)
+    })
+    if request.method == "POST":
+        form = EditAccountForm(request.POST, request.FILES, instance = user)
+        if form.is_valid():
+            form.save()
+        else:
+            print("form data invalid")
+        return render(request, "network/account.html", {
+            "form": EditAccountForm(instance = user)
+        })
 
 
 @login_required

@@ -3,7 +3,12 @@
 
 
 {% block body %}
-Hello
+    <img class="profile-pic" src="{{ request.user.avatar.url }}">
+    <form method="POST" action="" enctype="multipart/form-data">
+        {{ form.as_p }}
+        {% csrf_token %}
+        <input class="btn btn-primary" type="submit" name="Update Information">
+    </form>
 {% endblock %}
 
 {% block script %}

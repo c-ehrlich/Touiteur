@@ -31,6 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    # stoack
     'network',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -38,6 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # custom
+    'debug_toolbar',
     'sorl.thumbnail',
 ]
 
@@ -49,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'project4.urls'
@@ -127,3 +132,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # url to access our uploaded files
 MEDIA_URL = '/media/'
+
+# internal IPs for debug toolbar
+INTERNAL_IPS = [
+    '127.0.0.1',
+]

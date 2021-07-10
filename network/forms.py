@@ -4,8 +4,46 @@ from django.core.files.images import get_image_dimensions
 from network.models import User
 
 
-class EditAccountForm(forms.Form):
-    pass
+class EditAccountForm(forms.ModelForm):
+    username = forms.CharField(
+        required=False,
+        widget = forms.TextInput(attrs={
+            'class': 'form-control',
+        }))
+    displayname = forms.CharField(
+        required=False,
+        widget = forms.TextInput(attrs={
+            'class': 'form-control',
+        }))
+    email = forms.EmailField(
+        required=False,
+        widget = forms.EmailInput(attrs={
+            'class': 'form-control',
+        }))
+    # password = forms.CharField(
+    #     label = "New Password",
+    #     required = False,
+    #     widget = forms.PasswordInput(attrs={
+    #         'class': 'form-control'
+    #     }))
+    # confirmation = forms.CharField(
+    #     label = "Confirm New Password",
+    #     required = False,
+    #     widget = forms.PasswordInput(attrs={
+    #         'class': 'form-control'
+    #     }))
+
+    # avatar = forms.ImageField(
+    #     label = "Avatar",
+    #     required = False,
+    #     widget = forms.FileInput(attrs={
+    #         'class': 'form-control'
+    #     }))
+    
+    class Meta:
+        model = User
+        fields = ['username', 'displayname', 'email', 'avatar']
+
 
 class NewPostForm(forms.Form):
     post_text = forms.CharField(
