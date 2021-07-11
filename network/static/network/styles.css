@@ -4,6 +4,12 @@
     --item-max-width: 100%;
 }
 
+body, html {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+}
+
 /* STUFF FOR INDEX.HTML */
 /* #index-body-div {
     display: flex;
@@ -11,8 +17,12 @@
     align-items: center;
     width: 100%;
 } */
-#index-body-div {
+/* #index-body-div { */
+#body-outer {
     background-color: #e7eaef;
+    /* height: 100%; */
+    min-height: 100%;
+    /* min-height: 100vw; */
 }
 
 #compose-view-outer {
@@ -24,7 +34,7 @@
     display: flex;
     flex-direction: row;
     border: 1px solid lightgrey;
-    margin: 8px 8px 24px 8px;
+    margin: 8px;
     padding: 12px;
     background-color: white;
 }
@@ -176,6 +186,7 @@
     max-width: var(--item-max-width);
 }
 #user-profile-grid-div {
+    background-color: white;
     margin: 8px;
     padding: 12px;
     border: 1px solid lightgrey;
@@ -221,13 +232,6 @@
     display: flex;
     flex-direction: row;
 }
-
-/* #user-profile-top-left-div,
-#user-profile-top-right-div,
-#user-profile-bottom-left-div,
-#user-profile-bottom-right-div {
-    margin: 12px;
-} */
 
 #profile-avatar {
     border-radius: 100%;
