@@ -16,7 +16,7 @@
                     </a>
                     <div class="post-username-header-spacer"> · </div>
                     <div class="post-timestamp-div">
-                        <a href="{% url 'post' post.id %}" class="post-timestamp-text">{{ post.timestamp }}</a>
+                        <a href="{% url 'post' post.id %}" class="post-timestamp-text">{{ post.timestamp_f }}</a>
                     </div>
                 </div>
                 <div class="post-text" id="post-text-{{ post.id }}">{{ post.text }}</div>

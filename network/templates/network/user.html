@@ -6,32 +6,44 @@
 {% endblock %}
 
 {% block body %}
-    <div id="user-id">{{ view_user.id }}</div>
-    {{ view_user.username }}<br>
-    {{ view_user.displayname }}<br>
-    {{ view_user.bio }}<br>
-    <img src="{{ view_user.avatar.url }}"><br>
-    Posts: {{ view_user.posts.count }}<br>
-    Following: {{ view_user.following.count }}<br>
-    Followed by: <div id="follower-count">{{ view_user.followed_by.count }}</div><br>
-    Likes: {{ view_user.liked_posts.count }}<br>
-
-    <!-- TODO temp follow check logic -->
-    {% if user != view_user %}
-        <div id="follow-button-div">
-            {% if view_user in user.following.all %}
-                <button id="unfollow-button">Unfollow</button>
-            {% else %}
-                <button id="follow-button">Follow</button>
-            {% endif %}
+    <div id="user-profile-outer-div">
+        <div id="user-profile-grid-div">
+            <div id="user-profile-avatar-div">
+                <img id="profile-avatar" src="{{ view_user.avatar.url }}"><br>
+            </div>            
+            <div id="user-profile-name-div">
+                <div id="user-profile-displayname">{{ view_user.displayname }}</div>
+                <div id="user-profile-username">@{{ view_user.username }}</div>
+            </div>
+            <div id="user-profile-follow-div">
+                {% if user != view_user %}
+                    <div id="follow-button-div">
+                        {% if view_user in user.following.all %}
+                            <button id="unfollow-button">Unfollow</button>
+                        {% else %}
+                            <button id="follow-button">Follow</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            <div id="user-profile-info-div">
+                <div id="user-profile-bio">{{ view_user.bio }}</div>
+                <div id="user-profile-post-info-div">
+                    <div id="user-profile-post-count">{{ view_user.posts.count }}</div>
+                    <div id="user-profile-post-count-label"> Posts</div>
+                    <div id="user-profile-liked-posts-count">{{ view_user.liked_posts.count }} </div>
+                    <div id="user-profile-liked-posts-count-label"> Liked Posts</div>
+                </div>
+                <div id="user-profile-follower-info-div">
+                    <div id="user-profile-following-count">{{ view_user.following.count }}</div>
+                    <div id="user-profile-following-count-label">Following</div>
+                    <div id="user-profile-follower-count">{{ view_user.followed_by.count }}</div>
+                    <div id="user-profile-follower-count-label">Followers</div>
+                </div>
+            </div>
         </div>
-    {% endif %}
+    </div>
 
-    <!-- {% for post in posts %}
-        {{ post }} | Likes: {{ post.users_who_liked.count }}<br>
-    {% empty %}
-        This user has not yet made any posts
-    {% endfor %} -->
     {% include 'network/posts.html' %}
 {% endblock %}
 

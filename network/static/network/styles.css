@@ -58,6 +58,7 @@
     justify-content: flex-end;
 }
 
+/* TODO fix this button. it looks like shit */
 #compose-form-submit-button {
     padding: 8px 16px 8px 16px;
     border-radius: 32px;
@@ -72,7 +73,11 @@
     font-size: 24px;
 }
 
+
+/* -------------------- */
 /* STUFF FOR POSTS.HTML */
+/* -------------------- */
+
 #posts-all-container-div {
     margin: auto;
     width: var(--item-width);
@@ -157,4 +162,114 @@
         margin-left: 0;
         margin-right: 0;
     }
+}
+
+
+/* -------------------- */
+/* STUFF FOR PROFILE    */
+/* -------------------- */
+#user-profile-outer-div {
+    /* display: flex;
+    flex-direction: column; */
+    margin: auto;
+    width: var(--item-width);
+    max-width: var(--item-max-width);
+}
+#user-profile-grid-div {
+    margin: 8px;
+    padding: 12px;
+    border: 1px solid lightgrey;
+    display: grid;
+    grid-template-columns: 144px auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "avatar         name        follow"
+        "avatar         info        info"
+        ".              info        info";
+}
+@media (max-width: 500px) {
+    #user-profile-grid-div {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+#user-profile-avatar-div {
+    grid-area: avatar;
+}
+#user-profile-name-div {
+    grid-area: name;
+    display: flex;
+    flex-direction: column;
+}
+#user-profile-info-div {
+    grid-area: info;
+    display: flex;
+    flex-direction: column;
+}
+#user-profile-follow-div {
+    grid-area: follow;
+}
+#user-profile-bottom-right-div {
+    grid-area: follow-info;
+    display: flex;
+    flex-direction: row;
+}
+
+#user-profile-post-info-div,
+#user-profile-follower-info-div {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+}
+
+/* #user-profile-top-left-div,
+#user-profile-top-right-div,
+#user-profile-bottom-left-div,
+#user-profile-bottom-right-div {
+    margin: 12px;
+} */
+
+#profile-avatar {
+    border-radius: 100%;
+    width: 128px;
+    height: 128px;
+}
+
+#user-profile-displayname {
+    font-weight: bold;
+    font-size: 24px;
+}
+#user-profile-username {
+    color: grey;
+    margin-bottom: 12px;
+}
+#user-profile-post-count,
+#user-profile-liked-posts-count,
+#user-profile-following-count,
+#user-profile-follower-count {
+    font-weight: bold;
+}
+#user-profile-post-count-label,
+#user-profile-liked-posts-count-label,
+#user-profile-following-count-label,
+#user-profile-follower-count-label {
+    color: grey;
+}
+
+/* TODO refactor follow and unfollow button. most properties are shared! */
+#follow-button {
+    padding: 8px 16px 8px 16px;
+    border-radius: 32px;
+    font-weight: bold;
+    border-color: skyblue;
+    background-color: skyblue;
+    color: white;
+}
+#unfollow-button {
+    padding: 8px 16px 8px 16px;
+    border-radius: 32px;
+    font-weight: bold;
+    border-color: skyblue;
+    background-color: skyblue;
+    color: white;
 }
