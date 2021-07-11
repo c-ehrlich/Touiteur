@@ -30,6 +30,7 @@ function send_post() {
     }
   })
   // .then(response => response.json());
+  .then( window.location = window.location )
 }
 
 

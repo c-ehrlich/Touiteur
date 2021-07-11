@@ -50,6 +50,8 @@ def get_posts_from_followed_accounts(request):
     page = request.GET.get('page', 1)
     user = request.user
     objects = Post.objects.filter(user__in=user.following.all())
+    for object in objects:
+        object.timestamp_f = get_display_time(object.timestamp)
     p = Paginator(objects, PAGINATION_POST_COUNT)
     return p.page(page)
 
