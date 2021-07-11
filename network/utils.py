@@ -1,5 +1,7 @@
 from .models import User, Post
 from django.core.paginator import Paginator
+import datetime
+from pytz import timezone
 
 
 # +-----------------------------------------+
@@ -12,6 +14,38 @@ PAGINATION_POST_COUNT = 10
 # +-----------------------------------------+
 # |          UTILITY FUNCTIONS              |
 # +-----------------------------------------+
+def get_display_time(datetime_input):
+    """Takes a datatime object, and returns a time difference string.
+    
+    input: a date, in datetime object format
+    output: a string showing the amount of time that has elapsed
+    
+    Sample output strings:
+    less than 1 minute:   'now'
+    less than 1 hour:     '22m'
+    less than 1 day:      '4h'
+    this year:            'Mar 11'
+    older:                'Mar 11, 2019' 
+    """
+    utc = timezone('UTC')
+    post = datetime_input
+    now = datetime.datetime.now(tz=utc)
+    difference = now - post
+    td_days = difference.days
+    td_secs = difference.seconds
+    if td_days == 0 and td_secs < 60:
+        return "now"
+    if td_days == 0 and td_secs < 3600:
+        return f"{td_secs // 60}m"
+    if td_days == 0 and td_secs < 86400:
+        return f"{td_secs // 3600}h"
+    if post.year == now.year:
+        return datetime.datetime.strftime(post, "%b %-d")
+    if post.year != now.year:
+        return datetime.datetime.strftime(post, "%b %-d, %Y")
+    return "if you see this, there was an error in get_display_time"
+
+
 def get_posts_from_followed_accounts(request):
     page = request.GET.get('page', 1)
     user = request.user
@@ -22,6 +56,7 @@ def get_posts_from_followed_accounts(request):
 
 def get_post_from_id(id):
     post = Post.objects.get(id=id)
+    post.timestamp_f = get_display_time(post.timestamp)
     return post
 
 
@@ -33,6 +68,8 @@ def get_posts(request, username=None):
     else:
         user = get_user_from_username(username)
         objects = Post.objects.filter(user=user).all()
+    for object in objects:
+        object.timestamp_f = get_display_time(object.timestamp)
     p = Paginator(objects, PAGINATION_POST_COUNT)
     return p.page(page)
 

@@ -10,7 +10,7 @@ from django.urls import reverse
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm
 from network.models import User, Post
-from network.utils import get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts
+from network.utils import get_display_time, get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts
 
 # TODO temp imports remove later
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
