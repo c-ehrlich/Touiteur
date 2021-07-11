@@ -2,7 +2,9 @@
     {% for post in posts %}
         <div class="post-div" id="post-div{{ post.id }}">
             <div class="post-avatar-div">
-                <img class="profile-pic" src="{{ post.user.avatar.url }}">
+                <a href="{% url 'user' post.user.username %}">
+                    <img class="profile-pic" src="{{ post.user.avatar.url }}">
+                </a>
             </div>
             <div class="post-content-div">
                 <div class="post-username-header-div">
