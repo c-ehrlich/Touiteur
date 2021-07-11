@@ -20,6 +20,12 @@ class EditAccountForm(forms.ModelForm):
         widget = forms.EmailInput(attrs={
             'class': 'form-control',
         }))
+    bio = forms.CharField(
+        required=False,
+        widget = forms.Textarea(attrs={
+            'rows': 3,
+            'class': 'form-control',
+        }))
     # password = forms.CharField(
     #     label = "New Password",
     #     required = False,
@@ -42,7 +48,7 @@ class EditAccountForm(forms.ModelForm):
     
     class Meta:
         model = User
-        fields = ['username', 'displayname', 'email', 'avatar']
+        fields = ['username', 'displayname', 'bio', 'email', 'avatar']
 
 
 class NewPostForm(forms.Form):
