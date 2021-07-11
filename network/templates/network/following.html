@@ -3,12 +3,18 @@
 
 
 {% block body %}
+    {% if user.is_authenticated %}
+        {% include 'network/compose.html' %}
+    {% endif %}
+
+    <!-- TODO put a div here that indicates which page we're on -->
 
     {% include 'network/posts.html' %}
 
 {% endblock %}
 
 {% block script %}
+    <script src="{% static 'network/compose.js' %}"></script>
     <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
 {% endblock %}

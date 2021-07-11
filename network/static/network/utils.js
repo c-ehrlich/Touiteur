@@ -69,4 +69,4 @@ function getCookie(name) {
   return cookieValue;}
 
 
-console.log("utils.js loaded");
+console.log("loaded utils.js");

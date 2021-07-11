@@ -4,4 +4,4 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-console.log("loaded index.js")
+console.log("loaded index.js");

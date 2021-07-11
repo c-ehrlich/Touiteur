@@ -5,23 +5,7 @@
 {% block body %}
     <div id="index-body-div">
         {% if user.is_authenticated %}
-            <div id="compose-view-outer">
-                <div id="compose-view">
-                    <div id="compose-view-avatar-div">
-                        <img id="compose-view-avatar-img" src="{{ request.user.avatar.url }}">
-                    </div>
-                    <div id="compose-view-body">
-                        <form id="compose-form">
-                            <!-- {% csrf_token %} -->
-                            <!-- {{ new_post_form }} -->
-                            <textarea class="form-control" id="compose-form-post-text" placeholder="What's Happening?" required=True></textarea>
-                            <div id="compose-form-submit-button-div">
-                                <input type="submit" id="compose-form-submit-button">
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+            {% include 'network/compose.html' %}
         {% endif %}
 
         {% include 'network/posts.html' %}
@@ -29,7 +13,7 @@
 {% endblock %}
 
 {% block script %}
+    <script src="{% static 'network/compose.js' %}"></script>
     <script src="{% static 'network/posts.js' %}"></script>
-    <script src="{% static 'network/index.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
 {% endblock %}
