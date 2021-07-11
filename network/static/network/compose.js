@@ -4,4 +4,22 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
+// Sends a post
+function send_post() {
+  console.log("hello");
+  text = document.querySelector('#compose-form-post-text').value;
+  fetch('/compose', {
+    method: 'POST',
+    body: JSON.stringify({
+      text: text
+    }),
+    credentials: 'same-origin',
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken")
+    }
+  })
+  // .then(response => response.json());
+}
+
+
 console.log("loaded index.js");
