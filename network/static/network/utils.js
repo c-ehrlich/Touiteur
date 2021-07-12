@@ -16,24 +16,6 @@ function follow(user_id) {
 }
 
 
-// Sends a post
-function send_post() {
-  text = document.querySelector('#compose-form-post-text').value;
-  fetch('/compose', {
-    method: 'POST',
-    body: JSON.stringify({
-      text: text
-    }),
-    credentials: 'same-origin',
-    headers: {
-      "X-CSRFToken": getCookie("csrftoken")
-    }
-  })
-  // .then(response => response.json());
-  .then( window.location = window.location )
-}
-
-
 function unfollow(user_id) {
   fetch(`/follow/${user_id}`, {
     method: 'PUT',
