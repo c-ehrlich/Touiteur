@@ -4,10 +4,9 @@
             <img id="compose-view-avatar-img" src="{{ request.user.avatar.url }}">
         </div>
         <div id="compose-view-body">
-            <form id="compose-form">
-                <!-- {% csrf_token %} -->
-                <!-- {{ new_post_form }} -->
-                <textarea class="form-control" id="compose-form-post-text" placeholder="What's Happening?" required=True></textarea>
+            <form id="compose-form" action={% url 'compose' %} method="post">
+                {% csrf_token %}
+                {{ new_post_form.post_text }}
                 <div id="compose-form-submit-button-div">
                     <input type="submit" id="compose-form-submit-button">
                 </div>

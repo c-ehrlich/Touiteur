@@ -53,11 +53,14 @@ class EditAccountForm(forms.ModelForm):
 
 class NewPostForm(forms.Form):
     post_text = forms.CharField(
-        label = "New Post",
+        # label = "New Post",
         max_length = 500,
         required = True,
         widget = forms.Textarea(attrs={
-            'rows':3
+            'rows':3,
+            'class': 'form-control',
+            'id': 'compose-form-post-text',
+            'placeholder': "What's Happening?"
         })
     )
 

@@ -136,19 +136,24 @@ def user(request, username):
 # +-----------------------------------------+
 # |        VIEWS THAT RETURN JSON           |
 # +-----------------------------------------+
-# TODO remove csrf_exempt here and everywhere
 @csrf_protect
 def compose(request):
-    data=json.loads(request.body)
-    text = data.get("text", "")
-    if text == "":
+    print(request.headers)
+    form = NewPostForm(request.POST)
+    if form.is_valid():
+        post_text = form.cleaned_data["post_text"]
+        if post_text == "":
+            return JsonResponse({
+                "message": "You can't submit an empty post"
+            }, status=400)
+        user=request.user
+        post = Post(user=user, text=post_text)
+        post.save()
+        return HttpResponseRedirect(request.headers['Referer'])
+    else:
         return JsonResponse({
-            "message": "You can't submit an empty post"
+            "message": "Form data invalid"
         }, status=400)
-    user=request.user
-    post = Post(user=user, text=text)
-    post.save()
-    return JsonResponse({"message": "Post sent successfully"}, status=201)
 
 
 @csrf_protect
