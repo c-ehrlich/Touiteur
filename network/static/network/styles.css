@@ -1,3 +1,8 @@
+/* TEMP STYLING FOR DEVELOPMENT */
+/* TODO: REMOVE THIS */
+
+/* END TEMP STYLING */
+
 /* VARS */
 :root {
     --item-width: 600px;
@@ -11,18 +16,9 @@ body, html {
 }
 
 /* STUFF FOR INDEX.HTML */
-/* #index-body-div {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-} */
-/* #index-body-div { */
 #body-outer {
     background-color: #e7eaef;
-    /* height: 100%; */
     min-height: 100%;
-    /* min-height: 100vw; */
 }
 
 #compose-view-outer {
@@ -56,10 +52,6 @@ body, html {
 
 #compose-form-post-text {
     margin-bottom: 8px;
-}
-
-#compose-form {
-    /* margin: 8px; */
 }
 
 #compose-form-submit-button-div {
@@ -307,4 +299,67 @@ body, html {
 .footer-link,
 .footer-link:hover {
     color: black;
+}
+
+
+/* -------------------------- */
+/* STUFF FOR SINGLE POST VIEW */
+/* -------------------------- */
+#single-post-outer {
+    background-color: #e7eaef;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 8px;
+}
+#single-post-view-container {
+    width: 600px;
+    max-width: 100%;
+    background-color: white;
+    border: 1px solid lightgrey;
+    padding: 12px;
+    display: grid;
+    grid-template-columns: 144px auto auto auto;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+        "avatar     name        name        follow"
+        "text       text        text        text"
+        "timestamp  timestamp   like_edit   like_edit";
+}
+@media (max-width: 500px) {
+    #single-post-outer {
+        margin: 0;
+    }
+    #single-post-view-container {
+        border-left: none;
+        border-right: none;
+    }
+}
+#single-post-view-avatar {
+    grid-area: avatar;
+}
+#single-post-view-name-div {
+    grid-area: name;
+    display: flex;
+    flex-direction: column;
+}
+#single-post-view-follow-div {
+    grid-area: follow;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+#single-post-view-text-div {
+    grid-area: text;
+    font-size: 2rem;
+}
+#single-post-view-timestamp-div {
+    grid-area: timestamp;
+}
+#single-post-view-like-edit-div {
+    grid-area: like_edit;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }

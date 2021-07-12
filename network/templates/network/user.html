@@ -21,7 +21,8 @@
                     <div id="user-profile-username">@{{ view_user.username }}</div>
                 </div>
                 <div id="user-profile-follow-div">
-                    {% if user != view_user %}
+                    <!-- TODO check if this breaks when user is not logged in -->
+                    {% if user.is_authenticated and user != view_user %}
                         <div id="follow-button-div">
                             {% if view_user in user.following.all %}
                                 <button id="unfollow-button">Unfollow</button>
@@ -59,8 +60,8 @@
 
 
 {% block script %}
-    <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/user.js' %}"></script>
+    <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
 {% endblock %}
 

@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
   const view_user_id = document.querySelector('#user-id').innerHTML;
-//   console.log(view_user_id);
   if (document.querySelector('#follow-button')) {
     document.querySelector('#follow-button').addEventListener('click', event => {
       user_view_follow(view_user_id);
@@ -24,8 +23,10 @@ function user_view_follow() {
   follow_button_div = document.querySelector('#follow-button-div');
   follow_button_div.innerHTML = "";
   follow_button_div.append(unfollow_button);
-  follower_count_div = document.querySelector('#user-profile-follower-count');
-  follower_count_div.innerHTML = parseInt(follower_count_div.innerHTML) + 1;
+  if (document.querySelector('#user-profile-follower-count') !== null) {
+    follower_count_div = document.querySelector('#user-profile-follower-count');
+    follower_count_div.innerHTML = parseInt(follower_count_div.innerHTML) + 1;
+  }
 }
 
 
@@ -39,8 +40,10 @@ function user_view_unfollow() {
   follow_button_div = document.querySelector('#follow-button-div');
   follow_button_div.innerHTML = "";
   follow_button_div.append(follow_button);
-  follower_count_div = document.querySelector('#user-profile-follower-count');
-  follower_count_div.innerHTML = parseInt(follower_count_div.innerHTML) - 1;
+  if (document.querySelector('#user-profile-follower-count') !== null) {
+    follower_count_div = document.querySelector('#user-profile-follower-count');
+    follower_count_div.innerHTML = parseInt(follower_count_div.innerHTML) - 1;
+  }
 }
 
 

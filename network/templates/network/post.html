@@ -1,9 +1,52 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block title %}
     TK post view
 {% endblock %}
 
 {% block body %}
-    {{ post }}
+    <!-- DO NOT DELETE! THIS IS USED IN USER.JS -->
+    <div id="user-id" style="display: none">{{ post.user.id }}</div>
+    <!-- END DO NOT DELETE -->
+
+    <div id="single-post-outer">
+        <div id="single-post-view-container">
+            <div id="single-post-view-avatar">
+                <img id="profile-avatar" src="{{ post.user.avatar.url }}">
+            </div>
+            <div id="single-post-view-name-div">
+                <div>{{ post.user.displayname }}</div>
+                <div>@{{ post.user.username }}</div>
+            </div>
+            <div id="single-post-view-follow-div">
+                {% if user.is_authenticated and user != post.user %}
+                    <div id="follow-button-div">
+                        {% if view_user in user.following.all %}
+                            <button id="unfollow-button">Unfollow</button>
+                        {% else %}
+                            <button id="follow-button">Follow</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
+            </div>
+            <div id="single-post-view-text-div">
+                {{ post.text }}
+            </div>
+            <div id="single-post-view-timestamp-div">
+                {{ post.timestamp }} UTC
+            </div>
+            <div id="single-post-view-like-edit-div">
+                Like
+            </div>
+        </div>
+
+        {% include 'network/footer.html' %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/user.js' %}"></script>
+    <script src="{% static 'network/posts.js' %}"></script>
+    <script src="{% static 'network/utils.js' %}"></script>
 {% endblock %}
