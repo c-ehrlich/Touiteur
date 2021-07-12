@@ -265,7 +265,6 @@ body, html {
     color: grey;
 }
 
-/* TODO refactor follow and unfollow button. most properties are shared! */
 #follow-button {
     padding: 8px 16px 8px 16px;
     border-radius: 32px;
@@ -281,4 +280,31 @@ body, html {
     border-color: skyblue;
     background-color: skyblue;
     color: white;
+}
+
+/* -------------------- */
+/* STUFF FOR PAGINATION */
+/* -------------------- */
+.pagination {
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+
+/* -------------------- */
+/* STUFF FOR FOOTER     */
+/* -------------------- */
+#footer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border-top: 1px solid lightgrey;
+    padding: 8px;
+    font-family: monospace;
+    font-size: 0.875em;
+}
+.footer-link,
+.footer-link:hover {
+    color: black;
 }
