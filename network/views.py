@@ -45,7 +45,7 @@ def account(request):
 def following(request):
     posts = get_posts_from_followed_accounts(request)
     return render(request, "network/following.html", {
-        "posts": posts
+        "posts": posts,
     })
 
 
@@ -129,7 +129,8 @@ def user(request, username):
     posts = get_posts(request, username)
     return render(request, "network/user.html", {
         "view_user": user,
-        "posts": posts
+        "posts": posts,
+        "new_post_form": NewPostForm(),
     })
 
 
