@@ -65,11 +65,16 @@ body, html {
 /* TODO fix this button. it looks like shit */
 #compose-form-submit-button {
     padding: 8px 16px 8px 16px;
+    border: 0;
     border-radius: 32px;
     font-weight: bold;
     border-color: skyblue;
     background-color: skyblue;
     color: white;
+    transition: background-color 300ms ease-out 100ms;
+}
+#compose-form-submit-button:hover {
+    background-color: green;
 }
 
 #post-text {
@@ -154,6 +159,12 @@ body, html {
     justify-content: space-between;
 }
 
+.post-bottom-row-left-div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+}
+
 .post-likes-div {
     display: flex;
     flex-direction: row;
@@ -225,9 +236,13 @@ body, html {
     flex-direction: row;
 }
 
-#user-profile-post-info-div,
-#user-profile-follower-info-div {
+#user-profile-post-info-div {
     margin-top: 12px;
+    display: flex;
+    flex-direction: row;
+}
+#user-profile-follower-info-div {
+    margin-top: 8px;
     display: flex;
     flex-direction: row;
 }
@@ -257,6 +272,12 @@ body, html {
 #user-profile-following-count-label,
 #user-profile-follower-count-label {
     color: grey;
+    margin-left: 4px;
+}
+
+#user-profile-liked-posts-count,
+#user-profile-follower-count {
+    margin-left: 12px;
 }
 
 #follow-button {
@@ -267,6 +288,9 @@ body, html {
     background-color: skyblue;
     color: white;
 }
+#follow-button:hover {
+
+}
 #unfollow-button {
     padding: 8px 16px 8px 16px;
     border-radius: 32px;
@@ -274,6 +298,12 @@ body, html {
     border-color: skyblue;
     background-color: skyblue;
     color: white;
+    /* transition animation */
+    /* get rid of this weird border */
+    /* find a good color scheme */
+}
+#unfollow-button:hover {
+    background-color: red;
 }
 
 /* -------------------- */
