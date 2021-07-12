@@ -13,16 +13,16 @@
     <div id="single-post-outer">
         <div id="single-post-view-container">
             <div id="single-post-view-avatar">
-                <img id="profile-avatar" src="{{ post.user.avatar.url }}">
+                <img class="profile-pic" src="{{ post.user.avatar.url }}">
             </div>
             <div id="single-post-view-name-div">
-                <div>{{ post.user.displayname }}</div>
-                <div>@{{ post.user.username }}</div>
+                <div id="user-profile-displayname">{{ post.user.displayname }}</div>
+                <div id="user-profile-username">@{{ post.user.username }}</div>
             </div>
             <div id="single-post-view-follow-div">
                 {% if user.is_authenticated and user != post.user %}
                     <div id="follow-button-div">
-                        {% if view_user in user.following.all %}
+                        {% if post.user in user.following.all %}
                             <button id="unfollow-button">Unfollow</button>
                         {% else %}
                             <button id="follow-button">Follow</button>
@@ -41,8 +41,8 @@
             </div>
         </div>
 
-        {% include 'network/footer.html' %}
     </div>
+    
 {% endblock %}
 
 {% block script %}
