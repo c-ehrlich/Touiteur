@@ -40,7 +40,7 @@ body, html {
     /* margin: 8px; */
     padding: 12px;
     background-color: white;
-    border: 1px solid lightgrey; 
+    border: 1px solid lightgrey;
     font-size: 20px;
     font-weight: bold;
     display: flex;
@@ -496,4 +496,41 @@ body, html {
 .spacer-8-px {
     height: 8px;
     min-height: 8px;
+}
+
+/* register and login */
+.reg-login-outer {
+    width: var(--item-width);
+    max-width: var(--item-max-width);;
+    margin: auto;
+    /* border: 1px solid red; */
+    padding: 0 8px 8px 8px;
+}
+.reg-login-inner {
+    width: 100%;
+    /* margin: 8px; */
+    padding: 12px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    /* font-size: 20px; */
+    font-weight: bold;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+@media (max-width: 500px) {
+    .reg-login-inner {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.login-helper-text {
+    margin-top: 12px;
+    width: 100%;
 }

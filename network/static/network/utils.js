@@ -1,7 +1,7 @@
 /**
  * Determines how many lines to make the height of a Textarea for editing a tweet
- * 
- * @param  {String} input_string     The text of a tweet 
+ *
+ * @param  {String} input_string     The text of a tweet
  * @return {int}    number_of_lines  The number of lines to make the textbox to edit that tweet
  */
 function get_number_of_lines(input_string) {
