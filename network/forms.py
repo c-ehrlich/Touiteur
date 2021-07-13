@@ -72,7 +72,7 @@ class RegisterAccountForm(forms.Form):
         required = True,
         widget=forms.TextInput(attrs={
             'placeholder': 'Up to 20 characters, alphanumeric',
-            'class': 'form-control',
+            'class': 'form-control reg-login-form-item',
             'autofocus': True,
         })
     )
@@ -82,28 +82,28 @@ class RegisterAccountForm(forms.Form):
         required = True,
         widget=forms.TextInput(attrs={
             'placeholder': 'Up to 50 characters',
-            'class': 'form-control',
+            'class': 'form-control reg-login-form-item',
         })
     )
     email = forms.EmailField(
         label = "Email",
         required = True,
         widget=forms.EmailInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control reg-login-form-item',
         })
     )
     password = forms.CharField(
         label = "Password",
         required = True,
         widget = forms.PasswordInput(attrs={
-            'class': 'form-control'
+            'class': 'form-control reg-login-form-item',
         })
     )
     confirmation = forms.CharField(
         label = "Confirm Password",
         required = True,
         widget = forms.PasswordInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control reg-login-form-item',
         })
     )
 

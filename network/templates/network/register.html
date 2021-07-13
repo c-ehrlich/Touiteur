@@ -7,49 +7,59 @@
 
 {% block body %}
 
-    <h2>Register</h2>
+    <div class="section-identifier">
+        <div class="section-identifier-inner">
+            Register
+        </div>
+    </div>
 
-    {% if message %}
-        <div>{{ message }}</div>
-    {% endif %}
+    <div class="reg-login-outer">
+        <div class="reg-login-inner">
+            {% if message %}
+                <div>{{ message }}</div>
+            {% endif %}
 
-    <form action="{% url 'register' %}" method="post">
-        {% csrf_token %}
-        {{ form.non_field.errors }}
-        <div class="form-group">
-            <!-- <input class="form-control" autofocus type="text" name="username" placeholder="Username"> -->
-            {{ form.username.errors }}
-            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-            {{ form.username }}
-        </div>
-        <div class="form-group">
-            <!-- <input class="form-control" type="text" name="displayname" placeholder="Display Name"> -->
-            {{ form.displayname.errors }}
-            <label for="{{ form.displayname.id_for_label }}">{{ form.displayname.label }}</label>
-            {{ form.displayname }}
-        </div>
-        <div class="form-group">
-            <!-- <input class="form-control" type="email" name="email" placeholder="Email Address"> -->
-            {{ form.email.errors }}
-            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-            {{ form.email }}
-        </div>
-        <div class="form-group">
-            <!-- <input class="form-control" type="password" name="password" placeholder="Password"> -->
-            {{ form.password.errors }}
-            <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
-            {{ form.password }}
-        </div>
-        <div class="form-group">
-            <!-- <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password"> -->
-            {{ form.confirmation.errors }}
-            <label for="{{ form.confirmation.id_for_label }}">{{ form.confirmation.label }}</label>
-            {{ form.confirmation }}
-        </div>
-        <input class="btn btn-primary" type="submit" value="Register">
-    </form>
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                {{ form.non_field.errors }}
+                <div class="form-group">
+                    <!-- <input class="form-control" autofocus type="text" name="username" placeholder="Username"> -->
+                    {{ form.username.errors }}
+                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    <!-- <input class="form-control" type="text" name="displayname" placeholder="Display Name"> -->
+                    {{ form.displayname.errors }}
+                    <label for="{{ form.displayname.id_for_label }}">{{ form.displayname.label }}</label>
+                    {{ form.displayname }}
+                </div>
+                <div class="form-group">
+                    <!-- <input class="form-control" type="email" name="email" placeholder="Email Address"> -->
+                    {{ form.email.errors }}
+                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    <!-- <input class="form-control" type="password" name="password" placeholder="Password"> -->
+                    {{ form.password.errors }}
+                    <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                    {{ form.password }}
+                </div>
+                <div class="form-group">
+                    <!-- <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password"> -->
+                    {{ form.confirmation.errors }}
+                    <label for="{{ form.confirmation.id_for_label }}">{{ form.confirmation.label }}</label>
+                    {{ form.confirmation }}
+                </div>
+                <input class="btn btn-primary" type="submit" value="Register">
+            </form>
 
-    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+            <div class="login-helper-text">
+                Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 

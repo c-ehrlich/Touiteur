@@ -6,12 +6,52 @@
 {% endblock %}
 
 {% block body %}
-    <img class="profile-pic" src="{{ request.user.avatar.url }}">
-    <form method="POST" action="" enctype="multipart/form-data">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <input class="btn btn-primary" type="submit" name="Update Information">
-    </form>
+
+    <div class="section-identifier">
+        <div class="section-identifier-inner">
+            Edit Account
+        </div>
+    </div>
+
+    <div class="reg-login-outer">
+        <div class="reg-login-inner">
+            <form method="POST" action="" enctype="multipart/form-data" class="form-100-test">
+                <!-- {{ form.as_p }} -->
+                <div class="form-group">
+                    {{ form.username.errors }}
+                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                    {{ form.username }}
+                </div>
+                <div class="form-group">
+                    {{ form.displayname.errors }}
+                    <label for="{{ form.displayname.id_for_label }}">{{ form.displayname.label }}</label>
+                    {{ form.displayname }}
+                </div>
+                <div class="form-group">
+                    {{ form.email.errors }}
+                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    {{ form.bio.errors }}
+                    <label for="{{ form.bio.id_for_label }}">{{ form.bio.label }}</label>
+                    {{ form.bio }}
+                </div>
+                <div class="form-group">
+                    {{ form.avatar.errors }}
+                    <label for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}</label>
+                    <div class="flex-row avatar-input-container">
+                        <img class="profile-pic" src="{{ request.user.avatar.url }}">
+                        <div class="p-l-12">
+                            {{ form.avatar }}
+                        </div>
+                    </div>
+                </div>
+                {% csrf_token %}
+                <input class="btn btn-primary" type="submit" name="Update Information">
+            </form>
+        </div>
+    </div>
 {% endblock %}
 
 {% block script %}
