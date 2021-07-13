@@ -13,11 +13,17 @@
     <div id="single-post-outer">
         <div id="single-post-view-container">
             <div id="single-post-view-avatar">
-                <img class="profile-pic" src="{{ post.user.avatar.url }}">
+                <a href="{% url 'user' post.user.username %}">
+                    <img class="profile-pic" src="{{ post.user.avatar.url }}">
+                </a>
             </div>
             <div id="single-post-view-name-div">
-                <div id="user-profile-displayname">{{ post.user.displayname }}</div>
-                <div id="user-profile-username">@{{ post.user.username }}</div>
+                <a href="{% url 'user' post.user.username %}">
+                    <div id="user-profile-displayname">{{ post.user.displayname }}</div>
+                </a>
+                <a href="{% url 'user' post.user.username %}">
+                    <div id="user-profile-username">@{{ post.user.username }}</div>
+                </a>
             </div>
             <div id="single-post-view-follow-div">
                 {% if user.is_authenticated and user != post.user %}
@@ -48,7 +54,7 @@
                     {% else %}
                         <button class="post-like-button" id="post-like-button-{{ post.id }}">
                             <div id="post-like-heart-{{ post.id }}" class="post-like-heart-unliked">
-                                ‍♡
+                                ‍♡ 
                             </div>
                             <div id="post-like-count-{{ post.id }}" class="post-like-count">
                                 {{ post.users_who_liked.count }}

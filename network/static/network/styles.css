@@ -203,7 +203,7 @@ body, html {
     font-weight: bold;
     font-size: 14px;
     transition: background-color 0.3s;
-    transition: border: 0.3s
+    transition: border 0.3s
 }
 .post-like-button:focus,
 .post-unlike-button:focus {
@@ -308,6 +308,7 @@ body, html {
 }
 
 #user-profile-displayname {
+    color: black;
     font-weight: bold;
     font-size: 24px;
 }
@@ -335,24 +336,28 @@ body, html {
     margin-left: 12px;
 }
 
-#follow-button {
+#follow-button,
+#unfollow-button {
+    /* border: 0; */
+    border: 1px solid;
+    width: 105px;
     padding: 8px 16px 8px 16px;
     border-radius: 32px;
     font-weight: bold;
     border-color: skyblue;
     background-color: skyblue;
     color: white;
+    /* TODO: TRANSITION DOESN'T WORK */
+    transition: all 0.2s;
+}
+#follow-button {
+
 }
 #follow-button:hover {
-    /* TODO */
+    background-color: #54b4e6;
 }
 #unfollow-button {
-    padding: 8px 16px 8px 16px;
-    border-radius: 32px;
-    font-weight: bold;
-    border-color: skyblue;
-    background-color: skyblue;
-    color: white;
+
     /* transition animation */
     /* get rid of this weird border */
     /* find a good color scheme */
@@ -446,6 +451,8 @@ body, html {
 }
 #single-post-view-timestamp-div {
     grid-area: timestamp;
+    color: grey;
+    margin-bottom: 8px;
 }
 #single-post-view-like-edit-div {
     grid-area: like_edit;

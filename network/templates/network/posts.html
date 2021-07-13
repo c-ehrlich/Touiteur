@@ -12,6 +12,8 @@
                         <div class="post-username-header-displayname">
                             {{ post.user.displayname }}
                         </div>
+                    </a>
+                    <a href="{% url 'user' post.user.username %}" class="post-username-header-link">
                         <div class="post-username-header-username">
                             @{{ post.user.username }}
                         </div>
