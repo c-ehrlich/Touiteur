@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    TK post view
+    Post by {{ post.user.displayname }} (@{{ post.user.username }})
 {% endblock %}
 
 {% block body %}
@@ -34,6 +34,7 @@
             <div id="single-post-view-timestamp-div">
                 {{ post.timestamp }} UTC
             </div>
+            <div>{{ post.users_who_liked.count }}</div>
             <div id="single-post-view-like-edit-div">
                 Like
             </div>

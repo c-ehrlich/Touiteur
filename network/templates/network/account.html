@@ -1,6 +1,9 @@
 {% extends "network/layout.html" %}
 {% load static %}
 
+{% block title %}
+    Edit Account
+{% endblock %}
 
 {% block body %}
     <img class="profile-pic" src="{{ request.user.avatar.url }}">
