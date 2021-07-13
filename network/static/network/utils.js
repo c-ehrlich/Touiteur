@@ -1,3 +1,19 @@
+/**
+ * Determines how many lines to make the height of a Textarea for editing a tweet
+ * 
+ * @param  {String} input_string     The text of a tweet 
+ * @return {int}    number_of_lines  The number of lines to make the textbox to edit that tweet
+ */
+function get_number_of_lines(input_string) {
+    split_string = input_string.split(/\r\n|\r|\n/);
+    number_of_lines = split_string.length;
+    split_string.forEach(element => {
+        number_of_lines += Math.floor(element.length / 55);
+    })
+    return number_of_lines;
+}
+
+
 function follow(user_id) {
   fetch(`/follow/${user_id}`, {
     method: 'PUT',

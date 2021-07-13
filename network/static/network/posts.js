@@ -63,7 +63,8 @@ function edit_post_text(post_id) {
   const original_text = text_field.innerHTML;
   text_field.innerHTML = "";
   const text_edit_input = document.createElement('textarea');
-  text_edit_input.setAttribute('rows', 1);
+  const number_of_lines = get_number_of_lines(original_text);
+  text_edit_input.setAttribute('rows', number_of_lines);
   text_edit_input.setAttribute('maxlength', 500);
   // TODO set textArea cols? Or give it a class and then do it in CSS?
   // TODO give this textArea some classes
