@@ -47,6 +47,7 @@ function edit_post_submit(post_id, original_text) {
     }
     let save_button = document.querySelector(`#eb-${post_id}`);
     save_button.innerHTML = "Edit";
+    save_button.classList.remove('post-save-edits-button');
     save_button.addEventListener('click', event => {
       edit_post_text(post_id);
     }, { once: true } );
@@ -80,6 +81,7 @@ function edit_post_text(post_id) {
   // Turn the edit button into save button
   let save_button = document.querySelector(`#eb-${post_id}`);
   save_button.innerHTML = "Save";
+  save_button.classList.add('post-save-edits-button');
   save_button.addEventListener('click', event => {
     edit_post_submit(post_id, original_text);
   }, { once: true } );

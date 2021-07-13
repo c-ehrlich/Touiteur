@@ -151,6 +151,16 @@ body, html {
     margin-bottom: 8px;
 }
 
+.post-edit-button {
+    border: none;
+    background-color: transparent;
+    color: lightgrey;
+    cursor: pointer;
+}
+.post-save-edits-button {
+    color: black;
+}
+
 .post-edit-input {
     width: 100%;
 }
@@ -159,6 +169,7 @@ body, html {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    align-items: flex-end;
 }
 
 .post-bottom-row-left-div {
