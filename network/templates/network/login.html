@@ -1,4 +1,5 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block title %}
     Login
@@ -25,4 +26,17 @@
 
     Don't have an account? <a href="{% url 'register' %}">Register here.</a>
 
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/posts.js' %}"></script>
+    <script src="{% static 'network/utils.js' %}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.active').forEach(item => {
+          item.classList.remove('active');
+        });
+        document.querySelector('#navbar-login').classList.add('active');
+      });
+    </script>
 {% endblock %}

@@ -1,8 +1,9 @@
 {% extends "network/layout.html" %}
+{% load static %}
 
 {% block title %}
     Register
-{% block body %}
+{% endblock %}
 
 {% block body %}
 
@@ -50,4 +51,17 @@
 
     Already have an account? <a href="{% url 'login' %}">Log In here.</a>
 
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'network/posts.js' %}"></script>
+    <script src="{% static 'network/utils.js' %}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.active').forEach(item => {
+          item.classList.remove('active');
+        });
+        document.querySelector('#navbar-register').classList.add('active');
+      });
+    </script>
 {% endblock %}

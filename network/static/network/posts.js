@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-	document.querySelectorAll('.post-edit-button').forEach(button => {
+  document.querySelectorAll('.post-edit-button').forEach(button => {
     button.addEventListener('click', event => {
       post_id = button.id.split("-")[1];
       edit_post_text(post_id);

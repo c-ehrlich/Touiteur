@@ -17,6 +17,11 @@ body, html {
     flex-direction: column;
 }
 
+.active {
+    color: black !important;
+    text-decoration: underline;
+}
+
 /* STUFF FOR INDEX.HTML */
 #body-outer {
     background-color: #e7eaef;

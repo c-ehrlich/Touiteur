@@ -18,4 +18,12 @@
 {% block script %}
     <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.active').forEach(item => {
+          item.classList.remove('active');
+        });
+        document.querySelector('#navbar-index').classList.add('active');
+      });
+    </script>
 {% endblock %}

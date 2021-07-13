@@ -15,4 +15,12 @@
 {% endblock %}
 
 {% block script %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.active').forEach(item => {
+      item.classList.remove('active');
+    });
+    document.querySelector('#navbar-account').classList.add('active');
+  });
+</script>
 {% endblock %}
