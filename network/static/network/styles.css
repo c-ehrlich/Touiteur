@@ -78,6 +78,7 @@ body, html {
 }
 
 #post-text {
+    white-space: pre-wrap;
     width: 100%;
     font-size: 24px;
 }
@@ -146,6 +147,7 @@ body, html {
 }
 
 .post-text {
+    white-space: pre-wrap;
     margin-bottom: 8px;
 }
 
@@ -235,6 +237,10 @@ body, html {
     display: flex;
     flex-direction: row;
 }
+#user-profile-bio {
+    white-space: pre-line;
+    line-height: 1.25rem;
+}
 
 #user-profile-post-info-div {
     margin-top: 12px;
@@ -258,6 +264,7 @@ body, html {
     font-size: 24px;
 }
 #user-profile-username {
+    font-size: 18px;
     color: grey;
     margin-bottom: 12px;
 }
@@ -385,6 +392,7 @@ body, html {
     align-items: flex-end;
 }
 #single-post-view-text-div {
+    white-space: pre-wrap;
     grid-area: text;
     font-size: 1.75rem;
 }
