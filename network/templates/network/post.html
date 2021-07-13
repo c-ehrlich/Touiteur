@@ -30,13 +30,19 @@
                     </div>
                 {% endif %}
             </div>
-            <div id="single-post-view-text-div">{{ post.text }}</div>
+            <div id="post-text-{{ post.id }}" class="single-post-view-text-div">{{ post.text }}</div>
             <div id="single-post-view-timestamp-div">
                 {{ post.timestamp }} UTC
             </div>
             <div>{{ post.users_who_liked.count }}</div>
             <div id="single-post-view-like-edit-div">
-                Like
+                {% if user.is_authenticated %}
+                    <!-- edit button -->
+                    {% if post.user == user %}
+                        <div class="post-edit-button" id="eb-{{ post.id }}">Edit</div>
+                        <!-- <button class="post-edit-button" id="eb-{{ post.id }}">Edit</button> -->
+                    {% endif %}
+                {% endif %}
             </div>
         </div>
 
