@@ -192,13 +192,41 @@ body, html {
     }
 }
 
-.post-like-button {
-    display: flex;
-    flex-direction: row;
-}
+.post-like-button,
 .post-unlike-button {
     display: flex;
     flex-direction: row;
+    justify-content: center;
+    padding: 4px 12px 4px 12px;
+    border-radius: 8px;
+    width: 60px;
+    font-weight: bold;
+    font-size: 14px;
+    transition: background-color 0.3s;
+    transition: border: 0.3s
+}
+.post-like-button:focus,
+.post-unlike-button:focus {
+    outline: none;
+    box-shadow: none;
+}
+.post-like-button {
+    border: 1px solid grey;
+    /* background-color: white; */
+}
+.post-like-button:hover {
+    background-color: #ffe3e2;
+    border: 1px solid lightcoral;
+}
+.post-unlike-button {
+    border: 1px solid grey;
+    color: red;
+}
+.post-unlike-button:hover {
+    background-color: white;
+}
+.post-like-count {
+    margin-left: 6px;
 }
 
 

@@ -132,18 +132,22 @@ function update_post_like_status(json) {
   const like_button = document.querySelector(`#post-like-button-${json.post_id}`);
   if (json.is_liked == true) {
     // remove class "like-button"
-    like_button.classList.remove('like-button');
+    like_button.classList.remove('post-like-button');
     // add class "unlike-button"
-    like_button.classList.add('unlike-button');
+    like_button.classList.add('post-unlike-button');
     // set unlike eventlistener
     like_button.addEventListener('click', event => { unlike_post(json.post_id) }, { once: true });
+    // make heart red
+    document.querySelector(`#post-like-heart-${json.post_id}`).innerHTML = '❤️'
   } else {
     // remove class "unlike-button"
-    like_button.classList.remove('unlike-button');
+    like_button.classList.remove('post-unlike-button');
     // add class "like-button"
-    like_button.classList.add('like-button');
+    like_button.classList.add('post-like-button');
     // set like eventlistener
     like_button.addEventListener('click', event => { like_post(json.post_id) }, { once: true });
+    // make heart plain
+    document.querySelector(`#post-like-heart-${json.post_id}`).innerHTML = '‍♡'
   }
   // set like count
   document.querySelector(`#post-like-count-${json.post_id}`).innerHTML = json.like_count;
