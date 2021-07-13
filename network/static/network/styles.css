@@ -192,6 +192,15 @@ body, html {
     }
 }
 
+.post-like-button {
+    display: flex;
+    flex-direction: row;
+}
+.post-unlike-button {
+    display: flex;
+    flex-direction: row;
+}
+
 
 /* -------------------- */
 /* STUFF FOR PROFILE    */

@@ -7,15 +7,16 @@ document.addEventListener('DOMContentLoaded', function() {
   })
   document.querySelectorAll('.post-like-button').forEach(button => {
     button.addEventListener('click', event => {
-      post_id = button.id.split("-")[1];
+      // TODO is there a better way to get the id?
+      post_id = button.id.split("-")[3];
       like_post(post_id);
-    })
+    }, { once: true } );
   })
   document.querySelectorAll('.post-unlike-button').forEach(button => {
     button.addEventListener('click', event => {
-      post_id = button.id.split("-")[1];
+      post_id = button.id.split("-")[3];
       unlike_post(post_id);
-    })
+    }, { once: true } );
   })
   // TODO condense like and unlike into the same button / eventlistener
 });
@@ -39,7 +40,6 @@ function edit_post_submit(post_id, original_text) {
   })
   .then(response => response.json())
   .then(json => {
-    // console.log(json);
     if (json.edited === true) {
       document.querySelector(`#post-text-${post_id}`).innerHTML = new_text;
     } else {
@@ -91,8 +91,8 @@ function edit_post_text(post_id) {
 
 // Likes a post
 function like_post(post_id) {
-  // TODO create a condition to ensure 1. the user is logged in 2. they're not trying to like their own post
-  // TODO check if the post is currently liked
+  console.log("attempting like_post");
+  console.log(post_id)
   fetch(`/like/${post_id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -112,8 +112,8 @@ function like_post(post_id) {
 
 // Unlikes a post
 function unlike_post(post_id) {
-  // TODO create a condition to ensure 1. the user is logged in 2. they're not trying to like their own post
-  // OR just do this in the django route
+  console.log("attempting unlike_post");
+  console.log(post_id);
   fetch(`/like/${post_id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -133,26 +133,24 @@ function unlike_post(post_id) {
 
 // Updates a post in the view
 function update_post_like_status(json) {
-  document.querySelector(`#post-likes-${json.post_id}`).innerHTML = json.like_count;
-  button_div = document.querySelector(`#post-like-button-div-${json.post_id}`);
-  button_div.innerHTML = "";
-
-  // create new like/unlike button
-  const like_button = document.createElement('button');
+  const like_button = document.querySelector(`#post-like-button-${json.post_id}`);
   if (json.is_liked == true) {
-    // create unlike button
-    like_button.innerHTML = "Unlike";
-    like_button.classList.add('post-unlike-button');
-    like_button.id = `post-unlike-button-${json.post_id}`;
-    like_button.addEventListener('click', event => { unlike_post(json.post_id) });
+    // remove class "like-button"
+    like_button.classList.remove('like-button');
+    // add class "unlike-button"
+    like_button.classList.add('unlike-button');
+    // set unlike eventlistener
+    like_button.addEventListener('click', event => { unlike_post(json.post_id) }, { once: true });
   } else {
-    like_button.innerHTML = "Like";
-    like_button.classList.add('post-like-button');
-    like_button.id = `post-like-button-${json.post_id}`;
-    like_button.addEventListener('click', event => { like_post(json.post_id) });
+    // remove class "unlike-button"
+    like_button.classList.remove('unlike-button');
+    // add class "like-button"
+    like_button.classList.add('like-button');
+    // set like eventlistener
+    like_button.addEventListener('click', event => { like_post(json.post_id) }, { once: true });
   }
-  button_div.append(like_button);
+  // set like count
+  document.querySelector(`#post-like-count-${json.post_id}`).innerHTML = json.like_count;
 }
-
 
 console.log("loaded posts.js");
