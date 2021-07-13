@@ -91,8 +91,6 @@ function edit_post_text(post_id) {
 
 // Likes a post
 function like_post(post_id) {
-  console.log("attempting like_post");
-  console.log(post_id)
   fetch(`/like/${post_id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -112,8 +110,6 @@ function like_post(post_id) {
 
 // Unlikes a post
 function unlike_post(post_id) {
-  console.log("attempting unlike_post");
-  console.log(post_id);
   fetch(`/like/${post_id}`, {
     method: 'PUT',
     body: JSON.stringify({

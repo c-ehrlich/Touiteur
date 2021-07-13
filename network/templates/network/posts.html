@@ -24,16 +24,11 @@
                 <div class="post-text" id="post-text-{{ post.id }}">{{ post.text }}</div>
                 <div class="post-bottom-row-div">
                     <div class="post-bottom-row-left-div">
-                        <!-- <div class="post-likes-div">
-                            <div>♡‍&nbsp;</div>
-                            <div id="post-likes-{{ post.id }}">{{ post.users_who_liked.count }}</div>
-                        </div> -->
                         {% if user.is_authenticated and post.user != user %}
-                            <!-- TODO make sure the user hasn't liked the post yet -->
                             <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
                                 {% if post in user.liked_posts.all %}
                                     <button class="post-unlike-button" id="post-like-button-{{ post.id }}">
-                                        <div id="post-like-count-num-{{ post.id }}" class="post-like-heard-liked">
+                                        <div id="post-like-count-num-{{ post.id }}" class="post-like-heart-liked">
                                             ‍♡‍
                                         </div>
                                         <div id="post-like-count-{{ post.id }}">
@@ -42,7 +37,7 @@
                                     </button>
                                 {% else %}
                                     <button class="post-like-button" id="post-like-button-{{ post.id }}">
-                                        <div id="post-like-count-num-{{ post.id }}" class="post-like-heard-unliked">
+                                        <div id="post-like-count-num-{{ post.id }}" class="post-like-heart-unliked">
                                             ♡‍
                                         </div>
                                         <div id="post-like-count-{{ post.id }}">
