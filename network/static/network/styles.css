@@ -46,6 +46,7 @@ body, html {
     /* border: 1px solid red; */
     padding: 8px;
 }
+
 .section-identifier-inner {
     width: 100%;
     /* margin: 8px; */
@@ -585,4 +586,30 @@ body, html {
     display: flex;
     flex-direction: row;
     align-items: center;
+}
+
+.no-top-padding {
+    padding-top: 0;
+}
+
+.no-posts-found {
+    width: 100%;
+    /* margin: 8px; */
+    padding: 12px;
+    background-color: white;
+    border: 1px solid lightgrey;
+    font-size: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+@media (max-width: 500px) {
+    .section-identifier {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .section-identifier-inner {
+        margin-left: 0;
+        margin-right: 0;
+    }
 }

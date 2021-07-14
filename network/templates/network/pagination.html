@@ -1,56 +1,58 @@
 <!-- Pagination -->
-<div class="pagination-wrapper">
-    <nav area-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <!-- Previous pages -->
-            {% if posts.has_previous %}
-                {% ifnotequal 1 posts.previous_page_number %}
-                    <li class="page-item">
-                        <a class="page-link" href="?page=1">1</a>
-                    </li>
-                    {% ifnotequal 1 posts.previous_page_number|add:"-1" %}
-                    <li class="page-item disabled">
-                        <span class="page-link">
-                            ...
-                        </span>
-                    </li>
-                    {% endifnotequal %}
-                {% endifnotequal %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ posts.previous_page_number }}">
-                        {{ posts.previous_page_number }}
-                    </a>
-                </li>
-            {% endif %}
-            <!-- Current page -->
-                <li class="page-item active">
-                    <span class="page-link" href="#">
-                        {{ posts.number }}
-                        <span class="sr-only">(current)</span>
-                    </span>
-                </li>
-            <!-- Next page/s -->
-            {% if posts.has_next %}
-                <li class="page-item">
-                    <a class="page-link" href="?page={{ posts.next_page_number }}">
-                        {{ posts.next_page_number }}
-                    </a>
-                </li>
-                {% ifnotequal posts.next_page_number posts.paginator.num_pages %}
-                    {% ifnotequal posts.next_page_number|add:"1" posts.paginator.num_pages %}
+{% if posts.has_previous or posts.has_next or posts|length != 0 %}
+    <div class="pagination-wrapper">
+        <nav area-label="Page navigation">
+            <ul class="pagination justify-content-center">
+                <!-- Previous pages -->
+                {% if posts.has_previous %}
+                    {% ifnotequal 1 posts.previous_page_number %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page=1">1</a>
+                        </li>
+                        {% ifnotequal 1 posts.previous_page_number|add:"-1" %}
                         <li class="page-item disabled">
                             <span class="page-link">
                                 ...
                             </span>
                         </li>
+                        {% endifnotequal %}
                     {% endifnotequal %}
                     <li class="page-item">
-                        <a class="page-link" href="?page={{ posts.paginator.num_pages }}">
-                            {{ posts.paginator.num_pages }}
+                        <a class="page-link" href="?page={{ posts.previous_page_number }}">
+                            {{ posts.previous_page_number }}
                         </a>
                     </li>
-                {% endifnotequal %}
-            {% endif %}
-        </ul>
-    </nav>
-</div>
+                {% endif %}
+                <!-- Current page -->
+                    <li class="page-item active">
+                        <span class="page-link" href="#">
+                            {{ posts.number }}
+                            <span class="sr-only">(current)</span>
+                        </span>
+                    </li>
+                <!-- Next page/s -->
+                {% if posts.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ posts.next_page_number }}">
+                            {{ posts.next_page_number }}
+                        </a>
+                    </li>
+                    {% ifnotequal posts.next_page_number posts.paginator.num_pages %}
+                        {% ifnotequal posts.next_page_number|add:"1" posts.paginator.num_pages %}
+                            <li class="page-item disabled">
+                                <span class="page-link">
+                                    ...
+                                </span>
+                            </li>
+                        {% endifnotequal %}
+                        <li class="page-item">
+                            <a class="page-link" href="?page={{ posts.paginator.num_pages }}">
+                                {{ posts.paginator.num_pages }}
+                            </a>
+                        </li>
+                    {% endifnotequal %}
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+{% endif %}
