@@ -8,7 +8,7 @@ class EditAccountForm(forms.ModelForm):
     username = forms.CharField(
         required=False,
         widget = forms.TextInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control form-control-left-padding-for-at-sign',
         }))
     displayname = forms.CharField(
         required=False,
@@ -72,7 +72,7 @@ class RegisterAccountForm(forms.Form):
         required = True,
         widget=forms.TextInput(attrs={
             'placeholder': 'Up to 20 characters, alphanumeric',
-            'class': 'form-control reg-login-form-item',
+            'class': 'form-control reg-login-form-item form-control-left-padding-for-at-sign',
             'autofocus': True,
         })
     )

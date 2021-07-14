@@ -20,7 +20,9 @@
                 <div class="form-group">
                     {{ form.username.errors }}
                     <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
-                    {{ form.username }}
+                    <div class="input-with-at-sign">
+                        {{ form.username }}
+                    </div>
                 </div>
                 <div class="form-group">
                     {{ form.displayname.errors }}
