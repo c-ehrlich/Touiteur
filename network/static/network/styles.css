@@ -1,7 +1,8 @@
 /* TEMP STYLING FOR DEVELOPMENT */
 /* TODO: REMOVE THIS */
-.form-100ptest {
-    min-width: 100%
+.form-100-test {
+    min-width: 100%;
+
 }
 /* END TEMP STYLING */
 
@@ -94,6 +95,7 @@ body, html {
     margin-right: 12px;
 }
 #compose-view-avatar-img {
+    object-fit: cover;
     width: 64px;
     height: 64px;
     border-radius: 100%;
@@ -355,6 +357,7 @@ body, html {
 }
 
 #profile-avatar {
+    object-fit: cover;
     border-radius: 100%;
     width: 128px;
     height: 128px;
@@ -642,10 +645,49 @@ body, html {
     padding-left: 27px;
 }
 
-.account-details-equal-width-button {
+.equal-width-button {
     width: 80px;
 }
 
 .hidden {
     display: none;
+}
+
+/* HACK TO STYLE FILE UPLOADS */
+.avatar-input-container > .p-l-12 {
+    display: none;
+}
+input[type="file"] {
+    display: none;
+}
+.custom-file-upload {
+    display: inline-block;
+    cursor: pointer;
+    border: 1px solid grey;
+    padding: 4px 8px 4px 8px;
+    border-radius: 4px;
+}
+.custom-file-upload:hover {
+    background-color: lightgrey;
+}
+.custom-file-upload-helper-text {
+    display: none;
+    color: grey;
+}
+.flex-column-align-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.margin-left-12 {
+    margin-left: 12px;
+}
+
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}
+.margin-top-16 {
+    /* margin-top: 8px; */
 }
