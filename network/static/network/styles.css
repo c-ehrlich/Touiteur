@@ -509,9 +509,13 @@ body, html {
 }
 
 /* DIRTY HACKS */
-.spacer-8-px {
+.spacer-8-px-conditional {
     height: 8px;
     min-height: 8px;
+}
+#user-profile-outer-div + .spacer-8-px-conditional {
+    height: 0;
+    min-height: 0;
 }
 
 /* register and login */
