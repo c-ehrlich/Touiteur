@@ -108,6 +108,36 @@ class RegisterAccountForm(forms.Form):
     )
 
 
+class RegisterAccountStage2Form(forms.ModelForm):
+    username = forms.CharField(
+        required=False,
+        widget = forms.TextInput(attrs={
+            'class': 'form-control form-control-left-padding-for-at-sign',
+        }))
+    
+    avatar = forms.ImageField(
+        label = "Avatar",
+        required = False,
+        widget = forms.FileInput(attrs={
+            'class': 'form-control',
+        })
+    )
+    bio = forms.CharField(
+        label = "Bio",
+        required = False,
+        widget = forms.Textarea(attrs={
+            'rows': 3,
+            'class': 'form-control',
+        })
+    )
+    class Meta:
+        model = User
+        fields = ['username', 'email', 'bio', 'avatar']
+        # exclude = ['displayname', 'email', 'password', 'confirmation']
+
+    
+
+
 # TODO this is some stuff i copied from stackoverflow
 # see what this does and if i can use it to better implement avatars
 # class UserProfileForm(forms.ModelForm):

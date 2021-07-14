@@ -94,7 +94,7 @@ class User(AbstractUser):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return f"User {self.username}"
+        return self.username
 
 
 class Post(models.Model):

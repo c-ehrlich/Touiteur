@@ -1,0 +1,64 @@
+{% extends "network/layout.html" %}
+{% load static %}
+
+{% block title %}
+    Add Account Details
+{% endblock %}
+
+{% block body %}
+
+    <div class="section-identifier">
+        <div class="section-identifier-inner">
+            <div>
+                Add Account Details
+            </div>
+            <div class="section-identifier-additional-text">
+                Here you can add additional information to your account. This is optional, and you can also do it later by visiting the account settings.
+            </div>
+        </div>
+    </div>
+
+    <!-- TODO put a note here about adding optional stuff, or maybe put it in the section-identifier? -->
+
+    <div class="reg-login-outer">
+        <div class="reg-login-inner">
+            <form method="POST" action="" enctype="multipart/form-data" class="form-100-test">
+                <!-- {{ form.as_p }} -->
+                <div class="hidden">
+                    {{ form.username | safe }}
+                    {{ form.displayname | safe }}
+                    {{ form.email }}
+                </div>
+                <div class="form-group">
+                    {{ form.bio.errors }}
+                    <label for="{{ form.bio.id_for_label }}">{{ form.bio.label }}</label>
+                    {{ form.bio }}
+                </div>
+                <div class="form-group">
+                    {{ form.avatar.errors }}
+                    <label for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}</label>
+                    <div class="flex-row padding12 avatar-input-container">
+                        <img class="profile-pic" src="{{ request.user.avatar.url }}">
+                        <div class="p-l-12">
+                            {{ form.avatar }}
+                        </div>
+                    </div>
+                </div>
+                {% csrf_token %}
+                <a class="btn btn-outline-secondary account-details-equal-width-button" href="{% url 'index' %}">Skip</a>
+                <input class="btn btn-primary account-details-equal-width-button" type="submit" name="Update Information">
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.active').forEach(item => {
+      item.classList.remove('active');
+    });
+    document.querySelector('#navbar-account').classList.add('active');
+  });
+</script>
+{% endblock %}

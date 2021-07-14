@@ -8,7 +8,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 
-from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm
+from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, RegisterAccountStage2Form
 from network.models import User, Post
 from network.utils import get_mentions_from_post, get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts, get_posts_with_mention
 
@@ -132,6 +132,31 @@ def register(request):
         return render(request, "network/register.html", {
             "form": RegisterAccountForm()
         })
+
+
+def register2(request):
+    user = request.user
+    print(user)
+    if request.method == "GET":
+        return render(request, "network/register2.html", {
+            "form": RegisterAccountStage2Form(instance = user)
+        })
+    if request.method == "POST":
+        form = EditAccountForm(request.POST, request.FILES or None, instance = user)
+        if form.is_valid():
+            # set the user's bio and avatar based on form data
+            user.bio = form.cleaned_data['bio']
+            user.avatar = form.cleaned_data['avatar']
+            print(user.username)
+            print(user.bio)
+            print(user.avatar)
+            user.save()
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "network/register2.html", {
+                "form": RegisterAccountStage2Form(),
+                "message": "Form data is invalid"
+            })
 
 
 def user(request, username):
