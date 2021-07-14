@@ -40,7 +40,7 @@
                 <div class="form-group">
                     {{ form.avatar.errors }}
                     <label for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}</label>
-                    <div class="flex-row avatar-input-container">
+                    <div class="flex-row padding12 avatar-input-container">
                         <img class="profile-pic" src="{{ request.user.avatar.url }}">
                         <div class="p-l-12">
                             {{ form.avatar }}

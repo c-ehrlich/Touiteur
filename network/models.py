@@ -45,9 +45,9 @@ class User(AbstractUser):
         blank=True
     )
 
-    last_checked_mentions = models.DateTimeField(
-        blank=True,
-        null=True 
+    mentions_since_last_checked = models.PositiveIntegerField(
+        default = 0,
+        verbose_name="Mentions since last checked"
     )
 
     class Meta:

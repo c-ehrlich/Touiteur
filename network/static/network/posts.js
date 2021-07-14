@@ -32,6 +32,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Add links to mentions in post text
 function create_post_text_with_mention_links(post_text) {
+  // TODO make sure there are no invalid characters in the username
   post_text_words = post_text.split(" ");
   post_text_with_mention_links = "";
   for (let i = 0; i < post_text_words.length; i++) {

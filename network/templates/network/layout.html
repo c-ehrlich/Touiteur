@@ -37,7 +37,10 @@
                                 <a class="nav-link" href="{% url 'following' %}" id="navbar-following">Following</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'mentions' %}" id="navbar-mentions">Mentions</a>
+                                <a class="nav-link align-row-vertical" href="{% url 'mentions' %}" id="navbar-mentions">
+                                    Mentions
+                                    <div id="new-mentions-count">{{ user.mentions_since_last_checked }}</div>
+                                </a>
                             </li>
                         {% endif %}
                     </ul>

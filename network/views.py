@@ -164,6 +164,7 @@ def compose(request):
         post.save()
         for user in mentioned_users:
             post.mentioned_users.add(user)
+            user.mentions_since_last_checked += 1
         return HttpResponseRedirect(request.headers['Referer'])
     else:
         return JsonResponse({
