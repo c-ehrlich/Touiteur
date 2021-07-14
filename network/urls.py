@@ -19,6 +19,7 @@ urlpatterns = [
     path("user/<str:username>", views.user, name="user"),
 
     # API Routes
+    path("clear_mentions_count", views.clear_mentions_count, name="clear_mentions_count"),
     path("compose", views.compose, name="compose"),
     path("edit/<int:post_id>", views.edit, name="edit"),
     path("follow/<int:user_id>", views.follow, name="follow"),

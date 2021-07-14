@@ -21,7 +21,8 @@
 {% endblock %}
 
 
-<!-- {% block script %}
+{% block script %}
+    <script src="{% static 'network/mentions.js' %}"></script>
     <script src="{% static 'network/user.js' %}"></script>
     <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
@@ -33,4 +34,4 @@
         document.querySelector('#navbar-mentions').classList.add('active');
       });
     </script>
-{% endblock %} -->
+{% endblock %}

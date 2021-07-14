@@ -10,7 +10,7 @@ from django.urls import reverse
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm
 from network.models import User, Post
-from network.utils import get_display_time, get_mentions_from_post, get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts, get_posts_with_mention
+from network.utils import get_mentions_from_post, get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts, get_posts_with_mention
 
 # TODO temp imports remove later
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -149,6 +149,22 @@ def user(request, username):
 # |        VIEWS THAT RETURN JSON           |
 # +-----------------------------------------+
 @csrf_protect
+def clear_mentions_count(request):
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        if data['intent'] == 'clear_mentions_count':
+            user = request.user
+            user.mentions_since_last_checked = 0
+            user.save()
+            return HttpResponse(status=200)
+        else:
+            print(data['intent'])
+            return HttpResponse(status=400)
+    else:
+        return HttpResponse(status=405)
+
+
+@csrf_protect
 def compose(request):
     print(request.headers)
     form = NewPostForm(request.POST)
@@ -164,7 +180,6 @@ def compose(request):
         post.save()
         for user in mentioned_users:
             post.mentioned_users.add(user)
-            user.mentions_since_last_checked += 1
         return HttpResponseRedirect(request.headers['Referer'])
     else:
         return JsonResponse({

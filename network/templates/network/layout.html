@@ -39,7 +39,9 @@
                             <li class="nav-item">
                                 <a class="nav-link align-row-vertical" href="{% url 'mentions' %}" id="navbar-mentions">
                                     Mentions
-                                    <div id="new-mentions-count">{{ user.mentions_since_last_checked }}</div>
+                                    {% if user.mentions_since_last_checked != 0 %}
+                                        <div id="new-mentions-count">{{ user.mentions_since_last_checked }}</div>
+                                    {% endif %}
                                 </a>
                             </li>
                         {% endif %}

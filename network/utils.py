@@ -62,15 +62,6 @@ def get_mentions_from_post(post_text):
     return mentions
 
 
-def get_number_of_mentions_since_last_checked(request):
-    """Returns the number of mentions since the last time this function was called"""
-    user = request.user
-    since_last_check = user.mentions_since_last_check
-    user.mentions_since_last_check = 0
-    user.save()
-    return since_last_check
-
-
 def get_posts_from_followed_accounts(request):
     page = request.GET.get('page', 1)
     user = request.user
