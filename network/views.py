@@ -10,7 +10,7 @@ from django.urls import reverse
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm
 from network.models import User, Post
-from network.utils import get_display_time, get_mentions, get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts
+from network.utils import get_display_time, get_mentions_from_post, get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts, get_posts_with_mention
 
 # TODO temp imports remove later
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -84,6 +84,17 @@ def logout_view(request):
     return HttpResponseRedirect(reverse("index"))
 
 
+@login_required
+def mentions(request):
+    user = request.user
+    if request.method == "GET":
+        return render(request, "network/mentions.html", {
+            "posts": get_posts_with_mention(request, user.username),
+        })
+    else:
+        return HttpResponseRedirect(reverse("index"))
+
+
 def post(request, id):
     post = get_post_from_id(id)
     # TODO do something if it's a bad post
@@ -148,7 +159,7 @@ def compose(request):
                 "message": "You can't submit an empty post"
             }, status=400)
         user=request.user
-        mentioned_users = get_mentions(post_text)
+        mentioned_users = get_mentions_from_post(post_text)
         post = Post(user=user, text=post_text)
         post.save()
         for user in mentioned_users:

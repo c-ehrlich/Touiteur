@@ -46,7 +46,7 @@ def get_display_time(datetime_input):
     return "if you see this, there was an error in get_display_time"
 
 
-def get_mentions(post_text):
+def get_mentions_from_post(post_text):
     """Takes a post text, and returns a list of mentions (User objects) in the post"""
     mentions = []
     for word in post_text.split():
@@ -84,6 +84,18 @@ def get_posts(request, username=None):
     else:
         user = get_user_from_username(username)
         objects = Post.objects.filter(user=user).all()
+    for object in objects:
+        object.timestamp_f = get_display_time(object.timestamp)
+    p = Paginator(objects, PAGINATION_POST_COUNT)
+    return p.page(page)
+
+
+def get_posts_with_mention(request, username):
+    """RETURNS A PAGE OF POSTS THAT MENTION A USER"""
+    page = request.GET.get('page', 1)
+    user = get_user_from_username(username)
+    # get all posts where the user is mentioned
+    objects = Post.objects.filter(mentioned_users__in=[user])
     for object in objects:
         object.timestamp_f = get_display_time(object.timestamp)
     p = Paginator(objects, PAGINATION_POST_COUNT)
