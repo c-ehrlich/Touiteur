@@ -1,17 +1,25 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // add mention links to post text
+  document.querySelectorAll('.post-text, .single-post-view-text-div').forEach(post => {
+    post_text_with_mention_links = create_post_text_with_mention_links(post.innerHTML);
+    post.innerHTML = post_text_with_mention_links;
+  });
+
   document.querySelectorAll('.post-edit-button').forEach(button => {
     button.addEventListener('click', event => {
       post_id = button.id.split("-")[1];
       edit_post_text(post_id);
     }, { once: true } );
-  })
+  });
+
   document.querySelectorAll('.post-like-button').forEach(button => {
     button.addEventListener('click', event => {
       // TODO is there a better way to get the id?
       post_id = button.id.split("-")[3];
       like_post(post_id);
     }, { once: true } );
-  })
+  });
+
   document.querySelectorAll('.post-unlike-button').forEach(button => {
     button.addEventListener('click', event => {
       post_id = button.id.split("-")[3];
@@ -20,6 +28,26 @@ document.addEventListener('DOMContentLoaded', function() {
   })
   // TODO condense like and unlike into the same button / eventlistener
 });
+
+
+// Add links to mentions in post text
+function create_post_text_with_mention_links(post_text) {
+  post_text_words = post_text.split(" ");
+  post_text_with_mention_links = "";
+  for (let i = 0; i < post_text_words.length; i++) {
+    if (post_text_words[i].startsWith("@")) {
+      // make sure the name is at least 2 characters long and contains no invalid characters
+      if (post_text_words[i].length > 1 && post_text_words[i].match(/[^a-zA-Z0-9_]/)) {
+        post_text_with_mention_links += "<a href='/user/" + post_text_words[i].substring(1) + "'>" + post_text_words[i] + "</a> ";
+      }
+    } else {
+      post_text_with_mention_links += post_text_words[i] + " ";
+    }
+  }
+  // remove whitespace from end of post_text_with_mention_links
+  post_text_with_mention_links = post_text_with_mention_links.replace(/\s+$/, "");
+  return post_text_with_mention_links;
+}
 
 
 // Attempts to submit edited post

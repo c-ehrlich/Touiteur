@@ -45,6 +45,11 @@ class User(AbstractUser):
         blank=True
     )
 
+    last_checked_mentions = models.DateTimeField(
+        blank=True,
+        null=True 
+    )
+
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
@@ -104,6 +109,13 @@ class Post(models.Model):
     text = models.TextField(
         default = "error: post initialized without text",
         max_length = 500
+    )
+
+    mentioned_users = models.ManyToManyField(
+        "User",
+        related_name="mentions",
+        blank=True,
+        editable=False
     )
 
     class Meta:

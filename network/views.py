@@ -10,7 +10,7 @@ from django.urls import reverse
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm
 from network.models import User, Post
-from network.utils import get_display_time, get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts
+from network.utils import get_display_time, get_mentions, get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts
 
 # TODO temp imports remove later
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -148,8 +148,11 @@ def compose(request):
                 "message": "You can't submit an empty post"
             }, status=400)
         user=request.user
+        mentioned_users = get_mentions(post_text)
         post = Post(user=user, text=post_text)
         post.save()
+        for user in mentioned_users:
+            post.mentioned_users.add(user)
         return HttpResponseRedirect(request.headers['Referer'])
     else:
         return JsonResponse({

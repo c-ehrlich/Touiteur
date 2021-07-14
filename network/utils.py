@@ -46,6 +46,20 @@ def get_display_time(datetime_input):
     return "if you see this, there was an error in get_display_time"
 
 
+def get_mentions(post_text):
+    """Takes a post text, and returns a list of mentions (User objects) in the post"""
+    mentions = []
+    for word in post_text.split():
+        if word.startswith("@"):
+            # if a user with that username exists, add it to the list
+            try:
+                user = User.objects.get(username=word[1:])
+                mentions.append(user)
+            except User.DoesNotExist:
+                pass
+    return mentions
+
+
 def get_posts_from_followed_accounts(request):
     page = request.GET.get('page', 1)
     user = request.user
