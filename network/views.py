@@ -127,12 +127,14 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "network/register.html", {
-                "message": "Passwords must match."
+                "message": "Passwords must match.",
+                "form": RegisterAccountForm(),
             })
 
-        if not utils.utils.check_username_validity:
+        if not utils.check_username_validity(username):
             return render(request, "network/register.html", {
-                "message": "Username is not valid."
+                "message": "Username is not valid.",
+                "form": RegisterAccountForm(),
             })
 
         # Attempt to create new user
@@ -142,7 +144,8 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
-                "message": "Username already taken."
+                "message": "Username already taken.",
+                "form": RegisterAccountForm(),
             })
         login(request, user)
         return HttpResponseRedirect(reverse("register2"))

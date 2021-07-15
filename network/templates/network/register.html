@@ -16,7 +16,7 @@
     <div class="reg-login-outer">
         <div class="reg-login-inner">
             {% if message %}
-                <div>{{ message }}</div>
+                <div class="alert alert-danger" role="alart">{{ message }}</div>
             {% endif %}
 
             <form action="{% url 'register' %}" method="post">
