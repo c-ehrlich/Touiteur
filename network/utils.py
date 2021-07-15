@@ -50,15 +50,30 @@ def get_mentions_from_post(post_text):
     """Takes a post text, and returns a list of mentions (User objects) in the post"""
     mentions = []
     for word in post_text.split():
-        if word.startswith("@"):
-            # if a user with that username exists, add it to the list
-            try:
-                user = User.objects.get(username=word[1:])
-                mentions.append(user)
-                user.mentions_since_last_checked += 1
-                user.save()
-            except User.DoesNotExist:
-                pass
+        # compare the word to a regular expression:
+        # the first character must be '@'
+        # the second and third character must be alphanumeric
+        # keep going until you reach a character that isn't alphanumeric or '_',
+        # which means it's the end of the username
+        length = len(word)
+        if length >= 2:
+            if word[0] == '@' and word[1].isalnum():
+                # create a new string object that is the word without the '@'
+                username = word[1]
+                # then, keep adding characters to the new word until you hit a character that is neither alphanumeric nor '_'
+                location = 2
+                while location < length:
+                    if word[location].isalnum() or word[location] == '_':
+                        username += word[location]
+                        location += 1
+                # if a user with that username exists, add it to the list
+                try:
+                    user = User.objects.get(username=username)
+                    mentions.append(user)
+                    user.mentions_since_last_checked += 1
+                    user.save()
+                except User.DoesNotExist:
+                    pass
     return mentions
 
 
