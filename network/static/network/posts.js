@@ -36,11 +36,19 @@ function create_post_text_with_mention_links(post_text) {
   post_text_words = post_text.split(" ");
   post_text_with_mention_links = "";
   for (let i = 0; i < post_text_words.length; i++) {
-    if (post_text_words[i].startsWith("@")) {
-      // make sure the name is at least 2 characters long and contains no invalid characters
-      if (post_text_words[i].length > 1 && post_text_words[i].match(/[^a-zA-Z0-9_]/)) {
-        post_text_with_mention_links += "<a href='/user/" + post_text_words[i].substring(1) + "'>" + post_text_words[i] + "</a> ";
+    // check if the start of the word is a legitimate username
+    if (post_text_words[i].startsWith("@") && is_alphanumeric(post_text_words[i][1]) && is_alphanumeric_or_underscore(post_text_words[i][2])) {
+      // set username to characters 1 and 2 of the word
+      username = post_text_words[i].substring(1, 3);
+      // Keep going until you hit a chacracter that isn't alphanumeric or _, or the end of the string
+      let index = 3;
+      while (index < post_text_words[i].length && is_alphanumeric_or_underscore(post_text_words[i][index])) {
+        username += post_text_words[i][index];
+        index++;
       }
+      post_text_with_mention_links += `<a href="/user/${username}">@${username}</a>`;
+      // if the word continues after hitting a punctuation character, add the remainder in plaintext
+      post_text_with_mention_links += post_text_words[i].substring(index) + " ";
     } else {
       post_text_with_mention_links += post_text_words[i] + " ";
     }
@@ -184,3 +192,14 @@ function update_post_like_status(json) {
 }
 
 console.log("loaded posts.js");
+
+
+// check if a char is alphanumeric
+function is_alphanumeric(char) {
+  return /[a-zA-Z0-9]/.test(char);
+}
+
+// check if a char is alhpanumeric or underscore
+function is_alphanumeric_or_underscore(char) {
+  return /[a-zA-Z0-9_]/.test(char);
+}
