@@ -5,6 +5,12 @@ from network.models import User
 
 
 class EditAccountForm(forms.ModelForm):
+    password = forms.CharField(
+        required = True,
+        # Label = "Current Password",
+        widget = forms.PasswordInput(attrs={
+            'class': 'form-control',
+        }))
     username = forms.CharField(
         required=False,
         widget = forms.TextInput(attrs={
@@ -26,6 +32,19 @@ class EditAccountForm(forms.ModelForm):
             'rows': 3,
             'class': 'form-control',
         }))
+    new_password = forms.CharField(
+        required=False,
+        # Label = "New Password",
+        widget = forms.PasswordInput(attrs={
+            'class': 'form-control',
+        }))
+    new_password_confirm = forms.CharField(
+        required=False,
+        # Label = "Confirm New Password",
+        widget = forms.PasswordInput(attrs={
+            'class': 'form-control',
+        }))
+
     # password = forms.CharField(
     #     label = "New Password",
     #     required = False,
