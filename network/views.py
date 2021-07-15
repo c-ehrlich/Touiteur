@@ -32,25 +32,55 @@ def account(request):
         form = EditAccountForm(request.POST, request.FILES, instance = user)
 
         if form.is_valid():
+            user = authenticate(
+                request, 
+                username=utils.get_user_from_id(request.user.id), 
+                password=form.cleaned_data["password"]
+            )
+            if user is None:
+                print("Exception during verification")
+                return render(request, "network/account.html", {
+                    "form": EditAccountForm(instance = utils.get_user_from_id(request.user.id)),
+                    "message": "Invalid password."
+                })
+            print("verification successful, logged in as:", user)
             print(form.cleaned_data["username"])
             if utils.check_username_validity(form.cleaned_data["username"]) == False:
                 user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field TODO refactor
-                print(user.username)
                 # return an EditAccountForm with the user's original information
                 return render(request, "network/account.html", {
                     "form": EditAccountForm(instance = user),
                     "message": "Username is not valid."
                 })
 
-            else:
-                form.save()
+            # get new_password and new_pass_confirm from form
+            # check if they are the same, if so change the password
+            # if not, return an EditAccountForm with the user's original information
+            # and a message saying the passwords don't match
+            new_password = form.cleaned_data["new_password"]
+            new_password_confirm = form.cleaned_data["new_password_confirm"]
+            if new_password != new_password_confirm:
+                return render(request, "network/account.html", {
+                    "form": EditAccountForm(instance = user),
+                    "message": "New passwords don't match."
+                })
+            if new_password != None and new_password != "":
+                user.set_password(new_password)
+                user.save()
+
+            form.save()
+
+
+        # form is not valid
         else:
+            print(form.data)
             return render(request, "network/account.html", {
                 "form": EditAccountForm(instance = user),
                 "message": "Form data is invalid"
             })
+        print("everything went good!")
         return render(request, "network/account.html", {
-            "form": EditAccountForm(instance = user)
+            "form": EditAccountForm(instance = utils.get_user_from_id(request.user.id))
         })
 
 

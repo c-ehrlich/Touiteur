@@ -681,6 +681,9 @@ input[type="file"] {
     flex-direction: column;
     align-items: flex-start;
 }
+.margin-left-4 {
+    margin-left: 4px;
+}
 .margin-left-12 {
     margin-left: 12px;
 }
@@ -701,5 +704,9 @@ input[type="file"] {
     border-bottom: 0 !important;
 }
 .important-div {
-    background-color: #f8d7da;
+    /* background-color: #f8d7da; */
+    background-color: lightgrey;
+}
+.w100 {
+    width: 100%;
 }

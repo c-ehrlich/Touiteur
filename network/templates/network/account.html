@@ -15,60 +15,60 @@
 
     {% if message %}
     <div class="section-identifier">
-        <div class="section-identifier-inner">
+        <div class="alert alert-danger">
             {{ message }}
         </div>
     </div>
     {% endif %}
-
-    <div class="reg-login-outer padding-bottom-0">
-        <div class="reg-login-inner bb-0 important-div">
-            {% if form.password.errors %}
-                <div class="alert alert-danger">{{ form.password.errors }}</div>
-            {% endif %}
-            <div class="margin-bottom-8">
-                Current Password (required)
+    
+    <form method="POST" action="" enctype="multipart/form-data" class="form-100-test">
+        <div class="reg-login-outer padding-bottom-0">
+            <div class="reg-login-inner bb-0 important-div">
+                {% if form.password.errors %}
+                    <div class="alert alert-danger">{{ form.password.errors }}</div>
+                {% endif %}
+                <div class="margin-bottom-8">
+                    Current Password (required)
+                </div>
+                {{ form.password }}
             </div>
-            {{ form.password }}
         </div>
-    </div>
 
-    <div class="reg-login-outer">
-        <div class="reg-login-inner">
-            <form method="POST" action="" enctype="multipart/form-data" class="form-100-test">
-                <div class="form-group">
+        <div class="reg-login-outer">
+            <div class="reg-login-inner">
+                <div class="form-group w100">
                     {{ form.username.errors }}
                     <label for="{{ form.username.id_for_label }}">New {{ form.username.label }}</label>
                     <div class="input-with-at-sign">
                         {{ form.username }}
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group w100">
                     {{ form.displayname.errors }}
                     <label for="{{ form.displayname.id_for_label }}">New {{ form.displayname.label }}</label>
                     {{ form.displayname }}
                 </div>
-                <div class="form-group">
+                <div class="form-group w100">
                     {{ form.email.errors }}
                     <label for="{{ form.email.id_for_label }}">New {{ form.email.label }}</label>
                     {{ form.email }}
                 </div>
-                <div class="form-group">
+                <div class="form-group w100">
                     {{ form.bio.errors }}
                     <label for="{{ form.bio.id_for_label }}">New {{ form.bio.label }}</label>
                     {{ form.bio }}
                 </div>
-                <div class="form-group">
+                <div class="form-group w100">
                     {{ form.new_password.errors }}
                     <label for="{{ form.new_password.id_for_label }}">New Password</label>
                     {{ form.new_password }}
                 </div>
-                <div class="form-group">
+                <div class="form-group w100">
                     {{ form.new_password_confirm.errors }}
                     <label for="{{ form.new_password_confirm.id_for_label }}">Confirm New Password</label>
                     {{ form.new_password_confirm }}
                 </div>
-                <div class="form-group">
+                <div class="form-group w100">
                     {{ form.avatar.errors }}
                     <label for="{{ form.avatar.id_for_label }}">New {{ form.avatar.label }}</label>
                     <div class="flex-row padding12 avatar-input-container">
@@ -87,11 +87,13 @@
                     </div>
                 </div>
                 {% csrf_token %}
-                <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">Cancel</a>
-                <input class="btn btn-primary equal-width-button" type="submit" name="Update Information" value="Save">
-            </form>
+                <div class="flex-row">
+                    <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">Cancel</a>
+                    <input class="btn btn-primary equal-width-button margin-left-4" type="submit" name="Update Information" value="Save">
+                </div>
+            </div>
         </div>
-    </div>
+    </form>
 {% endblock %}
 
 {% block script %}
