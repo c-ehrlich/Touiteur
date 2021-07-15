@@ -29,7 +29,7 @@ class User(AbstractUser):
         max_length = 100
     )
     bio = models.TextField(
-        default = f"This user has not entered a bio",
+        default = f"",
         max_length = 500
     )
 
