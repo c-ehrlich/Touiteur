@@ -17,6 +17,7 @@
         <div class="reg-login-inner">
             <form method="POST" action="" enctype="multipart/form-data" class="form-100-test">
                 <!-- {{ form.as_p }} -->
+                <div class="alert alert-danger" role="alart">{{ message }}</div>
                 <div class="form-group">
                     {{ form.username.errors }}
                     <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>

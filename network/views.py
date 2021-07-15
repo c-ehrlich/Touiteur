@@ -10,7 +10,7 @@ from django.urls import reverse
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, RegisterAccountStage2Form
 from network.models import User, Post
-from network.utils import get_mentions_from_post, get_user_from_username, get_post_from_id, get_posts, get_posts_from_followed_accounts, get_posts_with_mention
+from network import utils
 
 # TODO temp imports remove later
 from django.views.decorators.csrf import csrf_exempt, csrf_protect
@@ -23,14 +23,27 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 @login_required
 def account(request):
     user = request.user
+
     if request.method == "GET":
         return render(request, "network/account.html", {
             "form": EditAccountForm(instance = user)
     })
     if request.method == "POST":
         form = EditAccountForm(request.POST, request.FILES, instance = user)
+
         if form.is_valid():
-            form.save()
+            print(form.cleaned_data["username"])
+            if utils.check_username_validity(form.cleaned_data["username"]) == False:
+                user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field TODO refactor
+                print(user.username)
+                # return an EditAccountForm with the user's original information
+                return render(request, "network/account.html", {
+                    "form": EditAccountForm(instance = user),
+                    "message": "Username is not valid."
+                })
+
+            else:
+                form.save()
         else:
             return render(request, "network/account.html", {
                 "form": EditAccountForm(instance = user),
@@ -43,7 +56,7 @@ def account(request):
 
 @login_required
 def following(request):
-    posts = get_posts_from_followed_accounts(request)
+    posts = utils.get_posts_from_followed_accounts(request)
     return render(request, "network/following.html", {
         "posts": posts,
     })
@@ -51,7 +64,7 @@ def following(request):
 
 def index(request):
     """RETURNS THE INDEX PAGE"""
-    posts = get_posts(request)
+    posts = utils.get_posts(request)
     return render(request, "network/index.html", {
         "posts": posts,
         "new_post_form": NewPostForm(auto_id=True),
@@ -89,14 +102,14 @@ def mentions(request):
     user = request.user
     if request.method == "GET":
         return render(request, "network/mentions.html", {
-            "posts": get_posts_with_mention(request, user.username),
+            "posts": utils.get_posts_with_mention(request, user.username),
         })
     else:
         return HttpResponseRedirect(reverse("index"))
 
 
 def post(request, id):
-    post = get_post_from_id(id)
+    post = utils.get_post_from_id(id)
     # TODO do something if it's a bad post
     return render(request, "network/post.html", {
         "post": post
@@ -115,6 +128,11 @@ def register(request):
         if password != confirmation:
             return render(request, "network/register.html", {
                 "message": "Passwords must match."
+            })
+
+        if not utils.utils.check_username_validity:
+            return render(request, "network/register.html", {
+                "message": "Username is not valid."
             })
 
         # Attempt to create new user
@@ -160,9 +178,9 @@ def register2(request):
 
 
 def user(request, username):
-    user = get_user_from_username(username)
+    user = utils.get_user_from_username(username)
     request.view_user = user
-    posts = get_posts(request, username)
+    posts = utils.get_posts(request, username)
     return render(request, "network/user.html", {
         "view_user": user,
         "posts": posts,
@@ -222,7 +240,7 @@ def edit(request, post_id):
                 "message": "Maximum post length is 500 characters",
                 "edited": False,
             }, status=400)
-        post = get_post_from_id(post_id)
+        post = utils.get_post_from_id(post_id)
         if request.user == post.user:
             post.text = new_text
             post.save()
@@ -280,7 +298,7 @@ def like(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)
         user = request.user
-        post = get_post_from_id(post_id)
+        post = utils.get_post_from_id(post_id)
         if data['like'] == True:
             user.liked_posts.add(post)
             return JsonResponse({

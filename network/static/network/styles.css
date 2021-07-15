@@ -691,3 +691,9 @@ input[type="file"] {
 .margin-top-16 {
     /* margin-top: 8px; */
 }
+
+.form-error-message {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 8px;
+}

@@ -14,6 +14,28 @@ PAGINATION_POST_COUNT = 10
 # +-----------------------------------------+
 # |          UTILITY FUNCTIONS              |
 # +-----------------------------------------+
+def check_username_validity(username):
+    """CHECKS USERNAME VALIDITY
+    
+    input: username (string)
+    output: boolean (true or false)
+    
+    conditions:
+    The username must be at least 2 characters long
+    The first character must be alphanumeric
+    Every character after that must be either alphanumeric or underscore"""
+    print("running username check")
+    if len(username) < 2:
+        return False
+    if not username[0].isalnum():
+        return False
+    for character in username[1:]:
+        if not (character.isalnum() or character == '_'):
+            return False
+    print(f"{username} is valid")
+    return True
+
+
 def get_display_time(datetime_input):
     """Takes a datatime object, and returns a time difference string.
     
@@ -122,6 +144,11 @@ def get_posts_with_mention(request, username):
     return p.page(page)
 
 
+def get_user_from_id(id):
+    user = User.objects.get(id=id)
+    return user
+
+    
 def get_user_from_username(username):
     user = User.objects.get(username=username)
     return user
