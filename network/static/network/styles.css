@@ -13,11 +13,17 @@
 }
 
 body, html {
-    min-height: 100%;
+    height: 100%;
     width: 100%;
     margin: 0;
-    display: flex;
-    flex-direction: column;
+    padding: 0;
+    /* display: flex; */
+    /* flex-direction: column; */
+}
+#outermost-container {
+    min-height: 100%;
+    position: relative;
+    background-color: #e7eaef;
 }
 
 .flex-row {
@@ -32,12 +38,6 @@ body, html {
 .active {
     color: black !important;
     text-decoration: underline;
-}
-
-/* STUFF FOR INDEX.HTML */
-#body-outer {
-    background-color: #e7eaef;
-    height: 100%;
 }
 
 .section-identifier {
@@ -434,6 +434,8 @@ body, html {
 /* STUFF FOR FOOTER     */
 /* -------------------- */
 #footer {
+    position: absolute;
+    bottom: 0;
     /* margin-top: auto; */
     width: 100%;
     display: flex;
@@ -690,10 +692,4 @@ input[type="file"] {
 }
 .margin-top-16 {
     /* margin-top: 8px; */
-}
-
-.form-error-message {
-    color: red;
-    font-weight: bold;
-    margin-bottom: 8px;
 }
