@@ -38,27 +38,36 @@
                     {{ form.avatar.errors }}
                     <label for="{{ form.avatar.id_for_label }}">{{ form.avatar.label }}</label>
                     <div class="flex-row padding12 avatar-input-container">
-                        <img class="profile-pic" src="{{ request.user.avatar.url }}">
+                        <img class="profile-pic" id="profile-pic-preview-img" src="{{ request.user.avatar.url }}">
                         <div class="p-l-12">
                             {{ form.avatar }}
+                        </div>
+                        <div class="flex-column-align-left margin-left-12">
+                            <label for="{{ form.avatar.id_for_label }}" class="btn btn-sm btn-outline-primary">
+                                <i class="fa fa-cloud-upload"></i> Upload new avatar
+                            </label>
+                            <div class="custom-file-upload-helper-text" id="custom-file-upload-helper-text">
+                                Note: The avatar won't be updated until you press "Save"
+                            </div>
                         </div>
                     </div>
                 </div>
                 {% csrf_token %}
                 <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">Skip</a>
-                <input class="btn btn-primary equal-width-button" type="submit" name="Update Information">
+                <input class="btn btn-primary equal-width-button" type="submit" name="Update Information" value="Save">
             </form>
         </div>
     </div>
 {% endblock %}
 
 {% block script %}
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.active').forEach(item => {
-      item.classList.remove('active');
-    });
-    document.querySelector('#navbar-account').classList.add('active');
-  });
-</script>
+    <script src="{% static 'network/image_uploads.js' %}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.active').forEach(item => {
+          item.classList.remove('active');
+        });
+        document.querySelector('#navbar-account').classList.add('active');
+      });
+    </script>
 {% endblock %}

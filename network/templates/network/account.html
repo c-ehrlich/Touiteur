@@ -48,7 +48,6 @@
                             {{ form.avatar }}
                         </div>
                         <div class="flex-column-align-left margin-left-12">
-                            <!-- <label for="{{ form.avatar.id_for_label }}" class="custom-file-upload"> -->
                             <label for="{{ form.avatar.id_for_label }}" class="btn btn-sm btn-outline-primary">
                                 <i class="fa fa-cloud-upload"></i> Upload new avatar
                             </label>
@@ -60,7 +59,7 @@
                 </div>
                 {% csrf_token %}
                 <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">Cancel</a>
-                <input class="btn btn-primary margin-top-16 equal-width-button" type="submit" name="Update Information" value="Save">
+                <input class="btn btn-primary equal-width-button" type="submit" name="Update Information" value="Save">
             </form>
         </div>
     </div>
