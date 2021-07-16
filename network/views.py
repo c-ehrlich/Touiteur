@@ -251,7 +251,7 @@ def compose(request):
                 "message": "You can't submit an empty post"
             }, status=400)
         user=request.user
-        mentioned_users = get_mentions_from_post(post_text)
+        mentioned_users = utils.get_mentions_from_post(post_text)
         post = Post(user=user, text=post_text)
         post.save()
         for user in mentioned_users:

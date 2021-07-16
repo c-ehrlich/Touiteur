@@ -85,7 +85,6 @@ def get_mentions_from_post(post_text):
                 # then, keep adding characters to the new word until you hit a character that is neither alphanumeric nor '_'
                 location = 2
                 while location < length:
-                    print(f"{location}: {word[location]}")
                     if word[location].isalnum() or word[location] == '_':
                         username += word[location]
                         location += 1
@@ -94,9 +93,13 @@ def get_mentions_from_post(post_text):
                 # if a user with that username exists, add it to the list
                 try:
                     user = User.objects.get(username=username)
-                    mentions.append(user)
-                    user.mentions_since_last_checked += 1
-                    user.save()
+                    if not user in mentions:
+                        print(mentions)
+                        mentions.append(user)
+                        user.mentions_since_last_checked += 1
+                        user.save()
+                    else:
+                        print(mentions)
                 except User.DoesNotExist:
                     pass
     return mentions
