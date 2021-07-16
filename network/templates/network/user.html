@@ -71,8 +71,9 @@
 
 {% block script %}
     {% if user != view_user %}
-        <script src="{% static 'network/user.js' %}"></script>
+        <script src="{% static 'network/live_notifications.js' %}"></script>
     {% endif %}
+    <script src="{% static 'network/user.js' %}"></script>
     <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
     <script>

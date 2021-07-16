@@ -712,11 +712,16 @@ input[type="file"] {
 }
 
 #new-posts-container {
-    margin: 8px auto 8px auto;
+    /* margin: 8px auto 8px auto; */
+}
+/* if #new-posts-container is hidden */
+#new-posts-container:hidden {
+    margin: 0;
 }
 #new-posts-inner {
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 8px;
     padding: 8px;
     background-color: #54b4e6;
     color: white;

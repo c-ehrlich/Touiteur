@@ -164,6 +164,9 @@ def get_post_count_since_timestamp(request, timestamp, context):
         print(f"checking for following posts")
         # get posts by followed users, newer than timestamp
         posts = Post.objects.filter(user__in=user.following.all()).filter(timestamp__gt=timestamp)
+    if context['location'] == 'index':
+        print(f"checking for index posts")
+        posts = Post.objects.filter(timestamp__gt=timestamp)
     # if we haven't created posts yet, return an error
     if  posts:
         print(posts)

@@ -14,6 +14,10 @@ function checkForNotifications() {
         second = path.split('/')[2];
         context.username = second;
     }
+    if (first === "") {
+        context.location = "index";
+    }
+    console.log(context.location);
     fetch('/new_posts', {
         method: 'PUT',
         headers: {
