@@ -328,7 +328,7 @@ def follow(request, user_id):
 
 @csrf_protect
 def get_notifications(request):
-    if request.method == "GET":
+    if request.method == "PUT":
         user = request.user
         if user == None:
             return JsonResponse({
@@ -342,7 +342,7 @@ def get_notifications(request):
         }, status=200)
     else:
         return JsonResponse({
-            "error": "GET request required."
+            "error": "PUT request required."
         }, status=400)
 
 
@@ -372,4 +372,25 @@ def like(request, post_id):
         print("ERROR please only come here via PUT")
         return JsonResponse({
             "error": "PUT request required."
+        }, status=400)
+
+
+def new_posts(request):
+    """checks for new post count
+    expects a json object in the request. that object should contain a 'context' variable. inside that variable:
+        'location': can be 'public_feed', 'user', or 'following' (can add more later for different views)
+        if 'location' == 'user':
+            'username': the username of the user who we are checking for new posts
+    returns a JsonResponse with the key 'count' which is the new post count
+    """
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        datetime_obj = utils.convert_javascript_date_to_python(data['timestamp'])
+        new_post_count = utils.get_post_count_since_timestamp(request, datetime_obj, data['context'])
+        return JsonResponse({
+            "new_post_count": new_post_count,
+        }, status=201)
+    else:
+        return JsonResponse({
+            "error": "GET request required."
         }, status=400)

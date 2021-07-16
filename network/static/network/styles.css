@@ -400,8 +400,8 @@ body, html {
     padding: 8px 16px 8px 16px;
     border-radius: 32px;
     font-weight: bold;
-    border-color: skyblue;
-    background-color: skyblue;
+    border-color: #54b4e6;
+    background-color: #54b4e6;
     color: white;
     /* TODO: TRANSITION DOESN'T WORK */
     transition: all 0.2s;
@@ -410,7 +410,7 @@ body, html {
 
 }
 #follow-button:hover {
-    background-color: #54b4e6;
+    background-color: #1d86bf;
 }
 #unfollow-button {
 
@@ -709,4 +709,30 @@ input[type="file"] {
 }
 .w100 {
     width: 100%;
+}
+
+#new-posts-container {
+    margin: 8px auto 8px auto;
+}
+#new-posts-inner {
+    margin-left: auto;
+    margin-right: auto;
+    padding: 8px;
+    background-color: #54b4e6;
+    color: white;
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+    border-radius: 1000px;
+    transition: background-color 300ms ease-out 100ms;
+}
+#new-posts-inner:hover {
+    background-color: #1d86bf;
+}
+
+.no-decoration-link {
+    text-decoration: none;
+}
+.no-decoration-link:hover {
+    text-decoration: none;
 }

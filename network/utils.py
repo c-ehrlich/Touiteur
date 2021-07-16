@@ -36,6 +36,17 @@ def check_username_validity(username):
     return True
 
 
+def convert_javascript_date_to_python(js_date_now):
+    """takes a javascript Date.now() value, and converts it to a Python datetime object
+    
+    input: javascript Date.now (epoch time)
+    output: Python datetime object that represents the same time"""
+    js_date_formatted = js_date_now / 1000
+    utc = timezone('UTC')
+    date = datetime.datetime.fromtimestamp(js_date_formatted, tz=utc)
+    return date
+
+
 def get_display_time(datetime_input):
     """Takes a datatime object, and returns a time difference string.
     
@@ -119,6 +130,46 @@ def get_post_from_id(id):
     post = Post.objects.get(id=id)
     post.timestamp_f = get_display_time(post.timestamp)
     return post
+
+
+def get_post_count_since_timestamp(request, timestamp, context):
+    """returns the number of new posts for a given context since a given timestamp
+    
+    inputs: timestamp (python datetime object)
+            context (dictionary)
+    outputs: new_post_count (int)
+
+    context options: 
+        'location':
+            'public_feed',
+            'user',
+            'following'
+        'username': (this will not contain anything unless the posts from a user profile are being checked)
+            '<username>'
+    """
+    user = request.user
+    posts = {}
+    print(f"location: {context['location']}")
+    if context['location'] == 'user':
+        post_user = get_user_from_username(context['username'])
+        print(f"checking for posts for {context['username']}")
+        # get posts by post_user, newer than timestamp
+        # posts = Post.objects.filter(user=post_user).filter(timestamp__gt=timestamp)
+        posts = Post.objects.filter(user=post_user, timestamp__gte=timestamp)
+    if context['location'] == 'public_feed':
+        print(f"chcking for public feed posts")
+        # get posts by all users, newer than timestamp
+        posts = Post.objects.filter(timestamp__gt=timestamp)
+    if context['location'] == 'following':
+        print(f"checking for following posts")
+        # get posts by followed users, newer than timestamp
+        posts = Post.objects.filter(user__in=user.following.all()).filter(timestamp__gt=timestamp)
+    # if we haven't created posts yet, return an error
+    if  posts:
+        print(posts)
+        return posts.count()
+    else:
+        return 0
 
 
 def get_posts(request, username=None):

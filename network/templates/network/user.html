@@ -56,13 +56,23 @@
 
         <div class="spacer-8-px-conditional"></div>
 
+        <div id="new-posts-container">
+            <a href="" class="no-decoration-link">
+                <div hidden id="new-posts-inner">
+                    No new posts (you should not see this)
+                </div>
+            </a>
+        </div>
+
         {% include 'network/posts.html' %}
     </div>
 {% endblock %}
 
 
 {% block script %}
-    <script src="{% static 'network/user.js' %}"></script>
+    {% if user != view_user %}
+        <script src="{% static 'network/user.js' %}"></script>
+    {% endif %}
     <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
     <script>

@@ -26,6 +26,7 @@ urlpatterns = [
     path("edit/<int:post_id>", views.edit, name="edit"),
     path("follow/<int:user_id>", views.follow, name="follow"),
     path("like/<int:post_id>", views.like, name="like"),
+    path("new_posts", views.new_posts, name="new_posts"),
 
     # Debug Routes
     path('__debug__/', include(debug_toolbar.urls)),
