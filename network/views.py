@@ -327,6 +327,26 @@ def follow(request, user_id):
 
 
 @csrf_protect
+def get_notifications(request):
+    if request.method == "GET":
+        user = request.user
+        if user == None:
+            return JsonResponse({
+                "error": "You are not logged in."
+            }, status=400)
+        # build a JSON response that contains any notifications
+        # (for now just unread mentions, but might add more stuff ie DMs later)
+        # maybe also a total count of notifications, for app badge etc?
+        return JsonResponse({
+            "mention_count": user.mentions_since_last_checked
+        }, status=200)
+    else:
+        return JsonResponse({
+            "error": "GET request required."
+        }, status=400)
+
+
+@csrf_protect
 def like(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)

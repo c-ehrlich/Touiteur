@@ -22,6 +22,7 @@ urlpatterns = [
     # API Routes
     path("clear_mentions_count", views.clear_mentions_count, name="clear_mentions_count"),
     path("compose", views.compose, name="compose"),
+    path("get_notifications", views.get_notifications, name="get_notifications"),
     path("edit/<int:post_id>", views.edit, name="edit"),
     path("follow/<int:user_id>", views.follow, name="follow"),
     path("like/<int:post_id>", views.like, name="like"),

@@ -2,6 +2,8 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     // send a fetch request to /clear_mentions_count
+    // This should ONLY run when the user wants to clear their mentions
+    // ie when they visit their notifications page
     if (document.getElementById('new-mentions-count') !== null) {
         fetch('/clear_mentions_count', {
             method: 'PUT',
