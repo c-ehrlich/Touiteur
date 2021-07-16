@@ -16,12 +16,21 @@
             </div>
         </div>
 
+        <div id="new-posts-container">
+            <a href="" class="no-decoration-link">
+                <div hidden id="new-posts-inner">
+                    No new posts (you should not see this)
+                </div>
+            </a>
+        </div>
+
         {% include 'network/posts.html' %}
     </div>
 {% endblock %}
 
 
 {% block script %}
+    <script src="{% static 'network/live_notifications.js' %}"></script>
     <script src="{% static 'network/mentions.js' %}"></script>
     <script src="{% static 'network/user.js' %}"></script>
     <script src="{% static 'network/posts.js' %}"></script>
