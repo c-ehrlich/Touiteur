@@ -444,6 +444,7 @@ body, html {
     background-color: white;
     border-top: 1px solid lightgrey;
     padding: 8px;
+    margin-top: 100px;
     font-family: monospace;
     font-size: 0.875em;
 }
@@ -740,4 +741,8 @@ input[type="file"] {
 }
 .no-decoration-link:hover {
     text-decoration: none;
+}
+
+.footer-spacing-hack {
+    margin-top: 30px;
 }
