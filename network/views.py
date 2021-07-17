@@ -30,7 +30,6 @@ def account(request):
     })
     if request.method == "POST":
         form = EditAccountForm(request.POST, request.FILES, instance = user)
-
         if form.is_valid():
             user = authenticate(
                 request, 
@@ -38,13 +37,10 @@ def account(request):
                 password=form.cleaned_data["password"]
             )
             if user is None:
-                print("Exception during verification")
                 return render(request, "network/account.html", {
                     "form": EditAccountForm(instance = utils.get_user_from_id(request.user.id)),
                     "message": "Invalid password."
                 })
-            print("verification successful, logged in as:", user)
-            print(form.cleaned_data["username"])
             if utils.check_username_validity(form.cleaned_data["username"]) == False:
                 user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field TODO refactor
                 # return an EditAccountForm with the user's original information
@@ -187,25 +183,20 @@ def register(request):
 
 def register2(request):
     user = request.user
-    print(user)
     if request.method == "GET":
         return render(request, "network/register2.html", {
             "form": RegisterAccountStage2Form(instance = user)
         })
     if request.method == "POST":
-        form = EditAccountForm(request.POST, request.FILES or None, instance = user)
+        form = RegisterAccountStage2Form(request.POST, request.FILES, instance = user)
         if form.is_valid():
-            # set the user's bio and avatar based on form data
             user.bio = form.cleaned_data['bio']
             user.avatar = form.cleaned_data['avatar']
-            print(user.username)
-            print(user.bio)
-            print(user.avatar)
-            user.save()
+            form.save()
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "network/register2.html", {
-                "form": RegisterAccountStage2Form(),
+                "form": form,
                 "message": "Form data is invalid"
             })
 

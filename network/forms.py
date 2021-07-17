@@ -45,26 +45,6 @@ class EditAccountForm(forms.ModelForm):
             'class': 'form-control',
         }))
 
-    # password = forms.CharField(
-    #     label = "New Password",
-    #     required = False,
-    #     widget = forms.PasswordInput(attrs={
-    #         'class': 'form-control'
-    #     }))
-    # confirmation = forms.CharField(
-    #     label = "Confirm New Password",
-    #     required = False,
-    #     widget = forms.PasswordInput(attrs={
-    #         'class': 'form-control'
-    #     }))
-
-    # avatar = forms.ImageField(
-    #     label = "Avatar",
-    #     required = False,
-    #     widget = forms.FileInput(attrs={
-    #         'class': 'form-control'
-    #     }))
-    
     class Meta:
         model = User
         fields = ['username', 'displayname', 'bio', 'email', 'avatar']
@@ -128,19 +108,6 @@ class RegisterAccountForm(forms.Form):
 
 
 class RegisterAccountStage2Form(forms.ModelForm):
-    username = forms.CharField(
-        required=False,
-        widget = forms.TextInput(attrs={
-            'class': 'form-control form-control-left-padding-for-at-sign',
-        }))
-
-    avatar = forms.ImageField(
-        label = "Avatar",
-        required = False,
-        widget = forms.FileInput(attrs={
-            'class': 'form-control',
-        })
-    )
     bio = forms.CharField(
         label = "Bio",
         required = False,
@@ -151,5 +118,4 @@ class RegisterAccountStage2Form(forms.ModelForm):
     )
     class Meta:
         model = User
-        fields = ['username', 'email', 'bio', 'avatar']
-        # exclude = ['displayname', 'email', 'password', 'confirmation']
+        fields = ['bio', 'avatar',]
