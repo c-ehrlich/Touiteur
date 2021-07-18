@@ -95,7 +95,6 @@ function edit_post_submit(post_id, original_text) {
 
 // Edits a post
 function edit_post_text(post_id) {
-  console.log("edit post");
   const text_field = document.querySelector(`#post-text-${post_id}`);
   const original_text = text_field.innerHTML;
   text_field.innerHTML = "";
@@ -103,7 +102,6 @@ function edit_post_text(post_id) {
   const number_of_lines = get_number_of_lines(original_text);
   text_edit_input.setAttribute('rows', number_of_lines);
   text_edit_input.setAttribute('maxlength', 500);
-  // TODO set textArea cols? Or give it a class and then do it in CSS?
   // TODO give this textArea some classes
   text_edit_input.value = original_text;
   text_edit_input.id = `post-edit-input-${post_id}`;
@@ -176,7 +174,7 @@ function update_post_like_status(json) {
     // set unlike eventlistener
     like_button.addEventListener('click', event => { unlike_post(json.post_id) }, { once: true });
     // make heart red
-    document.querySelector(`#post-like-heart-${json.post_id}`).innerHTML = '❤️'
+    document.querySelector(`#post-like-heart-${json.post_id}`).innerHTML = '<i class="fas fa-heart"></i>';
   } else {
     // remove class "unlike-button"
     like_button.classList.remove('post-unlike-button');
@@ -185,7 +183,7 @@ function update_post_like_status(json) {
     // set like eventlistener
     like_button.addEventListener('click', event => { like_post(json.post_id) }, { once: true });
     // make heart plain
-    document.querySelector(`#post-like-heart-${json.post_id}`).innerHTML = '‍♡'
+    document.querySelector(`#post-like-heart-${json.post_id}`).innerHTML = '<i class="far fa-heart"></i>';
   }
   // set like count
   document.querySelector(`#post-like-count-${json.post_id}`).innerHTML = json.like_count;

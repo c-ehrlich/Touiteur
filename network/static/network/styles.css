@@ -52,8 +52,9 @@ body, html {
     width: 100%;
     /* margin: 8px; */
     padding: 12px;
-    background-color: white;
-    border: 1px solid lightgrey;
+    color: var(--color-text-default);
+    background-color: var(--color-box-bg);
+    border: 1px solid var(--color-box-border);
     font-size: 20px;
     font-weight: bold;
     display: flex;
@@ -85,10 +86,11 @@ body, html {
 #compose-view {
     display: flex;
     flex-direction: row;
-    border: 1px solid lightgrey;
+    border: 1px solid var(--color-box-border);
     margin: 8px 8px 0 8px;
     padding: 12px;
-    background-color: white;
+    background-color: var(--color-box-bg);
+    color: var(--color-text-default)
 }
 
 #compose-view-avatar-div {
@@ -191,6 +193,9 @@ body, html {
     color: var(--color-text-medcontrast);
     padding-left: 8px;
 }
+.post-username-header-username:hover {
+    color: var(--color-text-medcontrast);
+}
 
 .post-username-header-spacer {
     padding-left: 4px;
@@ -198,7 +203,10 @@ body, html {
 }
 
 .post-timestamp-text {
-    color: grey;
+    color: var(--color-text-medcontrast);
+}
+.post-timestamp-text:hover {
+    color: var(--color-text-medcontrast);
 }
 
 .post-text {
@@ -210,11 +218,11 @@ body, html {
 .post-edit-button {
     border: none;
     background-color: transparent;
-    color: lightgrey;
+    color: var(--color-text-lowcontrast);
     cursor: pointer;
 }
 .post-save-edits-button {
-    color: black;
+    color: var(--color-text-default);
 }
 
 .post-edit-input {
@@ -297,10 +305,11 @@ body, html {
     max-width: var(--item-max-width);
 }
 #user-profile-grid-div {
-    background-color: white;
+    background-color: var(--color-box-bg);;
+    color: var(--color-text-default);
     margin: 8px;
     padding: 12px;
-    border: 1px solid lightgrey;
+    border: 1px solid var(--color-box-border);
     display: grid;
     grid-template-columns: 144px auto auto;
     grid-template-rows: auto auto auto;
@@ -365,13 +374,13 @@ body, html {
 }
 
 #user-profile-displayname {
-    color: black;
+    color: var(--color-text-default);
     font-weight: bold;
     font-size: 24px;
 }
 #user-profile-username {
     font-size: 18px;
-    color: grey;
+    color: var(--color-text-medcontrast);
     margin-bottom: 12px;
 }
 #user-profile-post-count,
@@ -384,7 +393,7 @@ body, html {
 #user-profile-liked-posts-count-label,
 #user-profile-following-count-label,
 #user-profile-follower-count-label {
-    color: grey;
+    color: var(--color-text-medcontrast);
     margin-left: 4px;
 }
 
@@ -415,7 +424,7 @@ body, html {
 }
 #unfollow-button {
 
-    /* transition animation */
+    /* TODO : transition animation */
     /* get rid of this weird border */
     /* find a good color scheme */
 }
@@ -427,8 +436,40 @@ body, html {
 /* STUFF FOR PAGINATION */
 /* -------------------- */
 .pagination {
+    z-index: 100 !important;
+    /* background-color: var(--color-pagi-bg) !important; */
     margin-top: 16px;
     margin-bottom: 32px;
+}
+
+.pagination > li > a {
+    background-color: var(--color-pagi-bg);
+    color: var(--color-pagi-text);
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+    /* color: #5a5a5a; */
+    background-color: var(--color-pagi-bg-hover);
+    /* border-color: #ddd; */
+}
+
+.pagination > .active > a {
+    color: var(--color-pagi-text-active);
+    background-color: var(--color-pagi-bg-active) !important;
+    border: solid 1px var(--color-pagi-border) !important;
+}
+
+.pagination > .active > a:hover {
+    /* background-color: var(--color-pagi-bg-active) !important; */
+    border: solid 1px var(--color-pagi-border) !important;;
+}
+
+.pagination > .disabled > a {
+    color: var(--color-pagi-text-disabled);
+    background-color: yellow;
 }
 
 /* -------------------- */
@@ -543,8 +584,8 @@ body, html {
     width: 100%;
     /* margin: 8px; */
     padding: 12px;
-    background-color: white;
-    border: 1px solid lightgrey;
+    background-color: var(--color-box-bg);
+    border: 1px solid var(--color-box-border);
     /* font-size: 20px; */
     /* font-weight: bold; */
     display: flex;
@@ -573,6 +614,7 @@ body, html {
 .login-helper-text {
     margin-top: 12px;
     width: 100%;
+    color: var(--color-text-default);
 }
 
 .p-l-12 {
@@ -707,7 +749,7 @@ input[type="file"] {
 }
 .important-div {
     /* background-color: #f8d7da; */
-    background-color: lightgrey;
+    background-color: var(--color-box-bg-contrast);
 }
 .w100 {
     width: 100%;
@@ -750,4 +792,19 @@ input[type="file"] {
 
 .default-text {
     color: var(--color-text-default);
+}
+.formlabel-text {
+    color: var(--color-text-formlabel);
+}
+.formerror-text {
+    color: var(--color-text-formerror);
+}
+
+.form-control {
+    background-color: var(--color-input-bg);
+    color: var(--color-input-placeholder-text);
+}
+.form-control:focus {
+    background-color: var(--color-input-bg-focus);
+    color: var(--color-input-text);
 }

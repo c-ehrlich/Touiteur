@@ -27,9 +27,9 @@
         <div class="reg-login-outer padding-bottom-0">
             <div class="reg-login-inner bb-0 important-div">
                 {% if form.password.errors %}
-                    <div class="alert alert-danger">{{ form.password.errors }}</div>
+                    <div class="alert alert-danger formerror-text">{{ form.password.errors }}</div>
                 {% endif %}
-                <div class="margin-bottom-8">
+                <div class="margin-bottom-8 formlabel-text">
                     Current Password (required)
                 </div>
                 {{ form.password }}
@@ -39,39 +39,39 @@
         <div class="reg-login-outer">
             <div class="reg-login-inner">
                 <div class="form-group w100">
-                    {{ form.username.errors }}
-                    <label for="{{ form.username.id_for_label }}">New {{ form.username.label }}</label>
+                    <div class="formerror-text">{{ form.username.errors }}</div>
+                    <label for="{{ form.username.id_for_label }}" class="formlabel-text">New {{ form.username.label }}</label>
                     <div class="input-with-at-sign">
                         {{ form.username }}
                     </div>
                 </div>
                 <div class="form-group w100">
-                    {{ form.displayname.errors }}
-                    <label for="{{ form.displayname.id_for_label }}">New {{ form.displayname.label }}</label>
+                    <div class="formerror-text">{{ form.displayname.errors }}</div>
+                    <label for="{{ form.displayname.id_for_label }}" class="formlabel-text">New {{ form.displayname.label }}</label>
                     {{ form.displayname }}
                 </div>
                 <div class="form-group w100">
-                    {{ form.email.errors }}
-                    <label for="{{ form.email.id_for_label }}">New {{ form.email.label }}</label>
+                    <div class="formerror-text">{{ form.email.errors }}</div>
+                    <label for="{{ form.email.id_for_label }}" class="formlabel-text">New {{ form.email.label }}</label>
                     {{ form.email }}
                 </div>
                 <div class="form-group w100">
-                    {{ form.bio.errors }}
+                    <div class="formerror-text">{{ form.bio.errors }}</div>
                     <label for="{{ form.bio.id_for_label }}">New {{ form.bio.label }}</label>
                     {{ form.bio }}
                 </div>
                 <div class="form-group w100">
-                    {{ form.new_password.errors }}
+                    <div class="formerror-text">{{ form.new_password.errors }}</div>
                     <label for="{{ form.new_password.id_for_label }}">New Password</label>
                     {{ form.new_password }}
                 </div>
                 <div class="form-group w100">
-                    {{ form.new_password_confirm.errors }}
+                    <div class="formerror-text">{{ form.new_password_confirm.errors }}</div>
                     <label for="{{ form.new_password_confirm.id_for_label }}">Confirm New Password</label>
                     {{ form.new_password_confirm }}
                 </div>
                 <div class="form-group w100">
-                    {{ form.avatar.errors }}
+                    <div class="formerror-text">{{ form.avatar.errors }}</div>
                     <label for="{{ form.avatar.id_for_label }}">New {{ form.avatar.label }}</label>
                     <div class="flex-row padding12 avatar-input-container">
                         <img class="profile-pic" id="profile-pic-preview-img" src="{{ request.user.avatar.url }}">
@@ -82,7 +82,7 @@
                             <label for="{{ form.avatar.id_for_label }}" class="btn btn-sm btn-outline-primary">
                                 <i class="fa fa-cloud-upload"></i> Upload new avatar
                             </label>
-                            <div class="custom-file-upload-helper-text" id="custom-file-upload-helper-text">
+                            <div class="custom-file-upload-helper-text formlabel-text" id="custom-file-upload-helper-text">
                                 Note: The avatar won't be updated until you press "Save"
                             </div>
                         </div>

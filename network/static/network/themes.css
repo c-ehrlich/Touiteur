@@ -5,21 +5,74 @@
     --color-button-hover-bad: #d43f3a;  
 
     --color-text-default: black;
+
     --color-text-medcontrast: grey;
     --color-text-lowcontrast: lightgrey;
     --color-text-contrastbtn: white;
 
+    --color-text-formlabel: black;
+    --color-text-formerror: black;
+
+    /* these don't work currently */
+    --color-pagination-bg: green;
+    --color-pagination-bg-hover: orange;
+    --color-pagination-border: red;
+    --color-pagination-active: blue;
+    --color-pagination-notactive: purple;
+
     --color-box-bg: white;
+    --color-box-bg-contrast: lightgrey; /* probably same as box-border */
     --color-box-border: lightgrey;
-    /* a class for box borders */
+
+    --color-input-bg: white;
+    --color-input-bg-focus: white;
+    --color-input-placeholder-text: grey;
+    --color-input-border: lightgrey;
+    --color-input-text: black;
+
+    --color-pagi-bg: white;
+    --color-pagi-bg-hover: lightgrey; /* this is probably incorrect */
+    --color-pagi-bg-active: #007bff;
+    --color-pagi-text: #007bff;
+    --color-pagi-text-active: white;
+    --color-pagi-text-disabled: #dee2e6;
+    --color-pagi-border: green; /* a class for box borders */
 }
 
 ._theme_dark {
-    --color-page-bg: black;
+    /* --color-page-bg: #1c2127; */
+    --color-page-bg: #34322e;
 
-    --color-text-default: green;
-    --color-text-medconstrast: orange;
+    --color-text-default: white; /* change */
 
-    --color-box-bg: purple;
-    --color-box-border: pink;
+    --color-text-medcontrast: grey;
+    --color-text-lowcontrast: #34322e;
+
+    --color-text-formlabel: white;
+    --color-text-formerror: white;
+
+    /* --color-box-bg: #1c252c; */
+    --color-box-bg: black;
+    --color-box-bg-contrast: navy; /* change */
+    --color-box-border: #2a2628;
+
+    --color-input-bg: #2a2628;
+    --color-input-bg-focus: #2a2628;
+    --color-input-placeholder-text: lightgrey;
+    --color-input-border: orange !important;
+    --color-input-text: white;
+
+    --color-pagi-bg: black;
+    --color-pagi-bg-hover: black; /* this is probably incorrect */
+    --color-pagi-bg-active: purple; /* doesn't work */
+    --color-pagi-text: white;
+    --color-pagi-text-active: red;
+    --color-pagi-text-disabled: red;
+    --color-pagi-border: green;
 }
+
+/* 
+FORMS
+text default: #495057
+border default: #ced4da 
+*/
