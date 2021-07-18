@@ -8,7 +8,17 @@ import sys
 
 
 class User(AbstractUser):
-    # TODO don't use first/last name fiels, use a single 'name' field instead like twitter?
+    THEMES = (
+        ('_theme_light', 'Light Mode'),
+        ('_theme_dark', 'Dark Mode'),
+    )
+
+    LANGUAGES = (
+        ('EN', 'English'),
+        ('DE', 'Deutsch'),
+        ('JP', '日本語'),
+    )
+
     avatar = models.ImageField(
         # height_field="avatar_height",
         # width_field="avatar_width",
@@ -48,6 +58,20 @@ class User(AbstractUser):
     mentions_since_last_checked = models.PositiveIntegerField(
         default = 0,
         verbose_name="Mentions since last checked"
+    )
+
+    theme = models.CharField(
+        max_length=20,
+        choices=THEMES,
+        default='_theme_light',
+        verbose_name="Theme"
+    )
+
+    language = models.CharField(
+        max_length=2,
+        choices=LANGUAGES,
+        default='EN',
+        verbose_name='Language'
     )
 
     class Meta:

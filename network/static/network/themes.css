@@ -1,0 +1,25 @@
+._theme_light {
+    --color-page-bg: #e7eaef;
+    --color-alert-1: #fc3d39; /* try d43f4a ? */
+    --color-button-hover-good: #1d86bg;
+    --color-button-hover-bad: #d43f3a;  
+
+    --color-text-default: black;
+    --color-text-medcontrast: grey;
+    --color-text-lowcontrast: lightgrey;
+    --color-text-contrastbtn: white;
+
+    --color-box-bg: white;
+    --color-box-border: lightgrey;
+    /* a class for box borders */
+}
+
+._theme_dark {
+    --color-page-bg: black;
+
+    --color-text-default: green;
+    --color-text-medconstrast: orange;
+
+    --color-box-bg: purple;
+    --color-box-border: pink;
+}

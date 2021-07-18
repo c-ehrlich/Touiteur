@@ -1,6 +1,6 @@
 <div id="posts-all-container-div">
     {% for post in posts %}
-        <div class="post-div" id="post-div{{ post.id }}">
+        <div class="post-div {{ user.theme|default:'_theme_light' }}" id="post-div{{ post.id }}">
             <div class="post-avatar-div">
                 <a href="{% url 'user' post.user.username %}">
                     <img class="profile-pic" src="{{ post.user.avatar.url }}">
@@ -23,7 +23,7 @@
                         <a href="{% url 'post' post.id %}" class="post-timestamp-text">{{ post.timestamp_f }}</a>
                     </div>
                 </div>
-                <div class="post-text" id="post-text-{{ post.id }}">{{ post.text }}</div>
+                <div class="post-text {{ user.theme|default:'_theme_light' }}" id="post-text-{{ post.id }}">{{ post.text }}</div>
                 <div class="post-bottom-row-div">
                     <div class="post-bottom-row-left-div">
                         {% if user.is_authenticated and post.user != user %}

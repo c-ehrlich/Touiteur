@@ -23,7 +23,7 @@ body, html {
 #outermost-container {
     min-height: 100%;
     position: relative;
-    background-color: #e7eaef;
+    background-color: var(--color-page-bg);
 }
 
 .flex-row {
@@ -108,7 +108,7 @@ body, html {
 }
 
 #compose-form-post-text {
-    margin-bottom: 8px;
+    margin-bottom: 12px;
 }
 
 #compose-form-submit-button-div {
@@ -152,10 +152,10 @@ body, html {
 .post-div {
     display: flex;
     flex-direction: row;
-    border: 1px solid lightgrey;
+    border: 1px solid var(--color-box-border);
     margin: 0 8px 0 8px;
     padding: 12px;
-    background-color: white;
+    background-color: var(--color-box-bg);
 }
 
 .profile-pic {
@@ -184,11 +184,11 @@ body, html {
 
 .post-username-header-displayname {
     font-weight: bold;
-    color: black;
+    color: var(--color-text-default);
 }
 
 .post-username-header-username {
-    color: grey;
+    color: var(--color-text-medcontrast);
     padding-left: 8px;
 }
 
@@ -204,6 +204,7 @@ body, html {
 .post-text {
     white-space: pre-wrap;
     margin-bottom: 8px;
+    color: var(--color-text-default);
 }
 
 .post-edit-button {
@@ -441,8 +442,8 @@ body, html {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: white;
-    border-top: 1px solid lightgrey;
+    background-color: var(--color-box-bg);
+    border-top: 1px solid var(--color-box-border);
     padding: 8px;
     margin-top: 100px;
     font-family: monospace;
@@ -745,4 +746,8 @@ input[type="file"] {
 
 .footer-spacing-hack {
     margin-top: 30px;
+}
+
+.default-text {
+    color: var(--color-text-default);
 }

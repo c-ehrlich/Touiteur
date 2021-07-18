@@ -1,5 +1,7 @@
-<div id="footer">
-    <a href="https://www.github.com/c-ehrlich" class="footer-link">
-        github.com/c-ehrlich
+<div id="footer" class="{{ user.theme|default:'_theme_light' }}">
+    <a href="https://www.github.com/c-ehrlich" class="footer-link {{ user.theme|default:'_theme_light' }}">
+        <div class="default-text {{user.theme|default:'_theme_light' }}">
+            github.com/c-ehrlich
+        </div>
     </a>
 </div>
