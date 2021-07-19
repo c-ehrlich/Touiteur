@@ -438,46 +438,6 @@ body, html {
 }
 
 /* -------------------- */
-/* STUFF FOR PAGINATION */
-/* -------------------- */
-.pagination {
-    z-index: 100 !important;
-    /* background-color: var(--color-pagi-bg) !important; */
-    margin-top: 16px;
-    margin-bottom: 32px;
-}
-
-.pagination > li > a {
-    background-color: var(--color-pagi-bg);
-    color: var(--color-pagi-text);
-}
-
-.pagination > li > a:focus,
-.pagination > li > a:hover,
-.pagination > li > span:focus,
-.pagination > li > span:hover {
-    /* color: #5a5a5a; */
-    background-color: var(--color-pagi-bg-hover);
-    /* border-color: #ddd; */
-}
-
-.pagination > .active > a {
-    color: var(--color-pagi-text-active);
-    background-color: var(--color-pagi-bg-active) !important;
-    border: solid 1px var(--color-pagi-border) !important;
-}
-
-.pagination > .active > a:hover {
-    /* background-color: var(--color-pagi-bg-active) !important; */
-    border: solid 1px var(--color-pagi-border) !important;;
-}
-
-.pagination > .disabled > a {
-    color: var(--color-pagi-text-disabled);
-    background-color: yellow;
-}
-
-/* -------------------- */
 /* STUFF FOR FOOTER     */
 /* -------------------- */
 #footer {
@@ -812,4 +772,50 @@ input[type="file"] {
 .form-control:focus {
     background-color: var(--color-input-bg-focus);
     color: var(--color-input-text);
+}
+
+/* -------------------- */
+/* STUFF FOR PAGINATION */
+/* -------------------- */
+.pagination {
+    z-index: 100 !important;
+    /* background-color: var(--color-pagi-bg) !important; */
+    margin-top: 16px;
+    margin-bottom: 32px;
+}
+
+.pagination > li > a,
+.pagination > .disabled > span {
+    border-color: var(--color-pagi-border) !important;
+}
+
+.pagination > .disabled > span {
+    background-color: var(--color-pagi-bg-disabled) !important;
+}
+
+.pagination > li > a {
+    background-color: var(--color-pagi-bg);
+    color: var(--color-pagi-text);
+}
+
+.pagination > li > a:focus,
+.pagination > li > a:hover,
+.pagination > li > span:focus,
+.pagination > li > span:hover {
+    /* TODO change text color? */
+    color: var(--color-pagi-text) !important;
+    background-color: var(--color-pagi-bg-hover) !important;
+    border-color: var(--color-pagi-border) !important;
+}
+
+.pagination > .active > span {
+    color: var(--color-pagi-text-active);
+    background-color: var(--color-pagi-bg-active) !important;
+    border: 1px solid var(--color-pagi-border-active) !important;
+}
+.pagination > .active > span:hover {
+    /* border: none !important; */
+    color: var(--color-pagi-text-active) !important;
+    background-color: var(--color-pagi-bg-active) !important;
+    border: 1px solid var(--color-pagi-bg-active) !important;
 }

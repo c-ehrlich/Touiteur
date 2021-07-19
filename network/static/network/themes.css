@@ -35,10 +35,12 @@
     --color-pagi-bg: white;
     --color-pagi-bg-hover: lightgrey; /* this is probably incorrect */
     --color-pagi-bg-active: #007bff;
+    --color-page-bg-disabled: lightgrey;
     --color-pagi-text: #007bff;
     --color-pagi-text-active: white;
-    --color-pagi-text-disabled: #dee2e6;
-    --color-pagi-border: green; /* a class for box borders */
+    /* --color-pagi-text-disabled: #dee2e6; */
+    --color-pagi-border: #dee2e6;
+    --color-pagi-border-active: #007bff;
 }
 
 ._theme_dark {
@@ -67,12 +69,14 @@
     --color-navbar-active: white;
 
     --color-pagi-bg: black;
-    --color-pagi-bg-hover: black; /* this is probably incorrect */
-    --color-pagi-bg-active: purple; /* doesn't work */
+    --color-pagi-bg-hover: #2a2628; /* this is probably incorrect */
+    --color-pagi-bg-active: #007bff; /* doesn't work */
+    --color-pagi-bg-disabled: #151314;
     --color-pagi-text: white;
-    --color-pagi-text-active: red;
-    --color-pagi-text-disabled: red;
-    --color-pagi-border: green;
+    --color-pagi-text-active: white;
+    /* --color-pagi-border: #2a2628; */
+    --color-pagi-border: #555354;
+    --color-pagi-border-active: #007bff;
 }
 
 /* 
