@@ -30,6 +30,8 @@
     --color-input-border: lightgrey;
     --color-input-text: black;
 
+    --color-navbar-active: black;
+
     --color-pagi-bg: white;
     --color-pagi-bg-hover: lightgrey; /* this is probably incorrect */
     --color-pagi-bg-active: #007bff;
@@ -61,6 +63,8 @@
     --color-input-placeholder-text: lightgrey;
     --color-input-border: orange !important;
     --color-input-text: white;
+
+    --color-navbar-active: white;
 
     --color-pagi-bg: black;
     --color-pagi-bg-hover: black; /* this is probably incorrect */

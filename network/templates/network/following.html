@@ -31,10 +31,10 @@
     <script src="{% static 'network/utils.js' %}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.active').forEach(item => {
-          item.classList.remove('active');
+        document.querySelectorAll('.navbar-active-item').forEach(item => {
+          item.classList.remove('navbar-active-item');
         });
-        document.querySelector('#navbar-following').classList.add('active');
+        document.querySelector('#navbar-following').classList.add('navbar-active-item');
       });
     </script>
 {% endblock %}

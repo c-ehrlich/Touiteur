@@ -35,9 +35,9 @@ body, html {
     padding: 12px;
 }
 
-.active {
-    color: black !important;
-    text-decoration: underline;
+.navbar-active-item {
+    color: var(--color-navbar-active) !important;
+    text-decoration: underline !important;
 }
 
 .section-identifier {

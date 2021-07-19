@@ -58,10 +58,9 @@
     <script src="{% static 'network/image_uploads.js' %}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.active').forEach(item => {
-          item.classList.remove('active');
+        document.querySelectorAll('.navbar-active-item').forEach(item => {
+          item.classList.remove('navbar-active-item');
         });
-        document.querySelector('#navbar-account').classList.add('active');
       });
     </script>
 {% endblock %}
