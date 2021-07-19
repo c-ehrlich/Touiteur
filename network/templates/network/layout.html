@@ -22,7 +22,7 @@
             <div id="var-user-theme">{{ user.theme }}</div>
         </div>
         <div id="outermost-container" class="{{ user.theme|default:'_theme_light' }}">
-            <nav class="navbar navbar-expand-md {% if user.theme == '_theme_dark' %}navbar-dark bg-dark{% else %}navbar-light bg-white
+            <nav class="navbar navbar-expand-md navbar-override-bg-color {% if user.theme == '_theme_dark' %}navbar-dark bg-dark{% else %}navbar-light bg-white
             {% endif %}">
                 <a class="navbar-brand" href="{% url 'index' %}">Network</a>
 

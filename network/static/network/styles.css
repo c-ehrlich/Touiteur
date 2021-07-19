@@ -40,6 +40,11 @@ body, html {
     text-decoration: underline !important;
 }
 
+.navbar-override-bg-color {
+    background-color: var(--color-box-bg) !important;
+    border-bottom: 1px solid var(--color-box-border);
+}
+
 .section-identifier {
     width: var(--item-width);
     max-width: var(--item-max-width);;
