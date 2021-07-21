@@ -63,7 +63,7 @@
     --color-input-bg: #2a2628;
     --color-input-bg-focus: #2a2628;
     --color-input-placeholder-text: lightgrey;
-    --color-input-border: orange !important;
+    --color-input-border: orange; /* currently not used? */
     --color-input-text: white;
 
     --color-navbar-active: white;

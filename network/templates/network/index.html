@@ -1,5 +1,6 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
     Public Timeline
@@ -7,13 +8,14 @@
 
 {% block body %}
     <div id="index-body-div">
+
         {% if user.is_authenticated %}
             {% include 'network/compose.html' %}
         {% endif %}
 
         <div class="section-identifier">
             <div class="section-identifier-inner">
-                Public Timeline
+                {% trans 'Public Timeline' %}
             </div>
         </div>
 

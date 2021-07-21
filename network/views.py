@@ -7,6 +7,8 @@ from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _lazy
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, RegisterAccountStage2Form
 from network.models import User, Post
@@ -46,7 +48,7 @@ def account(request):
                 # return an EditAccountForm with the user's original information
                 return render(request, "network/account.html", {
                     "form": EditAccountForm(instance = user),
-                    "message": "Username is not valid."
+                    "message": _("Username is not valid."),
                 })
 
             # get new_password and new_pass_confirm from form
@@ -112,7 +114,7 @@ def login_view(request):
             return HttpResponseRedirect(reverse("index"))
         else:
             return render(request, "network/login.html", {
-                "message": "Invalid username and/or password."
+                "message": _("Invalid username and/or password."),
             })
     else:
         return render(request, "network/login.html")
@@ -153,13 +155,13 @@ def register(request):
         confirmation = request.POST["confirmation"]
         if password != confirmation:
             return render(request, "network/register.html", {
-                "message": "Passwords must match.",
+                "message": _("Passwords must match."),
                 "form": RegisterAccountForm(),
             })
 
         if not utils.check_username_validity(username):
             return render(request, "network/register.html", {
-                "message": "Username is not valid.",
+                "message": _("Username is not valid."),
                 "form": RegisterAccountForm(),
             })
 
@@ -170,7 +172,7 @@ def register(request):
             user.save()
         except IntegrityError:
             return render(request, "network/register.html", {
-                "message": "Username already taken.",
+                "message": _("Username already taken."),
                 "form": RegisterAccountForm(),
             })
         login(request, user)

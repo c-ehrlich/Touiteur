@@ -16,7 +16,7 @@ class User(AbstractUser):
     LANGUAGES = (
         ('EN', 'English'),
         ('DE', 'Deutsch'),
-        ('JP', '日本語'),
+        ('JA', '日本語'),
     )
 
     avatar = models.ImageField(
