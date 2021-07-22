@@ -101,7 +101,7 @@ function edit_post_text(post_id) {
   const text_edit_input = document.createElement('textarea');
   const number_of_lines = get_number_of_lines(original_text);
   text_edit_input.setAttribute('rows', number_of_lines);
-  text_edit_input.setAttribute('maxlength', 500);
+  text_edit_input.setAttribute('maxlength', 140);
   // TODO give this textArea some classes
   text_edit_input.value = original_text;
   text_edit_input.id = `post-edit-input-${post_id}`;

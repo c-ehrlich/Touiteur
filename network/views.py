@@ -261,9 +261,9 @@ def edit(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)
         new_text = data['new_text']
-        if len(new_text) > 500:
+        if len(new_text) > 140:
             return JsonResponse({
-                "message": _("Maximum post length is 500 characters"),
+                "message": _("Maximum post length is 140 characters"),
                 "edited": False,
             }, status=400)
         post = utils.get_post_from_id(post_id)

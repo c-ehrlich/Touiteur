@@ -132,7 +132,7 @@ class Post(models.Model):
     )
     text = models.TextField(
         default = "error: post initialized without text",
-        max_length = 500
+        max_length = 140
     )
 
     mentioned_users = models.ManyToManyField(

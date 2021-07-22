@@ -56,7 +56,7 @@ class EditAccountForm(forms.ModelForm):
 class NewPostForm(forms.Form):
     post_text = forms.CharField(
         # label = "New Post",
-        max_length = 500,
+        max_length = 140,
         required = True,
         widget = forms.Textarea(attrs={
             'rows':3,
