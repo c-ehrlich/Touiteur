@@ -59,7 +59,7 @@ class NewPostForm(forms.Form):
         max_length = 140,
         required = True,
         widget = forms.Textarea(attrs={
-            'rows':3,
+            'rows':4,
             'class': 'form-control',
             'id': 'compose-form-post-text',
             'placeholder': "What's Happening?"

@@ -46,6 +46,7 @@
 ._theme_dark {
     /* --color-page-bg: #1c2127; */
     --color-page-bg: #34322e;
+    --color-button-hover-bad: #d43f3a; /* change */
 
     --color-text-default: white; /* change */
 

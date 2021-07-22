@@ -8,10 +8,14 @@
         <div id="compose-view-body">
             <form id="compose-form" action={% url 'compose' %} method="post">
                 {% csrf_token %}
-                {{ new_post_form.post_text }}
+                <div class="relative-block">
+                    {{ new_post_form.post_text }}
+                    <div id="compose-form-character-count"></div>
+                </div>
+                <!-- dirty hack... we get the color from this to make the char count gradient -->
+                <div hidden id="compose-form-character-count-end-color"></div>
                 <div id="compose-form-submit-button-div">
                     <input type="submit" id="compose-form-submit-button">
-                    <div id="compose-form-character/count"></div>
                 </div>
             </form>
         </div>

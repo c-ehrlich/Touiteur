@@ -644,6 +644,7 @@ body, html {
 }
 .input-with-at-sign::before {
     content: '@';
+    color: var(--color-text-medcontrast);
     position: absolute;
     top: 7px;
     left: 12px;
@@ -818,4 +819,26 @@ input[type="file"] {
     color: var(--color-pagi-text-active) !important;
     background-color: var(--color-pagi-bg-active) !important;
     border: 1px solid var(--color-pagi-bg-active) !important;
+}
+
+.relative-block {
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    display: inline-block;
+}
+
+#compose-form-post-text {
+    width: 100%;
+}
+
+#compose-form-character-count {
+    position: absolute;
+    text-align: right;
+    bottom: 18px;
+    right: 10px;
+}
+
+#compose-form-character-count-end-color {
+    color: var(--color-button-hover-bad);
 }
