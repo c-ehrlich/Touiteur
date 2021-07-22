@@ -1,5 +1,6 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
     {{ view_user.displayname }} (@{{ view_user.username }})
@@ -25,9 +26,9 @@
                     {% if user.is_authenticated and user != view_user %}
                         <div id="follow-button-div">
                             {% if view_user in user.following.all %}
-                                <button id="unfollow-button">Unfollow</button>
+                                <button id="unfollow-button">{% trans 'Unfollow' %}</button>
                             {% else %}
-                                <button id="follow-button">Follow</button>
+                                <button id="follow-button">{% trans 'Follow' %}</button>
                             {% endif %}
                         </div>
                     {% endif %}
@@ -36,15 +37,15 @@
                     <div id="user-profile-bio">{{ view_user.bio }}</div>
                     <div id="user-profile-post-info-div">
                         <div id="user-profile-post-count">{{ view_user.posts.count }}</div>
-                        <div id="user-profile-post-count-label"> Posts</div>
+                        <div id="user-profile-post-count-label"> {% trans 'Posts' %}</div>
                         <div id="user-profile-liked-posts-count">{{ view_user.liked_posts.count }} </div>
-                        <div id="user-profile-liked-posts-count-label"> Liked Posts</div>
+                        <div id="user-profile-liked-posts-count-label"> {% trans 'Liked Posts' %}</div>
                     </div>
                     <div id="user-profile-follower-info-div">
                         <div id="user-profile-following-count">{{ view_user.following.count }}</div>
-                        <div id="user-profile-following-count-label">Following</div>
+                        <div id="user-profile-following-count-label">{% trans 'Following' %}</div>
                         <div id="user-profile-follower-count">{{ view_user.followed_by.count }}</div>
-                        <div id="user-profile-follower-count-label">Followers</div>
+                        <div id="user-profile-follower-count-label">{% trans 'Followers' %}</div>
                     </div>
                 </div>
             </div>
@@ -59,7 +60,7 @@
         <div id="new-posts-container">
             <a href="" class="no-decoration-link">
                 <div hidden id="new-posts-inner">
-                    No new posts (you should not see this)
+                    {% trans 'No new posts (you should not see this)' %}
                 </div>
             </a>
         </div>

@@ -24,7 +24,6 @@ def check_username_validity(username):
     The username must be at least 2 characters long
     The first character must be alphanumeric
     Every character after that must be either alphanumeric or underscore"""
-    print("running username check")
     if len(username) < 2:
         return False
     if not username[0].isalnum():
@@ -32,7 +31,6 @@ def check_username_validity(username):
     for character in username[1:]:
         if not (character.isalnum() or character == '_'):
             return False
-    print(f"{username} is valid")
     return True
 
 
@@ -58,7 +56,9 @@ def get_display_time(datetime_input):
     less than 1 hour:     '22m'
     less than 1 day:      '4h'
     this year:            'Mar 11'
-    older:                'Mar 11, 2019' 
+    older:                'Mar 11, 2019'
+
+    TODO: Localise this! 
     """
     utc = timezone('UTC')
     post = datetime_input
@@ -149,26 +149,19 @@ def get_post_count_since_timestamp(request, timestamp, context):
     """
     user = request.user
     posts = {}
-    print(f"location: {context['location']}")
     if context['location'] == 'user':
         post_user = get_user_from_username(context['username'])
-        print(f"checking for posts for {context['username']}")
         # get posts by post_user, newer than timestamp
-        # posts = Post.objects.filter(user=post_user).filter(timestamp__gt=timestamp)
         posts = Post.objects.filter(user=post_user, timestamp__gte=timestamp)
     if context['location'] == 'public_feed':
-        print(f"chcking for public feed posts")
         # get posts by all users, newer than timestamp
         posts = Post.objects.filter(timestamp__gt=timestamp)
     if context['location'] == 'following':
-        print(f"checking for following posts")
         # get posts by followed users, newer than timestamp
         posts = Post.objects.filter(user__in=user.following.all()).filter(timestamp__gt=timestamp)
     if context['location'] == 'index':
-        print(f"checking for index posts")
         posts = Post.objects.filter(timestamp__gt=timestamp)
     if context['location'] == 'mentions':
-        print(f"checking for mentions")
         posts = Post.objects.filter(mentioned_users__in=[user], timestamp__gt=timestamp)
     # if we haven't created posts yet, return an error
     if  posts:

@@ -41,7 +41,7 @@ def account(request):
             if user is None:
                 return render(request, "network/account.html", {
                     "form": EditAccountForm(instance = utils.get_user_from_id(request.user.id)),
-                    "message": "Invalid password."
+                    "message": _("Invalid password.")
                 })
             if utils.check_username_validity(form.cleaned_data["username"]) == False:
                 user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field TODO refactor
@@ -60,7 +60,7 @@ def account(request):
             if new_password != new_password_confirm:
                 return render(request, "network/account.html", {
                     "form": EditAccountForm(instance = user),
-                    "message": "New passwords don't match."
+                    "message": _("New passwords don't match.")
                 })
             if new_password != None and new_password != "":
                 user.set_password(new_password)
@@ -74,7 +74,7 @@ def account(request):
             print(form.data)
             return render(request, "network/account.html", {
                 "form": EditAccountForm(instance = user),
-                "message": "Form data is invalid"
+                "message": _("Form data is invalid")
             })
         print("everything went good!")
         return render(request, "network/account.html", {
@@ -199,7 +199,7 @@ def register2(request):
         else:
             return render(request, "network/register2.html", {
                 "form": form,
-                "message": "Form data is invalid"
+                "message": _("Form data is invalid")
             })
 
 
@@ -241,7 +241,7 @@ def compose(request):
         post_text = form.cleaned_data["post_text"]
         if post_text == "":
             return JsonResponse({
-                "message": "You can't submit an empty post"
+                "message": _("You can't submit an empty post")
             }, status=400)
         user=request.user
         mentioned_users = utils.get_mentions_from_post(post_text)
@@ -252,7 +252,7 @@ def compose(request):
         return HttpResponseRedirect(request.headers['Referer'])
     else:
         return JsonResponse({
-            "message": "Form data invalid"
+            "message": _("Form data invalid")
         }, status=400)
 
 
@@ -263,7 +263,7 @@ def edit(request, post_id):
         new_text = data['new_text']
         if len(new_text) > 500:
             return JsonResponse({
-                "message": "Maximum post length is 500 characters",
+                "message": _("Maximum post length is 500 characters"),
                 "edited": False,
             }, status=400)
         post = utils.get_post_from_id(post_id)
@@ -271,12 +271,12 @@ def edit(request, post_id):
             post.text = new_text
             post.save()
             return JsonResponse({
-                "message": "Post edited successfully",
+                "message": _("Post edited successfully"),
                 "edited": True,
             }, status=201)
         else:
             return JsonResponse({
-                "message": "You are not authorized to edit this post",
+                "message": _("You are not authorized to edit this post"),
                 "edited": False,
             }, status=400)
 
@@ -288,34 +288,32 @@ def follow(request, user_id):
         # user is trying to follow themselves
         if user_id == user.id:
             return JsonResponse({
-                "error": "You cannot follow your own account."
+                "error": _("You cannot follow your own account.")
             }, status=400)
         else: 
             data = json.loads(request.body)
             user_to_follow = User.objects.get(id=user_id) 
             # good follow request
             if data['intent'] == 'follow' and user_to_follow not in user.following.all():
-                print("You are not currently following this user")
                 user.following.add(user_to_follow)
                 return JsonResponse({
-                    "message": f"followed user {user_to_follow}"
+                    "message": _(f"followed user {user_to_follow}")
                 }, status=201)
             # good unfollow request
             if data['intent'] == 'unfollow' and user_to_follow in user.following.all():
                 print("you are currently following this user")
                 user.following.remove(user_to_follow)
                 return JsonResponse({
-                    "message": f"unfollowed user {user_to_follow}"
+                    "message": _(f"unfollowed user {user_to_follow}")
                 }, status=201)
             # We reach this page if the intent does not match the current follow status
-            print("follow intent does not match current follow state")
             return JsonResponse({
-                "error": "follow intent does not match current follow state"
+                "error": _("follow intent does not match current follow state")
             }, status=400)
     # user did not make a put request
     else:
         return JsonResponse({
-            "error": "PUT request required."
+            "error": _("PUT request required.")
         }, status=400)
 
 
@@ -325,7 +323,7 @@ def get_notifications(request):
         user = request.user
         if user == None:
             return JsonResponse({
-                "error": "You are not logged in."
+                "error": _("You are not logged in.")
             }, status=400)
         # build a JSON response that contains any notifications
         # (for now just unread mentions, but might add more stuff ie DMs later)
@@ -335,7 +333,7 @@ def get_notifications(request):
         }, status=200)
     else:
         return JsonResponse({
-            "error": "PUT request required."
+            "error": _("PUT request required.")
         }, status=400)
 
 
@@ -348,7 +346,7 @@ def like(request, post_id):
         if data['like'] == True:
             user.liked_posts.add(post)
             return JsonResponse({
-                "message": "Post liked successfully",
+                "message": _("Post liked successfully"),
                 "post_id": post_id,
                 "is_liked": True,
                 "like_count": post.users_who_liked.count(),
@@ -356,7 +354,7 @@ def like(request, post_id):
         elif data['like'] == False:
             user.liked_posts.remove(post)
             return JsonResponse({
-                "message": "Post unliked successfully",
+                "message": _("Post unliked successfully"),
                 "post_id": post_id,
                 "is_liked": False,
                 "like_count": post.users_who_liked.count(),
@@ -364,7 +362,7 @@ def like(request, post_id):
     else:
         print("ERROR please only come here via PUT")
         return JsonResponse({
-            "error": "PUT request required."
+            "error": _("PUT request required.")
         }, status=400)
 
 
@@ -385,5 +383,5 @@ def new_posts(request):
         }, status=201)
     else:
         return JsonResponse({
-            "error": "GET request required."
+            "error": _("GET request required.")
         }, status=400)

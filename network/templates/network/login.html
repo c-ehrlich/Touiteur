@@ -1,5 +1,6 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
     Login
@@ -31,7 +32,7 @@
             </form>
 
             <div class="login-helper-text">
-                Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+                {% trans 'Don\'t have an account? ' %}<a href="{% url 'register' %}">{% trans 'Register here.' %}</a>
             </div>
         </div>
     </div>

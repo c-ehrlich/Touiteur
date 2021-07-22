@@ -1,5 +1,6 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
     Following
@@ -9,14 +10,14 @@
 
     <div class="section-identifier">
         <div class="section-identifier-inner">
-            Following
+            {% trans 'Following' %}
         </div>
     </div>
 
     <div id="new-posts-container">
         <a href="" class="no-decoration-link">
             <div hidden id="new-posts-inner">
-                No new posts (you should not see this)
+                {% trans 'No new posts (you should not see this)' %}
             </div>
         </a>
     </div>

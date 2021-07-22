@@ -1,11 +1,10 @@
 {% load static %}
-
 {% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}Social Network{% endblock %}</title>
+        <title>{% block title %}{% trans 'Social Network' %}{% endblock %}</title>
         <script src="https://kit.fontawesome.com/8309b215cf.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
@@ -26,7 +25,7 @@
         <div id="outermost-container" class="{{ user.theme|default:'_theme_light' }}">
             <nav class="navbar navbar-expand-md navbar-override-bg-color {% if user.theme == '_theme_dark' %}navbar-dark bg-dark{% else %}navbar-light bg-white
             {% endif %}">
-                <a class="navbar-brand" href="{% url 'index' %}">Network</a>
+                <a class="navbar-brand" href="{% url 'index' %}">{% trans 'Network' %}</a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#network-navbar" aria-controls="network-navbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -40,15 +39,15 @@
                             </li>
                         {% endif %}
                         <li class="nav-item">
-                          <a class="nav-link" href="{% url 'index' %}" id="navbar-index">All Posts</a>
+                          <a class="nav-link" href="{% url 'index' %}" id="navbar-index">{% trans 'All Posts' %}</a>
                         </li>
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'following' %}" id="navbar-following">Following</a>
+                                <a class="nav-link" href="{% url 'following' %}" id="navbar-following">{% trans 'Following' %}</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link align-row-vertical" href="{% url 'mentions' %}" id="navbar-mentions">
-                                    <div>Mentions</div>
+                                    <div>{% trans 'Mentions' %}</div>
                                     <div id="new-mentions-count"
                                         {% if user.mentions_since_last_checked == 0 %}
                                             hidden
@@ -62,17 +61,17 @@
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'account' %}" id="navbar-account">Account</a>
+                                <a class="nav-link" href="{% url 'account' %}" id="navbar-account">{% trans 'Account' %}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                                <a class="nav-link" href="{% url 'logout' %}">{% trans 'Log Out' %}</a>
                             </li>
                         {% else %}
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}" id="navbar-login">Log In</a>
+                                <a class="nav-link" href="{% url 'login' %}" id="navbar-login">{% trans 'Log In' %}</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'register' %}" id="navbar-register">Register</a>
+                                <a class="nav-link" href="{% url 'register' %}" id="navbar-register">{% trans 'Register' %}</a>
                             </li>
                         {% endif %}
                     </ul>

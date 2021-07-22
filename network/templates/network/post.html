@@ -1,8 +1,9 @@
 {% extends "network/layout.html" %}
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-    Post by {{ post.user.displayname }} (@{{ post.user.username }})
+    {% trans 'Post by {{ post.user.displayname }} (@{{ post.user.username }})' %}
 {% endblock %}
 
 {% block body %}
@@ -29,9 +30,9 @@
                 {% if user.is_authenticated and user != post.user %}
                     <div id="follow-button-div">
                         {% if post.user in user.following.all %}
-                            <button id="unfollow-button">Unfollow</button>
+                            <button id="unfollow-button">{% trans 'Unfollow' %}</button>
                         {% else %}
-                            <button id="follow-button">Follow</button>
+                            <button id="follow-button">{% trans 'Follow' %}</button>
                         {% endif %}
                     </div>
                 {% endif %}
@@ -67,7 +68,7 @@
                 {% if user.is_authenticated %}
                     <!-- edit button -->
                     {% if post.user == user %}
-                        <div class="post-edit-button" id="eb-{{ post.id }}">Edit</div>
+                        <div class="post-edit-button" id="eb-{{ post.id }}">{% trans 'Edit' %}</div>
                         <!-- <button class="post-edit-button" id="eb-{{ post.id }}">Edit</button> -->
                     {% endif %}
                 {% endif %}

@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div id="posts-all-container-div">
     {% for post in posts %}
         <div class="post-div" id="post-div{{ post.id }}">
@@ -54,7 +56,7 @@
                     {% if user.is_authenticated %}
                         <!-- edit button -->
                         {% if post.user == user %}
-                            <div class="post-edit-button" id="eb-{{ post.id }}">Edit</div>
+                            <div class="post-edit-button" id="eb-{{ post.id }}">{% trans 'Edit' %}</div>
                         {% endif %}
                     {% endif %}
                 </div>
@@ -63,7 +65,7 @@
     {% empty %}
         <div class="section-identifier no-top-padding">
             <div class="no-posts-found">
-                No posts found 🙁
+                {% trans 'No posts found 🙁' %}
             </div>
         </div>
     {% endfor %}

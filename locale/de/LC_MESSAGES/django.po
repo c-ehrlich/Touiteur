@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-21 19:20+0200\n"
+"POT-Creation-Date: 2021-07-22 17:31+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,13 +18,168 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
+#: network/forms.py:73
+msgid "Up to 20 characters, alphanumeric"
+msgstr "Bis zu 20 Zeichen, alphanumerisch"
+
+#: network/forms.py:83
+msgid "Up to 50 characters"
+msgstr "Bis zu 50 Zeichen"
+
+#: network/templates/network/account.html:12
+msgid "Edit Account"
+msgstr "Konto Bearbeiten"
+
+#: network/templates/network/account.html:65
+msgid "New Password"
+msgstr "Neues Passwort"
+
+#: network/templates/network/account.html:70
+msgid "Confirm New Password"
+msgstr "Neues Passwort Bestätigen"
+
+#: network/templates/network/account.html:83
+#: network/templates/network/register2.html:41
+msgid "Upload new avatar"
+msgstr "Neues Profilbild Hochladen"
+
+#: network/templates/network/account.html:86
+#: network/templates/network/register2.html:44
+msgid "Note: The avatar won"
+msgstr ""
+
+#: network/templates/network/account.html:93
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: network/templates/network/account.html:94
+msgid "Save"
+msgstr "Speichern"
+
+#: network/templates/network/following.html:12
+#: network/templates/network/layout.html:47
+#: network/templates/network/user.html:45
+msgid "Following"
+msgstr ""
+
+#: network/templates/network/following.html:19
+#: network/templates/network/index.html:25
+#: network/templates/network/mentions.html:22
+#: network/templates/network/user.html:62
+msgid "No new posts (you should not see this)"
+msgstr ""
+
 #: network/templates/network/index.html:18
 msgid "Public Timeline"
 msgstr "Alle Beiträge"
 
+#: network/templates/network/layout.html:8
+msgid "Social Network"
+msgstr ""
+
+#: network/templates/network/layout.html:29
+msgid "Network"
+msgstr ""
+
+#: network/templates/network/layout.html:43
+msgid "All Posts"
+msgstr "Alle Beiträge"
+
+#: network/templates/network/layout.html:51
+#: network/templates/network/mentions.html:15
+msgid "Mentions"
+msgstr ""
+
+#: network/templates/network/layout.html:65
+msgid "Account"
+msgstr "Mein Konto"
+
+#: network/templates/network/layout.html:68
+msgid "Log Out"
+msgstr "Ausloggen"
+
+#: network/templates/network/layout.html:72
+msgid "Log In"
+msgstr "Einloggen"
+
+#: network/templates/network/layout.html:75
+#: network/templates/network/register.html:12
+msgid "Register"
+msgstr "Registrieren"
+
+#: network/templates/network/login.html:34
+msgid "Don"
+msgstr ""
+
+#: network/templates/network/post.html:5
+msgid "Post by {{ post.user.displayname }} (@{{ post.user.username }})"
+msgstr "Beitrag von {{ post.user.displayname }} (@{{ post.user.username }})"
+
+#: network/templates/network/post.html:32
+#: network/templates/network/user.html:28
+msgid "Unfollow"
+msgstr ""
+
+#: network/templates/network/post.html:34
+#: network/templates/network/user.html:30
+msgid "Follow"
+msgstr ""
+
+#: network/templates/network/post.html:70
+#: network/templates/network/posts.html:57
+msgid "Edit"
+msgstr "Bearbeiten"
+
+#: network/templates/network/posts.html:66
+msgid "No posts found 🙁"
+msgstr "Keine Beiträge gefunden 🙁"
+
+#: network/templates/network/register.html:58
+#, python-format
+msgid "Already have an account? <a href=\"{%% url "
+msgstr ""
+
+#: network/templates/network/register2.html:5
+#: network/templates/network/register2.html:13
+msgid "Add Account Details"
+msgstr ""
+
+#: network/templates/network/register2.html:16
+msgid ""
+"Here you can add additional information to your account. This is optional, "
+"and you can also do it later by visiting the account settings."
+msgstr ""
+
+#: network/templates/network/user.html:39
+msgid "Posts"
+msgstr "Beiträge"
+
+#: network/templates/network/user.html:41
+msgid "Liked Posts"
+msgstr ""
+
+#: network/templates/network/user.html:47
+msgid "Followers"
+msgstr ""
+
+#: network/views.py:44
+#, fuzzy
+msgid "Invalid password."
+msgstr "Passwort ist ungültig."
+
 #: network/views.py:51 network/views.py:164
 msgid "Username is not valid."
 msgstr "Ungültiger Benutzername."
+
+#: network/views.py:63
+#, fuzzy
+#| msgid "Passwords must match."
+msgid "New passwords don't match."
+msgstr "Passwörter müssen übereinstimmen."
+
+#: network/views.py:77 network/views.py:202
+msgid "Form data is invalid"
+msgstr ""
 
 #: network/views.py:117
 msgid "Invalid username and/or password."
@@ -37,6 +192,64 @@ msgstr "Passwörter müssen übereinstimmen."
 #: network/views.py:175
 msgid "Username already taken."
 msgstr "Dieser Benutzername existiert bereits."
+
+#: network/views.py:244
+msgid "You can't submit an empty post"
+msgstr ""
+
+#: network/views.py:255
+msgid "Form data invalid"
+msgstr ""
+
+#: network/views.py:266
+msgid "Maximum post length is 500 characters"
+msgstr "Beiträge dürfen höchstens 500 Zeichen lang sein"
+
+#: network/views.py:274
+msgid "Post edited successfully"
+msgstr "Beitrag erfolgreich bearbeitet"
+
+#: network/views.py:279
+msgid "You are not authorized to edit this post"
+msgstr ""
+
+#: network/views.py:291
+msgid "You cannot follow your own account."
+msgstr ""
+
+#: network/views.py:300
+#, python-brace-format
+msgid "followed user {user_to_follow}"
+msgstr ""
+
+#: network/views.py:307
+#, python-brace-format
+msgid "unfollowed user {user_to_follow}"
+msgstr ""
+
+#: network/views.py:311
+msgid "follow intent does not match current follow state"
+msgstr ""
+
+#: network/views.py:316 network/views.py:336 network/views.py:365
+msgid "PUT request required."
+msgstr ""
+
+#: network/views.py:326
+msgid "You are not logged in."
+msgstr "Du bist nicht eingeloggt."
+
+#: network/views.py:349
+msgid "Post liked successfully"
+msgstr ""
+
+#: network/views.py:357
+msgid "Post unliked successfully"
+msgstr ""
+
+#: network/views.py:386
+msgid "GET request required."
+msgstr ""
 
 #~ msgid "testmsg"
 #~ msgstr "test de"

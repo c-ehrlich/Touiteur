@@ -1,6 +1,9 @@
 from django import forms
 from django.core.files.images import get_image_dimensions
 
+from django.utils.translation import ugettext as _
+from django.utils.translation import ugettext_lazy as _lazy
+
 from network.models import User
 
 
@@ -70,7 +73,7 @@ class RegisterAccountForm(forms.Form):
         max_length = 20,
         required = True,
         widget=forms.TextInput(attrs={
-            'placeholder': 'Up to 20 characters, alphanumeric',
+            'placeholder': _('Up to 20 characters, alphanumeric'),
             'class': 'form-control reg-login-form-item form-control-left-padding-for-at-sign',
             'autofocus': True,
         })
@@ -80,7 +83,7 @@ class RegisterAccountForm(forms.Form):
         max_length = 50,
         required = True,
         widget=forms.TextInput(attrs={
-            'placeholder': 'Up to 50 characters',
+            'placeholder': _('Up to 50 characters'),
             'class': 'form-control reg-login-form-item',
         })
     )
