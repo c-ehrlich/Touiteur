@@ -59,9 +59,23 @@ function create_post_text_with_mention_links(post_text) {
 }
 
 
+// Cancels post editing
+function edit_post_cancel(post_id, original_text) {
+  document.querySelector(`#post-text-${post_id}`).innerHTML = original_text;
+  // hide the cancel button
+  document.querySelector(`#ecb-${post_id}`).setAttribute('hidden', 'hidden');
+  // set the edit button innerhtml to save and give it the save eventlistener
+  let save_button = document.querySelector(`#eb-${post_id}`);
+  save_button.innerHTML = '<i class="far fa-edit"></i>';
+  save_button.classList.remove('post-save-edits-button');
+  save_button.addEventListener('click', event => {
+    edit_post_text(post_id);
+  }, { once: true } );
+}
+
+
 // Attempts to submit edited post
 function edit_post_submit(post_id, original_text) {
-  console.log(`submit edit on post ${post_id}`);
   const save_button = document.querySelector(`#eb-${post_id}`);
   const text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
   new_text = text_edit_input.value;
@@ -83,11 +97,12 @@ function edit_post_submit(post_id, original_text) {
       document.querySelector(`#post-text-${post_id}`).innerHTML = original_text;
     }
     let save_button = document.querySelector(`#eb-${post_id}`);
-    save_button.innerHTML = "Edit";
+    save_button.innerHTML = '<i class="far fa-edit"></i>';
     save_button.classList.remove('post-save-edits-button');
     save_button.addEventListener('click', event => {
       edit_post_text(post_id);
     }, { once: true } );
+    document.querySelector(`#ecb-${post_id}`).setAttribute('hidden', 'hidden');
   })
   // TODO: do this without 'original_text' variable - use JSON from backend instead
 }
@@ -116,12 +131,17 @@ function edit_post_text(post_id) {
   text_edit_input.focus();
   // Turn the edit button into save button
   let save_button = document.querySelector(`#eb-${post_id}`);
-  save_button.innerHTML = "Save";
+  save_button.innerHTML = '<i class="fas fa-check"></i>';
   save_button.classList.add('post-save-edits-button');
   save_button.addEventListener('click', event => {
     edit_post_submit(post_id, original_text);
   }, { once: true } );
-  // add edit_post_save function eventListener to button and textfield
+  // make the cancel button visible and give it an eventlistener
+  let edit_cancel_button = document.querySelector(`#ecb-${post_id}`);
+  edit_cancel_button.removeAttribute('hidden');
+  edit_cancel_button.addEventListener('click', () => {
+    edit_post_cancel(post_id, original_text);
+  })
 }
 
 

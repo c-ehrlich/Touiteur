@@ -56,7 +56,10 @@
                     {% if user.is_authenticated %}
                         <!-- edit button -->
                         {% if post.user == user %}
-                            <div class="post-edit-button" id="eb-{{ post.id }}">{% trans 'Edit' %}</div>
+                            <div class="post-bottom-row-right-div">
+                                <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
+                            </div>
                         {% endif %}
                     {% endif %}
                 </div>

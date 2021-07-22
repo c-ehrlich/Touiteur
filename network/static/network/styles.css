@@ -223,15 +223,22 @@ body, html {
 .post-edit-button {
     border: none;
     background-color: transparent;
-    color: var(--color-text-lowcontrast);
+    color: var(--color-text-medcontrast);
     cursor: pointer;
 }
 .post-save-edits-button {
     color: var(--color-text-default);
 }
 
+.post-edit-cancel-button {
+    color: var(--color-text-medcontrast);
+    margin-right: 12px;
+}
+
 .post-edit-input {
     width: 100%;
+    background-color: var(--color-input-bg);
+    color: var(--color-text-default);
 }
 
 .post-bottom-row-div {
@@ -296,6 +303,12 @@ body, html {
 }
 .post-like-count {
     margin-left: 6px;
+}
+
+.post-bottom-row-right-div {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
 }
 
 
