@@ -1,3 +1,5 @@
+postgres
+psycopg2
 gettext
 Pillow
 sorl-thumbnail

@@ -1,10 +1,23 @@
 from django.contrib.auth.models import AbstractUser
+from django.contrib.postgres.fields import ArrayField
 from django.db import models
+from django.utils.timezone import now
 from sorl.thumbnail import ImageField
 from PIL import Image, ImageOps, ExifTags
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
+
+
+class Conversation(models.Model):
+    user_ids = ArrayField(
+        models.PositiveIntegerField(),
+        size=2,
+    )
+    last_message_timestamp = models.DateTimeField(
+        default=now,
+        blank=True,
+    )
 
 
 class DirectMessage(models.Model):
@@ -39,6 +52,13 @@ class DirectMessage(models.Model):
     is_read = models.BooleanField(
         default=False
     )
+    conversation = models.ForeignKey(
+        "Conversation",
+        on_delete=models.CASCADE,
+        related_name="messages",
+        null=True,
+        blank=True,
+    )
 
     class Meta:
         get_latest_by = '-timestamp'
@@ -49,6 +69,26 @@ class DirectMessage(models.Model):
     def __str__(self):
         dm = (self.text[:50] + '..') if len(self.text) > 50 else self.text
         return f"{self.sender.username} to f{self.recipient.username} at {self.timestamp}: {dm}"
+
+    def save(self, *args, **kwargs):
+        print("in custom DM save")
+        # try: 
+            # conversation = Conversation.objects.get(
+            #     user_ids=set([self.sender.id, self.recipient.id])
+            # )
+        conversation = Conversation.objects.filter(
+            user_ids__contains=[self.sender.id, self.recipient.id]
+        ).first()
+        # except Conversation.DoesNotExist:
+        if conversation is None:
+            print("no conversation existed for these users. let's create one")
+            conversation = Conversation.objects.create(
+                user_ids=[self.sender.id, self.recipient.id]
+            )
+        conversation.last_message_timestamp=self.timestamp,
+        print(conversation)
+        # conversation.save()
+        super(DirectMessage, self).save(*args, **kwargs)
 
 
 class User(AbstractUser):
@@ -96,8 +136,12 @@ class User(AbstractUser):
     )
 
     mentions_since_last_checked = models.PositiveIntegerField(
-        default = 0,
+        default=0,
         verbose_name="Mentions since last checked"
+    )
+    DMs_since_last_checked = models.PositiveIntegerField(
+        default=0,
+        verbose_name="DMs since last checked",
     )
 
     theme = models.CharField(

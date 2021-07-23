@@ -83,6 +83,18 @@ body, html {
     margin-top: 8px;
 }
 
+.section-identifier-inner-leftright {
+    width: 100%;
+    padding: 12px;
+    color: var(--color-text-default);
+    background-color: var(--color-box-bg);
+    border: 1px solid var(--color-box-border);
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;;
+    justify-content: space-between;
+}
+
 #compose-view-outer {
     margin: auto;
     width: var(--item-width);
@@ -854,4 +866,8 @@ input[type="file"] {
 
 #compose-form-character-count-end-color {
     color: var(--color-button-hover-bad);
+}
+
+.mt0 {
+    margin-top: 0;
 }

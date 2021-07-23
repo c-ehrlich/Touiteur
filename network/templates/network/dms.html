@@ -1,0 +1,79 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'DMs' %}
+{% endblock %}
+
+{% block body %}
+    <div class="section-identifier">
+        <div class="section-identifier-inner">
+            {% trans 'Direct Messages' %}
+        </div>
+    </div>
+
+
+    <!-- Thing to start a new thread (or put it above?) -->
+    <!-- should the new thread thing be a separate html page? -->
+    <div class="section-identifier no-top-padding">
+        <div class="section-identifier-inner-leftright">
+            <div>{% trans 'New Conversation' %}</div>
+            <div>
+                <i class="fas fa-comment-medical"></i>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="new-posts-container">
+        <a href="" class="no-decoration-link">
+            <div hidden id="new-posts-inner">
+                {% trans 'No new messages (you should not see this)' %}
+            </div>
+        </a>
+    </div>
+
+
+    <!-- List of inbox messages -->
+    <div id="posts-all-container-div">
+        {% for thread in threads %}
+            <div class="inbox-div"> <!-- flex-row -->
+                <div class="inbox-avatar-div">
+                    <a href="{% url 'user' thread.convo-partner.username %}">
+                        <img class="profile-pic" src="{{ thread.convo-partner.avatar.url }}">
+                    </a>
+                </div>
+                <div class="inbox-content-div"> <!-- flex-column -->
+                    <div class="thread-username-header-div"> <!-- flex row -->
+                        <div> <!-- give a class -->
+                            {{ thread.convo-partner.displayname }}
+                        </div>
+                        <div> <!-- give a class -->
+                            {{ thread.convo-partner.username }}
+                        </div>
+                    </div>
+                    <div>
+                        Text of newest message (or like first 50 chars? Is this a model field?)
+                    </div>
+                </div>
+                <div> <!-- give a class -->
+                    2h
+                </div>
+            </div>
+        {% empty %}
+            <div class="section-identifier no-top-padding">
+                <div class="no-posts-found">
+                    {% trans 'You don\'t have any messages 🙁' %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+
+    <!-- Maybe pagination? -->
+
+{% endblock %}
+
+{% block script %}
+{% endblock %}

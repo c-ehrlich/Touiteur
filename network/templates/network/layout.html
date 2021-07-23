@@ -61,6 +61,17 @@
                     <ul class="navbar-nav">
                         {% if user.is_authenticated %}
                             <li class="nav-item">
+                                <a class="nav-link align-row-vertical" href="{% url 'dms' %}" id="navbar-DMs">
+                                    <div>{% trans 'DMs' %}</div>
+                                    <div id="new-DMs-count"
+                                        {% if user.DMs_since_last_checked == 0 %}
+                                            hidden
+                                        {% endif %}>
+                                        {{ user.DMs_since_last_checked }}
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{% url 'account' %}" id="navbar-account">{% trans 'Account' %}</a>
                             </li>
                             <li class="nav-item">

@@ -10,6 +10,8 @@ urlpatterns = [
     # View Routes
     path("", views.index, name="index"),
     path("account", views.account, name="account"),
+    path("dms", views.dms, name="dms"),
+    path("dms/<str:username>", views.dm_thread, name="dm_thread"),
     path("following", views.following, name="following"),
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),

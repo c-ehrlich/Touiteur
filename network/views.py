@@ -68,7 +68,6 @@ def account(request):
 
             form.save()
 
-
         # form is not valid
         else:
             print(form.data)
@@ -80,6 +79,18 @@ def account(request):
         return render(request, "network/account.html", {
             "form": EditAccountForm(instance = utils.get_user_from_id(request.user.id))
         })
+
+
+@login_required
+def dms(request):
+    return render(request, "network/dms.html", {
+        
+    })
+
+
+@login_required
+def dm_thread(request):
+    pass
 
 
 @login_required
