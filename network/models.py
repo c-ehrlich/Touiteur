@@ -7,6 +7,50 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 
 
+class DirectMessage(models.Model):
+    # for now there's just a recipient and user field
+    # so when the user account gets deleted, the DMs disappear
+    # maybe that's not the best way of doing it IRL?
+    # if someone deletes their account, you probably still want to be able
+    # to see their messages, for example to prove that they
+    # were harrasssing you
+    # one solution might be to have additonal sender_username and
+    # recipient_username fields that get populated on_delete so the
+    # evidence of the post remains
+    sender = models.ForeignKey(
+        "User",
+        on_delete=models.CASCADE,
+        related_name="sent_DMs",
+        verbose_name="Sender",
+    )
+    recipient = models.ForeignKey(
+        "User",
+        on_delete=models.CASCADE,
+        related_name="received_DMs",
+        verbose_name="Recipient",
+    )
+    text = models.TextField(
+        default="",
+        max_length=140,
+    )
+    timestamp = models.DateTimeField(
+        auto_now_add=True
+    )
+    is_read = models.BooleanField(
+        default=False
+    )
+
+    class Meta:
+        get_latest_by = '-timestamp'
+        ordering = ['-timestamp']
+        verbose_name = 'DM'
+        verbose_name_plural = 'DMs'
+
+    def __str__(self):
+        dm = (self.text[:50] + '..') if len(self.text) > 50 else self.text
+        return f"{self.sender.username} to f{self.recipient.username} at {self.timestamp}: {dm}"
+
+
 class User(AbstractUser):
     THEMES = (
         ('_theme_light', 'Light Mode'),
@@ -26,13 +70,9 @@ class User(AbstractUser):
         null=True,
         blank=True,
         editable=True,
-        # help_text="Avatar",
         verbose_name="Avatar",
         upload_to="avatars",
-        # default="avatars/default/default_avatar.png", # OR DEFAULT TO NONE AND MAKE IT CONTEXTUAL IN VIEWS?
     )
-    # avatar_height = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
-    # avatar_width = models.PositiveIntegerField(null=True, blank=True, editable=False, default="200")
 
     displayname = models.TextField(
         default = "",

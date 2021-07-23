@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import User, Post
+from .models import User, Post, DirectMessage
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -14,3 +14,4 @@ class PostAdmin(admin.ModelAdmin):
 
 admin.site.register(User)
 admin.site.register(Post, PostAdmin)
+admin.site.register(DirectMessage)
