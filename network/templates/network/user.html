@@ -21,9 +21,13 @@
                     <div id="user-profile-displayname">{{ view_user.displayname }}</div>
                     <div id="user-profile-username">@{{ view_user.username }}</div>
                 </div>
+                <div>
                 <div id="user-profile-follow-div">
                     <!-- TODO check if this breaks when user is not logged in -->
                     {% if user.is_authenticated and user != view_user %}
+                        <div id="user-profile-send-dm-div">
+                            <i class="far fa-envelope"></i>
+                        </div>
                         <div id="follow-button-div">
                             {% if view_user in user.following.all %}
                                 <button id="unfollow-button">{% trans 'Unfollow' %}</button>
@@ -32,6 +36,7 @@
                             {% endif %}
                         </div>
                     {% endif %}
+                </div>
                 </div>
                 <div id="user-profile-info-div">
                     <div id="user-profile-bio">{{ view_user.bio }}</div>

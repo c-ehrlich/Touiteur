@@ -385,9 +385,30 @@ body, html {
 }
 #user-profile-follow-div {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    /* align-items: flex-end; */
 }
+#user-profile-send-dm-div {
+    margin-right: 12px;
+    font-size: 24px;
+    /* border: 1px solid black; */
+    background-color: #54b4e6; /* TODO MAKE VAR */
+    color: white;
+    border-radius: 50%;
+    height: 42px;
+    width: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 200ms 50ms;
+}
+#user-profile-send-dm-div:hover {
+    background-color: #1d86bf;
+    cursor: pointer;
+}
+
 #user-profile-info-div {
     grid-area: info;
     display: flex;
@@ -465,7 +486,7 @@ body, html {
     background-color: #54b4e6;
     color: white;
     /* TODO: TRANSITION DOESN'T WORK */
-    transition: all 0.2s;
+    transition: all 200ms 50ms;
 }
 #follow-button {
 
