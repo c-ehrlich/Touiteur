@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   // send a request to make the thread 'read'
-  const thread_id = document.querySelector('#thread-id');
+  const thread_id = document.querySelector('#thread-id').innerHTML;
+  console.log(`thread_id: ${thread_id}`)
   setMessagesRead(thread_id);
 });
 
@@ -11,7 +12,7 @@ function setMessagesRead(thread_id) {
   fetch(`/thread_read_status/${thread_id}`, {
     method: 'PUT',
     headers: {
-      "X-CSRFToken": getCookie('csrftoken'),
+      'X-CSRFToken': getCookie('csrftoken')
     },
   })
   .then(response => {
@@ -23,4 +24,5 @@ function setMessagesRead(thread_id) {
   .catch(error => {
     console.log(error);
   });
+  console.log("attempted to set messages as read")
 }

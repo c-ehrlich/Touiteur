@@ -91,9 +91,19 @@ def dms(request):
 
 @login_required
 def dm_thread(request, username):
-    # TODO get posts
+    convo_partner = utils.get_user_from_username(username)
+    page = request.GET.get('page', 1)
+    user_id = request.user.id
+    convo_partner_id = convo_partner.id
+    conversation = Conversation.objects.get(
+        user_ids=[user_id, convo_partner_id]
+    )
+    thread = conversation.messages.all()
+    p = Paginator(thread, utils.PAGINATION_POST_COUNT)
+    # TODO if thread doesn't exist, give error
     return render(request, "network/dm_thread.html", {
-
+        "thread": p.page(page),
+        "thread_id": conversation.id,
     })
 
 
@@ -107,11 +117,16 @@ def following(request):
 
 def index(request):
     """RETURNS THE INDEX PAGE"""
-    posts = utils.get_posts(request)
-    return render(request, "network/index.html", {
-        "posts": posts,
-        "new_post_form": NewPostForm(auto_id=True),
-    })
+    if request.method == "GET":
+        posts = utils.get_posts(request)
+        return render(request, "network/index.html", {
+            "posts": posts,
+            "new_post_form": NewPostForm(auto_id=True),
+        })
+    else:
+        return JsonResponse({
+            "error": "GET request required"
+        }, 400)
 
 
 def login_view(request):

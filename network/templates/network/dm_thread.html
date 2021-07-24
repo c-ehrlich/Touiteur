@@ -8,7 +8,7 @@
 
 {% block body %}
     <!-- this is used for JS stuff -->
-    <div id="thread-id" hidden>{{ thread.id }}</div>
+    <div id="thread-id" hidden>{{ thread_id }}</div>
 
     <div class="section-identifier">
         <div class="section-identifier-inner">
@@ -16,10 +16,15 @@
         </div>
     </div>
 
+    {% for message in thread %}
+        <div>{{ message }}</div>
+    {% endfor %}
+
     {% include 'network/pagination.html' %}
 
 {% endblock %}
 
 {% block script %}
     <script src="{% static 'network/dm_thread.js' %}"></script>
+    <script src="{% static 'network/utils.js' %}"></script>
 {% endblock %}
