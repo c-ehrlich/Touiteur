@@ -29,6 +29,7 @@ urlpatterns = [
     path("follow/<int:user_id>", views.follow, name="follow"),
     path("like/<int:post_id>", views.like, name="like"),
     path("new_posts", views.new_posts, name="new_posts"),
+    path("thread_read_status/<int:thread_id>", views.thread_read_status, name="thread_read_status"),
 
     # Debug Routes
     path('__debug__/', include(debug_toolbar.urls)),

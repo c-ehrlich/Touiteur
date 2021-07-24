@@ -11,7 +11,7 @@ from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as _lazy
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, RegisterAccountStage2Form
-from network.models import User, Post
+from network.models import User, Post, Conversation
 from network import utils
 
 # TODO temp imports remove later
@@ -90,9 +90,10 @@ def dms(request):
 
 
 @login_required
-def dm_thread(request):
+def dm_thread(request, username):
+    # TODO get posts
     return render(request, "network/dm_thread.html", {
-        
+
     })
 
 
@@ -398,4 +399,27 @@ def new_posts(request):
     else:
         return JsonResponse({
             "error": _("GET request required.")
+        }, status=400)
+
+def thread_read_status(request, thread_id):
+    """marks all unread DMs in a thread as read"""
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        thread = Conversation.objects.get(id=data['thread_id'])
+        # TODO make sure the user is actually in the thread
+        try:
+            for message in thread.messages.all():
+                # TODO: check 1. user is the RECIPIENT 2. message is unread
+                message.is_read = True
+                message.save()
+            return JsonResponse({
+                "message": _("All posts marked as read")
+            }, status=201)
+        except Exception:
+            return JsonResponse({
+                "error": _("Error setting thread to read")
+            }, status=500)
+    else:
+        return JsonResponse({
+            "error": _("PUT request required")
         }, status=400)
