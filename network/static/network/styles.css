@@ -237,6 +237,11 @@ body, html {
     background-color: transparent;
     color: var(--color-text-medcontrast);
     cursor: pointer;
+    transition: all 200ms ease-out 50ms;
+}
+.post-edit-button:hover {
+    color: var(--color-text-default);
+    transform: scale(1.1);
 }
 .post-save-edits-button {
     color: var(--color-text-default);
@@ -245,6 +250,11 @@ body, html {
 .post-edit-cancel-button {
     color: var(--color-text-medcontrast);
     margin-right: 12px;
+    transition: all 200ms ease-out 50ms;
+}
+.post-edit-cancel-button:hover {
+    color: var(--color-button-hover-bad);
+    transform: scale(1.1);
 }
 
 .post-edit-input {
