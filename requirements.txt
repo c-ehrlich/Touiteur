@@ -1,6 +1,2 @@
-postgres
-psycopg2
-gettext
 Pillow
-pytz
 sorl-thumbnail

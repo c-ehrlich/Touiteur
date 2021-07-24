@@ -31,7 +31,6 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    # stoack
     'network',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,22 +38,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # custom
-    'debug_toolbar',
     'sorl.thumbnail',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware', # this is custom!
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware', # this is custom!
 ]
 
 ROOT_URLCONF = 'project4.urls'
@@ -81,24 +75,12 @@ WSGI_APPLICATION = 'project4.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cehrlich',
-        'USER': 'cehrlich',
-        'PASSWORD': '',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
 
 AUTH_USER_MODEL = "network.User"
 
@@ -126,16 +108,6 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-LANGUAGES = [
-    ('en-US', 'English (US)'),
-    ('de', 'German'),
-    ('ja', 'Japanese'),
-]
-
-LOCALE_PATHS = [
-    os.path.join(BASE_DIR, 'locale'),
-]
-
 TIME_ZONE = 'UTC'
 
 USE_I18N = True
@@ -155,8 +127,3 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # url to access our uploaded files
 MEDIA_URL = '/media/'
-
-# internal IPs for debug toolbar
-INTERNAL_IPS = [
-    '127.0.0.1',
-]

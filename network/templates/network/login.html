@@ -1,53 +1,24 @@
 {% extends "network/layout.html" %}
-{% load static %}
-{% load i18n %}
-
-{% block title %}
-    Login
-{% endblock %}
 
 {% block body %}
 
-    <div class="section-identifier">
-        <div class="section-identifier-inner">
-            Login
+    <h2>Login</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" type="text" name="username" placeholder="Username">
         </div>
-    </div>
-
-    <div class="reg-login-outer">
-        <div class="reg-login-inner">
-            {% if message %}
-                <div>{{ message }}</div>
-            {% endif %}
-
-            <form action="{% url 'login' %}" method="post" class="login-form">
-                {% csrf_token %}
-                <div class="form-group reg-login-form-item input-with-at-sign">
-                    <input autofocus class="form-control form-control-left-padding-for-at-sign" type="text" name="username" placeholder="Username">
-                </div>
-                <div class="form-group reg-login-form-item">
-                    <input class="form-control" type="password" name="password" placeholder="Password">
-                </div>
-                <input class="btn btn-primary" type="submit" value="Login">
-            </form>
-
-            <div class="login-helper-text">
-                {% trans 'Don\'t have an account? ' %}<a href="{% url 'register' %}">{% trans 'Register here.' %}</a>
-            </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
         </div>
-    </div>
+        <input class="btn btn-primary" type="submit" value="Login">
+    </form>
 
-{% endblock %}
+    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
 
-{% block script %}
-    <script src="{% static 'network/posts.js' %}"></script>
-    <script src="{% static 'network/utils.js' %}"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.navbar-active-item').forEach(item => {
-          item.classList.remove('navbar-active-item');
-        });
-        document.querySelector('#navbar-login').classList.add('navbar-active-item');
-      });
-    </script>
 {% endblock %}

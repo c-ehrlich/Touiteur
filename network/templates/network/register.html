@@ -1,77 +1,30 @@
 {% extends "network/layout.html" %}
-{% load static %}
-{% load i18n %}
-
-{% block title %}
-    Register
-{% endblock %}
 
 {% block body %}
 
-    <div class="section-identifier">
-        <div class="section-identifier-inner">
-            {% trans 'Register' %}
+    <h2>Register</h2>
+
+    {% if message %}
+        <div>{{ message }}</div>
+    {% endif %}
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" autofocus type="text" name="username" placeholder="Username">
         </div>
-    </div>
-
-    <div class="reg-login-outer">
-        <div class="reg-login-inner">
-            {% if message %}
-                <div class="alert alert-danger" role="alart">{{ message }}</div>
-            {% endif %}
-
-            <form action="{% url 'register' %}" method="post">
-                {% csrf_token %}
-                {{ form.non_field.errors }}
-                <div class="form-group">
-                    <div class="formerror-text">{{ form.username.errors }}</div>
-                    <label for="{{ form.username.id_for_label }}" class="formlabel-text">{{ form.username.label }}</label>
-                    <div class="input-with-at-sign">
-                        {{ form.username }}
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="formerror-text">{{ form.displayname.errors }}</div>
-                    <label for="{{ form.displayname.id_for_label }}" class="formlabel-text">{{ form.displayname.label }}</label>
-                    {{ form.displayname }}
-                </div>
-                <div class="form-group">
-                    <div class="formerror-text">{{ form.email.errors }}</div>
-                    <label for="{{ form.email.id_for_label }}" class="formlabel-text">{{ form.email.label }}</label>
-                    {{ form.email }}
-                </div>
-                <div class="form-group">
-                    <!-- <input class="form-control" type="password" name="password" placeholder="Password"> -->
-                    <div class="formerror-text">{{ form.password.errors }}</div>
-                    <label for="{{ form.password.id_for_label }}" class="formlabel-text">{{ form.password.label }}</label>
-                    {{ form.password }}
-                </div>
-                <div class="form-group">
-                    <!-- <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password"> -->
-                    <div class="formerror-text">{{ form.confirmation.errors }}</div>
-                    <label for="{{ form.confirmation.id_for_label }}" class="formlabel-text">{{ form.confirmation.label }}</label>
-                    {{ form.confirmation }}
-                </div>
-                <input class="btn btn-primary" type="submit" value="Register">
-            </form>
-
-            <div class="login-helper-text">
-                Already have an account? <a href="{% url 'login' %}">Log In here.</a>
-            </div>
+        <div class="form-group">
+            <input class="form-control" type="email" name="email" placeholder="Email Address">
         </div>
-    </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+        </div>
+        <input class="btn btn-primary" type="submit" value="Register">
+    </form>
 
-{% endblock %}
+    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
 
-{% block script %}
-    <script src="{% static 'network/posts.js' %}"></script>
-    <script src="{% static 'network/utils.js' %}"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.navbar-active-item').forEach(item => {
-          item.classList.remove('navbar-active-item');
-        });
-        document.querySelector('#navbar-register').classList.add('navbar-active-item');
-      });
-    </script>
 {% endblock %}

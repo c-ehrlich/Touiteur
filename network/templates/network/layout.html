@@ -1,105 +1,51 @@
 {% load static %}
-{% load i18n %}
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>{% block title %}{% trans 'Social Network' %}{% endblock %}</title>
-        <script src="https://kit.fontawesome.com/8309b215cf.js" crossorigin="anonymous"></script>
-        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <title>{% block title %}Social Network{% endblock %}</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        <!-- <link rel="stylesheet" href="{% static 'simplemde/debug/simplemde.css' %}" /> -->
-        <link href="{% static 'network/themes.css' %}" rel="stylesheet">
         <link href="{% static 'network/styles.css' %}" rel="stylesheet">
-        <!-- <script src="{% static '.js' %}"></script> -->
         {% block script %}
         {% endblock %}
     </head>
     <body>
-        <div hidden>
-            <div id="var-user-id">{{ user.id }}</div>
-            <div id="var-user-theme">{{ user.theme }}</div>
-        </div>
-        <div id="outermost-container" class="{{ user.theme|default:'_theme_light' }}">
-            <nav class="navbar navbar-expand-md navbar-override-bg-color {% if user.theme == '_theme_dark' %}navbar-dark bg-dark{% else %}navbar-light bg-white
-            {% endif %}">
-                <a class="navbar-brand" href="{% url 'index' %}">{% trans 'Network' %}</a>
 
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#network-navbar" aria-controls="network-navbar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="network-navbar">
-                    <ul class="navbar-nav mr-auto">
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'user' user.username %}" id="navbar-user">{{ user.username }}</a>
-                            </li>
-                        {% endif %}
-                        <li class="nav-item">
-                          <a class="nav-link" href="{% url 'index' %}" id="navbar-index">{% trans 'All Posts' %}</a>
-                        </li>
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'following' %}" id="navbar-following">{% trans 'Following' %}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link align-row-vertical" href="{% url 'mentions' %}" id="navbar-mentions">
-                                    <div>{% trans 'Mentions' %}</div>
-                                    <div id="new-mentions-count"
-                                        {% if user.mentions_since_last_checked == 0 %}
-                                            hidden
-                                        {% endif %}>
-                                        {{ user.mentions_since_last_checked }}
-                                    </div>
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                    <ul class="navbar-nav">
-                        {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <a class="nav-link align-row-vertical" href="{% url 'dms' %}" id="navbar-DMs">
-                                    <div>{% trans 'DMs' %}</div>
-                                    <div id="new-DMs-count"
-                                        {% if user.DMs_since_last_checked == 0 %}
-                                            hidden
-                                        {% endif %}>
-                                        {{ user.DMs_since_last_checked }}
-                                    </div>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'account' %}" id="navbar-account">{% trans 'Account' %}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">{% trans 'Log Out' %}</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'login' %}" id="navbar-login">{% trans 'Log In' %}</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'register' %}" id="navbar-register">{% trans 'Register' %}</a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </nav>
-            
-            <div class="body">
-                {% block body %}
-                {% endblock %}
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">Network</a>
+          
+            <div>
+              <ul class="navbar-nav mr-auto">
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><strong>{{ user.username }}</strong></a>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'index' %}">All Posts</a>
+                </li>
+                {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Following</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Register</a>
+                    </li>
+                {% endif %}
+              </ul>
             </div>
-
-            <div class="footer-spacing-hack">
-                &nbsp;
-            </div>
-
-            {% include 'network/footer.html' %}
-
+          </nav>
+        
+        <div class="body">
+            {% block body %}
+            {% endblock %}
         </div>
     </body>
 </html>

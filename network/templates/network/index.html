@@ -1,47 +1,23 @@
 {% extends "network/layout.html" %}
 {% load static %}
-{% load i18n %}
 
-{% block title %}
-    Public Timeline
-{% endblock %}
 
 {% block body %}
-    <div id="index-body-div">
-
-        {% if user.is_authenticated %}
-            {% include 'network/compose.html' %}
-        {% endif %}
-
-        <div class="section-identifier">
-            <div class="section-identifier-inner">
-                {% trans 'Public Timeline' %}
-            </div>
-        </div>
-
-        <div id="new-posts-container">
-            <a href="" class="no-decoration-link">
-                <div hidden id="new-posts-inner">
-                    {% trans 'No new posts (you should not see this)' %}
-                </div>
-            </a>
-        </div>
-
-        {% include 'network/posts.html' %}
+    <div id="compose-view">
+        <form id="compose-form">
+            <!-- {% csrf_token %} -->
+            <!-- {{ new_post_form }} -->
+            <textarea class="form-control" id="post-text" placeholder="Text"></textarea>
+            <input type="submit">
+        </form>
     </div>
+    {% for post in posts %}
+        {{ post }}<br>
+    {% empty %}
+        No posts to display :(
+    {% endfor %}
 {% endblock %}
 
 {% block script %}
-    <script src="{% static 'network/compose.js' %}"></script>
-    <script src="{% static 'network/live_notifications.js' %}"></script>
-    <script src="{% static 'network/posts.js' %}"></script>
-    <script src="{% static 'network/utils.js' %}"></script>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        document.querySelectorAll('.navbar-active-item').forEach(item => {
-          item.classList.remove('navbar-active-item');
-        });
-        document.querySelector('#navbar-index').classList.add('navbar-active-item');
-      });
-    </script>
+    <script src="{% static 'network/index.js' %}"></script>
 {% endblock %}
