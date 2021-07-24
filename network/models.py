@@ -7,6 +7,8 @@ from PIL import Image, ImageOps, ExifTags
 from io import BytesIO
 from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
+from datetime import timezone
+import datetime
 
 
 class Conversation(models.Model):
@@ -16,8 +18,17 @@ class Conversation(models.Model):
     )
     last_message_timestamp = models.DateTimeField(
         default=now,
-        blank=True,
+        # blank=True,
     )
+
+    class Meta:
+        get_latest_by = '-last_message_timestamp'
+        ordering = ['-last_message_timestamp']
+        verbose_name = 'DM Thread'
+        verbose_name_plural = 'DM Threads'
+
+    def __str__(self):
+        return f"{self.user_ids[0]}, {self.user_ids[1]} ... {self.last_message_timestamp}"
 
 
 class DirectMessage(models.Model):
@@ -85,7 +96,9 @@ class DirectMessage(models.Model):
             conversation = Conversation.objects.create(
                 user_ids=[self.sender.id, self.recipient.id]
             )
-        conversation.last_message_timestamp=self.timestamp,
+        dt = datetime.datetime.now(timezone.utc)
+        conversation.last_message_timestamp=dt,
+        print(self.timestamp)
         print(conversation)
         # conversation.save()
         super(DirectMessage, self).save(*args, **kwargs)

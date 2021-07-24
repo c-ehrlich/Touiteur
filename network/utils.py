@@ -1,4 +1,4 @@
-from .models import User, Post
+from .models import User, Post, Conversation
 from django.core.paginator import Paginator
 import datetime
 from pytz import timezone
@@ -77,6 +77,21 @@ def get_display_time(datetime_input):
     if post.year != now.year:
         return datetime.datetime.strftime(post, "%b %-d, %Y")
     return "if you see this, there was an error in get_display_time"
+
+
+def get_dm_threads_paginated(request):
+    page = request.GET.get('page', 1)
+    user = request.user
+    objects = Conversation.objects.filter(user_ids__contains=[user.id])
+    for object in objects:
+        if object.user_ids[0] == user.id:
+            object.convo_partner = User.objects.get(id=object.user_ids[1])
+        else:
+            object.convo_partner = User.objects.get(id=object.user_ids[0])
+    # TODO get the nicely formatted timestamps
+    print(objects)
+    p = Paginator(objects, PAGINATION_POST_COUNT)
+    return p.page(page) 
 
 
 def get_mentions_from_post(post_text):

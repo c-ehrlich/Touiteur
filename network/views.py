@@ -83,8 +83,9 @@ def account(request):
 
 @login_required
 def dms(request):
+    threads = utils.get_dm_threads_paginated(request)
     return render(request, "network/dms.html", {
-        
+        "threads": threads,
     })
 
 

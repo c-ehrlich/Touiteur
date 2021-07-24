@@ -40,17 +40,17 @@
         {% for thread in threads %}
             <div class="inbox-div"> <!-- flex-row -->
                 <div class="inbox-avatar-div">
-                    <a href="{% url 'user' thread.convo-partner.username %}">
-                        <img class="profile-pic" src="{{ thread.convo-partner.avatar.url }}">
+                    <a href="{% url 'user' thread.convo_partner.username %}">
+                        <img class="profile-pic" src="{{ thread.convo_partner.avatar.url }}">
                     </a>
                 </div>
                 <div class="inbox-content-div"> <!-- flex-column -->
                     <div class="thread-username-header-div"> <!-- flex row -->
                         <div> <!-- give a class -->
-                            {{ thread.convo-partner.displayname }}
+                            {{ thread.convo_partner.displayname }}
                         </div>
                         <div> <!-- give a class -->
-                            {{ thread.convo-partner.username }}
+                            {{ thread.convo_partner.username }}
                         </div>
                     </div>
                     <div>
