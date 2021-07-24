@@ -418,14 +418,16 @@ def new_posts(request):
 
 def thread_read_status(request, thread_id):
     """marks all unread DMs in a thread as read"""
+    print(thread_id)
     if request.method == "PUT":
-        data = json.loads(request.body)
-        thread = Conversation.objects.get(id=data['thread_id'])
+        print("we got into the PUT condition")
+        thread = Conversation.objects.get(id=thread_id)
         # TODO make sure the user is actually in the thread
         try:
             for message in thread.messages.all():
                 # TODO: check 1. user is the RECIPIENT 2. message is unread
                 message.is_read = True
+                print(f"{message} set to read")
                 message.save()
             return JsonResponse({
                 "message": _("All posts marked as read")
