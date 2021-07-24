@@ -84,12 +84,24 @@ def get_dm_threads_paginated(request):
     user = request.user
     objects = Conversation.objects.filter(user_ids__contains=[user.id])
     for object in objects:
+        # determine if there are unread messages, if yes set has_unread to TRUE else to FALSE
+        object.has_unread = False
+        print(f"messages for {object}: {object.messages.all()}")
+        messages = object.messages.all()
+        for message in messages:
+            if message.is_read == False and message.sender_id != user.id:
+                object.has_unread = True
+                print(f"unread: {message}")
+            else:
+                print(f"not unread: {message}")
+        print(f"~~~~~~has unread: {object.has_unread}")
+        # create formatted timestamp
+        object.timestamp_f = get_display_time(object.last_message_timestamp)
+        # determine who the conversation partner is
         if object.user_ids[0] == user.id:
             object.convo_partner = User.objects.get(id=object.user_ids[1])
         else:
             object.convo_partner = User.objects.get(id=object.user_ids[0])
-    # TODO get the nicely formatted timestamps
-    print(objects)
     p = Paginator(objects, PAGINATION_POST_COUNT)
     return p.page(page) 
 

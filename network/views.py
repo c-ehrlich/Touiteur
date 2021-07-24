@@ -91,7 +91,9 @@ def dms(request):
 
 @login_required
 def dm_thread(request):
-    pass
+    return render(request, "network/dm_thread.html", {
+        
+    })
 
 
 @login_required

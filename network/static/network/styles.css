@@ -871,3 +871,8 @@ input[type="file"] {
 .mt0 {
     margin-top: 0;
 }
+
+/* STUFF FOR DM INBOX */
+.unread-dm {
+    background-color: var(--color-dm-unread);
+}

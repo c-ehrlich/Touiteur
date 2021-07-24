@@ -41,6 +41,8 @@
     /* --color-pagi-text-disabled: #dee2e6; */
     --color-pagi-border: #dee2e6;
     --color-pagi-border-active: #007bff;
+
+    --color-dm-unread: pink;
 }
 
 ._theme_dark {
@@ -78,6 +80,8 @@
     /* --color-pagi-border: #2a2628; */
     --color-pagi-border: #555354;
     --color-pagi-border-active: #007bff;
+
+    --color-dm-unread: #061721;
 }
 
 /* 

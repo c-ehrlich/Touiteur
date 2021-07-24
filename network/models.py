@@ -20,6 +20,9 @@ class Conversation(models.Model):
         default=now,
         # blank=True,
     )
+    preview_text = models.TextField(
+        blank=True,
+    )
 
     class Meta:
         get_latest_by = '-last_message_timestamp'
@@ -28,7 +31,7 @@ class Conversation(models.Model):
         verbose_name_plural = 'DM Threads'
 
     def __str__(self):
-        return f"{self.user_ids[0]}, {self.user_ids[1]} ... {self.last_message_timestamp}"
+        return f"{self.user_ids[0]}, {self.user_ids[1]} at {self.last_message_timestamp}: {self.preview_text}"
 
 
 class DirectMessage(models.Model):
@@ -79,28 +82,27 @@ class DirectMessage(models.Model):
 
     def __str__(self):
         dm = (self.text[:50] + '..') if len(self.text) > 50 else self.text
-        return f"{self.sender.username} to f{self.recipient.username} at {self.timestamp}: {dm}"
+        return f"{self.sender.username} to {self.recipient.username} at {self.timestamp}: {dm}"
 
     def save(self, *args, **kwargs):
+        # TODO: don't change timestamp if only is_read is changed
         print("in custom DM save")
-        # try: 
-            # conversation = Conversation.objects.get(
-            #     user_ids=set([self.sender.id, self.recipient.id])
-            # )
         conversation = Conversation.objects.filter(
             user_ids__contains=[self.sender.id, self.recipient.id]
         ).first()
-        # except Conversation.DoesNotExist:
         if conversation is None:
             print("no conversation existed for these users. let's create one")
             conversation = Conversation.objects.create(
                 user_ids=[self.sender.id, self.recipient.id]
             )
-        dt = datetime.datetime.now(timezone.utc)
-        conversation.last_message_timestamp=dt,
-        print(self.timestamp)
-        print(conversation)
-        # conversation.save()
+        # if the message is just being created now, update the conversation with its timestamp and text preview
+        # if the message is being edited (for example is_read), don't update the conversation
+        if self.pk is None:
+            dt = datetime.datetime.now(timezone.utc)
+            conversation.preview_text = self.text
+            conversation.last_message_timestamp=dt
+            conversation.save()
+            self.conversation = conversation
         super(DirectMessage, self).save(*args, **kwargs)
 
 

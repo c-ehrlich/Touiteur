@@ -38,27 +38,34 @@
     <!-- List of inbox messages -->
     <div id="posts-all-container-div">
         {% for thread in threads %}
-            <div class="inbox-div"> <!-- flex-row -->
+            <div class="post-div {% if thread.has_unread %}unread-dm{% endif %}">
                 <div class="inbox-avatar-div">
                     <a href="{% url 'user' thread.convo_partner.username %}">
                         <img class="profile-pic" src="{{ thread.convo_partner.avatar.url }}">
                     </a>
                 </div>
-                <div class="inbox-content-div"> <!-- flex-column -->
-                    <div class="thread-username-header-div"> <!-- flex row -->
-                        <div> <!-- give a class -->
-                            {{ thread.convo_partner.displayname }}
-                        </div>
-                        <div> <!-- give a class -->
-                            {{ thread.convo_partner.username }}
-                        </div>
+                <div class="post-content-div"> <!-- flex-column -->
+                    <div class="post-username-header-div"> <!-- flex row -->
+                        <a href="{% url 'user' thread.convo_partner.username %}" class="post-username-header-link">
+                            <div class="post-username-header-displayname">
+                                {{ thread.convo_partner.displayname }}
+                            </div>
+                        </a>
+                        <a href="{% url 'user' thread.convo_partner.username %}" class="post-username-header-link">
+                            <div class="post-username-header-username">
+                                @{{ thread.convo_partner.username }}
+                            </div>
+                        </a>
                     </div>
                     <div>
-                        Text of newest message (or like first 50 chars? Is this a model field?)
+                        <!-- TODO: instead of making this a link, make the whole box a link! -->
+                        <a href="{% url 'dm_thread' thread.convo_partner.username %}">
+                            {{ thread.preview_text }}
+                        </a>
                     </div>
                 </div>
                 <div> <!-- give a class -->
-                    2h
+                    {{ thread.timestamp_f }}
                 </div>
             </div>
         {% empty %}
