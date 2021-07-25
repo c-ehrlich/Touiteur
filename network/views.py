@@ -418,6 +418,31 @@ def new_posts(request):
 
 
 @csrf_protect
+def reply(request, post_id):
+    print(request.headers)
+    if request.method == "PUT":
+        data = json.loads(request.body)
+        text = data["text"]
+        user = request.user
+        post = utils.get_post_from_id(post_id)
+        reply = Post(user=user, text=text, reply_to=post)
+        reply.save()
+        # maybe factor out the mentioned users thing? TODO
+        mentioned_users = utils.get_mentions_from_post(text)
+        for user in mentioned_users:
+            post.mentioned_users.add(user)
+        reply_count = post.replies.count()
+        print(f"reply: {reply}")
+        return JsonResponse({
+            "reply_count": reply_count,
+        }, status=201)
+    else:
+        return JsonResponse({
+            "error": _("PUT request required.")
+        }, status=400)
+
+
+@csrf_protect
 def thread_read_status(request, thread_id):
     """marks all unread DMs in a thread as read"""
     if request.method == "PUT":

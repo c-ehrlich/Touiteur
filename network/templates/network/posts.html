@@ -92,7 +92,7 @@
             {% if post.replies.count > 0 %}
                 <!-- <hr> -->
                 <div class="post-replies-div">
-                    <a class="post-replies-link" href="{% url 'post' post.id %}">
+                    <a class="post-replies-link" id="prl-{{ post.id }}" href="{% url 'post' post.id %}">
                         {% if post.replies.count == 1 %}
                             1 reply. click to view.
                         {% else %}
@@ -107,7 +107,7 @@
                 <!-- this button is a hack to prevent submit events on the "real" button -->
                 <!-- https://stackoverflow.com/questions/895171/prevent-users-from-submitting-a-form-by-hitting-enter/51507806#51507806 -->
                 <input type="submit" disabled style="display: none" aria-hidden="true" />
-                <textarea class="post-reply-input" id="pri-{{ post.id }}"></textarea>
+                <textarea class="post-reply-input" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
                 <button class="post-reply-submit" id="prs-{{ post.id }}">Submit</button>
             </form>
         </div>

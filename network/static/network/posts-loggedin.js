@@ -26,6 +26,7 @@ function showReplyUI(postId) {
   document.querySelector(`#prd-${postId}`).removeAttribute('hidden');
   document.querySelector(`#rb-${postId}`).setAttribute('hidden', 'hidden');
   document.querySelector(`#rcb-${postId}`).removeAttribute('hidden');
+  document.querySelector(`#pri-${postId}`).focus();
 }
 
 function hideReplyUI(postId) {
@@ -39,7 +40,22 @@ function sendReply(postId) {
   // if successful, clear the textbox, hide the reply UI, re-add the reply icon/eventListener,
     // and make some kind of indication (animation?) that the reply was sent successfully
   // if unsuccessful, keep the UI and show an error message?
+  const postText = document.querySelector(`#pri-${postId}`).value;
+  fetch(`/reply/${postId}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      "text": postText,
+    }),
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken")
+    }
+  })
+  .then(response => response.json())
+  .then(json => {
+    // update post reply count status (maybe the python function sends that to us?
+    document.querySelector(`#pri-${postId}`).value = "";
+    hideReplyUI(postId);
+  })
+  
   console.log("sending reply");
-  document.querySelector(`#pri-${postId}`).value = "";
-  hideReplyUI(postId);
 }
