@@ -918,3 +918,9 @@ input[type="file"] {
 .unread-dm {
     background-color: var(--color-dm-unread);
 }
+
+
+
+.single-page-like-button {
+    font-size: 18px !important;
+}

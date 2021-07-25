@@ -44,7 +44,7 @@
             {% if user.is_authenticated and post.user != user %}
                 <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
                     {% if post in user.liked_posts.all %}
-                        <button class="post-unlike-button" id="post-like-button-{{ post.id }}">
+                        <button class="post-unlike-button single-page-like-button" id="post-like-button-{{ post.id }}">
                             <div id="post-like-heart-{{ post.id }}" class="post-like-heart-liked">
                                 ❤️
                             </div>
@@ -53,7 +53,7 @@
                             </div>
                         </button>
                     {% else %}
-                        <button class="post-like-button" id="post-like-button-{{ post.id }}">
+                        <button class="post-like-button single-page-like-button" id="post-like-button-{{ post.id }}">
                             <div id="post-like-heart-{{ post.id }}" class="post-like-heart-unliked">
                                 ‍♡ 
                             </div>
