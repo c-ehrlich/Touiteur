@@ -103,13 +103,8 @@
             {% endif %}
         </div>
         <div hidden class="post-reply-div" id="prd-{{ post.id }}">
-            <!-- <form class="post-reply-form" id="prf-{{ post.id }}"> -->
-                <!-- this button is a hack to prevent submit events on the "real" button -->
-                <!-- https://stackoverflow.com/questions/895171/prevent-users-from-submitting-a-form-by-hitting-enter/51507806#51507806 -->
-                <!-- <input type="submit" disabled style="display: none" aria-hidden="true" /> -->
-                <textarea class="post-reply-input" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
-                <button class="post-reply-submit" id="prs-{{ post.id }}">Submit</button>
-            <!-- </form> -->
+            <textarea class="post-reply-input" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
+            <button class="post-reply-submit" id="prs-{{ post.id }}">Submit</button>
         </div>
     {% empty %}
         <div class="section-identifier no-top-padding">
