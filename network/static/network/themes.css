@@ -14,13 +14,6 @@
     --color-text-formlabel: black;
     --color-text-formerror: black;
 
-    /* these don't work currently */
-    --color-pagination-bg: green;
-    --color-pagination-bg-hover: orange;
-    --color-pagination-border: red;
-    --color-pagination-active: blue;
-    --color-pagination-notactive: purple;
-
     --color-box-bg: white;
     --color-box-bg-contrast: lightgrey; /* probably same as box-border */
     --color-box-border: lightgrey;
@@ -49,7 +42,6 @@
 }
 
 ._theme_dark {
-    /* --color-page-bg: #1c2127; */
     --color-page-bg: #34322e;
     --color-button-hover-bad: #d43f3a; /* change */
 
@@ -61,8 +53,7 @@
     --color-text-formlabel: white;
     --color-text-formerror: white;
 
-    /* --color-box-bg: #1c252c; */
-    --color-box-bg: black;
+    --color-box-bg: black; /* change (make it a grey theme) */
     --color-box-bg-contrast: navy; /* change */
     --color-box-border: #2a2628;
 

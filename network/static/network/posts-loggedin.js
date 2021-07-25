@@ -26,12 +26,19 @@ function showReplyUI(postId) {
   document.querySelector(`#prd-${postId}`).removeAttribute('hidden');
   document.querySelector(`#rb-${postId}`).setAttribute('hidden', 'hidden');
   document.querySelector(`#rcb-${postId}`).removeAttribute('hidden');
+  // const newHeight = document.querySelector(`#prd-${postId}`).style.height + 24;
+  const div = document.querySelector(`#prd-${postId}`);
+  const computedStyle = window.getComputedStyle(div);
+  const newHeight = computedStyle.getPropertyValue('height');
+  console.log(newHeight);
+  document.querySelector(`#prslide-${postId}`).style.height = adjustPixelValueString(newHeight, 24);
   const textArea = document.querySelector(`#pri-${postId}`);
   textArea.focus();
   textArea.setSelectionRange(textArea.value.length, textArea.value.length);
 }
 
 function hideReplyUI(postId) {
+  document.querySelector(`#prslide-${postId}`).style.height = 0;
   document.querySelector(`#prd-${postId}`).setAttribute('hidden', 'hidden');
   document.querySelector(`#rcb-${postId}`).setAttribute('hidden', 'hidden');
   document.querySelector(`#rb-${postId}`).removeAttribute('hidden');
@@ -61,4 +68,16 @@ function sendReply(postId) {
   })
   
   console.log("sending reply");
+}
+
+//////
+//////
+//////
+function adjustPixelValueString(input, change) {
+  // input: a pixel value as a string, example: "20px"
+  // input: an integer describing how many pixels to add or subtract, example: -5
+  // output: a new pixel value as a string, example: "15px"
+  let pixelValue = parseInt(input);
+  pixelValue += change;
+  return pixelValue + "px";
 }
