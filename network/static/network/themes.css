@@ -44,6 +44,8 @@
     --color-pagi-border-active: #007bff;
 
     --color-dm-unread: pink;
+
+    /* --color-hr: rgba(0, 0, 0, 0.1); */
 }
 
 ._theme_dark {
@@ -83,6 +85,8 @@
     --color-pagi-border-active: #007bff;
 
     --color-dm-unread: #061721;
+
+    --color-hr: rgba(255, 255, 255, 0.171);
 }
 
 /* 

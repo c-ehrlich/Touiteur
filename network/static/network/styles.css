@@ -20,6 +20,9 @@ body, html {
     /* display: flex; */
     /* flex-direction: column; */
 }
+hr {
+    border-top: 1px solid var(--color-hr);
+}
 #outermost-container {
     min-height: 100%;
     position: relative;
@@ -170,11 +173,34 @@ body, html {
 
 .post-div {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border: 1px solid var(--color-box-border);
-    margin: 0 8px 0 8px;
+    margin: 0 8px 4px 8px;
     padding: 12px;
     background-color: var(--color-box-bg);
+}
+
+.post-reply-to-div {
+    color: var(--color-text-medcontrast);
+    width: 100%;
+    text-align: center;
+    /* margin-bottom: 8px; */
+    margin-bottom: 0;
+    font-size: 12px;
+    margin-bottom: 12px;
+}
+.post-reply-to-div > hr {
+    margin-top: 8px;
+    margin-bottom: 12px;
+}
+.post-reply-to-link,
+.post-replies-link {
+    color: var(--color-text-medcontrast);
+    transition: all 200ms 50ms;
+}
+.post-reply-to-link:hover,
+.post-replies-link:hover {
+    color: var(--color-text-default);
 }
 
 .profile-pic {
@@ -295,7 +321,7 @@ body, html {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* padding: 4px 12px 4px 12px; */
+    color: var(--color-text-default);
     border: none;
     padding: 0;
     margin: 0;
@@ -334,6 +360,9 @@ body, html {
     box-shadow: 0px 0px 10px 6px var(--color-button-hover-like);
     scale: 1.1;
 }
+.single-page-like-button {
+    font-size: 18px !important;
+}
 .post-like-count {
     margin-left: 6px;
 }
@@ -344,6 +373,17 @@ body, html {
     align-items: flex-end;
 }
 
+.post-div > hr {
+    width: 100%;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+.post-replies-div {
+    text-align: center;
+    margin-top: 12px;
+    font-size: 12px;
+    color: var(--color-text-medcontrast);
+}
 
 /* -------------------- */
 /* STUFF FOR PROFILE    */
@@ -532,18 +572,19 @@ body, html {
 /* STUFF FOR SINGLE POST VIEW */
 /* -------------------------- */
 #single-post-outer {
-    background-color: #e7eaef;
+    background-color: var(--color-page-bg);
     /* min-height: 100%; */
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 8px;
+    color: var(--color-text-default);
 }
 #single-post-view-container {
     width: 600px;
     max-width: 100%;
-    background-color: white;
-    border: 1px solid lightgrey;
+    background-color: var(--color-box-bg);
+    border: 1px solid var(--color-box-border);
     padding: 12px;
     display: grid;
     grid-template-columns: 80px auto auto auto;
@@ -917,10 +958,4 @@ input[type="file"] {
 /* STUFF FOR DM INBOX */
 .unread-dm {
     background-color: var(--color-dm-unread);
-}
-
-
-
-.single-page-like-button {
-    font-size: 18px !important;
 }

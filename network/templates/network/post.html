@@ -3,7 +3,8 @@
 {% load i18n %}
 
 {% block title %}
-    {% trans 'Post by {{ post.user.displayname }} (@{{ post.user.username }})' %}
+    Post by @{{ post.user.username }}
+    <!-- TODO figure out how to translate this -->
 {% endblock %}
 
 {% block body %}

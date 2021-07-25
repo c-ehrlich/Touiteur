@@ -3,67 +3,89 @@
 <div id="posts-all-container-div">
     {% for post in posts %}
         <div class="post-div" id="post-div{{ post.id }}">
-            <div class="post-avatar-div">
-                <a href="{% url 'user' post.user.username %}">
-                    <img class="profile-pic" src="{{ post.user.avatar.url }}">
-                </a>
-            </div>
-            <div class="post-content-div">
-                <div class="post-username-header-div">
-                    <a href="{% url 'user' post.user.username %}" class="post-username-header-link">
-                        <div class="post-username-header-displayname">
-                            {{ post.user.displayname }}
-                        </div>
+            {% if post.reply_to != None %}
+                <div class="post-reply-to-div">
+                    <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
+                        Reply to @{{ post.reply_to.user }}: {{ post.reply_to.text }}
+                        <!-- <hr> -->
                     </a>
-                    <a href="{% url 'user' post.user.username %}" class="post-username-header-link">
-                        <div class="post-username-header-username">
-                            @{{ post.user.username }}
-                        </div>
-                    </a>
-                    <div class="post-username-header-spacer"> · </div>
-                    <div class="post-timestamp-div">
-                        <a href="{% url 'post' post.id %}" class="post-timestamp-text">{{ post.timestamp_f }}</a>
-                    </div>
                 </div>
-                <div class="post-text" id="post-text-{{ post.id }}">{{ post.text }}</div>
-                <div class="post-bottom-row-div">
-                    <div class="post-bottom-row-left-div">
-                        {% if user.is_authenticated and post.user != user %}
-                            <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
-                                {% if post in user.liked_posts.all %}
-                                    <button class="post-unlike-button" id="post-like-button-{{ post.id }}">
-                                        <div id="post-like-heart-{{ post.id }}" class="post-like-heart-liked">
-                                            <i class="fas fa-heart"></i>
-                                        </div>
-                                        <div id="post-like-count-{{ post.id }}" class="post-like-count">
-                                            {{ post.users_who_liked.count }}
-                                        </div>
-                                    </button>
-                                {% else %}
-                                    <button class="post-like-button" id="post-like-button-{{ post.id }}">
-                                        <div id="post-like-heart-{{ post.id }}" class="post-like-heart-unliked">
-                                            <i class="far fa-heart"></i>
-                                        </div>
-                                        <div id="post-like-count-{{ post.id }}" class="post-like-count">
-                                            {{ post.users_who_liked.count }}
-                                        </div>
-                                    </button>
-                                {% endif %}
+            {% endif %}
+            <div class="flex-row">
+                <div class="post-avatar-div">
+                    <a href="{% url 'user' post.user.username %}">
+                        <img class="profile-pic" src="{{ post.user.avatar.url }}">
+                    </a>
+                </div>
+                <div class="post-content-div">
+                    <div class="post-username-header-div">
+                        <a href="{% url 'user' post.user.username %}" class="post-username-header-link">
+                            <div class="post-username-header-displayname">
+                                {{ post.user.displayname }}
                             </div>
-                        {% endif %}
+                        </a>
+                        <a href="{% url 'user' post.user.username %}" class="post-username-header-link">
+                            <div class="post-username-header-username">
+                                @{{ post.user.username }}
+                            </div>
+                        </a>
+                        <div class="post-username-header-spacer"> · </div>
+                        <div class="post-timestamp-div">
+                            <a href="{% url 'post' post.id %}" class="post-timestamp-text">{{ post.timestamp_f }}</a>
+                        </div>
                     </div>
+                    <div class="post-text" id="post-text-{{ post.id }}">{{ post.text }}</div>
+                    <div class="post-bottom-row-div">
+                        <div class="post-bottom-row-left-div">
+                            {% if user.is_authenticated and post.user != user %}
+                                <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
+                                    {% if post in user.liked_posts.all %}
+                                        <button class="post-unlike-button" id="post-like-button-{{ post.id }}">
+                                            <div id="post-like-heart-{{ post.id }}" class="post-like-heart-liked">
+                                                <i class="fas fa-heart"></i>
+                                            </div>
+                                            <div id="post-like-count-{{ post.id }}" class="post-like-count">
+                                                {{ post.users_who_liked.count }}
+                                            </div>
+                                        </button>
+                                    {% else %}
+                                        <button class="post-like-button" id="post-like-button-{{ post.id }}">
+                                            <div id="post-like-heart-{{ post.id }}" class="post-like-heart-unliked">
+                                                <i class="far fa-heart"></i>
+                                            </div>
+                                            <div id="post-like-count-{{ post.id }}" class="post-like-count">
+                                                {{ post.users_who_liked.count }}
+                                            </div>
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                        </div>
 
-                    {% if user.is_authenticated %}
-                        <!-- edit button -->
-                        {% if post.user == user %}
-                            <div class="post-bottom-row-right-div">
-                                <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
-                                <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
-                            </div>
+                        {% if user.is_authenticated %}
+                            <!-- edit button -->
+                            {% if post.user == user %}
+                                <div class="post-bottom-row-right-div">
+                                    <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                    <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
+                                </div>
+                            {% endif %}
                         {% endif %}
-                    {% endif %}
+                    </div>
                 </div>
             </div>
+            {% if post.replies.count > 0 %}
+                <!-- <hr> -->
+                <div class="post-replies-div">
+                    <a class="post-replies-link" href="{% url 'post' post.id %}">
+                        {% if post.replies.count == 1 %}
+                            1 reply. click to view.
+                        {% else %}
+                            {{ post.replies.count }} replies. Click to view.
+                        {% endif %}
+                    </a>
+                </div>
+            {% endif %}
         </div>
     {% empty %}
         <div class="section-identifier no-top-padding">
