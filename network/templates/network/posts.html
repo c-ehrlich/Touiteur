@@ -7,7 +7,6 @@
                 <div class="post-reply-to-div">
                     <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
                         Reply to @{{ post.reply_to.user }}: {{ post.reply_to.text }}
-                        <!-- <hr> -->
                     </a>
                 </div>
             {% endif %}
@@ -79,6 +78,11 @@
                                 <div class="post-bottom-row-right-div">
                                     <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
                                     <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
+                                </div>
+                            {% else %}
+                                <div class="post-bottom-row-right-div">
+                                    <div hidden class="post-reply-cancel-button" id="rcb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                    <div class="post-reply-button" id="rb-{{ post.id }}"><i class="far fa-comment-dots"></i></i></div>
                                 </div>
                             {% endif %}
                         {% endif %}

@@ -258,14 +258,16 @@ hr {
     color: var(--color-text-default);
 }
 
-.post-edit-button {
+.post-edit-button,
+.post-reply-button {
     border: none;
     background-color: transparent;
     color: var(--color-text-medcontrast);
     cursor: pointer;
     transition: all 200ms ease-out 50ms;
 }
-.post-edit-button:hover {
+.post-edit-button:hover,
+.post-reply-button:hover {
     color: var(--color-text-default);
     transform: scale(1.1);
 }
@@ -322,7 +324,7 @@ hr {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    color: var(--color-text-default);
+    color: var(--color-text-medcontrast);
     border: none;
     padding: 0;
     margin: 0;
