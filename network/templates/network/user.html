@@ -81,6 +81,7 @@
     {% else %}
         <script src="{% static 'network/live_notifications.js' %}"></script>
     {% endif %}
+    {% if user.is_authenticated %}<script src="{% static 'network/posts-loggedin.js' %}"></script>{% endif %}
     <script src="{% static 'network/user.js' %}"></script>
     <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>

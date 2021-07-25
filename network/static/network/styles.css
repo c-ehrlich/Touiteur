@@ -304,6 +304,12 @@ hr {
     align-items: flex-end;
 }
 
+.post-interaction-div-right {
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+
 .post-likes-div {
     display: flex;
     flex-direction: row;

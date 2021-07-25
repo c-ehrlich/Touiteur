@@ -31,6 +31,7 @@
 
 
 {% block script %}
+    {% if user.is_authenticated %}<script src="{% static 'network/posts-loggedin.js' %}"></script>{% endif %}
     <script src="{% static 'network/live_notifications.js' %}"></script>
     <script src="{% static 'network/mentions.js' %}"></script>
     <script src="{% static 'network/user.js' %}"></script>

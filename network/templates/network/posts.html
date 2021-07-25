@@ -73,18 +73,18 @@
                         </div>
 
                         {% if user.is_authenticated %}
-                            <!-- edit button -->
-                            {% if post.user == user %}
-                                <div class="post-bottom-row-right-div">
-                                    <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
-                                    <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
-                                </div>
-                            {% else %}
+                            <div class="post-interaction-div-right">
+                                {% if post.user == user %}
+                                    <div class="post-bottom-row-right-div">
+                                        <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                        <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
+                                    </div>
+                                {% endif %}
                                 <div class="post-bottom-row-right-div">
                                     <div hidden class="post-reply-cancel-button" id="rcb-{{ post.id }}"><i class="fas fa-times"></i></div>
                                     <div class="post-reply-button" id="rb-{{ post.id }}"><i class="far fa-comment-dots"></i></i></div>
                                 </div>
-                            {% endif %}
+                            </div>
                         {% endif %}
                     </div>
                 </div>
@@ -101,6 +101,15 @@
                     </a>
                 </div>
             {% endif %}
+        </div>
+        <div hidden class="post-reply-div" id="prd-{{ post.id }}">
+            <form class="post-reply-form" id="prf-{{ post.id }}">
+                <!-- this button is a hack to prevent submit events on the "real" button -->
+                <!-- https://stackoverflow.com/questions/895171/prevent-users-from-submitting-a-form-by-hitting-enter/51507806#51507806 -->
+                <input type="submit" disabled style="display: none" aria-hidden="true" />
+                <textarea class="post-reply-input" id="pri-{{ post.id }}"></textarea>
+                <button class="post-reply-submit" id="prs-{{ post.id }}">Submit</button>
+            </form>
         </div>
     {% empty %}
         <div class="section-identifier no-top-padding">
