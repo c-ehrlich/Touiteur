@@ -13,10 +13,10 @@ document.addEventListener('DOMContentLoaded', () => {
     })
   })
   // Add eventListener to each send reply button
-  document.querySelectorAll('.post-reply-form').forEach(form => {
-    form.addEventListener('submit', () => {
+  document.querySelectorAll('.post-reply-submit').forEach(button => {
+    button.addEventListener('click', () => {
       // form.preventDefault();
-      postId = form.id.split('-')[1];
+      postId = button.id.split('-')[1];
       sendReply(postId);
     })
   })
@@ -41,6 +41,7 @@ function sendReply(postId) {
     // and make some kind of indication (animation?) that the reply was sent successfully
   // if unsuccessful, keep the UI and show an error message?
   const postText = document.querySelector(`#pri-${postId}`).value;
+  console.log("hi there");
   fetch(`/reply/${postId}`, {
     method: 'PUT',
     body: JSON.stringify({
