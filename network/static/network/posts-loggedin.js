@@ -26,7 +26,9 @@ function showReplyUI(postId) {
   document.querySelector(`#prd-${postId}`).removeAttribute('hidden');
   document.querySelector(`#rb-${postId}`).setAttribute('hidden', 'hidden');
   document.querySelector(`#rcb-${postId}`).removeAttribute('hidden');
-  document.querySelector(`#pri-${postId}`).focus();
+  const textArea = document.querySelector(`#pri-${postId}`);
+  textArea.focus();
+  textArea.setSelectionRange(textArea.value.length, textArea.value.length);
 }
 
 function hideReplyUI(postId) {
