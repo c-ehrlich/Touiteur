@@ -149,6 +149,10 @@ class User(AbstractUser):
         related_name="users_who_liked",
         blank=True
     )
+    show_liked_posts = models.BooleanField(
+        default=True,
+        verbose_name="Show Liked Posts"
+    )
 
     mentions_since_last_checked = models.PositiveIntegerField(
         default=0,
@@ -239,6 +243,14 @@ class Post(models.Model):
         related_name="mentions",
         blank=True,
         editable=False
+    )
+    reply_to = models.ForeignKey(
+        "Post",
+        related_name="replies",
+        on_delete=models.SET_DEFAULT,
+        default=None,
+        blank=True,
+        null=True,
     )
 
     class Meta:
