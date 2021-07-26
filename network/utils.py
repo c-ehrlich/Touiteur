@@ -1,5 +1,6 @@
 from .models import User, Post, Conversation
 from django.core.paginator import Paginator
+from django.db.models import Q
 import datetime
 from pytz import timezone
 
@@ -193,14 +194,17 @@ def get_post_count_since_timestamp(request, timestamp, context):
         return 0
 
 
-def get_posts(request, username=None):
+def get_posts(request, username=None, reply_to=None):
     """RETURNS A PAGE OF POSTS FROM A USER"""
     page = request.GET.get('page', 1)
-    if username == None:
+    if username == None and reply_to == None:
         objects = Post.objects.all()
-    else:
+    elif reply_to == None:
         user = get_user_from_username(username)
         objects = Post.objects.filter(user=user).all()
+    elif username == None:
+        objects = Post.objects.filter(reply_to=reply_to).all()
+
     for object in objects:
         object.timestamp_f = get_display_time(object.timestamp)
     p = Paginator(objects, PAGINATION_POST_COUNT)
