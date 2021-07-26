@@ -401,7 +401,7 @@ hr {
     display: flex;
     flex-direction: column;
     margin-left: 24px;
-    margin-right: 24px;
+    margin-right: 12px;
     margin-bottom: 16px;
     padding: 12px 12px 12px 12px;
     background-color: var(--color-box-bg);

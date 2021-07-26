@@ -31,7 +31,7 @@ function showReplyUI(postId) {
   const computedStyle = window.getComputedStyle(div);
   const newHeight = computedStyle.getPropertyValue('height');
   console.log(newHeight);
-  document.querySelector(`#prslide-${postId}`).style.height = adjustPixelValueString(newHeight, 24);
+  document.querySelector(`#prslide-${postId}`).style.height = adjustPixelValueString(newHeight, 12);
   const textArea = document.querySelector(`#pri-${postId}`);
   textArea.focus();
   textArea.setSelectionRange(textArea.value.length, textArea.value.length);
