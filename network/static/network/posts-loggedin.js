@@ -63,6 +63,14 @@ function sendReply(postId) {
   .then(response => response.json())
   .then(json => {
     // update post reply count status (maybe the python function sends that to us?
+    console.log(json);
+    replyCount = json.reply_count;
+    document.querySelector(`#prsd-${postId}`).removeAttribute('hidden');
+    if (replyCount == 1) {
+      document.querySelector(`#prl-${postId}`).innerHTML = '1 reply. Click to view.';
+    } else if (replyCount > 1) {
+      document.querySelector(`#prl-${postId}`).innerHTML = `${replyCount} replies. Click to view.`; 
+    }
     document.querySelector(`#pri-${postId}`).value = "";
     hideReplyUI(postId);
   })

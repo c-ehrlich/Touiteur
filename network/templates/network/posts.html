@@ -89,18 +89,15 @@
                     </div>
                 </div>
             </div>
-            {% if post.replies.count > 0 %}
-                <!-- <hr> -->
-                <div class="post-replies-div">
-                    <a class="post-replies-link" id="prl-{{ post.id }}" href="{% url 'post' post.id %}">
-                        {% if post.replies.count == 1 %}
-                            1 reply. click to view.
-                        {% else %}
-                            {{ post.replies.count }} replies. Click to view.
-                        {% endif %}
-                    </a>
-                </div>
-            {% endif %}
+            <div {% if post.replies.count == 0 %}hidden{% endif %} class="post-replies-div" id="prsd-{{ post.id }}">
+                <a class="post-replies-link" id="prl-{{ post.id }}" href="{% url 'post' post.id %}">
+                    {% if post.replies.count == 1 %}
+                        1 reply. Click to view.
+                    {% elif post.replies.count > 1 %}
+                        {{ post.replies.count }} replies. Click to view.
+                    {% endif %}
+                </a>
+            </div>
         </div>
         <div id="prslide-{{ post.id }}" class="prslide">
             <div hidden class="post-reply-div" id="prd-{{ post.id }}">
