@@ -78,11 +78,13 @@
             {% endif %}
             <div id="single-post-view-like-edit-div">
                 {% if user.is_authenticated %}
-                    <!-- edit button -->
-                    {% if post.user == user %}
-                        <div class="post-edit-button" id="eb-{{ post.id }}">{% trans 'Edit' %}</div>
-                        <!-- <button class="post-edit-button" id="eb-{{ post.id }}">Edit</button> -->
-                    {% endif %}
+                    <div class="post-interaction-div-right">
+                        <!-- edit button -->
+                        {% if post.user == user %}
+                            <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                            <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
+                        {% endif %}
+                    </div>
                 {% endif %}
             </div>
         </div>
