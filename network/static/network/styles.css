@@ -326,6 +326,12 @@ hr {
     }
 }
 
+.post-like-button-div {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .post-like-button,
 .post-unlike-button,
 .post-like-button-inactive {

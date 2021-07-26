@@ -64,6 +64,17 @@
                         </button>
                     {% endif %}
                 </div>
+            {% else %}
+                <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
+                    <div class="post-like-button-inactive single-page-like-button">
+                        <div class="post-like-heart-unliked">
+                            <i class="far fa-heart"></i>
+                        </div>
+                        <div class="post-like-count">
+                            {{ post.users_who_liked.count }}
+                        </div>
+                    </div>
+                </div>
             {% endif %}
             <div id="single-post-view-like-edit-div">
                 {% if user.is_authenticated %}
