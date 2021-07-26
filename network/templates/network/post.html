@@ -48,6 +48,11 @@
                 {% endif %}
             </div>
             <div id="post-text-{{ post.id }}" class="single-post-view-text-div">{{ post.text }}</div>
+            {% if post.image != none %}
+                <div id="single-post-view-image-div">
+                    <img class="post-image" src="{{ post.image.url }}">
+                </div>
+            {% endif %}
             <div id="single-post-view-timestamp-div">
                 {{ post.timestamp }} UTC
             </div>

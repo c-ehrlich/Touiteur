@@ -34,6 +34,11 @@
                         </div>
                     </div>
                     <div class="post-text" id="post-text-{{ post.id }}">{{ post.text }}</div>
+                    {% if post.image %}
+                        <div class="post-image-div" id="post-image-div{{ post.id }}">
+                            <img class="post-image" src="{{ post.image.url }}">
+                        </div>
+                    {% endif %}
                     <div class="post-bottom-row-div">
                         <div class="post-bottom-row-left-div">
                             {% if user.is_authenticated and post.user != user %}

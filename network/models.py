@@ -252,6 +252,52 @@ class Post(models.Model):
         blank=True,
         null=True,
     )
+    image = models.ImageField(
+        upload_to="post-images",
+        default=None,
+        blank=True,
+        null=True,
+        editable=True,
+    )
+    def save(self, *args, **kwargs):
+        try:
+            img = Image.open(self.image)
+            if img.height > 1024 or img.width > 1024:
+                resize_ratio = min(1024/img.height, 1024/img.width)
+                output_size = (int(resize_ratio*img.width), int(resize_ratio*img.height))
+                img = ImageOps.fit(img, output_size, Image.ANTIALIAS)
+                img = img.convert('RGB')
+
+                # rotate image correctly based on exif data
+                try:
+                    for orientation in ExifTags.TAGS.keys():
+                        if ExifTags.TAGS[orientation]=='Orientation':
+                            break
+                    exif = img.getexif()
+                    if exif[orientation] == 3:
+                        img = img.rotate(180, expand=True)
+                    elif exif[orientation] == 6:
+                        img = img.rotate(270, expand=True)
+                    elif exif[orientation] == 8:
+                        img = img.rotate(90, expand=True)
+                except (AttributeError, KeyError, IndexError):
+                    # cases: image doesn't have getexif
+                    pass
+
+                output = BytesIO()
+                img.save(output, format='JPEG')
+                output.seek(0)
+                self.avatar = InMemoryUploadedFile(
+                    output,
+                    'ImageField',
+                    f'{self.image.name.split(".")[0]}.jpg',
+                    'image/jpeg',
+                    sys.getsizeof(output),
+                    None
+                )
+        except Exception as e:
+            print(f"EXCEPTION: {str(e)}")
+        super().save(*args, **kwargs)
 
     class Meta:
         get_latest_by = '-timestamp'
