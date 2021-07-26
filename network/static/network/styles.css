@@ -326,11 +326,7 @@ hr {
     }
 }
 
-.post-like-button-div {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-}
+/* .post-like-button-div */
 
 .post-like-button,
 .post-unlike-button,
@@ -616,19 +612,21 @@ hr {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 8px;
+    margin: 8px 8px 0 8px;
     color: var(--color-text-default);
 }
 #single-post-view-container {
-    width: 600px;
-    max-width: 100%;
+    width: var(--item-width);
+    max-width: var(--item-width-max);
     background-color: var(--color-box-bg);
     border: 1px solid var(--color-box-border);
     padding: 12px;
+    margin-bottom: 4px; /* hack to make it work with the slide-out reply thing */
     display: grid;
     grid-template-columns: 80px auto auto auto;
-    grid-template-rows: auto auto auto;
+    grid-template-rows: auto auto auto auto auto;
     grid-template-areas:
+        "replyto    replyto     replyto     replyto"
         "avatar     name        name        follow"
         "text       text        text        text"
         "timestamp  timestamp   timestamp   timestamp"
@@ -642,6 +640,9 @@ hr {
         border-left: none;
         border-right: none;
     }
+}
+#single-post-view-reply-to-div {
+    grid-area: replyto;
 }
 #single-post-view-avatar {
     grid-area: avatar;
@@ -666,6 +667,9 @@ hr {
     grid-area: timestamp;
     color: grey;
     margin-bottom: 8px;
+}
+.single-post-view-like-button-div {
+    grid-area: likes;
 }
 #single-post-view-like-edit-div {
     grid-area: like_edit;
@@ -1002,4 +1006,14 @@ input[type="file"] {
 .btn-minw-small {
     min-width: 20px;
     text-align: center;
+}
+
+.z-index-1 {
+    z-index: 999;
+}
+
+.margin-fix {
+    margin: auto;
+    width: var(--item-width);
+    max-width: var(--item-max-width);
 }

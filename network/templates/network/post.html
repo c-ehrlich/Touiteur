@@ -13,7 +13,16 @@
     <!-- END DO NOT DELETE -->
 
     <div id="single-post-outer">
+        <!-- maybe put a smaller version of the entire post we're replying to in here? -->
+        
         <div id="single-post-view-container">
+            {% if post.reply_to != None %}
+            <div class="post-reply-to-div" id="single-post-view-reply-to-div">
+                <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
+                    Reply to @{{ post.reply_to.user }}: {{ post.reply_to.text }}
+                </a>
+            </div>
+            {% endif %}
             <div id="single-post-view-avatar">
                 <a href="{% url 'user' post.user.username %}">
                     <img class="profile-pic" src="{{ post.user.avatar.url }}">
@@ -43,7 +52,7 @@
                 {{ post.timestamp }} UTC
             </div>
             {% if user.is_authenticated and post.user != user %}
-                <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
+                <div class="post-like-button-div single-post-view-like-button-div" id="post-like-button-div-{{ post.id }}">
                     {% if post in user.liked_posts.all %}
                         <button class="post-unlike-button single-page-like-button" id="post-like-button-{{ post.id }}">
                             <div id="post-like-heart-{{ post.id }}" class="post-like-heart-liked">
@@ -96,7 +105,21 @@
         </div>
 
     </div>
-    
+
+    <!-- reply box -->
+    <div class="margin-fix">
+        <div id="prslide-{{ post.id }}" class="prslide z-index-1">
+            <div hidden class="post-reply-div" id="prd-{{ post.id }}">
+                <textarea class="post-reply-input" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
+                <div class="flex-row-end">
+                    <button class="post-reply-submit submit-button" id="prs-{{ post.id }}">Reply</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- replies -->
+
 {% endblock %}
 
 {% block script %}
