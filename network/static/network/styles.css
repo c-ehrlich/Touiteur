@@ -333,7 +333,8 @@ hr {
 .post-like-button-inactive {
     display: flex;
     flex-direction: row;
-    justify-content: center;
+    /* justify-content: center; */
+    justify-content: flex-start;
     color: var(--color-text-medcontrast);
     border: none;
     padding: 0;

@@ -50,7 +50,6 @@ function sendReply(postId) {
     // and make some kind of indication (animation?) that the reply was sent successfully
   // if unsuccessful, keep the UI and show an error message?
   const postText = document.querySelector(`#pri-${postId}`).value;
-  console.log("hi there");
   fetch(`/reply/${postId}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -63,19 +62,20 @@ function sendReply(postId) {
   .then(response => response.json())
   .then(json => {
     // update post reply count status (maybe the python function sends that to us?
-    console.log(json);
     replyCount = json.reply_count;
-    document.querySelector(`#prsd-${postId}`).removeAttribute('hidden');
-    if (replyCount == 1) {
-      document.querySelector(`#prl-${postId}`).innerHTML = '1 reply. Click to view.';
-    } else if (replyCount > 1) {
-      document.querySelector(`#prl-${postId}`).innerHTML = `${replyCount} replies. Click to view.`; 
+    if (document.querySelector(`#prsd-${postId}`)) {
+      document.querySelector(`#prsd-${postId}`).removeAttribute('hidden');
+      if (replyCount == 1) {
+        document.querySelector(`#prl-${postId}`).innerHTML = '1 reply. Click to view.';
+      } else if (replyCount > 1) {
+        document.querySelector(`#prl-${postId}`).innerHTML = `${replyCount} replies. Click to view.`; 
+      }
+    } else {
+      location.reload();
     }
     document.querySelector(`#pri-${postId}`).value = "";
     hideReplyUI(postId);
   })
-  
-  console.log("sending reply");
 }
 
 //////

@@ -119,14 +119,16 @@
     </div>
 
     <!-- replies header -->
-    <div class="section-identifier">
-        <div class="section-identifier-inner">
-            {% trans 'Replies' %}
+    {% if post.replies.count > 0 %}
+        <div class="section-identifier">
+            <div class="section-identifier-inner">
+                {{ post.replies.count }} replies
+            </div>
         </div>
-    </div>
 
-    <!-- replies -->
-    {% include 'network/posts.html' %}
+        <!-- replies -->
+        {% include 'network/posts.html' %}
+    {% endif %}
 
 {% endblock %}
 
