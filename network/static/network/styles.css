@@ -259,7 +259,8 @@ hr {
 }
 
 .post-edit-button,
-.post-reply-button {
+.post-reply-button,
+.post-reply-cancel-button {
     border: none;
     background-color: transparent;
     color: var(--color-text-medcontrast);
@@ -267,7 +268,8 @@ hr {
     transition: all 200ms ease-out 50ms;
 }
 .post-edit-button:hover,
-.post-reply-button:hover {
+.post-reply-button:hover,
+.post-reply-cancel-button:hover {
     color: var(--color-text-default);
     transform: scale(1.1);
 }
@@ -989,4 +991,9 @@ input[type="file"] {
 /* STUFF FOR DM INBOX */
 .unread-dm {
     background-color: var(--color-dm-unread);
+}
+
+.btn-minw-small {
+    min-width: 20px;
+    text-align: center;
 }

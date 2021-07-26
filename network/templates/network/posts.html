@@ -76,13 +76,13 @@
                             <div class="post-interaction-div-right">
                                 {% if post.user == user %}
                                     <div class="post-bottom-row-right-div">
-                                        <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
-                                        <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
+                                        <div hidden class="post-edit-cancel-button btn-minw-small" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                        <div class="post-edit-button btn-minw-small" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
                                     </div>
                                 {% endif %}
                                 <div class="post-bottom-row-right-div">
-                                    <div hidden class="post-reply-cancel-button" id="rcb-{{ post.id }}"><i class="fas fa-times"></i></div>
-                                    <div class="post-reply-button" id="rb-{{ post.id }}"><i class="far fa-comment-dots"></i></i></div>
+                                    <div hidden class="post-reply-cancel-button btn-minw-small" id="rcb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                    <div class="post-reply-button btn-minw-small" id="rb-{{ post.id }}"><i class="far fa-comment-dots"></i></i></div>
                                 </div>
                             </div>
                         {% endif %}
