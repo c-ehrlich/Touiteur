@@ -113,9 +113,9 @@ class User(AbstractUser):
     )
 
     LANGUAGES = (
-        ('EN', 'English'),
-        ('DE', 'Deutsch'),
-        ('JA', '日本語'),
+        ('en_US', 'English'),
+        ('de', 'Deutsch'),
+        ('ja', '日本語'),
     )
 
     avatar = models.ImageField(
@@ -171,9 +171,9 @@ class User(AbstractUser):
     )
 
     language = models.CharField(
-        max_length=2,
+        max_length=10,
         choices=LANGUAGES,
-        default='EN',
+        default='en_US',
         verbose_name='Language'
     )
 

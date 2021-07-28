@@ -1,4 +1,6 @@
 from .models import User, Post, Conversation
+from babel.dates import format_date, format_datetime, format_time
+from django.conf import settings
 from django.core.paginator import Paginator
 from django.db.models import Q
 import datetime
@@ -46,7 +48,7 @@ def convert_javascript_date_to_python(js_date_now):
     return date
 
 
-def get_display_time(datetime_input):
+def get_display_time(request, datetime_input):
     """Takes a datatime object, and returns a time difference string.
     
     input: a date, in datetime object format
@@ -58,25 +60,58 @@ def get_display_time(datetime_input):
     less than 1 day:      '4h'
     this year:            'Mar 11'
     older:                'Mar 11, 2019'
-
-    TODO: Localise this! 
     """
+
+    if request.user.is_authenticated and request.user.language:
+        language = request.user.language
+    elif request.LANGUAGE_CODE and next((v[0] for i, v in enumerate(settings.LANGUAGES) if v[0] == request.LANGUAGE_CODE), None) != None:
+        language = request.LANGUAGE_CODE
+    else: language = 'en_US'
+
     utc = timezone('UTC')
     post = datetime_input
     now = datetime.datetime.now(tz=utc)
     difference = now - post
     td_days = difference.days
     td_secs = difference.seconds
-    if td_days == 0 and td_secs < 60:
-        return "now"
-    if td_days == 0 and td_secs < 3600:
-        return f"{td_secs // 60}m"
-    if td_days == 0 and td_secs < 86400:
-        return f"{td_secs // 3600}h"
-    if post.year == now.year:
-        return datetime.datetime.strftime(post, "%b %-d")
-    if post.year != now.year:
-        return datetime.datetime.strftime(post, "%b %-d, %Y")
+
+    if language == 'de':
+        if td_days == 0 and td_secs < 60:
+            return 'Jetzt'
+        if td_days == 0 and td_secs < 3600:
+            return f"{td_secs // 60} Min."
+        if td_days == 0 and td_secs < 86400:
+            return f"{td_secs // 3600} Std."
+        if post.year == now.year:
+            return format_datetime(post, 'd. MMM', locale=language)
+        if post.year != now.year:
+            return format_datetime(post, 'd. MMM yyyy', locale=language)
+
+    elif language == 'ja':
+        if td_days == 0 and td_secs < 60:
+            return '今'
+        if td_days == 0 and td_secs < 3600:
+            return f"{td_secs // 60}分前"
+        if td_days == 0 and td_secs < 86400:
+            return f"{td_secs // 3600}時間前"
+        if post.year == now.year:
+            return format_datetime(post, 'M月d日', locale=language)
+        if post.year != now.year:
+            return format_datetime(post, 'yyyy年M月d日', locale=language)
+
+    else:
+        # default language is 'en_US'
+        if td_days == 0 and td_secs < 60:
+            return "now"
+        if td_days == 0 and td_secs < 3600:
+            return f"{td_secs // 60}m"
+        if td_days == 0 and td_secs < 86400:
+            return f"{td_secs // 3600}h"
+        if post.year == now.year:
+            return datetime.datetime.strftime(post, "%b %-d")
+        if post.year != now.year:
+            return datetime.datetime.strftime(post, "%b %-d, %Y")
+
     return "if you see this, there was an error in get_display_time"
 
 
@@ -92,7 +127,7 @@ def get_dm_threads_paginated(request):
             if message.is_read == False and message.sender_id != user.id:
                 object.has_unread = True
         # create formatted timestamp
-        object.timestamp_f = get_display_time(object.last_message_timestamp)
+        object.timestamp_f = get_display_time(request, object.last_message_timestamp)
         # determine who the conversation partner is
         if object.user_ids[0] == user.id:
             object.convo_partner = User.objects.get(id=object.user_ids[1])
@@ -144,14 +179,14 @@ def get_posts_from_followed_accounts(request):
     user = request.user
     objects = Post.objects.filter(user__in=user.following.all())
     for object in objects:
-        object.timestamp_f = get_display_time(object.timestamp)
+        object.timestamp_f = get_display_time(request, object.timestamp)
     p = Paginator(objects, PAGINATION_POST_COUNT)
     return p.page(page)
 
 
-def get_post_from_id(id):
+def get_post_from_id(request, id):
     post = Post.objects.get(id=id)
-    post.timestamp_f = get_display_time(post.timestamp)
+    post.timestamp_f = get_display_time(request, post.timestamp)
     return post
 
 
@@ -197,6 +232,7 @@ def get_post_count_since_timestamp(request, timestamp, context):
 def get_posts(request, username=None, reply_to=None):
     """RETURNS A PAGE OF POSTS FROM A USER"""
     page = request.GET.get('page', 1)
+
     if username == None and reply_to == None:
         objects = Post.objects.all()
     elif reply_to == None:
@@ -206,7 +242,7 @@ def get_posts(request, username=None, reply_to=None):
         objects = Post.objects.filter(reply_to=reply_to).all()
 
     for object in objects:
-        object.timestamp_f = get_display_time(object.timestamp)
+        object.timestamp_f = get_display_time(request, object.timestamp)
     p = Paginator(objects, PAGINATION_POST_COUNT)
     return p.page(page)
 
@@ -218,7 +254,7 @@ def get_posts_with_mention(request, username):
     # get all posts where the user is mentioned
     objects = Post.objects.filter(mentioned_users__in=[user])
     for object in objects:
-        object.timestamp_f = get_display_time(object.timestamp)
+        object.timestamp_f = get_display_time(request, object.timestamp)
     p = Paginator(objects, PAGINATION_POST_COUNT)
     return p.page(page)
 

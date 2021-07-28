@@ -1,6 +1,7 @@
-postgres
-psycopg2
+babel
 gettext
 Pillow
+postgres
+psycopg2
 pytz
 sorl-thumbnail

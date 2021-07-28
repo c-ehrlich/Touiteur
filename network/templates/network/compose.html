@@ -6,7 +6,7 @@
             <img id="compose-view-avatar-img" src="{{ request.user.avatar.url }}">
         </div>
         <div id="compose-view-body">
-            <form id="compose-form" action={% url 'compose' %} method="post">
+            <form id="compose-form" action={% url 'compose' %} method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="relative-block">
                     {{ new_post_form.post_text }}

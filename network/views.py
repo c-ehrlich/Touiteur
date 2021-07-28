@@ -167,7 +167,7 @@ def mentions(request):
 
 
 def post(request, id):
-    post = utils.get_post_from_id(id)
+    post = utils.get_post_from_id(request, id)
     # TODO do something if it's a bad post
 
     # TODO put post.replies.all() in a paginator
@@ -300,7 +300,7 @@ def edit(request, post_id):
                 "message": _("Maximum post length is 140 characters"),
                 "edited": False,
             }, status=400)
-        post = utils.get_post_from_id(post_id)
+        post = utils.get_post_from_id(request, post_id)
         if request.user == post.user:
             post.text = new_text
             post.save()
@@ -376,7 +376,7 @@ def like(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)
         user = request.user
-        post = utils.get_post_from_id(post_id)
+        post = utils.get_post_from_id(request, post_id)
         if data['like'] == True:
             user.liked_posts.add(post)
             return JsonResponse({
@@ -428,7 +428,7 @@ def reply(request, post_id):
         data = json.loads(request.body)
         text = data["text"]
         user = request.user
-        post = utils.get_post_from_id(post_id)
+        post = utils.get_post_from_id(request, post_id)
         reply = Post(user=user, text=text, reply_to=post)
         reply.save()
         # maybe factor out the mentioned users thing? TODO
