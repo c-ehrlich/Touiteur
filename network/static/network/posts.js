@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.post-save-edits-button').forEach(button => {
     button.addEventListener('click', event => {
       let post_id = button.id.split("-")[1];
-      let original_text = document.querySelector(`#post-text-${post_id}`).innerHTML;
+      let original_text = document.querySelector(`#post-text-${post_id}`).innerText;
       edit_post_submit(post_id, original_text);
     });
   });
@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', function() {
   document.querySelectorAll('.post-edit-cancel-button').forEach(button => {
     button.addEventListener('click', event => {
       let post_id = button.id.split("-")[1];
-      let original_text = document.querySelector(`#post-text-${post_id}`).innerHTML;
+      let original_text = document.querySelector(`#post-text-${post_id}`).innerText;
       edit_post_cancel(post_id, original_text);
     });
   });
@@ -111,9 +111,9 @@ function edit_post_submit(post_id, original_text) {
   .then(response => response.json())
   .then(json => {
     if (json.edited === true) {
-      text_field.innerHTML = new_text;
+      text_field.innerHTML = create_post_text_with_mention_links(new_text);
     } else {
-      text_field.innerHTML = original_text;
+      text_field.innerHTML = create_post_text_with_mention_links(original_text);
       // TODO flash a banner saying editing failed
     }
     text_field.removeAttribute('hidden');
@@ -136,7 +136,7 @@ function edit_post_submit(post_id, original_text) {
 function edit_post_text(post_id) {
   console.log("! running edit_post_text");
   let text_field = document.querySelector(`#post-text-${post_id}`);
-  let original_text = text_field.innerHTML;
+  let original_text = text_field.innerText;
   let text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
   text_edit_input.setAttribute('rows', get_number_of_lines(original_text));
   // TODO give this textArea some classes
