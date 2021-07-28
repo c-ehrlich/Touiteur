@@ -663,9 +663,12 @@ hr {
     flex-direction: column;
     align-items: flex-end;
 }
+.single-post-view-text-container{
+    grid-area: text;
+}
 .single-post-view-text-div {
     white-space: pre-wrap;
-    grid-area: text;
+    /* grid-area: text; */
     font-size: 1.75rem;
 }
 #single-post-view-image-div {

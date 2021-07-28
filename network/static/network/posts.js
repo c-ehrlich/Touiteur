@@ -5,24 +5,42 @@ document.addEventListener('DOMContentLoaded', function() {
     post.innerHTML = post_text_with_mention_links;
   });
 
+  // add eventListeners to save and cancel buttons
+
   document.querySelectorAll('.post-edit-button').forEach(button => {
     button.addEventListener('click', event => {
-      post_id = button.id.split("-")[1];
+      let post_id = button.id.split("-")[1];
       edit_post_text(post_id);
-    }, { once: true } );
+    });
+  });
+
+  document.querySelectorAll('.post-save-edits-button').forEach(button => {
+    button.addEventListener('click', event => {
+      let post_id = button.id.split("-")[1];
+      let original_text = document.querySelector(`#post-text-${post_id}`).innerHTML;
+      edit_post_submit(post_id, original_text);
+    });
+  });
+
+  document.querySelectorAll('.post-edit-cancel-button').forEach(button => {
+    button.addEventListener('click', event => {
+      let post_id = button.id.split("-")[1];
+      let original_text = document.querySelector(`#post-text-${post_id}`).innerHTML;
+      edit_post_cancel(post_id, original_text);
+    });
   });
 
   document.querySelectorAll('.post-like-button').forEach(button => {
     button.addEventListener('click', event => {
       // TODO is there a better way to get the id?
-      post_id = button.id.split("-")[3];
+      let post_id = button.id.split("-")[3];
       like_post(post_id);
     }, { once: true } );
   });
 
   document.querySelectorAll('.post-unlike-button').forEach(button => {
     button.addEventListener('click', event => {
-      post_id = button.id.split("-")[3];
+      let post_id = button.id.split("-")[3];
       unlike_post(post_id);
     }, { once: true } );
   })
@@ -61,24 +79,25 @@ function create_post_text_with_mention_links(post_text) {
 
 // Cancels post editing
 function edit_post_cancel(post_id, original_text) {
+  console.log("!running edit_post_cancel");
   document.querySelector(`#post-text-${post_id}`).innerHTML = original_text;
-  // hide the cancel button
+  // chenge visibility back to input view style
+  document.querySelector(`#post-edit-input-${post_id}`).setAttribute('hidden', 'hidden');
+  document.querySelector(`#post-text-${post_id}`).removeAttribute('hidden');
+  // adjust button visibility
   document.querySelector(`#ecb-${post_id}`).setAttribute('hidden', 'hidden');
-  // set the edit button innerhtml to save and give it the save eventlistener
-  let save_button = document.querySelector(`#eb-${post_id}`);
-  save_button.innerHTML = '<i class="far fa-edit"></i>';
-  save_button.classList.remove('post-save-edits-button');
-  save_button.addEventListener('click', event => {
-    edit_post_text(post_id);
-  }, { once: true } );
+  document.querySelector(`#seb-${post_id}`).setAttribute('hidden', 'hidden');
+  document.querySelector(`#eb-${post_id}`).removeAttribute('hidden');
+  console.log(`edit_post_cancel ... original text: ${original_text}`);
 }
 
 
 // Attempts to submit edited post
 function edit_post_submit(post_id, original_text) {
-  const save_button = document.querySelector(`#eb-${post_id}`);
-  const text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
-  new_text = text_edit_input.value;
+  console.log("! running edit_post_submit");
+  let text_field = document.querySelector(`#post-text-${post_id}`);
+  let text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
+  let new_text = text_edit_input.value;
   fetch(`/edit/${post_id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -92,17 +111,22 @@ function edit_post_submit(post_id, original_text) {
   .then(response => response.json())
   .then(json => {
     if (json.edited === true) {
-      document.querySelector(`#post-text-${post_id}`).innerHTML = new_text;
+      text_field.innerHTML = new_text;
     } else {
-      document.querySelector(`#post-text-${post_id}`).innerHTML = original_text;
+      text_field.innerHTML = original_text;
+      // TODO flash a banner saying editing failed
     }
-    let save_button = document.querySelector(`#eb-${post_id}`);
-    save_button.innerHTML = '<i class="far fa-edit"></i>';
-    save_button.classList.remove('post-save-edits-button');
-    save_button.addEventListener('click', event => {
-      edit_post_text(post_id);
-    }, { once: true } );
+    text_field.removeAttribute('hidden');
+    text_edit_input.setAttribute('hidden', 'hidden');
+
+    // set button attributes
     document.querySelector(`#ecb-${post_id}`).setAttribute('hidden', 'hidden');
+    document.querySelector(`#seb-${post_id}`).setAttribute('hidden', 'hidden');
+    document.querySelector(`#eb-${post_id}`).removeAttribute('hidden');
+
+    // TEMP TODO
+    console.log(`edit_post_submit ... original text: ${original_text}`);
+    console.log(`edit_post_submit ... new text: ${new_text}`);
   })
   // TODO: do this without 'original_text' variable - use JSON from backend instead
 }
@@ -110,38 +134,35 @@ function edit_post_submit(post_id, original_text) {
 
 // Edits a post
 function edit_post_text(post_id) {
-  const text_field = document.querySelector(`#post-text-${post_id}`);
-  const original_text = text_field.innerHTML;
-  text_field.innerHTML = "";
-  const text_edit_input = document.createElement('textarea');
-  const number_of_lines = get_number_of_lines(original_text);
-  text_edit_input.setAttribute('rows', number_of_lines);
-  text_edit_input.setAttribute('maxlength', 140);
+  console.log("! running edit_post_text");
+  let text_field = document.querySelector(`#post-text-${post_id}`);
+  let original_text = text_field.innerHTML;
+  let text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
+  text_edit_input.setAttribute('rows', get_number_of_lines(original_text));
   // TODO give this textArea some classes
   text_edit_input.value = original_text;
-  text_edit_input.id = `post-edit-input-${post_id}`;
-  text_edit_input.classList.add('post-edit-input');
-  // TODO this eventListener doesn't work because enter makes a newline. Investigate.
-  text_edit_input.addEventListener('keypress', e => {
-    if (e.key === 'Enter') {
-      edit_post_submit(post_id, original_text);
-    }
-  }, { once: true } );
-  text_field.append(text_edit_input);
+
+//   text_edit_input.addEventListener('keypress', e => {
+//     if (e.key === 'Enter') {
+//       edit_post_submit(post_id, original_text);
+//     }
+//   }, { once: true } );
+
+  text_field.setAttribute('hidden', 'hidden');
+  text_edit_input.removeAttribute('hidden');
+
   text_edit_input.focus();
-  // Turn the edit button into save button
-  let save_button = document.querySelector(`#eb-${post_id}`);
-  save_button.innerHTML = '<i class="fas fa-check"></i>';
-  save_button.classList.add('post-save-edits-button');
-  save_button.addEventListener('click', event => {
-    edit_post_submit(post_id, original_text);
-  }, { once: true } );
-  // make the cancel button visible and give it an eventlistener
-  let edit_cancel_button = document.querySelector(`#ecb-${post_id}`);
-  edit_cancel_button.removeAttribute('hidden');
-  edit_cancel_button.addEventListener('click', () => {
-    edit_post_cancel(post_id, original_text);
-  })
+
+  // TODO TEMP
+  console.log(original_text);
+
+  // set button visibility
+  document.querySelector(`#ecb-${post_id}`).removeAttribute('hidden');
+  document.querySelector(`#seb-${post_id}`).removeAttribute('hidden');
+  document.querySelector(`#eb-${post_id}`).setAttribute('hidden', 'hidden'); 
+
+  // TODO TEMP comments
+  console.log(`edit_post_text ... original text: ${original_text}`);
 }
 
 

@@ -47,7 +47,10 @@
                     </div>
                 {% endif %}
             </div>
-            <div id="post-text-{{ post.id }}" class="single-post-view-text-div">{{ post.text }}</div>
+            <div id="post-text-container-{{ post.id }}" class="single-post-view-text-container">
+                <div id="post-text-{{ post.id }}" class="single-post-view-text-div">{{ post.text }}</div>
+                <textarea hidden maxlength="140" id="post-edit-input-{{ post.id }}" class="post-edit-input"></textarea>
+            </div>
             {% if post.image %}
                 <div id="single-post-view-image-div">
                     <img class="post-image" src="{{ post.image.url }}">
@@ -97,6 +100,7 @@
                         {% if post.user == user %}
                             <div class="post-bottom-row-right-div">
                                 <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                <div hidden class="post-save-edits-button" id="seb-{{ post.id }}"><i class="fas fa-check"></i></i></div>
                                 <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
                             </div>
                         {% endif %}
