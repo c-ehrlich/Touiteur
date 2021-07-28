@@ -48,7 +48,7 @@
                 {% endif %}
             </div>
             <div id="post-text-{{ post.id }}" class="single-post-view-text-div">{{ post.text }}</div>
-            {% if post.image != none %}
+            {% if post.image %}
                 <div id="single-post-view-image-div">
                     <img class="post-image" src="{{ post.image.url }}">
                 </div>
