@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     post.innerHTML = post_text_with_mention_links;
   });
 
-  // add eventListeners to save and cancel buttons
-
   document.querySelectorAll('.post-edit-button').forEach(button => {
     button.addEventListener('click', event => {
       let post_id = button.id.split("-")[1];
@@ -79,7 +77,6 @@ function create_post_text_with_mention_links(post_text) {
 
 // Cancels post editing
 function edit_post_cancel(post_id, original_text) {
-  console.log("!running edit_post_cancel");
   document.querySelector(`#post-text-${post_id}`).innerHTML = original_text;
   // chenge visibility back to input view style
   document.querySelector(`#post-edit-input-${post_id}`).setAttribute('hidden', 'hidden');
@@ -88,7 +85,6 @@ function edit_post_cancel(post_id, original_text) {
   document.querySelector(`#ecb-${post_id}`).setAttribute('hidden', 'hidden');
   document.querySelector(`#seb-${post_id}`).setAttribute('hidden', 'hidden');
   document.querySelector(`#eb-${post_id}`).removeAttribute('hidden');
-  console.log(`edit_post_cancel ... original text: ${original_text}`);
 }
 
 
@@ -123,10 +119,6 @@ function edit_post_submit(post_id, original_text) {
     document.querySelector(`#ecb-${post_id}`).setAttribute('hidden', 'hidden');
     document.querySelector(`#seb-${post_id}`).setAttribute('hidden', 'hidden');
     document.querySelector(`#eb-${post_id}`).removeAttribute('hidden');
-
-    // TEMP TODO
-    console.log(`edit_post_submit ... original text: ${original_text}`);
-    console.log(`edit_post_submit ... new text: ${new_text}`);
   })
   // TODO: do this without 'original_text' variable - use JSON from backend instead
 }
@@ -139,30 +131,15 @@ function edit_post_text(post_id) {
   let original_text = text_field.innerText;
   let text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
   text_edit_input.setAttribute('rows', get_number_of_lines(original_text));
-  // TODO give this textArea some classes
   text_edit_input.value = original_text;
-
-//   text_edit_input.addEventListener('keypress', e => {
-//     if (e.key === 'Enter') {
-//       edit_post_submit(post_id, original_text);
-//     }
-//   }, { once: true } );
-
   text_field.setAttribute('hidden', 'hidden');
   text_edit_input.removeAttribute('hidden');
-
   text_edit_input.focus();
-
-  // TODO TEMP
-  console.log(original_text);
 
   // set button visibility
   document.querySelector(`#ecb-${post_id}`).removeAttribute('hidden');
   document.querySelector(`#seb-${post_id}`).removeAttribute('hidden');
   document.querySelector(`#eb-${post_id}`).setAttribute('hidden', 'hidden'); 
-
-  // TODO TEMP comments
-  console.log(`edit_post_text ... original text: ${original_text}`);
 }
 
 
@@ -231,7 +208,6 @@ function update_post_like_status(json) {
 }
 
 console.log("loaded posts.js");
-
 
 // check if a char is alphanumeric
 function is_alphanumeric(char) {
