@@ -434,9 +434,9 @@ def reply(request, post_id):
         # maybe factor out the mentioned users thing? TODO
         mentioned_users = utils.get_mentions_from_post(text)
         for user in mentioned_users:
-            post.mentioned_users.add(user)
+            reply.mentioned_users.add(user)
+        # this is the reply count that updates on the website, for the post that is being replied to
         reply_count = post.replies.count()
-        print(f"reply: {reply}")
         return JsonResponse({
             "reply_count": reply_count,
         }, status=201)
