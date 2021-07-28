@@ -137,6 +137,16 @@ def get_dm_threads_paginated(request):
     return p.page(page) 
 
 
+def get_liked_posts_paginated(request, user):
+    page = request.GET.get('page', 1)
+    posts = user.liked_posts.all()
+    # posts = Post.objects.filter(users_who_liked__contains=user)
+    for post in posts:
+        post.timestamp_f = get_display_time(request, post.timestamp)
+    p = Paginator(posts, PAGINATION_POST_COUNT)
+    return p.page(page)
+
+
 def get_mentions_from_post(post_text):
     """Takes a post text, and returns a list of mentions (User objects) in the post"""
     mentions = []

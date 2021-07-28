@@ -539,6 +539,7 @@ hr {
 #user-profile-following-count,
 #user-profile-follower-count {
     font-weight: bold;
+    color: var(--color-text-default);
 }
 #user-profile-post-count-label,
 #user-profile-liked-posts-count-label,

@@ -10,7 +10,7 @@
     *   [Back-End](#back-end)
     *   [Database](#database)
 *   [Screenshots](#screenshots)
-*   [Potential Improvements](#potential-improvements)]
+*   [Potential Improvements](#potential-improvements)
 
 ## Installation
 

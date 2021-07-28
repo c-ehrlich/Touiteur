@@ -1,0 +1,53 @@
+{% load i18n %}
+
+<div id="user-profile-outer-div">
+    <div id="user-profile-grid-div">
+        <div id="user-profile-avatar-div">
+            <img id="profile-avatar" src="{{ view_user.avatar.url }}"><br>
+        </div>            
+        <div id="user-profile-name-div">
+            <div id="user-profile-displayname">{{ view_user.displayname }}</div>
+            <div id="user-profile-username">@{{ view_user.username }}</div>
+        </div>
+        <div>
+        <div id="user-profile-follow-div">
+            <!-- TODO check if this breaks when user is not logged in -->
+            {% if user.is_authenticated and user != view_user %}
+                <div id="user-profile-send-dm-div">
+                    <i class="far fa-envelope"></i>
+                </div>
+                <div id="follow-button-div">
+                    {% if view_user in user.following.all %}
+                        <button id="unfollow-button">{% trans 'Unfollow' %}</button>
+                    {% else %}
+                        <button id="follow-button">{% trans 'Follow' %}</button>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+        </div>
+        <div id="user-profile-info-div">
+            <div id="user-profile-bio">{{ view_user.bio }}</div>
+            <div id="user-profile-post-info-div">
+                <a href="{% url 'user' view_user %}" class="flex-row">
+                    <div id="user-profile-post-count">{{ view_user.posts.count }}</div>
+                    <div id="user-profile-post-count-label"> {% trans 'Posts' %}</div>
+                </a>
+                <a href="{% url 'likes' view_user %}" class="flex-row">
+                    <div id="user-profile-liked-posts-count">
+                        {{ view_user.liked_posts.count }} 
+                    </div>
+                    <div id="user-profile-liked-posts-count-label">
+                         {% trans 'Liked Posts' %}
+                    </div>
+                </a>
+            </div>
+            <div id="user-profile-follower-info-div">
+                <div id="user-profile-following-count">{{ view_user.following.count }}</div>
+                <div id="user-profile-following-count-label">{% trans 'Following' %}</div>
+                <div id="user-profile-follower-count">{{ view_user.followed_by.count }}</div>
+                <div id="user-profile-follower-count-label">{% trans 'Followers' %}</div>
+            </div>
+        </div>
+    </div>
+</div>

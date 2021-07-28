@@ -129,6 +129,28 @@ def index(request):
         }, 400)
 
 
+def likes(request, username):
+    """RETURNS THE LIKED POSTS PAGE"""
+    if request.method == "GET":
+        view_user = utils.get_user_from_username(username)
+        page = request.GET.get('page', 1)
+        if view_user.show_liked_posts == True:
+            posts = utils.get_liked_posts_paginated(request, view_user)
+        else:
+            return render(request, "network/likes.html", {
+                "view_user": view_user,
+            })
+            # TODO return a view that shows that the user has sharing likes off
+        return render(request, "network/likes.html", {
+            "view_user": view_user,
+            "posts": posts,
+        })
+    else:
+        return JsonResponse({
+            "error": "GET request required"
+        }, 400)
+
+
 def login_view(request):
     """RETURNS THE LOGIN VIEW"""
     if request.method == "POST":

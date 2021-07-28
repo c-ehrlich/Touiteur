@@ -13,6 +13,7 @@ urlpatterns = [
     path("dms", views.dms, name="dms"),
     path("dm_thread/<str:username>", views.dm_thread, name="dm_thread"),
     path("following", views.following, name="following"),
+    path("likes/<str:username>", views.likes, name="likes"),
     path("login", views.login_view, name="login"),
     path("logout", views.logout_view, name="logout"),
     path("mentions", views.mentions, name="mentions"),

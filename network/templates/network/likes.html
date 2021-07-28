@@ -1,0 +1,53 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    @{{ view_user.username }}'s liked posts
+{% endblock %}
+
+{% block body %}
+    <div id="index-body-div">
+
+        {% include 'network/user_profile.html' %}
+
+        {% if view_user.show_liked_posts == True %}
+            <div class="section-identifier no-top-padding">
+                <div class="section-identifier-inner">
+                    @{{ view_user.username }}'s liked posts
+                </div>
+            </div>
+
+            <div id="new-posts-container">
+                <a href="" class="no-decoration-link">
+                    <div hidden id="new-posts-inner">
+                        {% trans 'No new posts (you should not see this)' %}
+                    </div>
+                </a>
+            </div>
+
+            {% include 'network/posts.html' %}
+        {% else %}
+            <div class="section-identifier no-top-padding">
+                <div class="section-identifier-inner">
+                    <div>This user has set their likes to private.</div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block script %}
+    {% if user.is_authenticated %}<script src="{% static 'network/posts-loggedin.js' %}"></script>{% endif %}
+    <script src="{% static 'network/live_notifications.js' %}"></script>
+    <script src="{% static 'network/posts.js' %}"></script>
+    <script src="{% static 'network/utils.js' %}"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.navbar-active-item').forEach(item => {
+          item.classList.remove('navbar-active-item');
+        });
+        // No active navbar item here!
+      });
+    </script>
+{% endblock %}

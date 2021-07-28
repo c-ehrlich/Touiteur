@@ -12,55 +12,20 @@
     <!-- END DO NOT DELETE -->
 
     <div id="index-body-div">
-        <div id="user-profile-outer-div">
-            <div id="user-profile-grid-div">
-                <div id="user-profile-avatar-div">
-                    <img id="profile-avatar" src="{{ view_user.avatar.url }}"><br>
-                </div>            
-                <div id="user-profile-name-div">
-                    <div id="user-profile-displayname">{{ view_user.displayname }}</div>
-                    <div id="user-profile-username">@{{ view_user.username }}</div>
-                </div>
-                <div>
-                <div id="user-profile-follow-div">
-                    <!-- TODO check if this breaks when user is not logged in -->
-                    {% if user.is_authenticated and user != view_user %}
-                        <div id="user-profile-send-dm-div">
-                            <i class="far fa-envelope"></i>
-                        </div>
-                        <div id="follow-button-div">
-                            {% if view_user in user.following.all %}
-                                <button id="unfollow-button">{% trans 'Unfollow' %}</button>
-                            {% else %}
-                                <button id="follow-button">{% trans 'Follow' %}</button>
-                            {% endif %}
-                        </div>
-                    {% endif %}
-                </div>
-                </div>
-                <div id="user-profile-info-div">
-                    <div id="user-profile-bio">{{ view_user.bio }}</div>
-                    <div id="user-profile-post-info-div">
-                        <div id="user-profile-post-count">{{ view_user.posts.count }}</div>
-                        <div id="user-profile-post-count-label"> {% trans 'Posts' %}</div>
-                        <div id="user-profile-liked-posts-count">{{ view_user.liked_posts.count }} </div>
-                        <div id="user-profile-liked-posts-count-label"> {% trans 'Liked Posts' %}</div>
-                    </div>
-                    <div id="user-profile-follower-info-div">
-                        <div id="user-profile-following-count">{{ view_user.following.count }}</div>
-                        <div id="user-profile-following-count-label">{% trans 'Following' %}</div>
-                        <div id="user-profile-follower-count">{{ view_user.followed_by.count }}</div>
-                        <div id="user-profile-follower-count-label">{% trans 'Followers' %}</div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+        {% include 'network/user_profile.html' %}
 
         {% if user.is_authenticated and user.id == view_user.id %}
             {% include 'network/compose.html' %}
         {% endif %}
 
         <div class="spacer-8-px-conditional"></div>
+
+        <div class="section-identifier no-top-padding">
+            <div class="section-identifier-inner">
+                Posts by @{{ view_user.username }}
+            </div>
+        </div>
 
         <div id="new-posts-container">
             <a href="" class="no-decoration-link">
@@ -71,6 +36,7 @@
         </div>
 
         {% include 'network/posts.html' %}
+        
     </div>
 {% endblock %}
 
