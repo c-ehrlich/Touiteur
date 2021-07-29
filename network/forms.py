@@ -150,10 +150,11 @@ class RegisterAccountStage3Form(forms.ModelForm):
 
     show_liked_posts = forms.BooleanField(
         label = "Show Liked Posts",
-        required = True,
+        help_text = "Decide whether other users can see which posts you have liked.",
+        required = False,
         # default = True,
         widget = forms.CheckboxInput(attrs={
-            'class': 'form-control',
+            'class': 'form-control form-checkbox',
         })
     )
 

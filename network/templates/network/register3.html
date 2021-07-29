@@ -24,13 +24,37 @@
     <div class="reg-login-outer">
         <div class="reg-login-inner">
             <form method="POST" action="" class="form-100-test">
+                <h4>Display</h4>
                 <!-- Language -->
-                <!-- TimeZone (default to browser/request time zone in form/route?) -->
+                <div class="form-group mw350">
+                    {{ form.language.errors | safe }}
+                    <div class="flex-row space-between">
+                        <label for="{{ form.language.id_for_label }}">{{ form.language.label }}</label>
+                        {{ form.language | safe }}
+                    </div>
+                </div>
                 <!-- Light/Dark Mode -->
-                <!-- Show/hide likes -->
+                <div class="form-group mw350">
+                    {{ form.theme.errors | safe }}
+                    <div class="flex-row space-between">
+                        <label for="{{ form.theme.id_for_label }}">{{ form.theme.label }}</label>
+                        {{ form.theme | safe }}
+                    </div>
+                </div>
 
-                <!-- temp -->
-                {{ form.as_p }}
+                <h4>Privacy</h4>
+                <!-- Show/hide likes -->
+                <div class="form-group mw350">
+                    {{ form.show_liked_posts.errors | safe }}
+                    <div class="flex-row space-between">
+                        <label for="{{ form.show_liked_posts.id_for_label }}">{{ form.show_liked_posts.label }}</label>
+                        {{ form.show_liked_posts | safe }}
+                    </div>
+                    <div class="form-help-text">
+                        {{ form.show_liked_posts.help_text }}
+                    </div>
+                </div>
+
                 {% csrf_token %}
                 <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">Skip</a>
                 <input class="btn btn-primary equal-width-button" type="submit" name="Update Information" value="Save">
