@@ -219,6 +219,7 @@ hr {
 .post-username-header-div {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
     margin-bottom: 4px;
 }
 
