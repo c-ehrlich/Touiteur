@@ -143,6 +143,11 @@ class User(AbstractUser):
         related_name="followed_by",
         blank=True
     )
+    blocked_users = models.ManyToManyField(
+        "User",
+        related_name="blocked_by",
+        blank=True
+    )
     # likes
     liked_posts = models.ManyToManyField(
         "Post",
