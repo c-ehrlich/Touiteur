@@ -291,17 +291,17 @@ def register3(request):
 
 @login_required
 def user(request, username):
-    request.view_user = utils.get_user_from_username(username)
+    view_user = utils.get_user_from_username(username)
     posts = utils.get_posts(request, username)
-    if request.user == request.view_user:
+    if request.user == view_user:
         return render(request, "network/user.html", {
-            "view_user": request.view_user,
+            "view_user": view_user,
             "posts": posts,
             "new_post_form": NewPostForm(),
         })
     else:
         return render(request, "network/user.html", {
-            "view_user": user,
+            "view_user": view_user,
             "posts": posts,
         })
 
