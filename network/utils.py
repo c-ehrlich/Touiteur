@@ -187,10 +187,10 @@ def get_mentions_from_post(post_text):
 def get_posts_from_followed_accounts(request):
     page = request.GET.get('page', 1)
     user = request.user
-    objects = Post.objects.filter(user__in=user.following.all())
-    for object in objects:
-        object.timestamp_f = get_display_time(request, object.timestamp)
-    p = Paginator(objects, PAGINATION_POST_COUNT)
+    posts = Post.objects.filter(user__in=user.following.all())
+    for post in posts:
+        post.timestamp_f = get_display_time(request, post.timestamp)
+    p = Paginator(posts, PAGINATION_POST_COUNT)
     return p.page(page)
 
 
@@ -244,16 +244,16 @@ def get_posts(request, username=None, reply_to=None):
     page = request.GET.get('page', 1)
 
     if username == None and reply_to == None:
-        objects = Post.objects.all()
+        posts = Post.objects.all()
     elif reply_to == None:
         user = get_user_from_username(username)
-        objects = Post.objects.filter(user=user).all()
+        posts = Post.objects.filter(user=user).all()
     elif username == None:
-        objects = Post.objects.filter(reply_to=reply_to).all()
+        posts = Post.objects.filter(reply_to=reply_to).all()
 
-    for object in objects:
-        object.timestamp_f = get_display_time(request, object.timestamp)
-    p = Paginator(objects, PAGINATION_POST_COUNT)
+    for post in posts:
+        post.timestamp_f = get_display_time(request, post.timestamp)
+    p = Paginator(posts, PAGINATION_POST_COUNT)
     return p.page(page)
 
 
@@ -262,10 +262,10 @@ def get_posts_with_mention(request, username):
     page = request.GET.get('page', 1)
     user = get_user_from_username(username)
     # get all posts where the user is mentioned
-    objects = Post.objects.filter(mentioned_users__in=[user])
-    for object in objects:
-        object.timestamp_f = get_display_time(request, object.timestamp)
-    p = Paginator(objects, PAGINATION_POST_COUNT)
+    posts = Post.objects.filter(mentioned_users__in=[user])
+    for post in posts:
+        post.timestamp_f = get_display_time(request, post.timestamp)
+    p = Paginator(posts, PAGINATION_POST_COUNT)
     return p.page(page)
 
 
