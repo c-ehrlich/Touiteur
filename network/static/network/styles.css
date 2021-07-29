@@ -1059,3 +1059,30 @@ h4 {
 .form-help-text {
     color: var(--color-text-medcontrast);
 }
+.blocked-by-author {
+    color: var(--color-text-medcontrast);
+    margin-top: 8px;
+    margin-bottom: 8px;
+    text-align: left;
+    font-weight: 300;
+    font-size: 1.25rem;
+}
+.blocked-by-user {
+    color: var(--color-text-medcontrast);
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font-weight: 300;
+    font-size: 1.25rem;
+}
+.blocked-by-user-reveal {
+    margin-left: auto;
+    margin-right: auto;
+}
+.blocked-by-user-hidden {
+    display: none;
+}
+.center-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}

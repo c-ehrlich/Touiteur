@@ -15,9 +15,24 @@ document.addEventListener('DOMContentLoaded', () => {
   // Add eventListener to each send reply button
   document.querySelectorAll('.post-reply-submit').forEach(button => {
     button.addEventListener('click', () => {
-      // form.preventDefault();
       postId = button.id.split('-')[1];
       sendReply(postId);
+    })
+  })
+  // Add eventListener to each post where user has blocked the author to show that post
+  document.querySelectorAll('.blocked-by-user-reveal').forEach(button => {
+    button.addEventListener('click', event => {
+      postId = button.id.split('-')[1];
+      console.log(`show ${postId}`);
+      // hide stuff that needs to be hidden
+      document.querySelectorAll(`.blk-info-${postId}`).forEach(item => {
+        item.setAttribute('hidden', 'hidden');
+      })
+      // show stuff that needs to be shown
+      document.querySelectorAll(`.blk-hidden-${postId}`).forEach(item => {
+        // item.removeAttribute('hidden');
+        item.classList.remove('blocked-by-user-hidden');
+      })
     })
   })
 })

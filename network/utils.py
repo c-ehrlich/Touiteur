@@ -142,7 +142,7 @@ def get_liked_posts_paginated(request, user):
     posts = user.liked_posts.all()
     # posts = Post.objects.filter(users_who_liked__contains=user)
     for post in posts:
-        post.timestamp_f = get_display_time(request, post.timestamp)
+        get_post_additonal_data(request, post)
     p = Paginator(posts, PAGINATION_POST_COUNT)
     return p.page(page)
 
@@ -189,9 +189,29 @@ def get_posts_from_followed_accounts(request):
     user = request.user
     posts = Post.objects.filter(user__in=user.following.all())
     for post in posts:
-        post.timestamp_f = get_display_time(request, post.timestamp)
+        get_post_additonal_data(request, post)
     p = Paginator(posts, PAGINATION_POST_COUNT)
     return p.page(page)
+
+
+def get_post_additonal_data(request, post):
+    """takes a post object, and appends additional information
+    
+    Data that is always added, whether user is logged in or not:
+        timestamp_f (string): formatted and localised timestamp for timeline view
+
+    Data that is only added if user is logged in:
+        author_blocked_by_user (boolean): is the post author blocked by the user requesting the post
+        user_blocked_by_author (boolean): is the user requesting the post blocked by the author"""
+    post.timestamp_f = get_display_time(request, post.timestamp)
+    if request.user:
+        # post.author_blocked_by_user = post.user.blocked_by.filter(request.user).count() > 0
+        # post.user_blocked_by_author = request.user.blocked_by.filter(post.author).count() > 0
+        post.user_blocked_by_author = request.user in post.user.blocked_users.all()
+        post.author_blocked_by_user = request.user in post.user.blocked_by.all()
+
+    # return post
+    # TODO can i do this without returning the post?
 
 
 def get_post_from_id(request, id):
@@ -252,7 +272,7 @@ def get_posts(request, username=None, reply_to=None):
         posts = Post.objects.filter(reply_to=reply_to).all()
 
     for post in posts:
-        post.timestamp_f = get_display_time(request, post.timestamp)
+        get_post_additonal_data(request, post)
     p = Paginator(posts, PAGINATION_POST_COUNT)
     return p.page(page)
 
@@ -264,7 +284,7 @@ def get_posts_with_mention(request, username):
     # get all posts where the user is mentioned
     posts = Post.objects.filter(mentioned_users__in=[user])
     for post in posts:
-        post.timestamp_f = get_display_time(request, post.timestamp)
+        get_post_additonal_data(request, post)
     p = Paginator(posts, PAGINATION_POST_COUNT)
     return p.page(page)
 
