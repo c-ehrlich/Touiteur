@@ -176,6 +176,10 @@ class User(AbstractUser):
         default='en_US',
         verbose_name='Language'
     )
+    has_completed_onboarding = models.BooleanField(
+        default=False,
+        verbose_name="Has Completed Initial Onboarding"
+    )
 
     # TODO: add a timezone field
 

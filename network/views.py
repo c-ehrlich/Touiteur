@@ -239,12 +239,16 @@ def register(request):
         })
 
 
+@login_required
 def register2(request):
     user = request.user
     if request.method == "GET":
-        return render(request, "network/register2.html", {
-            "form": RegisterAccountStage2Form(instance = user)
-        })
+        if user.has_completed_onboarding == False:
+            return render(request, "network/register2.html", {
+                "form": RegisterAccountStage2Form(instance = user)
+            })
+        else:
+            return HttpResponseRedirect(reverse("index"))
     if request.method == "POST":
         form = RegisterAccountStage2Form(request.POST, request.FILES, instance = user)
         if form.is_valid():
@@ -258,18 +262,24 @@ def register2(request):
                 "message": _("Form data is invalid")
             })
 
+
+@login_required
 def register3(request):
     user = request.user
     if request.method == "GET":
-        return render(request, "network/register3.html", {
-            "form": RegisterAccountStage3Form(instance = user)
-        })
+        if user.has_completed_onboarding == False:
+            return render(request, "network/register3.html", {
+                "form": RegisterAccountStage3Form(instance = user)
+            })
+        else:
+            return HttpResponseRedirect(reverse("index"))
     if request.method == "POST":
         form = RegisterAccountStage3Form(request.POST, instance = user)
         if form.is_valid():
             user.theme = form.cleaned_data['theme']
             user.language = form.cleaned_data['language']
             user.show_liked_posts = form.cleaned_data['show_liked_posts']
+            user.has_completed_onboarding = True
             user.save()
             return HttpResponseRedirect(reverse("index"))
         else:
@@ -278,17 +288,22 @@ def register3(request):
                 "message": _("Form data is invalid")
             })
 
-@login_required
 
+@login_required
 def user(request, username):
-    user = utils.get_user_from_username(username)
-    request.view_user = user
+    request.view_user = utils.get_user_from_username(username)
     posts = utils.get_posts(request, username)
-    return render(request, "network/user.html", {
-        "view_user": user,
-        "posts": posts,
-        "new_post_form": NewPostForm(),
-    })
+    if request.user == request.view_user:
+        return render(request, "network/user.html", {
+            "view_user": request.view_user,
+            "posts": posts,
+            "new_post_form": NewPostForm(),
+        })
+    else:
+        return render(request, "network/user.html", {
+            "view_user": user,
+            "posts": posts,
+        })
 
 
 # +-----------------------------------------+
