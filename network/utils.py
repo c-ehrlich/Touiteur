@@ -203,15 +203,14 @@ def get_post_additonal_data(request, post):
     Data that is only added if user is logged in:
         author_blocked_by_user (boolean): is the post author blocked by the user requesting the post
         user_blocked_by_author (boolean): is the user requesting the post blocked by the author"""
-    post.timestamp_f = get_display_time(request, post.timestamp)
     if request.user:
         # post.author_blocked_by_user = post.user.blocked_by.filter(request.user).count() > 0
         # post.user_blocked_by_author = request.user.blocked_by.filter(post.author).count() > 0
         post.user_blocked_by_author = request.user in post.user.blocked_users.all()
+        if post.user_blocked_by_author:
+            post.text = "You do not have permission to see this post because you have been blocked by " + post.user.username + "."
         post.author_blocked_by_user = request.user in post.user.blocked_by.all()
-
-    # return post
-    # TODO can i do this without returning the post?
+    post.timestamp_f = get_display_time(request, post.timestamp)
 
 
 def get_post_from_id(request, id):

@@ -44,7 +44,10 @@
                                 <i class="fas fa-ban"></i> {% trans 'This post is hidden because you blocked the author.' %}
                             </div>
                         {% endif %}
-                        <div class="post-text {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}" id="post-text-{{ post.id }}">{{ post.text }}</div>
+                        <div id="post-text-contianer-{{ post.id }}" class="{% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                            <div class="post-text" id="post-text-{{ post.id }}">{{ post.text }}</div>
+                            <textarea hidden maxlength="140" id="post-edit-input-{{ post.id }}" class="post-edit-input"></textarea>
+                        </div>
                         {% if post.image %}
                             <div class="post-image-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}" id="post-image-div{{ post.id }}">
                                 <img class="post-image" src="{{ post.image.url }}">
@@ -92,8 +95,9 @@
                                 <div class="post-interaction-div-right">
                                     {% if post.user == user %}
                                         <div class="post-bottom-row-right-div">
-                                            <div hidden class="post-edit-cancel-button btn-minw-small" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
-                                            <div class="post-edit-button btn-minw-small" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
+                                            <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                            <div hidden class="post-save-edits-button" id="seb-{{ post.id }}"><i class="fas fa-check"></i></i></div>
+                                            <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
                                         </div>
                                     {% endif %}
                                     <div class="post-bottom-row-right-div">

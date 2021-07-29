@@ -90,7 +90,6 @@ function edit_post_cancel(post_id, original_text) {
 
 // Attempts to submit edited post
 function edit_post_submit(post_id, original_text) {
-  console.log("! running edit_post_submit");
   let text_field = document.querySelector(`#post-text-${post_id}`);
   let text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
   let new_text = text_edit_input.value;
@@ -126,7 +125,6 @@ function edit_post_submit(post_id, original_text) {
 
 // Edits a post
 function edit_post_text(post_id) {
-  console.log("! running edit_post_text");
   let text_field = document.querySelector(`#post-text-${post_id}`);
   let original_text = text_field.innerText;
   let text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
@@ -156,7 +154,6 @@ function like_post(post_id) {
   })
   .then(response => response.json())
   .then(json => {
-    // console.log(json);
     update_post_like_status(json);
   })
 }
@@ -175,7 +172,6 @@ function unlike_post(post_id) {
   })
   .then(response => response.json())
   .then(json => {
-		// console.log(json)
     update_post_like_status(json);
   })
 }
