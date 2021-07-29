@@ -790,8 +790,9 @@ hr {
     width: 100%;
     /* margin: 8px; */
     padding: 12px;
-    background-color: white;
-    border: 1px solid lightgrey;
+    background-color: var(--color-box-bg);
+    border: 1px solid var(--color-box-border);
+    color: var(--color-text-default);
     font-size: 16px;
     display: flex;
     flex-direction: column;
