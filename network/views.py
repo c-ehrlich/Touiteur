@@ -192,7 +192,7 @@ def post(request, id):
     post = utils.get_post_from_id(request, id)
     # TODO do something if it's a bad post
 
-    # TODO put post.replies.all() in a paginator
+
     replies = utils.get_posts(request, reply_to=post)
     return render(request, "network/post.html", {
         "post": post,

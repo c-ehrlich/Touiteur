@@ -16,12 +16,14 @@
         <!-- maybe put a smaller version of the entire post we're replying to in here? -->
         
         <div id="single-post-view-container">
-            {% if post.reply_to != None %}
-            <div class="post-reply-to-div" id="single-post-view-reply-to-div">
-                <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
-                    Reply to @{{ post.reply_to.user }}: {{ post.reply_to.text }}
-                </a>
-            </div>
+            {% if not post.user_blocked_by_author %}
+                {% if post.reply_to != None %}
+                    <div id="single-post-view-reply-to-div" class="post-reply-to-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                        <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
+                            Reply to @{{ post.reply_to.user }}: {{ post.reply_to.text }}
+                        </a>
+                    </div>
+                {% endif %}
             {% endif %}
             <div id="single-post-view-avatar">
                 <a href="{% url 'user' post.user.username %}">
@@ -36,87 +38,101 @@
                     <div id="user-profile-username">@{{ post.user.username }}</div>
                 </a>
             </div>
-            <div id="single-post-view-follow-div">
-                {% if user.is_authenticated and user != post.user %}
-                    <div id="follow-button-div">
-                        {% if post.user in user.following.all %}
-                            <button id="unfollow-button">{% trans 'Unfollow' %}</button>
-                        {% else %}
-                            <button id="follow-button">{% trans 'Follow' %}</button>
-                        {% endif %}
+            {% if post.user_blocked_by_author %}
+                <div class="blocked-by-author single-post-view-text-container mb16"><i class="fas fa-ban"></i> {% trans 'The author of this post has blocked you.' %}</div>
+            {% else %}
+                <div id="single-post-view-follow-div" class="{% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                    {% if user.is_authenticated and user != post.user and not post.author_blocked_by_user %}
+                        <div id="follow-button-div">
+                            {% if post.user in user.following.all %}
+                                <button id="unfollow-button">{% trans 'Unfollow' %}</button>
+                            {% else %}
+                                <button id="follow-button">{% trans 'Follow' %}</button>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                </div>
+                <div id="post-text-container-{{ post.id }}" class="single-post-view-text-container">
+                    <div id="post-text-{{ post.id }}" class="single-post-view-text-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">{{ post.text }}</div>
+                    <textarea hidden maxlength="140" id="post-edit-input-{{ post.id }}" class="post-edit-input {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}"></textarea>
+                    {% if post.author_blocked_by_user %}
+                        <div class="blocked-by-user blk-info-{{ post.id }} fs15rem mb16">
+                            <i class="fas fa-ban"></i> {% trans 'This post is hidden because you blocked the author.' %}
+                        </div>
+                        <div class="blocked-by-user center-content blk-info-{{ post.id }}">
+                            <button class="blocked-by-user-reveal btn btn-outline-secondary" id="unhide-{{ post.id }}">Show Post</button>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if post.image %}
+                    <div id="single-post-view-image-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                        <img class="post-image" src="{{ post.image.url }}">
                     </div>
                 {% endif %}
-            </div>
-            <div id="post-text-container-{{ post.id }}" class="single-post-view-text-container">
-                <div id="post-text-{{ post.id }}" class="single-post-view-text-div">{{ post.text }}</div>
-                <textarea hidden maxlength="140" id="post-edit-input-{{ post.id }}" class="post-edit-input"></textarea>
-            </div>
-            {% if post.image %}
-                <div id="single-post-view-image-div">
-                    <img class="post-image" src="{{ post.image.url }}">
-                </div>
             {% endif %}
             <div id="single-post-view-timestamp-div">
                 {{ post.timestamp }} UTC
             </div>
-            {% if user.is_authenticated and post.user != user %}
-                <div class="post-like-button-div single-post-view-like-button-div" id="post-like-button-div-{{ post.id }}">
-                    {% if post in user.liked_posts.all %}
-                        <button class="post-unlike-button single-page-like-button" id="post-like-button-{{ post.id }}">
-                            <div id="post-like-heart-{{ post.id }}" class="post-like-heart-liked">
-                                ❤️
-                            </div>
-                            <div id="post-like-count-{{ post.id }}" class="post-like-count">
-                                {{ post.users_who_liked.count }}
-                            </div>
-                        </button>
-                    {% else %}
-                        <button class="post-like-button single-page-like-button" id="post-like-button-{{ post.id }}">
-                            <div id="post-like-heart-{{ post.id }}" class="post-like-heart-unliked">
-                                ‍♡ 
-                            </div>
-                            <div id="post-like-count-{{ post.id }}" class="post-like-count">
-                                {{ post.users_who_liked.count }}
-                            </div>
-                        </button>
-                    {% endif %}
-                </div>
-            {% else %}
-                <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
-                    <div class="post-like-button-inactive single-page-like-button">
-                        <div class="post-like-heart-unliked">
-                            <i class="far fa-heart"></i>
-                        </div>
-                        <div class="post-like-count">
-                            {{ post.users_who_liked.count }}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-            <div id="single-post-view-like-edit-div">
-                {% if user.is_authenticated %}
-                    <div class="post-interaction-div-right">
-                        <!-- edit button -->
-                        {% if post.user == user %}
-                            <div class="post-bottom-row-right-div">
-                                <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
-                                <div hidden class="post-save-edits-button" id="seb-{{ post.id }}"><i class="fas fa-check"></i></i></div>
-                                <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
-                            </div>
+            {% if not post.user_blocked_by_author %}
+                {% if user.is_authenticated and post.user != user %}
+                    <div class="post-like-button-div single-post-view-like-button-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}" id="post-like-button-div-{{ post.id }}">
+                        {% if post in user.liked_posts.all %}
+                            <button class="post-unlike-button single-page-like-button" id="post-like-button-{{ post.id }}">
+                                <div id="post-like-heart-{{ post.id }}" class="post-like-heart-liked">
+                                    ❤️
+                                </div>
+                                <div id="post-like-count-{{ post.id }}" class="post-like-count">
+                                    {{ post.users_who_liked.count }}
+                                </div>
+                            </button>
+                        {% else %}
+                            <button class="post-like-button single-page-like-button" id="post-like-button-{{ post.id }}">
+                                <div id="post-like-heart-{{ post.id }}" class="post-like-heart-unliked">
+                                    ‍♡ 
+                                </div>
+                                <div id="post-like-count-{{ post.id }}" class="post-like-count">
+                                    {{ post.users_who_liked.count }}
+                                </div>
+                            </button>
                         {% endif %}
-                        <div class="post-bottom-row-right-div">
-                            <div hidden class="post-reply-cancel-button btn-minw-small" id="rcb-{{ post.id }}"><i class="fas fa-times"></i></div>
-                            <div class="post-reply-button btn-minw-small" id="rb-{{ post.id }}"><i class="far fa-comment-dots"></i></i></div>
+                    </div>
+                {% else %}
+                    <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
+                        <div class="post-like-button-inactive single-page-like-button">
+                            <div class="post-like-heart-unliked">
+                                <i class="far fa-heart"></i>
+                            </div>
+                            <div class="post-like-count">
+                                {{ post.users_who_liked.count }}
+                            </div>
                         </div>
                     </div>
                 {% endif %}
-            </div>
+                <div id="single-post-view-like-edit-div">
+                    {% if user.is_authenticated %}
+                        <div class="post-interaction-div-right {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                            <!-- edit button -->
+                            {% if post.user == user %}
+                                <div class="post-bottom-row-right-div">
+                                    <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                    <div hidden class="post-save-edits-button" id="seb-{{ post.id }}"><i class="fas fa-check"></i></i></div>
+                                    <div class="post-edit-button" id="eb-{{ post.id }}"><i class="far fa-edit"></i></div>
+                                </div>
+                            {% endif %}
+                            <div class="post-bottom-row-right-div">
+                                <div hidden class="post-reply-cancel-button btn-minw-small" id="rcb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                <div class="post-reply-button btn-minw-small" id="rb-{{ post.id }}"><i class="far fa-comment-dots"></i></i></div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
         </div>
 
     </div>
 
     <!-- reply box -->
-    <div class="margin-fix">
+    <div class="margin-fix {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
         <div id="prslide-{{ post.id }}" class="prslide">
             <div hidden class="post-reply-div" id="prd-{{ post.id }}">
                 <textarea class="post-reply-input" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
@@ -129,14 +145,16 @@
 
     <!-- replies header -->
     {% if post.replies.count > 0 %}
-        <div class="section-identifier">
+        <div class="section-identifier {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
             <div class="section-identifier-inner">
                 {{ post.replies.count }} replies
             </div>
         </div>
 
         <!-- replies -->
-        {% include 'network/posts.html' %}
+        <div class="single-post-view-replies {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+            {% include 'network/posts.html' %}
+        </div>
     {% endif %}
 
 {% endblock %}

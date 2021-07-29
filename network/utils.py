@@ -215,7 +215,7 @@ def get_post_additonal_data(request, post):
 
 def get_post_from_id(request, id):
     post = Post.objects.get(id=id)
-    post.timestamp_f = get_display_time(request, post.timestamp)
+    get_post_additonal_data(request, post)
     return post
 
 

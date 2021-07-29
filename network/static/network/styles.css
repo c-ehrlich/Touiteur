@@ -1045,6 +1045,12 @@ input[type="file"] {
     margin-left: auto;
     margin-right: auto;
 }
+.mb16 {
+    margin-bottom: 16px !important;
+}
+.fs15rem {
+    font-size: 1.5rem !important;
+}
 
 .form-checkbox {
     height: 24px;
