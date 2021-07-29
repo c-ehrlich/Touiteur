@@ -122,3 +122,41 @@ class RegisterAccountStage2Form(forms.ModelForm):
     class Meta:
         model = User
         fields = ['bio', 'avatar',]
+
+class RegisterAccountStage3Form(forms.ModelForm):
+    # Display settings
+    theme = forms.CharField(
+        label = "Theme",
+        required = True,
+        # default = "_theme_light",
+        widget = forms.Select(
+            choices = User.THEMES,
+            # attrs = {
+            #     'class': 'form-control',
+            # }
+        )
+    )
+    language = forms.CharField(
+        label = "Language",
+        required = True,
+        # default = "en_US",
+        widget = forms.Select(
+            choices = User.LANGUAGES,
+            # attrs = {
+            #     'class': 'form-control',
+            # }
+        )
+    )
+
+    show_liked_posts = forms.BooleanField(
+        label = "Show Liked Posts",
+        required = True,
+        # default = True,
+        widget = forms.CheckboxInput(attrs={
+            'class': 'form-control',
+        })
+    )
+
+    class Meta:
+        model = User
+        fields = ['theme', 'language', 'show_liked_posts',]

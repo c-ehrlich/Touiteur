@@ -1,0 +1,50 @@
+{% extends "network/layout.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}
+    {% trans 'Add Account Details' %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="section-identifier">
+        <div class="section-identifier-inner">
+            <div>
+                {% trans 'Add Account Details' %}
+            </div>
+            <div class="section-identifier-additional-text">
+                {% trans 'Here you can select region, theme, and privacy settings for your account. This is optional, and you can also do it later by visiting the account settings.' %}
+            </div>
+        </div>
+    </div>
+
+    <!-- TODO put a note here about adding optional stuff, or maybe put it in the section-identifier? -->
+
+    <div class="reg-login-outer">
+        <div class="reg-login-inner">
+            <form method="POST" action="" class="form-100-test">
+                <!-- Language -->
+                <!-- TimeZone (default to browser/request time zone in form/route?) -->
+                <!-- Light/Dark Mode -->
+                <!-- Show/hide likes -->
+
+                <!-- temp -->
+                {{ form.as_p }}
+                {% csrf_token %}
+                <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">Skip</a>
+                <input class="btn btn-primary equal-width-button" type="submit" name="Update Information" value="Save">
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('.navbar-active-item').forEach(item => {
+          item.classList.remove('navbar-active-item');
+        });
+      });
+    </script>
+{% endblock %}

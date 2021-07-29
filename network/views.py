@@ -10,7 +10,7 @@ from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as _lazy
 
-from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, RegisterAccountStage2Form
+from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, RegisterAccountStage2Form, RegisterAccountStage3Form
 from network.models import User, Post, Conversation
 from network import utils
 
@@ -251,13 +251,34 @@ def register2(request):
             user.bio = form.cleaned_data['bio']
             user.avatar = form.cleaned_data['avatar']
             form.save()
-            return HttpResponseRedirect(reverse("index"))
+            return HttpResponseRedirect(reverse("register3"))
         else:
             return render(request, "network/register2.html", {
                 "form": form,
                 "message": _("Form data is invalid")
             })
 
+def register3(request):
+    user = request.user
+    if request.method == "GET":
+        return render(request, "network/register3.html", {
+            "form": RegisterAccountStage3Form(instance = user)
+        })
+    if request.method == "POST":
+        form = RegisterAccountStage3Form(request.POST, instance = user)
+        if form.is_valid():
+            user.theme = form.cleaned_data['theme']
+            user.language = form.cleaned_data['language']
+            user.show_liked_posts = form.cleaned_data['show_liked_posts']
+            user.save()
+            return HttpResponseRedirect(reverse("index"))
+        else:
+            return render(request, "network/register3.html", {
+                "form": form,
+                "message": _("Form data is invalid")
+            })
+
+@login_required
 
 def user(request, username):
     user = utils.get_user_from_username(username)

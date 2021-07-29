@@ -177,6 +177,8 @@ class User(AbstractUser):
         verbose_name='Language'
     )
 
+    # TODO: add a timezone field
+
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'
