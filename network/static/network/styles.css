@@ -468,7 +468,7 @@ hr {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
-    flex-gap: 12px;
+    /* flex-gap: 12px; */
     /* align-items: flex-end; */
 }
 #user-profile-hover-menu-div {
@@ -502,7 +502,7 @@ hr {
     display: none;
     position: absolute;
     right: 0;
-    top: 32px;
+    top: 44px;
     font-size: 1rem;
     background-color: var(--color-box-bg-contrast);
     width: 120px;
@@ -519,7 +519,7 @@ hr {
 }
 #user-profile-dropdown-content > div:hover,
 #user-profile-dropdown-content > a:hover {
-    background-color: var(--color-box-bg);
+    background-color: var(--color-box-hover-contrast);
 }
 
 .show {

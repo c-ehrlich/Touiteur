@@ -290,11 +290,10 @@ def register3(request):
             })
 
 
-@login_required
 def user(request, username):
     view_user = utils.get_user_from_username(username)
     posts = utils.get_posts(request, username)
-    if request.user:
+    if request.user.is_authenticated:
         view_user.blocked_by_user = view_user in request.user.blocked_users.all()
         view_user.has_user_blocked = request.user in view_user.blocked_users.all()
     if request.user == view_user:

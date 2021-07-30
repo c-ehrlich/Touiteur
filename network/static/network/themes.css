@@ -15,8 +15,10 @@
     --color-text-formerror: black;
 
     --color-box-bg: white;
-    --color-box-bg-contrast: lightgrey; /* probably same as box-border */
     --color-box-border: lightgrey;
+    --color-box-bg-contrast: #eeeeee; /* probably same as box-border */
+    --color-box-hover-contrast: lightgrey;
+    --color-box-border-contrast: grey;
 
     --color-input-bg: white;
     --color-input-bg-focus: white;
@@ -54,6 +56,7 @@
     --color-box-bg: black; /* change (make it a grey theme) */
     --color-box-border: #2a2628;
     --color-box-bg-contrast: #444444; /* change */
+    --color-box-hover-contrast: black;
     --color-box-border-contrast: #888888; /* change */
 
     --color-input-bg: #2a2628;
