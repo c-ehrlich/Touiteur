@@ -16,11 +16,13 @@
             <!-- TODO check if this breaks when user is not logged in -->
             {% if user.is_authenticated and user != view_user and not view_user.has_user_blocked %}
                 <div id="user-profile-hover-menu-div">
-                    <i class="fas fa-ellipsis-v user-profile-hover-menu-icon"></i>
-                    <div class="user-profile-hover-dropdown-content">
-                        <div {% if view_user.blocked_by_user %}hidden {% endif %}href="">
+                    <div class="dropbtn" id="user-profile-dropdown-button">
+                        <i class="fas fa-ellipsis-v user-profile-hover-menu-icon"></i>
+                    </div>
+                    <div id="user-profile-dropdown-content">
+                        <a {% if view_user.blocked_by_user %}hidden {% endif %}href="{% url 'dm_thread' view_user %}">
                             <i class="far fa-envelope"></i> Message
-                        </div>
+                        </a>
                         <div id="block-button" {% if view_user.blocked_by_user %}hidden {% endif %}href="">
                             <i class="far fa-eye-slash"></i> Block
                         </div>

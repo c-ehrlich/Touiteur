@@ -25,7 +25,28 @@ document.addEventListener('DOMContentLoaded', () => {
       user_view_share_profile();
     })
   }
+  document.querySelector('#user-profile-dropdown-button').addEventListener('click', event => {
+    show_dropdown();
+  })
+  window.addEventListener('click', event => {
+    if (!(event.target.matches('.dropbtn')) && !(event.target.matches('.user-profile-hover-menu-icon'))) {
+      console.log("hiding dropdown");
+      console.log(event.target);
+      // document.querySelector('#user-profile-dropdown-content').classList.remove('show');
+      if (document.querySelector('#user-profile-dropdown-content').classList.contains('show')) {
+        document.querySelector('#user-profile-dropdown-content').classList.remove('show');
+      } else {
+        console.log("u clicked da wrong palce boi");
+      }
+    }
+  })
 })
+
+
+function show_dropdown() {
+  console.log("click de button");
+  document.querySelector("#user-profile-dropdown-content").classList.toggle("show");
+}
 
 
 function user_view_block() {
