@@ -18,18 +18,18 @@
                 <div id="user-profile-hover-menu-div">
                     <i class="fas fa-ellipsis-v user-profile-hover-menu-icon"></i>
                     <div class="user-profile-hover-dropdown-content">
-                        <a {% if view_user.blocked_by_user %}hidden {% endif %}href="#">
+                        <div {% if view_user.blocked_by_user %}hidden {% endif %}href="">
                             <i class="far fa-envelope"></i> Message
-                        </a>
-                        <a {% if view_user.blocked_by_user %}hidden {% endif %}href="#">
+                        </div>
+                        <div id="block-button" {% if view_user.blocked_by_user %}hidden {% endif %}href="">
                             <i class="far fa-eye-slash"></i> Block
-                        </a>
-                        <a {% if not view_user.blocked_by_user %}hidden {% endif %}href="#">
+                        </div>
+                        <div id="unblock-button" {% if not view_user.blocked_by_user %}hidden {% endif %}href="">
                             <i class="far fa-eye"></i> Unblock
-                        </a>
-                        <a href="#">
+                        </div>
+                        <div id="share-profile-button" href="">
                             <i class="fas fa-share-square"></i> Share
-                        </a>
+                        </div>
                     </div>
                 </div>
                 {% if not view_user.blocked_by_user %}

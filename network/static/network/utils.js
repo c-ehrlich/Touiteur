@@ -1,3 +1,39 @@
+function block(user_id) {
+  fetch(`/block_toggle/${user_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      "intent": "block",
+    }),
+    credentials: 'same-origin',
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken")
+    }
+  })
+  .then(response => response.json())
+  .then(json => {
+    console.log(json);
+  })
+}
+
+
+function unblock(user_id) {
+  fetch(`/block_toggle/${user_id}`, {
+    method: 'PUT',
+    body: JSON.stringify({
+      "intent": "unblock",
+    }),
+    credentials: 'same-origin',
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken")
+    }
+  })
+  .then(response => response.json())
+  .then(json => {
+    console.log(json);
+  })
+}
+
+
 /**
  * Determines how many lines to make the height of a Textarea for editing a tweet
  *

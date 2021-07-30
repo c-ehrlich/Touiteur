@@ -24,6 +24,7 @@ urlpatterns = [
     path("user/<str:username>", views.user, name="user"),
 
     # API Routes
+    path("block_toggle/<int:user_id>", views.block_toggle, name="block_toggle"),
     path("clear_mentions_count", views.clear_mentions_count, name="clear_mentions_count"),
     path("compose", views.compose, name="compose"),
     path("get_notifications", views.get_notifications, name="get_notifications"),

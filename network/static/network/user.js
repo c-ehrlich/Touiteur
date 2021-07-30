@@ -2,15 +2,57 @@ document.addEventListener('DOMContentLoaded', () => {
   const view_user_id = document.querySelector('#user-id').innerHTML;
   if (document.querySelector('#follow-button')) {
     document.querySelector('#follow-button').addEventListener('click', event => {
-      user_view_follow(view_user_id);
+      user_view_follow();
     })
   }
   if (document.querySelector('#unfollow-button')) {
     document.querySelector('#unfollow-button').addEventListener('click', event => {
-      user_view_unfollow(view_user_id);
+      user_view_unfollow();
+    })
+  }
+  if (document.querySelector('#block-button')) {
+    document.querySelector('#block-button').addEventListener('click', event => {
+      user_view_block();
+    })
+  }
+  if (document.querySelector('#unblock-button')) {
+    document.querySelector('#unblock-button').addEventListener('click', event => {
+      user_view_unblock();
+    })
+  }
+  if (document.querySelector('#share-profile-button')) {
+    document.querySelector('#share-profile-button').addEventListener('click', event => {
+      user_view_share_profile();
     })
   }
 })
+
+
+function user_view_block() {
+  const view_user_id = document.querySelector('#user-id').innerHTML;
+  block(view_user_id);
+  window.location.reload();
+}
+
+
+function user_view_unblock() {
+  const view_user_id = document.querySelector('#user-id').innerHTML;
+  console.log(`unblock ${view_user_id}`);
+  unblock(view_user_id);
+  window.location.reload();
+}
+
+
+function user_view_share_profile() {
+  var copy_dummy = document.createElement('input');
+  text = window.location.href;
+  document.body.appendChild(copy_dummy);
+  copy_dummy.value = text;
+  copy_dummy.select();
+  document.execCommand('copy');
+  document.body.removeChild(copy_dummy);
+  alert(`copied url: ${text}`);
+}
 
 
 function user_view_follow() {

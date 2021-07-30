@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import IntegrityError
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
+from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import ugettext as _
@@ -312,6 +313,47 @@ def user(request, username):
 # +-----------------------------------------+
 # |        VIEWS THAT RETURN JSON           |
 # +-----------------------------------------+
+@csrf_protect
+def block_toggle(request, user_id):
+    if request.method == "PUT":
+        user = request.user
+        view_user = utils.get_user_from_id(user_id)
+        data = json.loads(request.body)
+        if data['intent'] == 'block':
+            if not view_user in user.blocked_users.all():
+                user.blocked_users.add(view_user)
+                return JsonResponse({
+                    "intent": "block",
+                    "success": True,
+                }, status=200)
+            else:
+                return JsonResponse({
+                    "intent": "block",
+                    "success": False,
+                    "message": _("User is already blocked."),
+                }, status=400)
+        elif data['intent'] == 'unblock':
+            if view_user in user.blocked_users.all():
+                user.blocked_users.remove(view_user)
+                return JsonResponse({
+                    "intent": "unblock",
+                    "success": True,
+                }, status=200)
+            else:
+                return JsonResponse({
+                    "intent": "unblock",
+                    "success": False,
+                    "message": _("User is already not blocked."),
+                }, status=400)
+        else:
+            return HttpResponseBadRequest()
+
+    else:
+        return JsonResponse({
+            "error": _("PUT request required.")
+        }, status=400)
+
+
 @csrf_protect
 def clear_mentions_count(request):
     if request.method == "PUT":

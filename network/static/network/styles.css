@@ -500,11 +500,12 @@ hr {
     z-index: 1;
     border: 1px solid var(--color-box-border-contrast);
 }
-.user-profile-hover-dropdown-content > a {
+.user-profile-hover-dropdown-content > div {
     color: var(--color-text-default);
     padding: 12px 16px;
     text-decoration: none;
     display: block;
+    cursor: pointer;
 }
 .user-profile-hover-dropdown-content > a:hover {
     background-color: var(--color-box-bg);
@@ -585,6 +586,7 @@ hr {
 #follow-button,
 #unfollow-button {
     /* border: 0; */
+    margin-left: 12px;
     border: 1px solid;
     width: 105px;
     padding: 8px 16px 8px 16px;
