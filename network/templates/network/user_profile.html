@@ -32,7 +32,7 @@
                     </div>
                 </div>
             </div>
-            {% if not view_user.blocked_by_user %}
+            {% if not view_user.blocked_by_user and not view_user.has_user_blocked %}
                 <div id="follow-button-div">
                     {% if view_user in user.following.all %}
                         <button id="unfollow-button">{% trans 'Unfollow' %}</button>

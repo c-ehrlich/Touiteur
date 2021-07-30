@@ -321,6 +321,11 @@ def block_toggle(request, user_id):
         if data['intent'] == 'block':
             if not view_user in user.blocked_users.all():
                 user.blocked_users.add(view_user)
+                # end follow relation in both directions
+                if view_user in user.following.all():
+                    user.following.remove(view_user)
+                if user in view_user.following.all():
+                    view_user.following.remove(user)
                 return JsonResponse({
                     "intent": "block",
                     "success": True,
