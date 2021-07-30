@@ -326,6 +326,13 @@ def block_toggle(request, user_id):
                     user.following.remove(view_user)
                 if user in view_user.following.all():
                     view_user.following.remove(user)
+                # remove post likes in both directions
+                for post in user.posts.all():
+                    if view_user in post.users_who_liked.all():
+                        post.users_who_liked.remove(view_user)
+                for post in view_user.posts.all():
+                    if user in post.users_who_liked.all():
+                        post.users_who_liked.remove(user)
                 return JsonResponse({
                     "intent": "block",
                     "success": True,
@@ -493,6 +500,10 @@ def like(request, post_id):
         user = request.user
         post = utils.get_post_from_id(request, post_id)
         if data['like'] == True:
+            if user in post.user.blocked_users.all() or post.user in user.blocked_users.all():
+                return JsonResponse({
+                    "error": _("You cannot like this post because there is a block relationship.")
+                }, status=400)
             user.liked_posts.add(post)
             return JsonResponse({
                 "message": _("Post liked successfully"),
@@ -544,6 +555,11 @@ def reply(request, post_id):
         text = data["text"]
         user = request.user
         post = utils.get_post_from_id(request, post_id)
+        # check for a block relationship
+        if user in post.user.blocked_users.all() or post.user in user.blocked_users.all():
+            return JsonResponse({
+                "error": _("You cannot reply to this post because there is a block relationship.")
+            }, status=400)
         reply = Post(user=user, text=text, reply_to=post)
         reply.save()
         # maybe factor out the mentioned users thing? TODO

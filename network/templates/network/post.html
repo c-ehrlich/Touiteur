@@ -73,7 +73,7 @@
             <div id="single-post-view-timestamp-div">
                 {{ post.timestamp }} UTC
             </div>
-            {% if not post.user_blocked_by_author %}
+            {% if not post.user_blocked_by_author and not post.author_blocked_by_user %}}
                 {% if user.is_authenticated and post.user != user %}
                     <div class="post-like-button-div single-post-view-like-button-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}" id="post-like-button-div-{{ post.id }}">
                         {% if post in user.liked_posts.all %}
