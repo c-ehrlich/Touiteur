@@ -72,7 +72,23 @@ function user_view_share_profile() {
   copy_dummy.select();
   document.execCommand('copy');
   document.body.removeChild(copy_dummy);
-  alert(`copied url: ${text}`);
+  new Notify({
+    status: 'success',
+    // title: 'Notify Title',
+    text: 'Profile link copied to clipboard.',
+    effect: 'fade',
+    speed: 300,
+    customClass: null,
+    customIcon: null,
+    showIcon: true,
+    showCloseButton: true,
+    autoclose: true,
+    autotimeout: 3000,
+    gap: 20,
+    distance: 20,
+    type: 1,
+    position: 'x-center top'
+  })
 }
 
 
