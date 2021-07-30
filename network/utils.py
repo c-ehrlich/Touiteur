@@ -173,12 +173,9 @@ def get_mentions_from_post(post_text):
                 try:
                     user = User.objects.get(username=username)
                     if not user in mentions:
-                        print(mentions)
                         mentions.append(user)
                         user.mentions_since_last_checked += 1
                         user.save()
-                    else:
-                        print(mentions)
                 except User.DoesNotExist:
                     pass
     return mentions

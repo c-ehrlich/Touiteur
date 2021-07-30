@@ -404,6 +404,9 @@ def edit(request, post_id):
             }, status=400)
         post = utils.get_post_from_id(request, post_id)
         if request.user == post.user:
+            new_mentioned_users = utils.get_mentions_from_post(new_text)
+            for user in new_mentioned_users:
+                post.mentioned_users.add(user)
             post.text = new_text
             post.save()
             return JsonResponse({
