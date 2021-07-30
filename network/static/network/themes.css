@@ -52,8 +52,9 @@
     --color-text-formerror: white;
 
     --color-box-bg: black; /* change (make it a grey theme) */
-    --color-box-bg-contrast: navy; /* change */
     --color-box-border: #2a2628;
+    --color-box-bg-contrast: #444444; /* change */
+    --color-box-border-contrast: #888888; /* change */
 
     --color-input-bg: #2a2628;
     --color-input-bg-focus: #2a2628;

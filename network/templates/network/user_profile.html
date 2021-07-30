@@ -1,6 +1,8 @@
 {% load i18n %}
 
 <div id="user-profile-outer-div">
+    <div>{{ view_user.blocked_by_user }}</div>
+    <div>{{ view_user.has_user_blocked }}</div>
     <div id="user-profile-grid-div">
         <div id="user-profile-avatar-div">
             <img id="profile-avatar" src="{{ view_user.avatar.url }}"><br>
@@ -12,17 +14,33 @@
         <div>
         <div id="user-profile-follow-div">
             <!-- TODO check if this breaks when user is not logged in -->
-            {% if user.is_authenticated and user != view_user %}
-                <div id="user-profile-send-dm-div">
-                    <i class="far fa-envelope"></i>
+            {% if user.is_authenticated and user != view_user and not view_user.has_user_blocked %}
+                <div id="user-profile-hover-menu-div">
+                    <i class="fas fa-ellipsis-v user-profile-hover-menu-icon"></i>
+                    <div class="user-profile-hover-dropdown-content">
+                        <a {% if view_user.blocked_by_user %}hidden {% endif %}href="#">
+                            <i class="far fa-envelope"></i> Message
+                        </a>
+                        <a {% if view_user.blocked_by_user %}hidden {% endif %}href="#">
+                            <i class="far fa-eye-slash"></i> Block
+                        </a>
+                        <a {% if not view_user.blocked_by_user %}hidden {% endif %}href="#">
+                            <i class="far fa-eye"></i> Unblock
+                        </a>
+                        <a href="#">
+                            <i class="fas fa-share-square"></i> Share
+                        </a>
+                    </div>
                 </div>
-                <div id="follow-button-div">
-                    {% if view_user in user.following.all %}
-                        <button id="unfollow-button">{% trans 'Unfollow' %}</button>
-                    {% else %}
-                        <button id="follow-button">{% trans 'Follow' %}</button>
-                    {% endif %}
-                </div>
+                {% if not view_user.blocked_by_user %}
+                    <div id="follow-button-div">
+                        {% if view_user in user.following.all %}
+                            <button id="unfollow-button">{% trans 'Unfollow' %}</button>
+                        {% else %}
+                            <button id="follow-button">{% trans 'Follow' %}</button>
+                        {% endif %}
+                    </div>
+                {% endif %}
             {% endif %}
         </div>
         </div>
