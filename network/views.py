@@ -439,6 +439,11 @@ def follow(request, user_id):
             user_to_follow = User.objects.get(id=user_id) 
             # good follow request
             if data['intent'] == 'follow' and user_to_follow not in user.following.all():
+                # check for block relationship
+                if user_to_follow in user.blocked_users.all() or user in user_to_follow.blocked_users.all():
+                    return JsonResponse({
+                        "error": _("You cannot follow this user because there is a block relationship.")
+                    }, status=400)
                 user.following.add(user_to_follow)
                 return JsonResponse({
                     "message": _(f"followed user {user_to_follow}")
