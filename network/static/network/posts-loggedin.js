@@ -76,7 +76,6 @@ function sendReply(postId) {
   })
   .then(response => response.json())
   .then(json => {
-    // update post reply count status (maybe the python function sends that to us?
     replyCount = json.reply_count;
     if (document.querySelector(`#prsd-${postId}`)) {
       document.querySelector(`#prsd-${postId}`).removeAttribute('hidden');

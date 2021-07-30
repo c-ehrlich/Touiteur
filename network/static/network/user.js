@@ -30,13 +30,8 @@ document.addEventListener('DOMContentLoaded', () => {
   })
   window.addEventListener('click', event => {
     if (!(event.target.matches('.dropbtn')) && !(event.target.matches('.user-profile-hover-menu-icon'))) {
-      console.log("hiding dropdown");
-      console.log(event.target);
-      // document.querySelector('#user-profile-dropdown-content').classList.remove('show');
       if (document.querySelector('#user-profile-dropdown-content').classList.contains('show')) {
         document.querySelector('#user-profile-dropdown-content').classList.remove('show');
-      } else {
-        console.log("u clicked da wrong palce boi");
       }
     }
   })
@@ -44,7 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function show_dropdown() {
-  console.log("click de button");
   document.querySelector("#user-profile-dropdown-content").classList.toggle("show");
 }
 
@@ -58,7 +52,6 @@ function user_view_block() {
 
 function user_view_unblock() {
   const view_user_id = document.querySelector('#user-id').innerHTML;
-  console.log(`unblock ${view_user_id}`);
   unblock(view_user_id);
   window.location.reload();
 }

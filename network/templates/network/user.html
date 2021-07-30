@@ -7,9 +7,6 @@
 {% endblock %}
 
 {% block body %}
-    <!-- DO NOT DELETE! THIS IS USED IN USER.JS -->
-    <div id="user-id" style="display: none">{{ view_user.id }}</div>
-    <!-- END DO NOT DELETE -->
 
     <div id="index-body-div">
 
@@ -44,10 +41,9 @@
 {% block script %}
     {% if user == view_user %}
         <script src="{% static 'network/compose.js' %}"></script>
-    {% else %}
-        <script src="{% static 'network/live_notifications.js' %}"></script>
     {% endif %}
     {% if user.is_authenticated %}<script src="{% static 'network/posts-loggedin.js' %}"></script>{% endif %}
+    <script src="{% static 'network/live_notifications.js' %}"></script>
     <script src="{% static 'network/user.js' %}"></script>
     <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
