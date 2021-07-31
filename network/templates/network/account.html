@@ -111,8 +111,18 @@
         </div>
     </form>
 
-    <div hidden id="blocklist-form">
-        Blocklist Test
+    <div hidden id="blocklist-form" class="reg-login-outer">
+        <div class="reg-login-inner">
+            {% for blocked_user in blocklist %}
+                <div class="flex-row" id="unblock-row-{{ blocked_user.id }}">
+                    <img src="{{ blocked_user.avatar.url}}" width="40px" class="avatar-img">
+                    <div>@{{ blocked_user.username }}</div>
+                    <button class="settings-unblock-button" userid="{{ blocked_user.id }}" username="{{ blocked_user.username }}">unblock</button>
+                </div>
+            {% empty %}
+                blocklist is empty
+            {% endfor %}
+        </div>
     </div>
 
     <div hidden id="preferences-form" class="reg-login-outer">
@@ -159,6 +169,7 @@
 
 {% block script %}
     <script src="{% static 'network/account.js' %}"></script>
+    <script src="{% static 'network/utils.js' %}"></script>
     <script src="{% static 'network/image_uploads.js' %}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {

@@ -29,7 +29,7 @@ function unblock(user_id) {
   })
   .then(response => response.json())
   .then(json => {
-    console.log(json);
+    return json;
   })
 }
 

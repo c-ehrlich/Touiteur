@@ -65,4 +65,35 @@ document.addEventListener('DOMContentLoaded', () => {
     blocklistForm.setAttribute('hidden', 'true');
     preferencesForm.removeAttribute('hidden');
   }
+
+  document.querySelectorAll('.settings-unblock-button').forEach(button => {
+    button.addEventListener('click', event => {
+      let userId = button.getAttribute('userid');
+      let userName = button.getAttribute('username');
+      unblock(userId);
+      unblockSettingsDOMManipulation(userId, userName);
+    })
+  })
 })
+
+function unblockSettingsDOMManipulation(userId, userName) {
+  document.querySelector(`#unblock-row-${userId}`).remove();
+  new Notify({
+    status: 'success',
+    title: 'Blocklist',
+    text: `Successfully removed @${userName}`,
+    effect: 'fade',
+    speed: 300,
+    customClass: null,
+    customIcon: null,
+    showIcon: true,
+    showCloseButton: true,
+    autoclose: true,
+    autotimeout: 3000,
+    gap: 20,
+    distance: 20,
+    type: 1,
+    position: 'x-center top'
+  })
+  // if there are no blocked users, show the "empty" thing
+}

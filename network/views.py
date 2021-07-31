@@ -28,9 +28,11 @@ def account(request):
     user = request.user
 
     if request.method == "GET":
+        blocklist = user.blocked_users.all()
         return render(request, "network/account.html", {
             "account_form": EditAccountForm(instance = user),
             "preferences_form": RegisterAccountStage3Form(instance = user),
+            "blocklist": blocklist,
     })
     if request.method == "POST":
         if 'account-form-button' in request.POST:
