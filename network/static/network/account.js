@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
     preferencesForm.removeAttribute('hidden');
   }
 
-  document.querySelectorAll('.settings-unblock-button').forEach(button => {
+  document.querySelectorAll('.blocklist-unblock-button').forEach(button => {
     button.addEventListener('click', event => {
       let userId = button.getAttribute('userid');
       let userName = button.getAttribute('username');
@@ -77,7 +77,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.querySelector('#add-to-blocklist-button').addEventListener('click', event => {
     let userName = document.querySelector('#add-to-blocklist-input').value;
-    blockUserFromUsername(userName);
+    if (userName !== '') {
+      blockUserFromUsername(userName);
+    }
+  })
+  document.querySelector('#add-to-blocklist-input').addEventListener('keypress', event => {
+    var key = event.which || event.keyCode || 0;
+    if (key === 13) {
+      let userName = document.querySelector('#add-to-blocklist-input').value;
+      if (userName !== '') {
+        blockUserFromUsername(userName);
+      }
+    }
   })
 })
 
@@ -96,25 +107,34 @@ function blockUserFromUsername(userName) {
   .then(response => response.json())
   .then(json => {
     console.log(json);
-    blockSettingsDOMManipulation(json.user.id, json.user.username, json.user.avatar);
+    blockSettingsDOMManipulation(json.user.id, json.user.username, json.user.displayname, json.user.avatar);
   })
 }
 
 
-function blockSettingsDOMManipulation(userId, userName, userAvatar) {
+function blockSettingsDOMManipulation(userId, userName, displayName, userAvatar) {
+  const addBlocklistInput = document.querySelector('#add-to-blocklist-input');
+  addBlocklistInput.value = '';
+  addBlocklistInput.focus();
+
   const blockedUserDiv = document.createElement('div');
-  blockedUserDiv.classList.add('flex-row');
+  blockedUserDiv.classList.add('blocklist-grid');
   blockedUserDiv.id = `unblock-row-${userId}`;
 
+  const blockedUserDisplayNameDiv = document.createElement('div');
+  blockedUserDisplayNameDiv.classList.add('blocklist-displayname');
+  blockedUserDisplayNameDiv.innerHTML = displayName;
+
   const blockedUserNameDiv = document.createElement('div');
+  blockedUserNameDiv.classList.add('blocklist-username');
   blockedUserNameDiv.innerHTML = `@${userName}`;
 
   const blockedUserAvatarDiv = document.createElement('img');
   blockedUserAvatarDiv.src = userAvatar;
-  blockedUserAvatarDiv.classList.add('avatar-img');
+  blockedUserAvatarDiv.classList.add('blocklist-avatar-img');
   
   const blockedUserButton = document.createElement('button');
-  blockedUserButton.classList.add('settings-unblock-button');
+  blockedUserButton.classList.add('blocklist-unblock-button', 'btn', 'btn-outline-secondary');
   blockedUserButton.setAttribute('userid', userId);
   blockedUserButton.setAttribute('username', userName);
   blockedUserButton.innerHTML = 'Unblock';
@@ -126,10 +146,11 @@ function blockSettingsDOMManipulation(userId, userName, userAvatar) {
   })
 
   blockedUserDiv.appendChild(blockedUserAvatarDiv);
+  blockedUserDiv.appendChild(blockedUserDisplayNameDiv);
   blockedUserDiv.appendChild(blockedUserNameDiv);
   blockedUserDiv.appendChild(blockedUserButton);
 
-  const target_div = document.querySelector('#add-to-blocklist');
+  const target_div = document.querySelector('#blocked-users-header');
   target_div.parentNode.insertBefore(blockedUserDiv, target_div.nextSibling);
 }
 

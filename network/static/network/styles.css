@@ -1085,6 +1085,12 @@ input[type="file"] {
     margin-left: auto;
     margin-right: auto;
 }
+.mb0 {
+    margin-bottom: 0 !important;
+}
+.mb12 {
+    margin-bottom: 12px !important;
+}
 .mb16 {
     margin-bottom: 16px !important;
 }
@@ -1098,6 +1104,12 @@ input[type="file"] {
 .form-checkbox {
     height: 24px;
     width: 24px;
+}
+.mt4 {
+    margin-top: 4px;
+}
+.mt32 {
+    margin-top: 32px;
 }
 
 label {
@@ -1199,4 +1211,74 @@ h4 {
 }
 .important-form-label-icon {
     color: var(--color-alert-1);
+}
+
+.blocklist-grid {
+    width: 100%;
+    /* max-width: 400px; */
+    display: grid;
+    grid-template-rows: auto auto;
+    grid-template-columns: 64px auto 100px;
+    grid-template-areas: 
+        "avatar displayname button"
+        "avatar username button";
+    gap: 0px 12px;
+    padding-top: 8px;
+    border-top: 1px solid var(--color-text-medcontrast);
+    margin-top: 12px;
+}
+.blocklist-grid > * {
+    /* border: 1px solid red; */
+}
+.blocklist-avatar-img {
+    object-fit: cover;
+    width: 64px;
+    height: 64px;
+    margin-top: 4px;
+    border-radius: 100%;
+    grid-area: avatar;
+}
+.blocklist-displayname {
+    grid-area: displayname;
+    align-self: start;
+    justify-self: start;
+    font-weight: bold;
+    text-align: left;
+    color: var(--color-text-default);
+    font-size: 1.125rem;
+    padding: 0;
+    margin: 0;
+}
+.blocklist-username {
+    grid-area: username;
+    align-self: start;
+    justify-self: start;
+    color: var(--color-text-medcontrast);
+    padding: 0;
+    margin: 0;
+    margin-top: -10px;
+}
+.blocklist-unblock-button {
+    grid-area: button;
+    align-self: start;
+    justify-self: end; 
+    width: 120px;
+    max-width: 100%;
+}
+
+#add-to-blocklist {
+    width: 100%;
+    gap: 12px;
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: auto 100px;
+    grid-template-areas: "input button";
+}
+#add-to-blocklist-input {
+    width: 100%;
+    grid-area: input;
+}
+#add-to-blocklist-button {
+    /* width: 150px; */
+    grid-area: button;
 }

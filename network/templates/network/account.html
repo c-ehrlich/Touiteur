@@ -113,15 +113,18 @@
 
     <div hidden id="blocklist-form" class="reg-login-outer">
         <div class="reg-login-inner" id="block-box">
+            <h4 class="mb12 mt4">Add a user to blocklist</h4>
             <div class="flex-row" id="add-to-blocklist">
                 <input type="text" id="add-to-blocklist-input">
-                <button id="add-to-blocklist-button">Add</button>
+                <button id="add-to-blocklist-button" class="btn btn-primary">Block</button>
             </div>
+            <h4 class="mt32 mb0" id="blocked-users-header">Blocked Users</h4>
             {% for blocked_user in blocklist %}
-                <div class="flex-row" id="unblock-row-{{ blocked_user.id }}">
-                    <img src="{{ blocked_user.avatar.url}}" width="40px" class="avatar-img">
-                    <div>@{{ blocked_user.username }}</div>
-                    <button class="settings-unblock-button" userid="{{ blocked_user.id }}" username="{{ blocked_user.username }}">unblock</button>
+                <div class="blocklist-grid" id="unblock-row-{{ blocked_user.id }}">
+                    <img class="blocklist-avatar-img" src="{{ blocked_user.avatar.url}}">
+                    <div class="blocklist-displayname">{{ blocked_user.displayname }}</div>
+                    <div class="blocklist-username">@{{ blocked_user.username }}</div>
+                    <button class="blocklist-unblock-button btn btn-outline-secondary" userid="{{ blocked_user.id }}" username="{{ blocked_user.username }}">Unblock</button>
                 </div>
             {% empty %}
                 blocklist is empty

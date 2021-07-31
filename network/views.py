@@ -433,6 +433,7 @@ def block_toggle_username(request, username):
             "success": True,
             "user": {
                 "username": view_user.username,
+                "displayname": view_user.displayname,
                 "avatar": view_user.avatar.url,
                 "id": view_user.id
             }
