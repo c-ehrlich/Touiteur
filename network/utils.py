@@ -228,8 +228,12 @@ def get_post_count_since_timestamp(request, timestamp, context):
             'public_feed',
             'user',
             'following'
+            'mentions'
         'username': (this will not contain anything unless the posts from a user profile are being checked)
             '<username>'
+
+    context options todo:
+        'likes/<str:username>'
     """
     user = request.user
     posts = {}
@@ -237,7 +241,7 @@ def get_post_count_since_timestamp(request, timestamp, context):
         post_user = get_user_from_username(context['username'])
         # get posts by post_user, newer than timestamp
         posts = Post.objects.filter(user=post_user, timestamp__gte=timestamp)
-    if context['location'] == 'public_feed':
+    if context['location'] == 'public_feed': # TODO is this just the same as index and never gets called?
         # get posts by all users, newer than timestamp
         posts = Post.objects.filter(timestamp__gt=timestamp)
     if context['location'] == 'following':
@@ -247,9 +251,11 @@ def get_post_count_since_timestamp(request, timestamp, context):
         posts = Post.objects.filter(timestamp__gt=timestamp)
     if context['location'] == 'mentions':
         posts = Post.objects.filter(mentioned_users__in=[user], timestamp__gt=timestamp)
+    if context['location'] == 'likes':
+        post_user = get_user_from_username(context['username'])
+        posts = post_user.liked_posts.filter(timestamp__gt=timestamp)
     # if we haven't created posts yet, return an error
     if  posts:
-        print(posts)
         return posts.count()
     else:
         return 0

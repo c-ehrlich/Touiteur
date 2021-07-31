@@ -10,14 +10,14 @@ function checkForNotifications() {
     // get the first alphanumeric string from the path
     var first = path.split('/')[1];
     context.location = first;
-    if (first === "user") {
+    if (first === "user" || first === "likes") {
         second = path.split('/')[2];
         context.username = second;
     }
     if (first === "") {
         context.location = "index";
     }
-    console.log(context.location);
+    // console.log(context.location);
     fetch('/notifications', {
         method: 'PUT',
         headers: {
