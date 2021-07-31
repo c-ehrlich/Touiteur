@@ -43,6 +43,7 @@
 
 ._theme_dark {
     --color-page-bg: #34322e;
+    --color-alert-1: #fc3d39; /* try d43f4a ? */
     --color-button-hover-bad: #d43f3a; /* change */
 
     --color-text-default: white; /* change */

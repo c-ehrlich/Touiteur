@@ -1088,6 +1088,9 @@ input[type="file"] {
 .mb16 {
     margin-bottom: 16px !important;
 }
+.mb48 {
+    margin-bottom: 48px !important;
+}
 .fs15rem {
     font-size: 1.5rem !important;
 }
@@ -1132,4 +1135,68 @@ h4 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+
+/* -------------------- */
+/* STUFF FOR TABS       */
+/* -------------------- */
+.settings-tabs {
+    width: 600px;
+    max-width: 100%;
+    margin: auto;
+    padding: 0 12px 0 4px;
+    margin-top: 16px;
+    display: flex;
+    justify-content: center;
+}
+.settings-tabs ul {
+    width: 100%;
+    margin: 0;
+    padding: 0 12px 0 12px;
+    display: flex;
+    gap: 12px;
+    flex-direction: row;
+}
+.settings-tabs ul li {
+    margin-bottom: -1px;
+    flex-grow: 1;
+    list-style: none;
+    text-align: center;
+    background: var(--color-box-bg-contrast);
+    color: var(--color-text-default);
+    cursor: pointer;
+    width: 30%;
+    border: 1px solid var(--color-box-border);
+    border-bottom: none;
+}
+.settings-tabs ul li.active-settings-tab {
+    background: var(--color-box-bg);
+}
+.settings-tab {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 12px 4px 12px;
+}
+.account-tab-icon {
+    font-size: 24px;
+}
+.account-tab-text {
+    margin-top: 8px;
+}
+@media (max-width: 420px) {
+    .account-tab-text {
+        display: none;
+    }
+}
+
+
+/* -------------------- */
+/* STUFF FOR SETTINGS   */
+/* -------------------- */
+.important-form-label {
+    font-weight: bold;
+}
+.important-form-label-icon {
+    color: var(--color-alert-1);
 }

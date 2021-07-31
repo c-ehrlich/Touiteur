@@ -8,10 +8,27 @@
 
 {% block body %}
 
-    <div class="section-identifier">
+    <!-- <div class="section-identifier">
         <div class="section-identifier-inner">
-            {% trans 'Edit Account' %}
+            {% trans 'Settings' %}
         </div>
+    </div> -->
+
+    <div class="settings-tabs">
+        <ul>
+            <li id="account-tab" class="settings-tab active-settings-tab">
+                <i class="account-tab-icon fas fa-user"></i>
+                <div class="account-tab-text">Account</div>
+            </li>
+            <li id="blocklist-tab" class="settings-tab">
+                <i class="account-tab-icon fas fa-ban"></i>
+                <div class="account-tab-text">Blocklist</div>
+            </li>
+            <li id="preferences-tab" class="settings-tab">
+                <i class="account-tab-icon fas fa-cog"></i>
+                <div class="account-tab-text">Preferences</div>
+            </li>
+        </ul>
     </div>
 
     {% if message %}
@@ -24,21 +41,20 @@
     
 
     
-    <form method="POST" action="" enctype="multipart/form-data" class="form-100-test">
-        <div class="reg-login-outer padding-bottom-0">
-            <div class="reg-login-inner bb-0 important-div">
-                {% if form.password.errors %}
-                    <div class="alert alert-danger formerror-text">{{ form.password.errors }}</div>
-                {% endif %}
-                <div class="margin-bottom-8 formlabel-text">
-                    Current Password (required)
-                </div>
-                {{ form.password }}
-            </div>
-        </div>
-
+    <form method="POST" action="" enctype="multipart/form-data" class="form-100-test" id="account-form">
         <div class="reg-login-outer">
             <div class="reg-login-inner">
+                <div class="form-group w100 mb48">
+                    <div class="margin-bottom-8 formlabel-text important-form-label">
+                        <i class="fas fa-exclamation-triangle important-form-label-icon"></i> 
+                        Current Password (required)
+                        <i class="fas fa-exclamation-triangle important-form-label-icon"></i> 
+                    </div>
+                    {% if form.password.errors %}
+                        <div class="alert alert-danger formerror-text">{{ form.password.errors }}</div>
+                    {% endif %}
+                    {{ form.password }}
+                </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ form.username.errors }}</div>
                     <label for="{{ form.username.id_for_label }}" class="formlabel-text">New {{ form.username.label }}</label>
@@ -97,9 +113,18 @@
             </div>
         </div>
     </form>
+
+    <div hidden id="blocklist-form">
+        Blocklist Test
+    </div>
+
+    <form hidden id="preferences-form">
+        Preferences Test
+    </form>
 {% endblock %}
 
 {% block script %}
+    <script src="{% static 'network/account.js' %}"></script>
     <script src="{% static 'network/image_uploads.js' %}"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function() {
