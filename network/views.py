@@ -29,57 +29,93 @@ def account(request):
 
     if request.method == "GET":
         return render(request, "network/account.html", {
-            "form": EditAccountForm(instance = user)
+            "account_form": EditAccountForm(instance = user),
+            "preferences_form": RegisterAccountStage3Form(instance = user),
     })
     if request.method == "POST":
-        form = EditAccountForm(request.POST, request.FILES, instance = user)
-        if form.is_valid():
-            user = authenticate(
-                request, 
-                username=utils.get_user_from_id(request.user.id), 
-                password=form.cleaned_data["password"]
-            )
-            if user is None:
-                return render(request, "network/account.html", {
-                    "form": EditAccountForm(instance = utils.get_user_from_id(request.user.id)),
-                    "message": _("Invalid password.")
-                })
-            if utils.check_username_validity(form.cleaned_data["username"]) == False:
-                user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field TODO refactor
-                # return an EditAccountForm with the user's original information
-                return render(request, "network/account.html", {
-                    "form": EditAccountForm(instance = user),
-                    "message": _("Username is not valid."),
-                })
+        if 'account-form-button' in request.POST:
+            form = EditAccountForm(request.POST, request.FILES, instance = user)
+            if form.is_valid():
+                user = authenticate(
+                    request, 
+                    username=utils.get_user_from_id(request.user.id), 
+                    password=form.cleaned_data["password"]
+                )
+                if user is None:
+                    return render(request, "network/account.html", {
+                        "account_form": EditAccountForm(instance = user),
+                        "preferences_form": RegisterAccountStage3Form(instance = user),
+                        "message": _("Invalid password."),
+                        "start_tab": "account",
+                    })
+                if utils.check_username_validity(form.cleaned_data["username"]) == False:
+                    user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field TODO refactor
+                    # return an EditAccountForm with the user's original information
+                    return render(request, "network/account.html", {
+                        "account_form": EditAccountForm(instance = user),
+                        "preferences_form": RegisterAccountStage3Form(instance = user),
+                        "message": _("Username is not valid."),
+                        "start_tab": "account",
+                    })
 
-            # get new_password and new_pass_confirm from form
-            # check if they are the same, if so change the password
-            # if not, return an EditAccountForm with the user's original information
-            # and a message saying the passwords don't match
-            new_password = form.cleaned_data["new_password"]
-            new_password_confirm = form.cleaned_data["new_password_confirm"]
-            if new_password != new_password_confirm:
+                # get new_password and new_pass_confirm from form
+                # check if they are the same, if so change the password
+                # if not, return an EditAccountForm with the user's original information
+                # and a message saying the passwords don't match
+                new_password = form.cleaned_data["new_password"]
+                new_password_confirm = form.cleaned_data["new_password_confirm"]
+                if new_password != new_password_confirm:
+                    return render(request, "network/account.html", {
+                        "account_form": EditAccountForm(instance = user),
+                        "preferences_form": RegisterAccountStage3Form(instance = user),
+                        "message": _("New passwords don't match."),
+                        "start_tab": "account",
+                    })
+                if new_password != None and new_password != "":
+                    user.set_password(new_password)
+                    user.save()
+
+                form.save()
+
+            # form is not valid
+            else:
+                print(form.data)
                 return render(request, "network/account.html", {
-                    "form": EditAccountForm(instance = user),
-                    "message": _("New passwords don't match.")
+                    "account_form": EditAccountForm(instance = user),
+                    "preferences_form": RegisterAccountStage3Form(instance = user),
+                    "message": _("Form data is invalid"),
+                    "start_tab": "account",
                 })
-            if new_password != None and new_password != "":
-                user.set_password(new_password)
-                user.save()
-
-            form.save()
-
-        # form is not valid
-        else:
-            print(form.data)
+            print("everything went good!")
             return render(request, "network/account.html", {
-                "form": EditAccountForm(instance = user),
-                "message": _("Form data is invalid")
+                "account_form": EditAccountForm(instance = user),
+                "preferences_form": RegisterAccountStage3Form(instance = user),
+                "start_tab": "account",
             })
-        print("everything went good!")
-        return render(request, "network/account.html", {
-            "form": EditAccountForm(instance = utils.get_user_from_id(request.user.id))
-        })
+
+        elif 'preferences-form-button' in request.POST:
+            form = RegisterAccountStage3Form(request.POST, instance = user)
+            if form.is_valid():
+                user.theme = form.cleaned_data['theme']
+                user.language = form.cleaned_data['language']
+                user.show_liked_posts = form.cleaned_data['show_liked_posts']
+                user.save()
+                print("preferences form good")
+                return render(request,"network/account.html", {
+                    "account_form": EditAccountForm(instance = user),
+                    "preferences_form": RegisterAccountStage3Form(instance = user),
+                    "start_tab": "preferences",
+                })
+            else:
+                print("preferences form bad")
+                return render(request, "network/account.html", {
+                    "account_form": EditAccountForm(instance = user),
+                    "preferences_form": RegisterAccountStage3Form(instance = user),
+                    "message": _("Form data is invalid"),
+                    "start_tab": "preferences",
+                })
+        else:
+            return HttpResponseBadRequest()
 
 
 @login_required

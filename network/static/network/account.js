@@ -36,4 +36,33 @@ document.addEventListener('DOMContentLoaded', () => {
     blocklistForm.setAttribute('hidden', 'true');
     preferencesForm.removeAttribute('hidden');
   })
+
+  const startTab = document.querySelector('#account-page-tab-start-value').innerHTML;
+  if (startTab === 'account') {
+    accountTab.classList.add('active-settings-tab');
+    blocklistTab.classList.remove('active-settings-tab');
+    preferencesTab.classList.remove('active-settings-tab');
+
+    accountForm.removeAttribute('hidden')
+    blocklistForm.setAttribute('hidden', 'true');
+    preferencesForm.setAttribute('hidden', 'true');
+  }
+  if (startTab === 'blocklist') {
+    accountTab.classList.remove('active-settings-tab');
+    blocklistTab.classList.add('active-settings-tab');
+    preferencesTab.classList.remove('active-settings-tab');
+
+    accountForm.setAttribute('hidden', 'true');
+    blocklistForm.removeAttribute('hidden');
+    preferencesForm.setAttribute('hidden', 'true');;
+  }
+  if (startTab === 'preferences') {
+    accountTab.classList.remove('active-settings-tab');
+    blocklistTab.classList.remove('active-settings-tab');
+    preferencesTab.classList.add('active-settings-tab');
+
+    accountForm.setAttribute('hidden', 'true');
+    blocklistForm.setAttribute('hidden', 'true');
+    preferencesForm.removeAttribute('hidden');
+  }
 })
