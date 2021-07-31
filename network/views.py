@@ -474,26 +474,6 @@ def follow(request, user_id):
 
 
 @csrf_protect
-def get_notifications(request):
-    if request.method == "PUT":
-        user = request.user
-        if user == None:
-            return JsonResponse({
-                "error": _("You are not logged in.")
-            }, status=400)
-        # build a JSON response that contains any notifications
-        # (for now just unread mentions, but might add more stuff ie DMs later)
-        # maybe also a total count of notifications, for app badge etc?
-        return JsonResponse({
-            "mention_count": user.mentions_since_last_checked
-        }, status=200)
-    else:
-        return JsonResponse({
-            "error": _("PUT request required.")
-        }, status=400)
-
-
-@csrf_protect
 def like(request, post_id):
     if request.method == "PUT":
         data = json.loads(request.body)
@@ -526,25 +506,46 @@ def like(request, post_id):
         }, status=400)
 
 
-def new_posts(request):
-    """checks for new post count
+@csrf_protect
+def notifications(request):
+    """checks for notifications
+    * for both logged in and non logged in users:
+        * new posts in the current view
+    * only for logged in users:
+        * new mentions
+        * new DMs
+
     expects a json object in the request. that object should contain a 'context' variable. inside that variable:
         'location': can be 'public_feed', 'user', or 'following' (can add more later for different views)
         if 'location' == 'user':
             'username': the username of the user who we are checking for new posts
-    returns a JsonResponse with the key 'count' which is the new post count
+
+    Returns a JsonResponse with the following fields:
+        'new_post_count': the number of new posts in the current view
+        'new_mention_count': the number of new mentions (only for logged in users)
+        'new_dm_count': the number of new DMs (only for logged in users)
     """
     if request.method == "PUT":
         data = json.loads(request.body)
         datetime_obj = utils.convert_javascript_date_to_python(data['timestamp'])
         new_post_count = utils.get_post_count_since_timestamp(request, datetime_obj, data['context'])
+        user = request.user
+        if user.is_authenticated:
+            print("user authenticated :)")
+            new_mention_count = user.mentions_since_last_checked
+            new_dm_count = user.DMs_since_last_checked
+            return JsonResponse({
+                "new_post_count": new_post_count,
+                "new_mention_count": new_mention_count,
+                "new_dm_count": new_dm_count,
+                }, status=200)
         return JsonResponse({
             "new_post_count": new_post_count,
-        }, status=201)
+            }, status=200)
     else:
         return JsonResponse({
             "error": _("GET request required.")
-        }, status=400)
+            }, status=400)
 
 
 @csrf_protect

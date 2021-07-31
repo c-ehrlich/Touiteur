@@ -18,7 +18,7 @@ function checkForNotifications() {
         context.location = "index";
     }
     console.log(context.location);
-    fetch('/new_posts', {
+    fetch('/notifications', {
         method: 'PUT',
         headers: {
             'X-CSRFToken': getCookie('csrftoken')
@@ -29,7 +29,7 @@ function checkForNotifications() {
         }),
     })
     .then(response => {
-        if (response.status === 201) {
+        if (response.status === 200) {
             return response.json();
         }
         else {
@@ -49,6 +49,24 @@ function checkForNotifications() {
         else {
             newPostsDiv.innerHTML = '0';
             newPostsDiv.setAttribute('hidden', 'hidden');
+        }
+        if (json.hasOwnProperty('new_mention_count')) {
+            if (json.new_mention_count > 0) {
+                // update mention count in header
+                const newMentionsCountDiv = document.querySelector('#new-mentions-count');
+                newMentionsCountDiv.innerHTML = json.new_mention_count;
+                newMentionsCountDiv.removeAttribute('hidden');
+                // TODO temp hack because I can't figure out what sets this div to style display none
+                newMentionsCountDiv.style.display = 'flex';
+            }
+        }
+        if (json.hasOwnProperty('new_dm_count')) {
+            if (json.new_dm_count > 0) {
+                // update dm count in header
+                const newDMsCountDiv = document.querySelector('#new-DMs-count');
+                newDMsCountDiv.innerHTML = json.new_dm_count;
+                newDMsCountDiv.removeAttribute('hidden');
+            }
         }
     })
     .catch(error => {

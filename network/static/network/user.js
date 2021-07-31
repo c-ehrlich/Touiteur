@@ -25,9 +25,11 @@ document.addEventListener('DOMContentLoaded', () => {
       user_view_share_profile();
     })
   }
-  document.querySelector('#user-profile-dropdown-button').addEventListener('click', event => {
-    show_dropdown();
-  })
+  if (document.querySelector('#user-profile-dropdown-button')) {
+    document.querySelector('#user-profile-dropdown-button').addEventListener('click', event => {
+      show_dropdown();
+    })
+  }
   window.addEventListener('click', event => {
     if (!(event.target.matches('.dropbtn')) && !(event.target.matches('.user-profile-hover-menu-icon'))) {
       if (document.querySelector('#user-profile-dropdown-content').classList.contains('show')) {

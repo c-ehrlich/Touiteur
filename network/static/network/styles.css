@@ -799,7 +799,8 @@ hr {
     border: 1px solid lightgrey;
 }
 
-#new-mentions-count {
+#new-mentions-count,
+#new-DMs-count {
     background-color: #fc3d39;
     font-size: 12px;
     height: 16px;

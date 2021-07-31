@@ -27,11 +27,10 @@ urlpatterns = [
     path("block_toggle/<int:user_id>", views.block_toggle, name="block_toggle"),
     path("clear_mentions_count", views.clear_mentions_count, name="clear_mentions_count"),
     path("compose", views.compose, name="compose"),
-    path("get_notifications", views.get_notifications, name="get_notifications"),
     path("edit/<int:post_id>", views.edit, name="edit"),
     path("follow/<int:user_id>", views.follow, name="follow"),
     path("like/<int:post_id>", views.like, name="like"),
-    path("new_posts", views.new_posts, name="new_posts"),
+    path("notifications", views.notifications, name="notifications"),
     path("reply/<int:post_id>", views.reply, name="reply"),
     path("thread_read_status/<int:thread_id>", views.thread_read_status, name="thread_read_status"),
 
