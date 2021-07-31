@@ -374,6 +374,11 @@ def block_toggle(request, user_id):
                 return JsonResponse({
                     "intent": "block",
                     "success": True,
+                    "user": {
+                        "username": view_user.username,
+                        "avatar": view_user.avatar.url,
+                        "id": view_user.id
+                    }
                 }, status=200)
             else:
                 return JsonResponse({
@@ -401,6 +406,39 @@ def block_toggle(request, user_id):
         return JsonResponse({
             "error": _("PUT request required.")
         }, status=400)
+
+
+@csrf_protect
+def block_toggle_username(request, username):
+    # TODO this is not very DRY! (a lot of code is repeated from block_toggle)
+    user = request.user
+    if request.method == 'PUT':
+        view_user = utils.get_user_from_username(username)
+        if not view_user in user.blocked_users.all():
+            user.blocked_users.add(view_user)
+        # end follow relation in both directions
+        if view_user in user.following.all():
+            user.following.remove(view_user)
+        if user in view_user.following.all():
+            view_user.following.remove(user)
+        # remove post likes in both directions
+        for post in user.posts.all():
+            if view_user in post.users_who_liked.all():
+                post.users_who_liked.remove(view_user)
+        for post in view_user.posts.all():
+            if user in post.users_who_liked.all():
+                post.users_who_liked.remove(user)
+        return JsonResponse({
+            "intent": "block",
+            "success": True,
+            "user": {
+                "username": view_user.username,
+                "avatar": view_user.avatar.url,
+                "id": view_user.id
+            }
+        }, status=200)
+    else:
+        return HttpResponseBadRequest()
 
 
 @csrf_protect

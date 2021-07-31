@@ -74,7 +74,32 @@ document.addEventListener('DOMContentLoaded', () => {
       unblockSettingsDOMManipulation(userId, userName);
     })
   })
+
+  document.querySelector('#add-to-blocklist-button').addEventListener('click', event => {
+    let userName = document.querySelector('#add-to-blocklist-input').value;
+    blockUserFromUsername(userName);
+  })
 })
+
+
+function blockUserFromUsername(userName) {
+  fetch(`/block_toggle_username/${userName}`, {
+    method: 'PUT',
+    headers: {
+      "X-CSRFToken": getCookie("csrftoken"),
+    },
+    credentials: 'same-origin',
+    body: JSON.stringify({
+      "intent": "block",
+    })
+  })
+  .then(response => response.json())
+  .then(json => {
+    console.log(json);
+
+  })
+}
+
 
 function unblockSettingsDOMManipulation(userId, userName) {
   document.querySelector(`#unblock-row-${userId}`).remove();
@@ -95,5 +120,5 @@ function unblockSettingsDOMManipulation(userId, userName) {
     type: 1,
     position: 'x-center top'
   })
-  // if there are no blocked users, show the "empty" thing
+  // TODO if there are no blocked users, show the "empty" thing
 }

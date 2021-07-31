@@ -101,7 +101,8 @@ function getCookie(name) {
           }
       }
   }
-  return cookieValue;}
+  return cookieValue;
+}
 
 
 console.log("loaded utils.js");

@@ -113,6 +113,10 @@
 
     <div hidden id="blocklist-form" class="reg-login-outer">
         <div class="reg-login-inner">
+            <div class="flex-row">
+                <input type="text" id="add-to-blocklist-input">
+                <button id="add-to-blocklist-button">Add</button>
+            </div>
             {% for blocked_user in blocklist %}
                 <div class="flex-row" id="unblock-row-{{ blocked_user.id }}">
                     <img src="{{ blocked_user.avatar.url}}" width="40px" class="avatar-img">

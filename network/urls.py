@@ -25,6 +25,7 @@ urlpatterns = [
 
     # API Routes
     path("block_toggle/<int:user_id>", views.block_toggle, name="block_toggle"),
+    path("block_toggle_username/<str:username>", views.block_toggle_username, name="block_toggle_username"),
     path("clear_mentions_count", views.clear_mentions_count, name="clear_mentions_count"),
     path("compose", views.compose, name="compose"),
     path("edit/<int:post_id>", views.edit, name="edit"),
