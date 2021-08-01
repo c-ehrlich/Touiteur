@@ -9,7 +9,6 @@ from . import views
 urlpatterns = [
     # View Routes
     path("", views.index, name="index"),
-    path("account", views.account, name="account"),
     path("dms", views.dms, name="dms"),
     path("dm_thread/<str:username>", views.dm_thread, name="dm_thread"),
     path("following", views.following, name="following"),
@@ -21,6 +20,7 @@ urlpatterns = [
     path("register", views.register, name="register"),
     path("register2", views.register2, name="register2"),
     path("register3", views.register3, name="register3"),
+    path("settings", views.settings, name="settings"),
     path("user/<str:username>", views.user, name="user"),
 
     # API Routes
