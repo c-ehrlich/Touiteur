@@ -26,9 +26,9 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 @login_required
 def account(request):
     user = request.user
+    blocklist = user.blocked_users.all().order_by('username')
 
     if request.method == "GET":
-        blocklist = user.blocked_users.all()
         return render(request, "network/account.html", {
             "account_form": EditAccountForm(instance = user),
             "preferences_form": RegisterAccountStage3Form(instance = user),
@@ -47,6 +47,7 @@ def account(request):
                     return render(request, "network/account.html", {
                         "account_form": EditAccountForm(instance = user),
                         "preferences_form": RegisterAccountStage3Form(instance = user),
+                        "blocklist": blocklist,
                         "message": _("Invalid password."),
                         "start_tab": "account",
                     })
@@ -56,6 +57,7 @@ def account(request):
                     return render(request, "network/account.html", {
                         "account_form": EditAccountForm(instance = user),
                         "preferences_form": RegisterAccountStage3Form(instance = user),
+                        "blocklist": blocklist,
                         "message": _("Username is not valid."),
                         "start_tab": "account",
                     })
@@ -70,6 +72,7 @@ def account(request):
                     return render(request, "network/account.html", {
                         "account_form": EditAccountForm(instance = user),
                         "preferences_form": RegisterAccountStage3Form(instance = user),
+                        "blocklist": blocklist,
                         "message": _("New passwords don't match."),
                         "start_tab": "account",
                     })
@@ -85,6 +88,7 @@ def account(request):
                 return render(request, "network/account.html", {
                     "account_form": EditAccountForm(instance = user),
                     "preferences_form": RegisterAccountStage3Form(instance = user),
+                    "blocklist": blocklist,
                     "message": _("Form data is invalid"),
                     "start_tab": "account",
                 })
@@ -92,6 +96,7 @@ def account(request):
             return render(request, "network/account.html", {
                 "account_form": EditAccountForm(instance = user),
                 "preferences_form": RegisterAccountStage3Form(instance = user),
+                "blocklist": blocklist,
                 "start_tab": "account",
             })
 
@@ -106,6 +111,7 @@ def account(request):
                 return render(request,"network/account.html", {
                     "account_form": EditAccountForm(instance = user),
                     "preferences_form": RegisterAccountStage3Form(instance = user),
+                    "blocklist": blocklist,
                     "start_tab": "preferences",
                 })
             else:
@@ -113,6 +119,7 @@ def account(request):
                 return render(request, "network/account.html", {
                     "account_form": EditAccountForm(instance = user),
                     "preferences_form": RegisterAccountStage3Form(instance = user),
+                    "blocklist": blocklist,
                     "message": _("Form data is invalid"),
                     "start_tab": "preferences",
                 })
