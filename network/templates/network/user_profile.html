@@ -50,23 +50,27 @@
         <div id="user-profile-info-div">
             <div id="user-profile-bio">{{ view_user.bio }}</div>
             <div id="user-profile-post-info-div">
-                <a href="{% url 'user' view_user %}" class="flex-row">
-                    <div id="user-profile-post-count">{{ view_user.posts.count }}</div>
-                    <div id="user-profile-post-count-label"> {% trans 'Posts' %}</div>
+                <a href="{% url 'user' view_user %}" id="user-profile-post-count" class="flex-row">
+                    {{ view_user.posts.count }}
                 </a>
-                <a href="{% url 'likes' view_user %}" class="flex-row">
-                    <div id="user-profile-liked-posts-count">
-                        {{ view_user.liked_posts.count }} 
-                    </div>
-                    <div id="user-profile-liked-posts-count-label">
-                         {% trans 'Liked Posts' %}
-                    </div>
+                &nbsp;
+                <a href="{% url 'user' view_user %}" id="user-profile-post-count-label" class="flex-row">
+                    {% trans 'Posts' %}
+                </a>
+                <a href="{% url 'likes' view_user %}" id="user-profile-liked-posts-count" class="flex-row">
+                    {{ view_user.liked_posts.count }} 
+                </a>
+                &nbsp;
+                <a href="{% url 'likes' view_user %}" id="user-profile-liked-posts-count-label" class="flex-row">
+                    {% trans 'Liked Posts' %}
                 </a>
             </div>
             <div id="user-profile-follower-info-div">
                 <div id="user-profile-following-count">{{ view_user.following.count }}</div>
+                &nbsp;
                 <div id="user-profile-following-count-label">{% trans 'Following' %}</div>
                 <div id="user-profile-follower-count">{{ view_user.followed_by.count }}</div>
+                &nbsp;
                 <div id="user-profile-follower-count-label">{% trans 'Followers' %}</div>
             </div>
         </div>

@@ -234,6 +234,9 @@ hr {
     font-weight: bold;
     color: var(--color-text-default);
 }
+.post-username-header-displayname:hover {
+    color: var(--color-text-default);
+}
 
 .post-username-header-username {
     color: var(--color-text-medcontrast);
@@ -241,6 +244,7 @@ hr {
 }
 .post-username-header-username:hover {
     color: var(--color-text-medcontrast);
+    text-decoration-color: var(--color-text-medcontrast);
 }
 
 .post-username-header-spacer {
@@ -586,7 +590,7 @@ hr {
 #user-profile-following-count-label,
 #user-profile-follower-count-label {
     color: var(--color-text-medcontrast);
-    margin-left: 4px;
+    /* margin-left: 4px; */
 }
 
 #user-profile-liked-posts-count,
