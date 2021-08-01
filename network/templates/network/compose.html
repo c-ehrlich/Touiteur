@@ -17,14 +17,15 @@
 
                 <div class="form-group w100">
                     <div class="formerror-text">{{ new_post_form.image.errors }}</div>
-                    <label for="{{ form.avatar.id_for_label }}">New {{ new_post_form.image.label }}</label>
+                    <label>New {{ new_post_form.image.label }}</label>
                     <div class="flex-row padding12 avatar-input-container">
+                        <img class="profile-pic" id="profile-pic-preview-img" src="{{ new_post_form.image.url }}">
                         <div class="p-l-12">
                             {{ new_post_form.image }}
                         </div>
                         <div class="flex-column-align-left margin-left-12">
-                            <label id="post-image-upload" for="{{ new_post_form.image.id_for_label }}" class="btn btn-sm btn-outline-primary">
-                                <i class="fa fa-cloud-upload"></i> {% trans 'Upload new avatar' %}
+                            <label for="{{ new_post_form.image.id_for_label }}" class="btn btn-sm btn-outline-primary">
+                                <i class="fa fa-cloud-upload"></i> {% trans 'Add Image' %}
                             </label>
                             <div class="custom-file-upload-helper-text formlabel-text" id="custom-file-upload-helper-text">
                                 {% trans 'Note: The avatar won\'t be updated until you press \"Save\"' %}

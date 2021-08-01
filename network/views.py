@@ -237,7 +237,7 @@ def settings(request):
     blocklist = user.blocked_users.all().order_by('username')
 
     if request.method == "GET":
-        return render(request, "network/account.html", {
+        return render(request, "network/settings.html", {
             "account_form": EditAccountForm(instance = user),
             "preferences_form": RegisterAccountStage3Form(instance = user),
             "blocklist": blocklist,
@@ -252,7 +252,7 @@ def settings(request):
                     password=form.cleaned_data["password"]
                 )
                 if user is None:
-                    return render(request, "network/account.html", {
+                    return render(request, "network/settings.html", {
                         "account_form": EditAccountForm(instance = user),
                         "preferences_form": RegisterAccountStage3Form(instance = user),
                         "blocklist": blocklist,
@@ -262,7 +262,7 @@ def settings(request):
                 if utils.check_username_validity(form.cleaned_data["username"]) == False:
                     user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field TODO refactor
                     # return an EditAccountForm with the user's original information
-                    return render(request, "network/account.html", {
+                    return render(request, "network/settings.html", {
                         "account_form": EditAccountForm(instance = user),
                         "preferences_form": RegisterAccountStage3Form(instance = user),
                         "blocklist": blocklist,
@@ -277,7 +277,7 @@ def settings(request):
                 new_password = form.cleaned_data["new_password"]
                 new_password_confirm = form.cleaned_data["new_password_confirm"]
                 if new_password != new_password_confirm:
-                    return render(request, "network/account.html", {
+                    return render(request, "network/settings.html", {
                         "account_form": EditAccountForm(instance = user),
                         "preferences_form": RegisterAccountStage3Form(instance = user),
                         "blocklist": blocklist,
@@ -293,7 +293,7 @@ def settings(request):
             # form is not valid
             else:
                 print(form.data)
-                return render(request, "network/account.html", {
+                return render(request, "network/settings.html", {
                     "account_form": EditAccountForm(instance = user),
                     "preferences_form": RegisterAccountStage3Form(instance = user),
                     "blocklist": blocklist,
@@ -301,7 +301,7 @@ def settings(request):
                     "start_tab": "account",
                 })
             print("everything went good!")
-            return render(request, "network/account.html", {
+            return render(request, "network/settings.html", {
                 "account_form": EditAccountForm(instance = user),
                 "preferences_form": RegisterAccountStage3Form(instance = user),
                 "blocklist": blocklist,
@@ -316,7 +316,7 @@ def settings(request):
                 user.show_liked_posts = form.cleaned_data['show_liked_posts']
                 user.save()
                 print("preferences form good")
-                return render(request,"network/account.html", {
+                return render(request,"network/settings.html", {
                     "account_form": EditAccountForm(instance = user),
                     "preferences_form": RegisterAccountStage3Form(instance = user),
                     "blocklist": blocklist,
@@ -324,7 +324,7 @@ def settings(request):
                 })
             else:
                 print("preferences form bad")
-                return render(request, "network/account.html", {
+                return render(request, "network/settings.html", {
                     "account_form": EditAccountForm(instance = user),
                     "preferences_form": RegisterAccountStage3Form(instance = user),
                     "blocklist": blocklist,
@@ -468,16 +468,17 @@ def clear_mentions_count(request):
 @csrf_protect
 def compose(request):
     print(request.headers)
-    form = NewPostForm(request.POST)
+    form = NewPostForm(request.POST, request.FILES)
     if form.is_valid():
-        post_text = form.cleaned_data["post_text"]
+        post_text = form.cleaned_data["text"]
         if post_text == "":
             return JsonResponse({
                 "message": _("You can't submit an empty post")
             }, status=400)
         user=request.user
         mentioned_users = utils.get_mentions_from_post(post_text)
-        post = Post(user=user, text=post_text)
+        image = form.cleaned_data['image']
+        post = Post(user=user, text=post_text, image=image)
         post.save()
         for user in mentioned_users:
             post.mentioned_users.add(user)

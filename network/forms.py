@@ -65,13 +65,14 @@ class NewPostForm(forms.Form):
             'placeholder': "What's Happening?"
         })
     )
-    # image = forms.ImageField(
-    #     required = False,
-    #     widget = forms.FileInput(attrs={
-    #         'class': 'form-control',
-    #         'id': 'compose-form-image',
-    #     })
-    # )
+    image = forms.ImageField(
+        label = "post_image",
+        required = False,
+        widget = forms.FileInput(attrs={
+            'class': 'form-control',
+            'id': 'compose-form-image',
+        })
+    )
 
     class Meta:
         model = Post
