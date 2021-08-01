@@ -130,7 +130,7 @@ hr {
 }
 
 #compose-form-post-text {
-    margin-bottom: 12px;
+    margin-bottom: 6px;
 }
 
 .flex-row-end {
@@ -140,7 +140,8 @@ hr {
 }
 
 /* TODO fix this button. it looks like shit */
-.submit-button {
+.submit-button,
+.upload-image-button {
     padding: 8px 16px 8px 16px;
     border: 0;
     border-radius: 32px;
@@ -150,7 +151,8 @@ hr {
     color: white;
     transition: background-color 300ms ease-out 100ms;
 }
-.submit-button:hover {
+.submit-button:hover,
+.upload-image-button:hover {
     background-color: green;
 }
 
@@ -1281,4 +1283,37 @@ h4 {
 #add-to-blocklist-button {
     /* width: 150px; */
     grid-area: button;
+}
+.space-between-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.compose-form-submit-grid {
+    display: grid;
+    grid-template-rows: 48px;
+    /* grid-template-columns: auto 48px 112px; */
+    width: 100%;
+    gap: 12px;
+    grid-template: "img upload-img submit" / auto 48px 96px;
+}
+#compose-pic-preview-img {
+    grid-area: img;
+    width: 48px;
+    height: 48px;
+    border-radius: 8px;
+}
+#compose-upload-image-button {
+    grid-area: upload-img;
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0;
+}
+#compose-form-submit-button {
+    grid-area: submit;
+    height: 48px !important;
 }

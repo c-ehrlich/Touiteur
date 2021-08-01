@@ -41,6 +41,7 @@
 {% block script %}
     {% if user == view_user %}
         <script src="{% static 'network/compose.js' %}"></script>
+        <script src="{% static 'network/image_uploads_compose.js' %}"></script>
     {% endif %}
     {% if user.is_authenticated %}<script src="{% static 'network/posts-loggedin.js' %}"></script>{% endif %}
     <script src="{% static 'network/live_notifications.js' %}"></script>
