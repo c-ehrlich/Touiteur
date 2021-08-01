@@ -174,5 +174,4 @@ function unblockSettingsDOMManipulation(userId, userName) {
     type: 1,
     position: 'x-center top'
   })
-  // TODO if there are no blocked users, show the "empty" thing
 }

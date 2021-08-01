@@ -10,13 +10,12 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as _lazy
+from django.views.decorators.csrf import csrf_protect
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, RegisterAccountStage2Form, RegisterAccountStage3Form
 from network.models import User, Post, Conversation
 from network import utils
 
-# TODO temp imports remove later
-from django.views.decorators.csrf import csrf_exempt, csrf_protect
 
 
 # +-----------------------------------------+
@@ -82,7 +81,6 @@ def likes(request, username):
             return render(request, "network/likes.html", {
                 "view_user": view_user,
             })
-            # TODO return a view that shows that the user has sharing likes off
         return render(request, "network/likes.html", {
             "view_user": view_user,
             "posts": posts,
@@ -260,7 +258,7 @@ def settings(request):
                         "start_tab": "account",
                     })
                 if utils.check_username_validity(form.cleaned_data["username"]) == False:
-                    user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field TODO refactor
+                    user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field NICE-TO-HAVE refactor
                     # return an EditAccountForm with the user's original information
                     return render(request, "network/settings.html", {
                         "account_form": EditAccountForm(instance = user),
@@ -419,7 +417,8 @@ def block_toggle(request, user_id):
 
 @csrf_protect
 def block_toggle_username(request, username):
-    # TODO this is not very DRY! (a lot of code is repeated from block_toggle)
+    # NICE-TO-HAVE this is not very DRY! (a lot of code is repeated from block_toggle)
+    # REFACTOR: block_toggle should take user=None and username=None, then sees if at least one exist
     user = request.user
     if request.method == 'PUT':
         view_user = utils.get_user_from_username(username)
@@ -650,7 +649,6 @@ def reply(request, post_id):
             }, status=400)
         reply = Post(user=user, text=text, reply_to=post)
         reply.save()
-        # maybe factor out the mentioned users thing? TODO
         mentioned_users = utils.get_mentions_from_post(text)
         for user in mentioned_users:
             reply.mentioned_users.add(user)

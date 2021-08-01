@@ -186,8 +186,6 @@ class User(AbstractUser):
         verbose_name="Has Completed Initial Onboarding"
     )
 
-    # TODO: add a timezone field
-
     class Meta:
         verbose_name = 'User'
         verbose_name_plural = 'Users'

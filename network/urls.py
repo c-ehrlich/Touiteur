@@ -42,5 +42,5 @@ urlpatterns = [
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
-# TODO in deployment serve files in the proper way
+# in deployment serve files in the proper way
 # see: https://docs.djangoproject.com/en/3.2/howto/static-files/deployment/
