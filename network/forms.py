@@ -4,7 +4,7 @@ from django.core.files.images import get_image_dimensions
 from django.utils.translation import ugettext as _
 from django.utils.translation import ugettext_lazy as _lazy
 
-from network.models import User
+from network.models import Post, User
 
 
 class EditAccountForm(forms.ModelForm):
@@ -54,7 +54,7 @@ class EditAccountForm(forms.ModelForm):
 
 
 class NewPostForm(forms.Form):
-    post_text = forms.CharField(
+    text = forms.CharField(
         # label = "New Post",
         max_length = 140,
         required = True,
@@ -65,6 +65,17 @@ class NewPostForm(forms.Form):
             'placeholder': "What's Happening?"
         })
     )
+    # image = forms.ImageField(
+    #     required = False,
+    #     widget = forms.FileInput(attrs={
+    #         'class': 'form-control',
+    #         'id': 'compose-form-image',
+    #     })
+    # )
+
+    class Meta:
+        model = Post
+        fields = ['text', 'image']
 
 
 class RegisterAccountForm(forms.Form):

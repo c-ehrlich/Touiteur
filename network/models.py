@@ -265,6 +265,7 @@ class Post(models.Model):
     )
     image = models.ImageField(
         upload_to="post-images",
+        verbose_name="Image",
         default=None,
         blank=True,
         null=True,

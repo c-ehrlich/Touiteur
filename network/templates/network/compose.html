@@ -9,11 +9,30 @@
             <form id="compose-form" action={% url 'compose' %} method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="relative-block">
-                    {{ new_post_form.post_text }}
+                    {{ new_post_form.text }}
                     <div id="compose-form-character-count"></div>
                 </div>
                 <!-- dirty hack... we get the color from this to make the char count gradient -->
                 <div hidden id="compose-form-character-count-end-color"></div>
+
+                <div class="form-group w100">
+                    <div class="formerror-text">{{ new_post_form.image.errors }}</div>
+                    <label for="{{ form.avatar.id_for_label }}">New {{ new_post_form.image.label }}</label>
+                    <div class="flex-row padding12 avatar-input-container">
+                        <div class="p-l-12">
+                            {{ new_post_form.image }}
+                        </div>
+                        <div class="flex-column-align-left margin-left-12">
+                            <label id="post-image-upload" for="{{ new_post_form.image.id_for_label }}" class="btn btn-sm btn-outline-primary">
+                                <i class="fa fa-cloud-upload"></i> {% trans 'Upload new avatar' %}
+                            </label>
+                            <div class="custom-file-upload-helper-text formlabel-text" id="custom-file-upload-helper-text">
+                                {% trans 'Note: The avatar won\'t be updated until you press \"Save\"' %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div id="compose-form-submit-button-div" class="flex-row-end">
                     <input type="submit" id="compose-form-submit-button" class="submit-button">
                 </div>
