@@ -286,8 +286,8 @@ def settings(request):
                     })
                 if new_password != None and new_password != "":
                     user.set_password(new_password)
-                    user.save()
 
+                user.save()
                 form.save()
 
             # form is not valid
@@ -300,7 +300,9 @@ def settings(request):
                     "message": _("Form data is invalid"),
                     "start_tab": "account",
                 })
-            print("everything went good!")
+
+            # Form is valid. This is the place we _want_ to end up.
+            user.refresh_from_db()
             return render(request, "network/settings.html", {
                 "account_form": EditAccountForm(instance = user),
                 "preferences_form": RegisterAccountStage3Form(instance = user),
