@@ -65,7 +65,7 @@
                     {% endif %}
                 </div>
                 {% if post.image %}
-                    <div id="single-post-view-image-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                    <div id="single-post-view-image-div" {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}>
                         <img class="post-image" src="{{ post.image.url }}">
                     </div>
                 {% endif %}
