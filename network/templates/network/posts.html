@@ -132,7 +132,7 @@
             <div id="prslide-{{ post.id }}" class="prslide">
                 <div hidden class="post-reply-div" id="prd-{{ post.id }}">
                     <div class="relative-block">
-                        <textarea class="post-reply-input form-control" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
+                        <textarea class="post-reply-input form-control" id="pri-{{ post.id }}" rows="3" maxlength="140">@{{ post.user.username }} </textarea>
                         <div id="pri-{{ post.id }}-count" class="post-character-count"></div>
                     </div>
                     <div class="flex-row-end">

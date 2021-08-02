@@ -70,3 +70,5 @@ function calculateInBetweenColor(rgbColor1, rgbColor2, step, numSteps) {
   // return the color as a string in the format "rbg(a, b, c)"
   return `rgb(${colorR}, ${colorG}, ${colorB})`;
 }
+
+console.log("loaded compose.js");
