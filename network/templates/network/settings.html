@@ -126,9 +126,8 @@
                     <div class="blocklist-username">@{{ blocked_user.username }}</div>
                     <button class="blocklist-unblock-button btn btn-outline-secondary" userid="{{ blocked_user.id }}" username="{{ blocked_user.username }}">Unblock</button>
                 </div>
-            {% empty %}
-                blocklist is empty
             {% endfor %}
+            <div {% if blocklist.count != 0 %}hidden{% endif %} id="blocklist-empty">{% trans 'Blocklist is empty.' %}</div>
         </div>
     </div>
 
@@ -138,28 +137,28 @@
                 <h4>Display</h4>
                 <!-- Language -->
                 <div class="form-group mw350">
-                    {{ preferences_form.language.errors | safe }}
+                    {{ preferences_form.language.errors }}
                     <div class="flex-row space-between">
                         <label for="{{ preferences_form.language.id_for_label }}">{{ preferences_form.language.label }}</label>
-                        {{ preferences_form.language | safe }}
+                        {{ preferences_form.language }}
                     </div>
                 </div>
                 <!-- Light/Dark Mode -->
                 <div class="form-group mw350">
-                    {{ preferences_form.theme.errors | safe }}
+                    {{ preferences_form.theme.errors }}
                     <div class="flex-row space-between">
                         <label for="{{ preferences_form.theme.id_for_label }}">{{ preferences_form.theme.label }}</label>
-                        {{ preferences_form.theme | safe }}
+                        {{ preferences_form.theme }}
                     </div>
                 </div>
 
                 <h4>Privacy</h4>
                 <!-- Show/hide likes -->
                 <div class="form-group mw350">
-                    {{ preferences_form.show_liked_posts.errors | safe }}
+                    {{ preferences_form.show_liked_posts.errors }}
                     <div class="flex-row space-between">
                         <label for="{{ preferences_form.show_liked_posts.id_for_label }}">{{ preferences_form.show_liked_posts.label }}</label>
-                        {{ preferences_form.show_liked_posts | safe }}
+                        {{ preferences_form.show_liked_posts }}
                     </div>
                     <div class="form-help-text">
                         {{ preferences_form.show_liked_posts.help_text }}

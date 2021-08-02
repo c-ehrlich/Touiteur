@@ -113,6 +113,8 @@ function blockUserFromUsername(userName) {
 
 
 function blockSettingsDOMManipulation(userId, userName, displayName, userAvatar) {
+  document.querySelector('#blocklist-empty').setAttribute('hidden', 'hidden');
+
   const addBlocklistInput = document.querySelector('#add-to-blocklist-input');
   addBlocklistInput.value = '';
   addBlocklistInput.focus();
@@ -174,4 +176,6 @@ function unblockSettingsDOMManipulation(userId, userName) {
     type: 1,
     position: 'x-center top'
   })
+
+  document.querySelector('#blocklist-empty').removeAttribute('hidden');
 }
