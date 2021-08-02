@@ -1,22 +1,42 @@
 const TWEET_CHARACTER_LIMIT = 140;
+const END_COLOR = 'rgb(212, 63, 58)';
+
 
 document.addEventListener('DOMContentLoaded', () => {
-  const color = 'rgb(255, 255, 255)';
   // set a change eventlistener for the input box
   if (document.querySelector('#compose-form-post-text')) {
-    document.querySelector('#compose-form-post-text').addEventListener('keyup', updatePostCharCounter);
+    document.querySelector('#compose-form-post-text').addEventListener('keyup', () => {
+      updatePostCharCounter('#compose-form-post-text', '#compose-form-character-count');
+    });
   }
   console.log("compose.js loaded");
+
+  // editing
+  document.querySelectorAll('.post-edit-input').forEach(element => {
+    element.addEventListener('keyup', () => {
+      let itemName = element.id;
+      console.log(itemName);
+      updatePostCharCounter(`#${itemName}`, `#${itemName}-count`);
+    })
+  })
+
+  // replying
+  // TODO
 });
 
-function updatePostCharCounter() {
-  let postLength = document.querySelector('#compose-form-post-text').value.length;
-  const startingColor = getComputedStyle(document.querySelector('#compose-form-post-text')).backgroundColor;
-  const endColor = getComputedStyle(document.querySelector('#compose-form-character-count-end-color')).color;
-  let currentColor = calculateInBetweenColor(startingColor, endColor, postLength, TWEET_CHARACTER_LIMIT);
-  document.querySelector('#compose-form-character-count').innerHTML = `${postLength}/${TWEET_CHARACTER_LIMIT}`;
-  document.querySelector('#compose-form-character-count').style.color = currentColor;
+
+function updatePostCharCounter(inputElement, countElement) {
+  console.log(inputElement);
+  console.log(typeof(inputElement));
+  console.log(countElement);
+  console.log(typeof(countElement));
+  let postLength = document.querySelector(inputElement).value.length;
+  const startingColor = getComputedStyle(document.querySelector(inputElement)).backgroundColor; // hardcode #d43f3a
+  let currentColor = calculateInBetweenColor(startingColor, END_COLOR, postLength, TWEET_CHARACTER_LIMIT);
+  document.querySelector(countElement).innerHTML = `${postLength} / ${TWEET_CHARACTER_LIMIT}`;
+  document.querySelector(countElement).style.color = currentColor;
 }
+
 
 function calculateInBetweenColor(rgbColor1, rgbColor2, step, numSteps) {
   // Calculates the color between two colors, given a step and number of steps

@@ -35,9 +35,9 @@
     {% if user.is_authenticated %}
         <script src="{% static 'network/posts-loggedin.js' %}"></script>
         <script src="{% static 'network/image_uploads_compose.js' %}"></script>
+        <script src="{% static 'network/compose.js' %}"></script>
+        <script src="{% static 'network/live_notifications.js' %}"></script>
     {% endif %}
-    <script src="{% static 'network/compose.js' %}"></script>
-    <script src="{% static 'network/live_notifications.js' %}"></script>
     <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
     <script>

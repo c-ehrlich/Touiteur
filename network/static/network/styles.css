@@ -1047,15 +1047,11 @@ input[type="file"] {
     width: 100%;
 }
 
-#compose-form-character-count {
+.post-character-count {
     position: absolute;
     text-align: right;
-    bottom: 18px;
+    bottom: 14px;
     right: 10px;
-}
-
-#compose-form-character-count-end-color {
-    color: var(--color-button-hover-bad);
 }
 
 .mt0 {

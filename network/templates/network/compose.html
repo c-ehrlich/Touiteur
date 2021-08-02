@@ -10,11 +10,8 @@
                 {% csrf_token %}
                 <div class="relative-block">
                     {{ new_post_form.text }}
-                    <div id="compose-form-character-count"></div>
+                    <div id="compose-form-character-count" class="post-character-count"></div>
                 </div>
-                <!-- dirty hack... we get the color from this to make the char count gradient -->
-                <div hidden id="compose-form-character-count-end-color"></div>
-
                 <div hidden>{{ new_post_form.image }}</div>
                 <div id="compose-form-submit-button-div" class="compose-form-submit-grid">
                     <div hidden id="compose-pic-preview-img-div">

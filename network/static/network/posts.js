@@ -128,7 +128,8 @@ function edit_post_text(post_id) {
   let text_field = document.querySelector(`#post-text-${post_id}`);
   let original_text = text_field.innerText;
   let text_edit_input = document.querySelector(`#post-edit-input-${post_id}`);
-  text_edit_input.setAttribute('rows', get_number_of_lines(original_text));
+  // text_edit_input.setAttribute('rows', get_number_of_lines(original_text));
+  text_edit_input.setAttribute('rows', 4);
   text_edit_input.value = original_text;
   text_field.setAttribute('hidden', 'hidden');
   text_edit_input.removeAttribute('hidden');
