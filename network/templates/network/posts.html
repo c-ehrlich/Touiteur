@@ -131,7 +131,10 @@
         {% if not post.user_blocked_by_author and not post.author_blocked_by_user %}
             <div id="prslide-{{ post.id }}" class="prslide">
                 <div hidden class="post-reply-div" id="prd-{{ post.id }}">
-                    <textarea class="post-reply-input form-control" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
+                    <div class="relative-block">
+                        <textarea class="post-reply-input form-control" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
+                        <div id="pri-{{ post.id }}-count" class="post-character-count"></div>
+                    </div>
                     <div class="flex-row-end">
                         <button class="post-reply-submit submit-button" id="prs-{{ post.id }}">Reply</button>
                     </div>

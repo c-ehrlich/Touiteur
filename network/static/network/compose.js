@@ -21,7 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
   })
 
   // replying
-  // TODO
+  document.querySelectorAll('.post-reply-input').forEach(element => {
+    element.addEventListener('keyup', () => {
+      let itemName = element.id;
+      updatePostCharCounter(`#${itemName}`, `#${itemName}-count`);
+    })
+  })
 });
 
 
