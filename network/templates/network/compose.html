@@ -17,7 +17,12 @@
 
                 <div hidden>{{ new_post_form.image }}</div>
                 <div id="compose-form-submit-button-div" class="compose-form-submit-grid">
-                    <img hidden id="compose-pic-preview-img" src="{{ new_post_form.image.url }}">
+                    <div hidden id="compose-pic-preview-img-div">
+                        <img id="compose-pic-preview-img" src="{{ new_post_form.image.url }}">
+                        <div id="compose-pic-preview-remove-btn">
+                            <i class="fas fa-times"></i>
+                        </div>
+                    </div>
                     <label for="{{ new_post_form.image.id_for_label }}" id="compose-upload-image-button" class="upload-image-button">
                         <i class="far fa-image"></i>
                     </label>

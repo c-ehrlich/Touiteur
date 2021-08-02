@@ -1,5 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
   if (document.querySelector('#compose-pic-preview-img') !== null) {
+    document.querySelector('#compose-pic-preview-remove-btn').addEventListener('click', () => {
+      document.querySelector('#compose-pic-preview-img-div').setAttribute('hidden', 'hidden');
+      document.querySelector('#compose-form-image').value = "";
+    })
+
     const uploadDiv = document.querySelector('#compose-form-image');
 
     uploadDiv.addEventListener('click', event => {
@@ -13,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const reader = new FileReader();
       reader.onload = () => {
         document.querySelector('#compose-pic-preview-img').src = reader.result;
-        document.querySelector('#compose-pic-preview-img').removeAttribute('hidden');
+        document.querySelector('#compose-pic-preview-img-div').removeAttribute('hidden');
       }
       reader.readAsDataURL(file);
     });

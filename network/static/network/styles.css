@@ -1309,13 +1309,41 @@ h4 {
     /* grid-template-columns: auto 48px 112px; */
     width: 100%;
     gap: 12px;
-    grid-template: "img upload-img submit" / auto 48px 96px;
+    grid-template: "img . upload-img submit" / 48px auto 48px 96px;
+}
+#compose-pic-preview-img-div {
+    grid-area: img;
+    position: relative;
 }
 #compose-pic-preview-img {
-    grid-area: img;
+    /* grid-area: img; */
     width: 48px;
     height: 48px;
+    border: 1px solid var(--color-box-border-contrast);
     border-radius: 8px;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+}
+#compose-pic-preview-remove-btn {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    /* z-index: 9; */
+    background-color: var(--color-box-bg-contrast);
+    border: 1px solid var(--color-border-contrast);
+    color: white;
+    border-radius: 50%;
+    height: 20px;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 200ms ease-out 50ms;
+}
+#compose-pic-preview-remove-btn:hover {
+    background-color: var(--color-alert-1);
 }
 #compose-upload-image-button {
     grid-area: upload-img;
