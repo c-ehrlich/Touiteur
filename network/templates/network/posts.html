@@ -42,8 +42,8 @@
                         {% endif %}
                         <div id="post-text-container-{{ post.id }}" class="{% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                             <div class="post-text" id="post-text-{{ post.id }}">{{ post.text }}</div>
-                            <div class="relative-block">
-                                <textarea hidden maxlength="140" id="post-edit-input-{{ post.id }}" class="post-edit-input"></textarea>
+                            <div hidden id="post-edit-container-{{ post.id }}" class="relative-block">
+                                <textarea maxlength="140" id="post-edit-input-{{ post.id }}" class="post-edit-input"></textarea>
                                 <div id="post-edit-input-{{ post.id }}-count" class="post-character-count"></div>
                             </div>
                         </div>

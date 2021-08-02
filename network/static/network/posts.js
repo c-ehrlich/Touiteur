@@ -79,7 +79,7 @@ function create_post_text_with_mention_links(post_text) {
 function edit_post_cancel(post_id, original_text) {
   document.querySelector(`#post-text-${post_id}`).innerHTML = original_text;
   // chenge visibility back to input view style
-  document.querySelector(`#post-edit-input-${post_id}`).setAttribute('hidden', 'hidden');
+  document.querySelector(`#post-edit-container-${post_id}`).setAttribute('hidden', 'hidden');
   document.querySelector(`#post-text-${post_id}`).removeAttribute('hidden');
   // adjust button visibility
   document.querySelector(`#ecb-${post_id}`).setAttribute('hidden', 'hidden');
@@ -112,7 +112,7 @@ function edit_post_submit(post_id, original_text) {
       // TODO flash a banner saying editing failed
     }
     text_field.removeAttribute('hidden');
-    text_edit_input.setAttribute('hidden', 'hidden');
+    document.querySelector(`#post-edit-container-${post_id}`).setAttribute('hidden', 'hidden');
 
     // set button attributes
     document.querySelector(`#ecb-${post_id}`).setAttribute('hidden', 'hidden');
@@ -132,7 +132,7 @@ function edit_post_text(post_id) {
   text_edit_input.setAttribute('rows', 4);
   text_edit_input.value = original_text;
   text_field.setAttribute('hidden', 'hidden');
-  text_edit_input.removeAttribute('hidden');
+  document.querySelector(`#post-edit-container-${post_id}`).removeAttribute('hidden');
   text_edit_input.focus();
 
   // set button visibility
