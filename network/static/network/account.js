@@ -136,7 +136,7 @@ function blockSettingsDOMManipulation(userId, userName, displayName, userAvatar)
   blockedUserAvatarDiv.classList.add('blocklist-avatar-img');
   
   const blockedUserButton = document.createElement('button');
-  blockedUserButton.classList.add('blocklist-unblock-button', 'btn', 'btn-outline-secondary');
+  blockedUserButton.classList.add('blocklist-unblock-button', 'btn', 'btn-outline-light');
   blockedUserButton.setAttribute('userid', userId);
   blockedUserButton.setAttribute('username', userName);
   blockedUserButton.innerHTML = 'Unblock';

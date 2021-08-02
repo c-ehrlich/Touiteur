@@ -104,7 +104,7 @@
                 </div>
                 {% csrf_token %}
                 <div class="flex-row">
-                    <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">{% trans 'Cancel' %}</a>
+                    <a class="btn btn-outline-light equal-width-button" href="{% url 'index' %}">{% trans 'Cancel' %}</a>
                     <input class="btn btn-primary equal-width-button margin-left-4" type="submit" name="account-form-button" value="{% trans 'Save' %}">
                 </div>
             </div>
@@ -115,7 +115,7 @@
         <div class="reg-login-inner" id="block-box">
             <h4 class="mb12 mt4">Add a user to blocklist</h4>
             <div class="flex-row" id="add-to-blocklist">
-                <input type="text" id="add-to-blocklist-input">
+                <input type="text" id="add-to-blocklist-input" class="form-control">
                 <button id="add-to-blocklist-button" class="btn btn-primary">Block</button>
             </div>
             <h4 class="mt32 mb0" id="blocked-users-header">Blocked Users</h4>
@@ -124,7 +124,7 @@
                     <img class="blocklist-avatar-img" src="{{ blocked_user.avatar.url}}">
                     <div class="blocklist-displayname">{{ blocked_user.displayname }}</div>
                     <div class="blocklist-username">@{{ blocked_user.username }}</div>
-                    <button class="blocklist-unblock-button btn btn-outline-secondary" userid="{{ blocked_user.id }}" username="{{ blocked_user.username }}">Unblock</button>
+                    <button class="blocklist-unblock-button btn btn-outline-light" userid="{{ blocked_user.id }}" username="{{ blocked_user.username }}">Unblock</button>
                 </div>
             {% endfor %}
             <div {% if blocklist.count != 0 %}hidden{% endif %} id="blocklist-empty">{% trans 'Blocklist is empty.' %}</div>
@@ -166,7 +166,7 @@
                 </div>
 
                 {% csrf_token %}
-                <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">{% trans 'Cancel' %}</a>
+                <a class="btn btn-outline-light equal-width-button" href="{% url 'index' %}">{% trans 'Cancel' %}</a>
                 <input class="btn btn-primary equal-width-button" type="submit" name="preferences-form-button" value="Save">
             </form>
         </div>

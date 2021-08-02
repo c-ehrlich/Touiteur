@@ -39,9 +39,9 @@
             {% if not user == view_user and not view_user.blocked_by_user and not view_user.has_user_blocked %}
                 <div id="follow-button-div">
                     {% if view_user in user.following.all %}
-                        <button id="unfollow-button">{% trans 'Unfollow' %}</button>
+                        <button id="unfollow-button" class="hero-button-bad">{% trans 'Unfollow' %}</button>
                     {% else %}
-                        <button id="follow-button">{% trans 'Follow' %}</button>
+                        <button id="follow-button" class="hero-button-default">{% trans 'Follow' %}</button>
                     {% endif %}
                 </div>
             {% endif %}

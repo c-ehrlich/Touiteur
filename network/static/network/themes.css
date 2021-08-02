@@ -5,6 +5,16 @@
     --color-button-hover-bad: #d43f3a;  
     --color-button-hover-like: #ffdede;
 
+    --color-herobutton-text-default: #0085B6;
+    --color-herobutton-border-default: #0085B6;
+    --color-herobutton-bg-default: transparent;
+    --color-herobutton-text-hover: white;
+    --color-herobutton-border-hover: #00BAFF;
+    --color-herobutton-bg-hover: #00BAFF;
+    --color-herobutton-text-hoverbad: white;
+    --color-herobutton-border-hoverbad: #fc3d39;
+    --color-herobutton-bg-hoverbad: #fc3d39;
+
     --color-text-default: black;
 
     --color-text-medcontrast: grey;
@@ -39,31 +49,45 @@
     --color-pagi-border-active: #007bff;
 
     --color-dm-unread: pink; /* change */
+
+    --color-bootstrap-primary: #007bff;
 }
 
 ._theme_dark {
-    --color-page-bg: #34322e;
+    --color-page-bg: #6A7987;
     --color-alert-1: #fc3d39; /* try d43f4a ? */
     --color-button-hover-good: #1d86bg;
     --color-button-hover-bad: #d43f3a; /* change */
-    --color-button-hover-like: #310505;
+    --color-button-hover-like: #67525a;
+    
+    --color-herobutton-text-default: white;
+    --color-herobutton-border-default: white;
+    --color-herobutton-bg-default: transparent;
+    --color-herobutton-text-hover: white;
+    --color-herobutton-border-hover: #009DF8;
+    --color-herobutton-bg-hover: #009DF8;
+    --color-herobutton-text-hoverbad: white;
+    --color-herobutton-border-hoverbad: #fc3d39;
+    --color-herobutton-bg-hoverbad: #fc3d39;
 
     --color-text-default: white; /* change */
 
-    --color-text-medcontrast: grey;
+    --color-text-medcontrast: #9DADBD;
     --color-text-lowcontrast: #34322e;
-
     --color-text-formlabel: white;
     --color-text-formerror: white;
 
-    --color-box-bg: black; /* change (make it a grey theme) */
-    --color-box-border: #2a2628;
+    --color-link-default: #99BDD9;
+    --color-link-hover: white;
+
+    --color-box-bg: #4a525a;
+    --color-box-border: #3A4856;
     --color-box-bg-contrast: #444444; /* change */
     --color-box-hover-contrast: black;
     --color-box-border-contrast: #888888; /* change */
 
-    --color-input-bg: #2a2628;
-    --color-input-bg-focus: #2a2628;
+    --color-input-bg: #5A6671;
+    --color-input-bg-focus: #5A6671;
     --color-input-placeholder-text: lightgrey;
     --color-input-border: orange; /* currently not used? */
     --color-input-text: white;
@@ -81,6 +105,8 @@
     --color-pagi-border-active: #007bff;
 
     --color-dm-unread: #061721;
+
+    --color-bootstrap-primary: white;
 }
 
 /* 

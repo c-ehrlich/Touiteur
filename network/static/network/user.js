@@ -93,6 +93,7 @@ function user_view_follow() {
   const unfollow_button = document.createElement('button');
   unfollow_button.innerHTML = "Unfollow";
   unfollow_button.id = "unfollow-button";
+  unfollow_button.classList.add('hero-button-default');
   unfollow_button.addEventListener('click', event => { user_view_unfollow() });
   follow_button_div = document.querySelector('#follow-button-div');
   follow_button_div.innerHTML = "";
@@ -110,6 +111,7 @@ function user_view_unfollow() {
   const follow_button = document.createElement('button');
   follow_button.innerHTML = "Follow";
   follow_button.id = "follow-button";
+  follow_button.classList.add('hero-button-default');
   follow_button.addEventListener('click', event => { user_view_follow() });
   follow_button_div = document.querySelector('#follow-button-div');
   follow_button_div.innerHTML = "";

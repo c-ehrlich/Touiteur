@@ -31,11 +31,11 @@
                 </a>
             </div>
             <div id="single-post-view-name-div">
-                <a href="{% url 'user' post.user.username %}">
-                    <div id="user-profile-displayname">{{ post.user.displayname }}</div>
+                <a href="{% url 'user' post.user.username %}" id="user-profile-displayname">
+                    {{ post.user.displayname }}
                 </a>
-                <a href="{% url 'user' post.user.username %}">
-                    <div id="user-profile-username">@{{ post.user.username }}</div>
+                <a href="{% url 'user' post.user.username %}" id="user-profile-username">
+                    @{{ post.user.username }}
                 </a>
             </div>
             {% if post.user_blocked_by_author %}
@@ -45,9 +45,9 @@
                     {% if user.is_authenticated and user != post.user and not post.author_blocked_by_user %}
                         <div id="follow-button-div">
                             {% if post.user in user.following.all %}
-                                <button id="unfollow-button">{% trans 'Unfollow' %}</button>
+                                <button id="unfollow-button" class="hero-button-default">{% trans 'Unfollow' %}</button>
                             {% else %}
-                                <button id="follow-button">{% trans 'Follow' %}</button>
+                                <button id="follow-button" class="hero-button-default">{% trans 'Follow' %}</button>
                             {% endif %}
                         </div>
                     {% endif %}
@@ -79,7 +79,7 @@
                         {% if post in user.liked_posts.all %}
                             <button class="post-unlike-button single-page-like-button" id="post-like-button-{{ post.id }}">
                                 <div id="post-like-heart-{{ post.id }}" class="post-like-heart-liked">
-                                    ❤️
+                                    <i class="fas fa-heart"></i>
                                 </div>
                                 <div id="post-like-count-{{ post.id }}" class="post-like-count">
                                     {{ post.users_who_liked.count }}
@@ -88,7 +88,7 @@
                         {% else %}
                             <button class="post-like-button single-page-like-button" id="post-like-button-{{ post.id }}">
                                 <div id="post-like-heart-{{ post.id }}" class="post-like-heart-unliked">
-                                    ‍♡ 
+                                    ‍<i class="far fa-heart"></i>
                                 </div>
                                 <div id="post-like-count-{{ post.id }}" class="post-like-count">
                                     {{ post.users_who_liked.count }}
@@ -120,8 +120,8 @@
                                 </div>
                             {% endif %}
                             <div class="post-bottom-row-right-div">
-                                <div hidden class="post-reply-cancel-button btn-minw-small" id="rcb-{{ post.id }}"><i class="fas fa-times"></i></div>
-                                <div class="post-reply-button btn-minw-small" id="rb-{{ post.id }}"><i class="far fa-comment-dots"></i></i></div>
+                                <div hidden class="post-reply-cancel-button btn-minw-med" id="rcb-{{ post.id }}"><i class="fas fa-times"></i></div>
+                                <div class="post-reply-button btn-minw-med" id="rb-{{ post.id }}"><i class="far fa-comment-dots"></i></i></div>
                             </div>
                         </div>
                     {% endif %}
@@ -137,7 +137,7 @@
             <div hidden class="post-reply-div" id="prd-{{ post.id }}">
                 <textarea class="post-reply-input form-control" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
                 <div class="flex-row-end">
-                    <button class="post-reply-submit submit-button" id="prs-{{ post.id }}">Reply</button>
+                    <button class="post-reply-submit hero-button-default" id="prs-{{ post.id }}">Reply</button>
                 </div>
             </div>
         </div>

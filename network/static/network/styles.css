@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap');
+
 /* TEMP STYLING FOR DEVELOPMENT */
 /* TODO: REMOVE THIS */
 .form-100-test {
@@ -20,6 +22,29 @@ body, html {
     /* display: flex; */
     /* flex-direction: column; */
 }
+
+a {
+    color: var(--color-link-default);
+}
+a:hover {
+    color: var(--color-link-hover);
+}
+
+#header-logo-img {
+    height: 32px;
+    width: auto;
+}
+#header-type {
+    font-family: 'Roboto Mono', monospace;
+}
+.navbar-brand {
+    display: flex;
+    gap: 12px;
+    cursor: pointer;
+    align-items: top;
+    font-weight: 500;
+}
+
 hr {
     border-top: 1px solid var(--color-hr);
 }
@@ -139,7 +164,9 @@ hr {
     justify-content: flex-end;
 }
 
-/* TODO fix this button. it looks like shit */
+/* TODO
+ * this is being replaced by hero-button. see if I still need it...
+ */
 .submit-button,
 .upload-image-button {
     padding: 8px 16px 8px 16px;
@@ -147,7 +174,8 @@ hr {
     border-radius: 32px;
     font-weight: bold;
     border-color: skyblue;
-    background-color: skyblue;
+    /* background-color: skyblue; */
+    background-color: pink;
     color: white;
     transition: background-color 300ms ease-out 100ms;
 }
@@ -281,7 +309,7 @@ hr {
 .post-reply-button:hover,
 .post-reply-cancel-button:hover {
     color: var(--color-text-default);
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
 }
 .post-save-edits-button {
     color: var(--color-text-default);
@@ -294,7 +322,7 @@ hr {
 }
 .post-edit-cancel-button:hover {
     color: var(--color-button-hover-bad);
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
 }
 
 .post-edit-input {
@@ -379,7 +407,7 @@ hr {
 .post-unlike-button:hover {
     background-color: var(--color-button-hover-like);
     box-shadow: 0px 0px 10px 6px var(--color-button-hover-like);
-    scale: 1.1;
+    /* scale: 1.1; */
 }
 .single-page-like-button {
     font-size: 18px !important;
@@ -474,13 +502,15 @@ hr {
     flex-direction: row;
     justify-content: flex-end;
     align-items: center;
+    gap: 12px;
     /* flex-gap: 12px; */
     /* align-items: flex-end; */
 }
 #user-profile-hover-menu-div {
     font-size: 24px;
     /* border: 1px solid black; */
-    background-color: #54b4e6; /* TODO MAKE VAR */
+    /* background-color: #54b4e6; TODO MAKE VAR */
+    border: 1px solid white;
     color: white;
     border-radius: 50%;
     height: 42px;
@@ -492,13 +522,14 @@ hr {
     position: relative;
 }
 #user-profile-hover-menu-div:hover {
-    background-color: #1d86bf;
+    background-color: var(--color-herobutton-bg-hover);
+    border: 1px solid var(--color-herobutton-border-hover);
     cursor: pointer;
 }
 #user-profile-dropdown-button {
     width: 100%;
     height: 100%;
-    background-color: none;
+    background-color: transparent;
     color: white;
     display: flex;
     align-items: center;
@@ -598,35 +629,31 @@ hr {
     margin-left: 12px;
 }
 
-#follow-button,
-#unfollow-button {
-    /* border: 0; */
-    margin-left: 12px;
+.hero-button-default,
+.hero-button-bad {
     border: 1px solid;
-    width: 105px;
     padding: 8px 16px 8px 16px;
     border-radius: 32px;
     font-weight: bold;
-    border-color: #54b4e6;
-    background-color: #54b4e6;
-    color: white;
-    /* TODO: TRANSITION DOESN'T WORK */
+    border-color: var(--color-herobutton-border-default);
+    background: var(--color-herobutton-bg-default);
+    color: var(--color-herobutton-text-default);
     transition: all 200ms 50ms;
 }
-#follow-button {
-
+.hero-button-default:hover {
+    color: var(--color-herobutton-text-hoverbad);
+    border-color: var(--color-herobutton-border-hover);
+    background-color: var(--color-herobutton-bg-hover);
 }
-#follow-button:hover {
-    background-color: #1d86bf;
+.hero-button-bad:hover {
+    color: var(--color-herobutton-text-hoverbad);
+    border-color: var(--color-herobutton-border-hoverbad);
+    background-color: var(--color-herobutton-bg-hoverbad);
 }
-#unfollow-button {
-
-    /* TODO : transition animation */
-    /* get rid of this weird border */
-    /* find a good color scheme */
-}
-#unfollow-button:hover {
-    background-color: red;
+#follow-button,
+#unfollow-button
+{
+    min-width: 100px;
 }
 
 /* -------------------- */
@@ -727,17 +754,20 @@ hr {
 }
 #single-post-view-timestamp-div {
     grid-area: timestamp;
-    color: grey;
+    color: var(--color-text-medcontrast);
     margin-bottom: 8px;
 }
 .single-post-view-like-button-div {
     grid-area: likes;
+    align-self: flex-end;
+    /* // jam text to bottom */
 }
 #single-post-view-like-edit-div {
     grid-area: like_edit;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    align-self: flex-end;
 }
 
 /* DIRTY HACKS */
@@ -1067,6 +1097,11 @@ input[type="file"] {
     min-width: 20px;
     text-align: center;
 }
+.btn-minw-med {
+    min-width: 32px;
+    font-size: 20px;
+    text-align: right;
+}
 
 .margin-fix {
     margin: auto;
@@ -1261,7 +1296,7 @@ h4 {
 }
 .blocklist-unblock-button {
     grid-area: button;
-    align-self: start;
+    align-self: center;
     justify-self: end; 
     width: 120px;
     max-width: 100%;
@@ -1354,4 +1389,33 @@ h4 {
 #compose-form-submit-button {
     grid-area: submit;
     height: 48px !important;
+}
+
+
+/* OVERRIDE BOOTSTRAP */
+.btn {
+    font-size: 16px;
+}
+.btn-primary {
+    color: white;
+    /* border: 2px solid var(--color-text-default); */
+    /* background-color: var(--color-herobutton-default); */
+    font-weight: bold;
+}
+.btn-outline-primary {
+    color: var(--color-bootstrap-primary);
+    border-color: var(--color-bootstrap-primary);
+}
+.btn-outline-secondary {
+    border-color: var(--color-text-medcontrast);
+    color: var(--color-text-medcontrast);
+}
+.btn-outline-light {
+    border-color: var(--color-text-default);
+    color: var(--color-text-default)
+}
+.btn-outline-light:hover {
+    color: var(--color-text-default);
+    border-color: var(--color-text-default);
+    background-color: var(--color-box-bg-contrast);
 }

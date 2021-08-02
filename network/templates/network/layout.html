@@ -26,7 +26,10 @@
         <div id="outermost-container" class="{{ user.theme|default:'_theme_light' }}">
             <nav class="navbar navbar-expand-md navbar-override-bg-color {% if user.theme == '_theme_dark' %}navbar-dark bg-dark{% else %}navbar-light bg-white
             {% endif %}">
-                <a class="navbar-brand" href="{% url 'index' %}">{% trans 'Network' %}</a>
+                <a class="navbar-brand" href="{% url 'index' %}">
+                    <img src="{% static 'network/logo-128.png' %}" id="header-logo-img">
+                    <div id="header-type">Touiteur</div>
+                </a>
 
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#network-navbar" aria-controls="network-navbar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
