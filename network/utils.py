@@ -203,9 +203,11 @@ def get_post_additonal_data(request, post):
     if request.user:
         # post.author_blocked_by_user = post.user.blocked_by.filter(request.user).count() > 0
         # post.user_blocked_by_author = request.user.blocked_by.filter(post.author).count() > 0
+        print(post.user.blocked_users.all().explain(analyze=True))
         post.user_blocked_by_author = request.user in post.user.blocked_users.all()
         if post.user_blocked_by_author:
             post.text = "You do not have permission to see this post because you have been blocked by " + post.user.username + "."
+        print(post.user.blocked_by.all().explain(analyze=True))
         post.author_blocked_by_user = request.user in post.user.blocked_by.all()
     post.timestamp_f = get_display_time(request, post.timestamp)
 
@@ -262,6 +264,7 @@ def get_posts(request, username=None, reply_to=None):
     page = request.GET.get('page', 1)
 
     if username == None and reply_to == None:
+        print(Post.objects.all().explain(verbose=True, analyze=True))
         posts = Post.objects.all()
     elif reply_to == None:
         user = get_user_from_username(username)
@@ -288,6 +291,7 @@ def get_posts_with_mention(request, username):
 
 
 def get_user_from_id(id):
+    print(User.objects.get(id=id).explain(verbose=True, analyze=True))
     user = User.objects.get(id=id)
     return user
 
