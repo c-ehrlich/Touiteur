@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import IntegrityError
-from django.db.models import prefetch_related_objects
+from django.db.models import Count, Exists, OuterRef, prefetch_related_objects
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render
@@ -121,18 +121,41 @@ def index(request):
 def likes(request, username):
     """RETURNS THE LIKED POSTS PAGE"""
     if request.method == "GET":
-        view_user = utils.get_user_from_username(username)
+        user = request.user
+        view_user = User.objects.get(username=username)
         page = request.GET.get('page', 1)
+
         if view_user.show_liked_posts == True:
-            posts = utils.get_liked_posts_paginated(request, view_user)
-        else:
+            posts = Post.objects.filter(
+                users_who_liked=view_user
+            ).prefetch_related(
+                'author',
+                'author__blocked_users',
+                'author__blocked_by',
+            ).select_related(
+                'reply_to'
+            ).annotate(
+                Count('users_who_liked'),
+                Count('replies'),
+            )
+
+            paginated = Paginator(posts, PAGINATION_POST_COUNT)
+            page = request.GET.get('page', 1)
+            posts = paginated.get_page(page)
+
+            for post in posts:
+                utils.get_post_additional_data(request, post)
+
+            return render(request, "network/likes.html", {
+                "view_user": view_user,
+                "posts": posts,
+            })
+
+        else: #user has likes hidden
             return render(request, "network/likes.html", {
                 "view_user": view_user,
             })
-        return render(request, "network/likes.html", {
-            "view_user": view_user,
-            "posts": posts,
-        })
+
     else:
         return JsonResponse({
             "error": "GET request required"

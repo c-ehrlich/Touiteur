@@ -2,8 +2,12 @@
 
 <div id="posts-all-container-div">
     {% for post in posts %}
+    <!-- DEBUG DELETE LATER -->
+    {{ post.user_blocked_by_author }}
+    {{ post.author_blocked_by_user }}
+    <!-- END DEBUG -->
         <div class="post-div" id="post-div{{ post.id }}">
-            {% if not post.user_blocked_by_author %}
+            {% if not post.author_blocked_by_author %}
                 {% if post.reply_to != None %}
                     <div class="post-reply-to-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                         <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
@@ -32,7 +36,7 @@
                             <a href="{% url 'post' post.id %}" class="post-timestamp-text">{{ post.timestamp_f }}</a>
                         </div>
                     </div>
-                    {% if post.user_blocked_by_author %}
+                    {% if post.author_blocked_by_author %}
                         <div class="blocked-by-author"><i class="fas fa-ban"></i> {% trans 'The author of this post has blocked you.' %}</div>
                     {% else %}
                         {% if post.author_blocked_by_user %}
@@ -55,7 +59,7 @@
                         {% if not post.user_blocked_by_author and not post.author_blocked_by_user %}
                             <div class="post-bottom-row-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                                 <div class="post-bottom-row-left-div">
-                                    {% if user.is_authenticated and post.user != user %}
+                                    {% if user.is_authenticated and post.author != user %}
                                         <div class="post-like-button-div" id="post-like-button-div-{{ post.id }}">
                                             {% if post in user.liked_posts.all %}
                                                 <button class="post-unlike-button" id="post-like-button-{{ post.id }}">
@@ -63,7 +67,7 @@
                                                         <i class="fas fa-heart"></i>
                                                     </div>
                                                     <div id="post-like-count-{{ post.id }}" class="post-like-count">
-                                                        {{ post.users_who_liked.count }}
+                                                        {{ post.users_who_liked__count }}
                                                     </div>
                                                 </button>
                                             {% else %}
@@ -72,7 +76,7 @@
                                                         <i class="far fa-heart"></i>
                                                     </div>
                                                     <div id="post-like-count-{{ post.id }}" class="post-like-count">
-                                                        {{ post.users_who_liked.count }}
+                                                        {{ post.users_who_liked__count }}
                                                     </div>
                                                 </button>
                                             {% endif %}
@@ -84,7 +88,7 @@
                                                     <i class="far fa-heart"></i>
                                                 </div>
                                                 <div class="post-like-count">
-                                                    {{ post.users_who_liked.count }}
+                                                    {{ post.users_who_liked__count }}
                                                 </div>
                                             </div>
                                         </div>
@@ -93,7 +97,7 @@
 
                                 {% if user.is_authenticated %}
                                     <div class="post-interaction-div-right">
-                                        {% if post.user == user %}
+                                        {% if post.author == user %}
                                             <div class="post-bottom-row-right-div">
                                                 <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
                                                 <div hidden class="post-save-edits-button" id="seb-{{ post.id }}"><i class="fas fa-check"></i></i></div>
@@ -112,12 +116,12 @@
                 </div>
             </div>
             {% if not post.user_blocked_by_author %}
-                <div {% if post.replies.count == 0 %}hidden{% endif %} class="post-replies-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}" id="prsd-{{ post.id }}">
+                <div {% if post.replies__count == 0 %}hidden{% endif %} class="post-replies-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}" id="prsd-{{ post.id }}">
                     <a class="post-replies-link" id="prl-{{ post.id }}" href="{% url 'post' post.id %}">
-                        {% if post.replies.count == 1 %}
+                        {% if post.replies__count == 1 %}
                             1 reply. Click to view.
-                        {% elif post.replies.count > 1 %}
-                            {{ post.replies.count }} replies. Click to view.
+                        {% elif post.replies__count > 1 %}
+                            {{ post.replies__count }} replies. Click to view.
                         {% endif %}
                     </a>
                 </div>
