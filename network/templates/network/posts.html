@@ -2,10 +2,6 @@
 
 <div id="posts-all-container-div">
     {% for post in posts %}
-        {{ post.user.blocked_users.all }}<br>
-        {{ post.user.blocked_by }}<br>
-        {{ user.blocked_users }}<br>
-        {{ user.blocked_by }}<br>
         <div class="post-div" id="post-div{{ post.id }}">
             {% if not post.user_blocked_by_author %}
                 {% if post.reply_to != None %}
@@ -18,18 +14,18 @@
             {% endif %}
             <div class="flex-row">
                 <div class="post-avatar-div">
-                    <a href="{% url 'user' post.user.username %}">
-                        <img class="profile-pic" src="{{ post.user.avatar.url }}">
+                    <a href="{% url 'user' post.author.username %}">
+                        <img class="profile-pic" src="{{ post.author.avatar.url }}">
                     </a>
                 </div>
                 <div class="post-content-div">
                     <div class="post-username-header-div">
                         <div class="flex-row">
-                            <a href="{% url 'user' post.user.username %}" class="post-username-header-link post-username-header-displayname">
-                                {{ post.user.displayname }}
+                            <a href="{% url 'user' post.author.username %}" class="post-username-header-link post-username-header-displayname">
+                                {{ post.author.displayname }}
                             </a>
-                            <a href="{% url 'user' post.user.username %}" class="post-username-header-link post-username-header-username">
-                                @{{ post.user.username }}
+                            <a href="{% url 'user' post.author.username %}" class="post-username-header-link post-username-header-username">
+                                @{{ post.author.username }}
                             </a>
                         </div>
                         <div class="post-timestamp-div">
@@ -136,7 +132,7 @@
             <div id="prslide-{{ post.id }}" class="prslide">
                 <div hidden class="post-reply-div" id="prd-{{ post.id }}">
                     <div class="relative-block">
-                        <textarea class="post-reply-input form-control" id="pri-{{ post.id }}" rows="3" maxlength="140">@{{ post.user.username }} </textarea>
+                        <textarea class="post-reply-input form-control" id="pri-{{ post.id }}" rows="3" maxlength="140">@{{ post.author.username }} </textarea>
                         <div id="pri-{{ post.id }}-count" class="post-character-count"></div>
                     </div>
                     <div class="flex-row-end">

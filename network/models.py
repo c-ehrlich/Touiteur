@@ -107,8 +107,16 @@ class DirectMessage(models.Model):
 
 
 class CustomUserManager(UserManager):
+    """Reduce number of SQL queries
+
+    This could be expanded by getting a smaller queryset for each
+    related prefetch"""
     def get(self, *args, **kwargs):
-        return super().prefetch_related('liked_posts', 'blocked_users', 'blocked_by').get(*args, **kwargs)
+        return super().prefetch_related(
+            'liked_posts',
+            'blocked_users',
+            'blocked_by'
+        ).get(*args, **kwargs)
 
 
 class User(AbstractUser):

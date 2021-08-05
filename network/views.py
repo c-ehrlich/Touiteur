@@ -61,18 +61,6 @@ def following(request):
 def index(request):
     """RETURNS THE INDEX PAGE"""
     if request.method == "GET":
-        # STUFF WE NEED
-        # about each post:
-          # in the post itself
-            # text
-            # timestamp
-            # image
-          # foreign keys
-            # user
-              # avatar
-              # username
-              # displayname
-            # 
             
         posts = Post.objects.all().prefetch_related(
             'author',
@@ -84,10 +72,7 @@ def index(request):
             'users_who_liked'
         ).select_related(
             'author',
-        ).exclude(
-            'author__has_completed_onboarding'
         )
-
 
         paginated = Paginator(posts, PAGINATION_POST_COUNT)
         page = request.GET.get('page', 1)
