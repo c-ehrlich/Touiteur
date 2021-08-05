@@ -7,7 +7,7 @@
                 {% if post.reply_to != None %}
                     <div class="post-reply-to-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                         <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
-                            Reply to @{{ post.reply_to.user }}: {{ post.reply_to.text }}
+                            Reply to @{{ post.reply_to.author }}: {{ post.reply_to.text }}
                         </a>
                     </div>
                 {% endif %}

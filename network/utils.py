@@ -264,7 +264,6 @@ def get_posts(request, username=None, reply_to=None):
     page = request.GET.get('page', 1)
 
     if username == None and reply_to == None:
-        print(Post.objects.all().explain(verbose=True, analyze=True))
         posts = Post.objects.all()
     elif reply_to == None:
         user = get_user_from_username(username)

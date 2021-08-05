@@ -52,7 +52,30 @@ def dm_thread(request, username):
 
 @login_required
 def following(request):
-    posts = utils.get_posts_from_followed_accounts(request)
+    # posts = utils.get_posts_from_followed_accounts(request)
+    user = request.user
+
+    posts = Post.objects.filter(
+        author__in=user.following.all()
+    ).prefetch_related(
+        'author',
+        'author__blocked_users',
+        'author__blocked_by',
+        'reply_to',
+        'replies',
+        # 'user__liked_posts',
+        'users_who_liked'
+    ).select_related(
+        'author',
+    )
+
+    paginated = Paginator(posts, PAGINATION_POST_COUNT)
+    page = request.GET.get('page', 1)
+    posts = paginated.get_page(page)
+
+    for post in posts:
+        post.timestamp_f = utils.get_display_time(request, post.timestamp)
+
     return render(request, "network/following.html", {
         "posts": posts,
     })
@@ -78,10 +101,14 @@ def index(request):
         page = request.GET.get('page', 1)
         posts = paginated.get_page(page)
 
+        # TODO maybe loop inside the function instead of here?
+        for post in posts:
+            post.timestamp_f = utils.get_display_time(request, post.timestamp)
+
         context = {
             'posts': posts,
             'new_post_form': NewPostForm(auto_id=True),
-            }
+        }
 
         return render(request, "network/index.html", context)
     else:
@@ -499,7 +526,7 @@ def compose(request):
         user=request.user
         mentioned_users = utils.get_mentions_from_post(post_text)
         image = form.cleaned_data['image']
-        post = Post(user=user, text=post_text, image=image)
+        post = Post(author=user, text=post_text, image=image)
         post.save()
         for user in mentioned_users:
             post.mentioned_users.add(user)

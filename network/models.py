@@ -332,4 +332,4 @@ class Post(models.Model):
 
     def __str__(self):
         post = (self.text[:50] + '..') if len(self.text) > 50 else self.text
-        return f"{self.user.username} at {self.timestamp}: {post}"
+        return f"{self.author.username} at {self.timestamp}: {post}"
