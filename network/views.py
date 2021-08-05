@@ -383,11 +383,25 @@ def settings(request):
 
 
 def user(request, username):
-    view_user = utils.get_user_from_username(username)
-    posts = utils.get_posts(request, username)
-    if request.user.is_authenticated:
-        view_user.blocked_by_user = view_user in request.user.blocked_users.all()
-        view_user.has_user_blocked = request.user in view_user.blocked_users.all()
+    view_user = User.objects.get(username=username)
+
+    posts = Post.objects.filter(
+        author__username=username
+    ).prefetch_related(
+        'author',
+        'author__blocked_users',
+        'author__blocked_by',
+        'reply_to',
+        'replies',
+        # 'user__liked_posts',
+        'users_who_liked'
+    ).select_related(
+        'author',
+    )
+
+    for post in posts:
+        post.timestamp_f = utils.get_display_time(request, post.timestamp)
+
     if request.user == view_user:
         return render(request, "network/user.html", {
             "view_user": view_user,

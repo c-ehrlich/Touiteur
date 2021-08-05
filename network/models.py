@@ -107,7 +107,7 @@ class DirectMessage(models.Model):
 
 
 class CustomUserManager(UserManager):
-    """Reduce number of SQL queries
+    """Reduce number of SQL queries 
 
     This could be expanded by getting a smaller queryset for each
     related prefetch"""

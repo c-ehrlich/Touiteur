@@ -259,6 +259,7 @@ def get_post_count_since_timestamp(request, timestamp, context):
         return 0
 
 
+# TODO by the time we're done optimising the code, this function should no longer exist!
 def get_posts(request, username=None, reply_to=None):
     """RETURNS A PAGE OF POSTS FROM A USER"""
     page = request.GET.get('page', 1)
@@ -297,4 +298,9 @@ def get_user_from_id(id):
     
 def get_user_from_username(username):
     user = User.objects.get(username=username)
+    # .prefetch_related(
+    #     'liked_posts',
+    #     'blocked_users',
+    #     'blocked_by'
+    # )
     return user
