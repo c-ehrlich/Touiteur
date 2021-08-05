@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.db import IntegrityError
+from django.db.models import prefetch_related_objects
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render
@@ -176,14 +177,17 @@ def mentions(request):
 
 
 def post(request, id):
-    post = utils.get_post_from_id(request, id)
-    # TODO do something if it's a bad post
+    post = Post.objects.get(id=id)
+    replies = post.replies.all()
+    prefetch_related_objects(replies, 'replies', 'author', 'users_who_liked')
 
+    paginated = Paginator(replies, PAGINATION_POST_COUNT)
+    page = request.GET.get('page', 1)
+    replies = paginated.get_page(page)
 
-    replies = utils.get_posts(request, reply_to=post)
     return render(request, "network/post.html", {
         "post": post,
-        "posts": replies 
+        "posts": replies,
     })
 
 

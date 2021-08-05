@@ -3,13 +3,13 @@
 {% load i18n %}
 
 {% block title %}
-    Post by @{{ post.user.username }}
+    Post by @{{ post.author.username }}
     <!-- TODO figure out how to translate this -->
 {% endblock %}
 
 {% block body %}
     <!-- DO NOT DELETE! THIS IS USED IN USER.JS -->
-    <div id="user-id" style="display: none">{{ post.user.id }}</div>
+    <div id="user-id" style="display: none">{{ post.author.id }}</div>
     <!-- END DO NOT DELETE -->
 
     <div id="single-post-outer">
@@ -26,25 +26,25 @@
                 {% endif %}
             {% endif %}
             <div id="single-post-view-avatar">
-                <a href="{% url 'user' post.user.username %}">
-                    <img class="profile-pic" src="{{ post.user.avatar.url }}">
+                <a href="{% url 'user' post.author.username %}">
+                    <img class="profile-pic" src="{{ post.author.avatar.url }}">
                 </a>
             </div>
             <div id="single-post-view-name-div">
-                <a href="{% url 'user' post.user.username %}" id="user-profile-displayname">
-                    {{ post.user.displayname }}
+                <a href="{% url 'user' post.author.username %}" id="user-profile-displayname">
+                    {{ post.author.displayname }}
                 </a>
-                <a href="{% url 'user' post.user.username %}" id="user-profile-username">
-                    @{{ post.user.username }}
+                <a href="{% url 'user' post.author.username %}" id="user-profile-username">
+                    @{{ post.author.username }}
                 </a>
             </div>
             {% if post.user_blocked_by_author %}
                 <div class="blocked-by-author single-post-view-text-container mb16"><i class="fas fa-ban"></i> {% trans 'The author of this post has blocked you.' %}</div>
             {% else %}
                 <div id="single-post-view-follow-div" class="{% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
-                    {% if user.is_authenticated and user != post.user and not post.author_blocked_by_user %}
+                    {% if user.is_authenticated and user != post.author and not post.author_blocked_by_user %}
                         <div id="follow-button-div">
-                            {% if post.user in user.following.all %}
+                            {% if post.author in user.following.all %}
                                 <button id="unfollow-button" class="hero-button-default">{% trans 'Unfollow' %}</button>
                             {% else %}
                                 <button id="follow-button" class="hero-button-default">{% trans 'Follow' %}</button>
@@ -135,7 +135,7 @@
     <div class="margin-fix {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
         <div id="prslide-{{ post.id }}" class="prslide">
             <div hidden class="post-reply-div" id="prd-{{ post.id }}">
-                <textarea class="post-reply-input form-control" id="pri-{{ post.id }}">@{{ post.user.username }} </textarea>
+                <textarea class="post-reply-input form-control" id="pri-{{ post.id }}">@{{ post.author.username }} </textarea>
                 <div class="flex-row-end">
                     <button class="post-reply-submit hero-button-default" id="prs-{{ post.id }}">Reply</button>
                 </div>
