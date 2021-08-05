@@ -2,6 +2,10 @@
 
 <div id="posts-all-container-div">
     {% for post in posts %}
+        {{ post.user.blocked_users.all }}<br>
+        {{ post.user.blocked_by }}<br>
+        {{ user.blocked_users }}<br>
+        {{ user.blocked_by }}<br>
         <div class="post-div" id="post-div{{ post.id }}">
             {% if not post.user_blocked_by_author %}
                 {% if post.reply_to != None %}

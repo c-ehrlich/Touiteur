@@ -9,7 +9,7 @@ class PostAdmin(admin.ModelAdmin):
         return [user.username for user in obj.mentioned_users.all()]
         # return "\n".join([p.mentioned_users for p in self.mentions.all()])
 
-    list_display = ('user', 'timestamp', 'text', 'get_mentioned_users')
+    list_display = ('author', 'timestamp', 'text', 'get_mentioned_users')
 
 
 admin.site.register(User)

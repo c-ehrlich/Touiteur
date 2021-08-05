@@ -16,6 +16,8 @@ from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, Reg
 from network.models import User, Post, Conversation
 from network import utils
 
+PAGINATION_POST_COUNT = 10
+
 
 
 # +-----------------------------------------+
@@ -40,7 +42,7 @@ def dm_thread(request, username):
         user_ids=[user_id, convo_partner_id]
     )
     thread = conversation.messages.all()
-    p = Paginator(thread, utils.PAGINATION_POST_COUNT)
+    p = Paginator(thread, PAGINATION_POST_COUNT)
     # TODO if thread doesn't exist, give error
     return render(request, "network/dm_thread.html", {
         "thread": p.page(page),
@@ -59,11 +61,44 @@ def following(request):
 def index(request):
     """RETURNS THE INDEX PAGE"""
     if request.method == "GET":
-        posts = utils.get_posts(request)
-        return render(request, "network/index.html", {
-            "posts": posts,
-            "new_post_form": NewPostForm(auto_id=True),
-        })
+        # STUFF WE NEED
+        # about each post:
+          # in the post itself
+            # text
+            # timestamp
+            # image
+          # foreign keys
+            # user
+              # avatar
+              # username
+              # displayname
+            # 
+            
+        posts = Post.objects.all().prefetch_related(
+            'author',
+            'author__blocked_users',
+            'author__blocked_by',
+            'reply_to',
+            'replies',
+            # 'user__liked_posts',
+            'users_who_liked'
+        ).select_related(
+            'author',
+        ).exclude(
+            'author__has_completed_onboarding'
+        )
+
+
+        paginated = Paginator(posts, PAGINATION_POST_COUNT)
+        page = request.GET.get('page', 1)
+        posts = paginated.get_page(page)
+
+        context = {
+            'posts': posts,
+            'new_post_form': NewPostForm(auto_id=True),
+            }
+
+        return render(request, "network/index.html", context)
     else:
         return JsonResponse({
             "error": "GET request required"

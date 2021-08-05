@@ -1,4 +1,4 @@
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.contrib.postgres.fields import ArrayField
 from django.db import models
 from django.utils.timezone import now
@@ -104,6 +104,11 @@ class DirectMessage(models.Model):
             conversation.save()
             self.conversation = conversation
         super(DirectMessage, self).save(*args, **kwargs)
+
+
+class CustomUserManager(UserManager):
+    def get(self, *args, **kwargs):
+        return super().prefetch_related('liked_posts', 'blocked_users', 'blocked_by').get(*args, **kwargs)
 
 
 class User(AbstractUser):
@@ -232,9 +237,11 @@ class User(AbstractUser):
     def __str__(self):
         return self.username
 
+    objects = CustomUserManager()
+
 
 class Post(models.Model):
-    user = models.ForeignKey(
+    author = models.ForeignKey(
         "User",
         on_delete=models.CASCADE,
         related_name="posts"
