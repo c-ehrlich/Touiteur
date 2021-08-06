@@ -276,20 +276,7 @@ def get_posts(request, username=None, reply_to=None):
     return p.page(page)
 
 
-def get_posts_with_mention(request, username):
-    """RETURNS A PAGE OF POSTS THAT MENTION A USER"""
-    page = request.GET.get('page', 1)
-    user = get_user_from_username(username)
-    # get all posts where the user is mentioned
-    posts = Post.objects.filter(mentioned_users__in=[user])
-    for post in posts:
-        get_post_additional_data(request, post)
-    p = Paginator(posts, PAGINATION_POST_COUNT)
-    return p.page(page)
-
-
 def get_user_from_id(id):
-    print(User.objects.get(id=id).explain(verbose=True, analyze=True))
     user = User.objects.get(id=id)
     return user
 

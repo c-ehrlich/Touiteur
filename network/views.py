@@ -53,33 +53,35 @@ def dm_thread(request, username):
 
 @login_required
 def following(request):
-    # posts = utils.get_posts_from_followed_accounts(request)
-    user = request.user
+    if request.method == "GET":
+        user = request.user
 
-    posts = Post.objects.filter(
-        author__in=user.following.all()
-    ).prefetch_related(
-        'author',
-        'author__blocked_users',
-        'author__blocked_by',
-        'reply_to',
-        'replies',
-        # 'user__liked_posts',
-        'users_who_liked'
-    ).select_related(
-        'author',
-    )
+        posts = Post.objects.filter(
+            author__in=user.following.all()
+        ).prefetch_related(
+            'author__blocked_users',
+            'author__blocked_by',
+        ).select_related(
+            'author',
+            'reply_to',
+        ).annotate(
+            Count('users_who_liked'),
+            Count('replies'),
+        )
 
-    paginated = Paginator(posts, PAGINATION_POST_COUNT)
-    page = request.GET.get('page', 1)
-    posts = paginated.get_page(page)
+        paginated = Paginator(posts, PAGINATION_POST_COUNT)
+        page = request.GET.get('page', 1)
+        posts = paginated.get_page(page)
 
-    for post in posts:
-        post.timestamp_f = utils.get_display_time(request, post.timestamp)
+        for post in posts:
+            utils.get_post_additional_data(request, post)
 
-    return render(request, "network/following.html", {
-        "posts": posts,
-    })
+        context = {'posts': posts}
+
+        return render(request, "network/following.html", context)
+
+    else:
+        return HttpResponseBadRequest()
 
 
 def index(request):
@@ -87,15 +89,14 @@ def index(request):
     if request.method == "GET":
             
         posts = Post.objects.all().prefetch_related(
-            'author',
             'author__blocked_users',
             'author__blocked_by',
-            'reply_to',
-            'replies',
-            # 'user__liked_posts',
-            'users_who_liked'
         ).select_related(
             'author',
+            'reply_to'
+        ).annotate(
+            Count('users_who_liked'),
+            Count('replies'),
         )
 
         paginated = Paginator(posts, PAGINATION_POST_COUNT)
@@ -104,7 +105,7 @@ def index(request):
 
         # TODO maybe loop inside the function instead of here?
         for post in posts:
-            post.timestamp_f = utils.get_display_time(request, post.timestamp)
+            utils.get_post_additional_data(request, post)
 
         context = {
             'posts': posts,
@@ -112,28 +113,27 @@ def index(request):
         }
 
         return render(request, "network/index.html", context)
+
     else:
-        return JsonResponse({
-            "error": "GET request required"
-        }, 400)
+        return HttpResponseBadRequest()
 
 
 def likes(request, username):
     """RETURNS THE LIKED POSTS PAGE"""
     if request.method == "GET":
-        user = request.user
         view_user = User.objects.get(username=username)
-        page = request.GET.get('page', 1)
+        context = {'view_user': view_user}
 
+        # create posts object (paginated)
         if view_user.show_liked_posts == True:
             posts = Post.objects.filter(
                 users_who_liked=view_user
             ).prefetch_related(
-                'author',
-                'author__blocked_users',
-                'author__blocked_by',
+                'author__blocked_users__id',
+                'author__blocked_by__id',
             ).select_related(
-                'reply_to'
+                'author',
+                'reply_to',
             ).annotate(
                 Count('users_who_liked'),
                 Count('replies'),
@@ -146,20 +146,12 @@ def likes(request, username):
             for post in posts:
                 utils.get_post_additional_data(request, post)
 
-            return render(request, "network/likes.html", {
-                "view_user": view_user,
-                "posts": posts,
-            })
+            context['posts'] = posts
 
-        else: #user has likes hidden
-            return render(request, "network/likes.html", {
-                "view_user": view_user,
-            })
+        return render(request, "network/likes.html", context)
 
     else:
-        return JsonResponse({
-            "error": "GET request required"
-        }, 400)
+        return HttpResponseBadRequest()
 
 
 def login_view(request):
@@ -190,28 +182,65 @@ def logout_view(request):
 
 @login_required
 def mentions(request):
-    user = request.user
     if request.method == "GET":
-        return render(request, "network/mentions.html", {
-            "posts": utils.get_posts_with_mention(request, user.username),
-        })
+        user = request.user
+
+        posts = Post.objects.filter(
+            mentioned_users__in=[user]
+        ).prefetch_related(
+            'author__blocked_users',
+            'author__blocked_by',
+        ).select_related(
+            'author',
+            'reply_to',
+        ).annotate(
+            Count('users_who_liked'),
+            Count('replies'),
+        )
+
+        paginated = Paginator(posts, PAGINATION_POST_COUNT)
+        page = request.GET.get('page', 1)
+        posts = paginated.get_page(page)
+
+        for post in posts:
+            utils.get_post_additional_data(request, post)
+
+        context = {'posts': posts}
+
+        return render(request, "network/mentions.html", context)
+
     else:
         return HttpResponseRedirect(reverse("index"))
 
 
 def post(request, id):
-    post = Post.objects.get(id=id)
-    replies = post.replies.all()
-    prefetch_related_objects(replies, 'replies', 'author', 'users_who_liked')
+    if request.method == "GET":
+        post = Post.objects.get(id=id)
+        replies = post.replies.all(
+        ).prefetch_related(
+            'author__blocked_users',
+            'author__blocked_by',
+        ).select_related(
+            'author',
+            'reply_to',
+        ).annotate(
+            Count('users_who_liked'),
+            Count('replies'),
+        )
 
-    paginated = Paginator(replies, PAGINATION_POST_COUNT)
-    page = request.GET.get('page', 1)
-    replies = paginated.get_page(page)
+        paginated = Paginator(replies, PAGINATION_POST_COUNT)
+        page = request.GET.get('page', 1)
+        replies = paginated.get_page(page)
 
-    return render(request, "network/post.html", {
-        "post": post,
-        "posts": replies,
-    })
+        context = {
+            'post': post,
+            'posts': replies, #call it that to make it work with posts.html
+        }
+
+        return render(request, "network/post.html", context)
+    
+    else:
+        return HttpResponseBadRequest()
 
 
 def register(request):
@@ -247,10 +276,14 @@ def register(request):
             })
         login(request, user)
         return HttpResponseRedirect(reverse("register2"))
-    else:
+
+    elif request.method == "GET":
         return render(request, "network/register.html", {
             "form": RegisterAccountForm()
         })
+
+    else:
+        return HttpResponseBadRequest()
 
 
 @login_required
@@ -263,7 +296,7 @@ def register2(request):
             })
         else:
             return HttpResponseRedirect(reverse("index"))
-    if request.method == "POST":
+    elif request.method == "POST":
         form = RegisterAccountStage2Form(request.POST, request.FILES, instance = user)
         if form.is_valid():
             user.bio = form.cleaned_data['bio']
@@ -275,6 +308,9 @@ def register2(request):
                 "form": form,
                 "message": _("Form data is invalid")
             })
+            
+    else:
+        return HttpResponseBadRequest()
 
 
 @login_required
@@ -287,7 +323,8 @@ def register3(request):
             })
         else:
             return HttpResponseRedirect(reverse("index"))
-    if request.method == "POST":
+
+    elif request.method == "POST":
         form = RegisterAccountStage3Form(request.POST, instance = user)
         if form.is_valid():
             user.theme = form.cleaned_data['theme']
@@ -302,6 +339,9 @@ def register3(request):
                 "message": _("Form data is invalid")
             })
 
+    else:
+        return HttpResponseBadRequest()
+
 
 @login_required
 def settings(request):
@@ -313,8 +353,9 @@ def settings(request):
             "account_form": EditAccountForm(instance = user),
             "preferences_form": RegisterAccountStage3Form(instance = user),
             "blocklist": blocklist,
-    })
-    if request.method == "POST":
+        })
+
+    elif request.method == "POST":
         if 'account-form-button' in request.POST:
             form = EditAccountForm(request.POST, request.FILES, instance = user)
             if form.is_valid():
@@ -405,41 +446,46 @@ def settings(request):
                     "message": _("Form data is invalid"),
                     "start_tab": "preferences",
                 })
-        else:
-            return HttpResponseBadRequest()
+
+    else:
+        return HttpResponseBadRequest()
 
 
 def user(request, username):
-    view_user = User.objects.get(username=username)
+    if request.method == "GET":
+        view_user = User.objects.get(username=username)
+        context = {}
 
-    posts = Post.objects.filter(
-        author__username=username
-    ).prefetch_related(
-        'author',
-        'author__blocked_users',
-        'author__blocked_by',
-        'reply_to',
-        'replies',
-        # 'user__liked_posts',
-        'users_who_liked'
-    ).select_related(
-        'author',
-    )
+        posts = Post.objects.filter(
+            author__username=username
+        ).prefetch_related(
+            'author__blocked_users',
+            'author__blocked_by',
+        ).select_related(
+            'author',
+            'reply_to',
+        ).annotate(
+            Count('users_who_liked'),
+            Count('replies'),
+        )
 
-    for post in posts:
-        post.timestamp_f = utils.get_display_time(request, post.timestamp)
+        paginated = Paginator(posts, PAGINATION_POST_COUNT)
+        page = request.GET.get('page', 1)
+        posts = paginated.get_page(page)
 
-    if request.user == view_user:
-        return render(request, "network/user.html", {
-            "view_user": view_user,
-            "posts": posts,
-            "new_post_form": NewPostForm(),
-        })
+        for post in posts:
+            utils.get_post_additional_data(request, post)
+
+        context['view_user'] = view_user
+        context['posts'] = posts
+
+        if request.user == view_user:
+            context['new_post_form'] = NewPostForm()
+
+        return render(request, "network/user.html", context)
+
     else:
-        return render(request, "network/user.html", {
-            "view_user": view_user,
-            "posts": posts,
-        })
+        return HttpResponseBadRequest()
 
 
 # +-----------------------------------------+
