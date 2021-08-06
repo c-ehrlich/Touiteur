@@ -67,10 +67,15 @@ function user_view_share_profile() {
   copy_dummy.select();
   document.execCommand('copy');
   document.body.removeChild(copy_dummy);
+
+  // Devide whether to say "User" or "Post in the Notify"
+  let section = text.split('/').slice(-2).reverse().pop();
+  section = section.charAt(0).toUpperCase() + section.slice(1);
+
   new Notify({
     status: 'success',
     // title: 'Notify Title',
-    text: 'Profile link copied to clipboard.',
+    text: `${section} link copied to clipboard.`,
     effect: 'fade',
     speed: 300,
     customClass: null,

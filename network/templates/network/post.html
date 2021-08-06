@@ -42,6 +42,27 @@
                 <div class="blocked-by-author single-post-view-text-container mb16"><i class="fas fa-ban"></i> {% trans 'The author of this post has blocked you.' %}</div>
             {% else %}
                 <div id="single-post-view-follow-div" class="{% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                    <div id="user-profile-hover-menu-div">
+                        <div class="dropbtn" id="user-profile-dropdown-button">
+                            <i class="fas fa-ellipsis-v user-profile-hover-menu-icon"></i>
+                        </div>
+                        <div id="user-profile-dropdown-content">
+                            {% if user.is_authenticated and user != view_user and not post.user_blocked_by_author %}
+                                <a {% if post.author_blocked_by_user %}hidden {% endif %}href="{% url 'dm_thread' view_user %}">
+                                    <i class="far fa-envelope"></i> Message
+                                </a>
+                                <div id="block-button" {% if post.author_blocked_by_user %}hidden {% endif %}href="">
+                                    <i class="far fa-eye-slash"></i> Block
+                                </div>
+                                <div id="unblock-button" {% if not post.author_blocked_by_user %}hidden {% endif %}href="">
+                                    <i class="far fa-eye"></i> Unblock
+                                </div>
+                            {% endif %}
+                            <div id="share-profile-button" href="">
+                                <i class="fas fa-share-square"></i> Share
+                            </div>
+                        </div>
+                    </div>
                     {% if user.is_authenticated and user != post.author and not post.author_blocked_by_user %}
                         <div id="follow-button-div">
                             {% if post.author in user.following.all %}

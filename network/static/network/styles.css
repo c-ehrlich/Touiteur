@@ -732,8 +732,10 @@ hr {
 #single-post-view-follow-div {
     grid-area: follow;
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
+    flex-direction: row;
+    gap: 12px;
+    align-items: flex-start;
+    justify-content: flex-end;
 }
 .single-post-view-text-container{
     grid-area: text;

@@ -701,7 +701,7 @@ def like(request, post_id):
         user = request.user
         post = utils.get_post_from_id(request, post_id)
         if data['like'] == True:
-            if user in post.user.blocked_users.all() or post.user in user.blocked_users.all():
+            if user in post.author.blocked_users.all() or post.author in user.blocked_users.all():
                 return JsonResponse({
                     "error": _("You cannot like this post because there is a block relationship.")
                 }, status=400)
