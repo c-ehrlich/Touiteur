@@ -233,6 +233,7 @@ def post(request, id):
         replies = paginated.get_page(page)
 
         context = {
+            'view_user': post.author,
             'post': post,
             'posts': replies, #call it that to make it work with posts.html
         }
@@ -777,11 +778,11 @@ def reply(request, post_id):
         user = request.user
         post = utils.get_post_from_id(request, post_id)
         # check for a block relationship
-        if user in post.user.blocked_users.all() or post.user in user.blocked_users.all():
+        if user in post.author.blocked_users.all() or post.author in user.blocked_users.all():
             return JsonResponse({
                 "error": _("You cannot reply to this post because there is a block relationship.")
             }, status=400)
-        reply = Post(user=user, text=text, reply_to=post)
+        reply = Post(author=user, text=text, reply_to=post)
         reply.save()
         mentioned_users = utils.get_mentions_from_post(text)
         for user in mentioned_users:
