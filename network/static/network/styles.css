@@ -1078,6 +1078,9 @@ input[type="file"] {
 #compose-form-post-text {
     width: 100%;
 }
+#compose-form-post-text::placeholder {
+    color: var(--color-text-hicontrast);
+}
 
 .post-character-count {
     position: absolute;

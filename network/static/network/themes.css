@@ -16,7 +16,7 @@
     --color-herobutton-bg-hoverbad: #fc3d39;
 
     --color-text-default: black;
-
+    --color-text-hicontrast: #404040;
     --color-text-medcontrast: grey;
     --color-text-lowcontrast: lightgrey;
     --color-text-contrastbtn: white;
@@ -71,7 +71,7 @@
     --color-herobutton-bg-hoverbad: #fc3d39;
 
     --color-text-default: white; /* change */
-
+    --color-text-hicontrast: #CED6DE;
     --color-text-medcontrast: #9DADBD;
     --color-text-lowcontrast: #34322e;
     --color-text-formlabel: white;
