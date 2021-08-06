@@ -137,16 +137,6 @@ def get_dm_threads_paginated(request):
     return p.page(page) 
 
 
-def get_liked_posts_paginated(request, user):
-    page = request.GET.get('page', 1)
-    posts = user.liked_posts.all()
-    # posts = Post.objects.filter(users_who_liked__contains=user)
-    for post in posts:
-        get_post_additional_data(request, post)
-    p = Paginator(posts, PAGINATION_POST_COUNT)
-    return p.page(page)
-
-
 def get_mentions_from_post(post_text):
     """Takes a post text, and returns a list of mentions (User objects) in the post"""
     mentions = []
@@ -179,16 +169,6 @@ def get_mentions_from_post(post_text):
                 except User.DoesNotExist:
                     pass
     return mentions
-
-
-def get_posts_from_followed_accounts(request):
-    page = request.GET.get('page', 1)
-    user = request.user
-    posts = Post.objects.filter(user__in=user.following.all())
-    for post in posts:
-        get_post_additional_data(request, post)
-    p = Paginator(posts, PAGINATION_POST_COUNT)
-    return p.page(page)
 
 
 def get_post_additional_data(request, post):
@@ -237,19 +217,19 @@ def get_post_count_since_timestamp(request, timestamp, context):
     user = request.user
     posts = {}
     if context['location'] == 'user':
-        post_user = get_user_from_username(context['username'])
+        post_user = get_user_from_username(context['username']).count()
         # get posts by post_user, newer than timestamp
-        posts = Post.objects.filter(user=post_user, timestamp__gte=timestamp)
+        posts = Post.objects.filter(user=post_user, timestamp__gte=timestamp).count()
     if context['location'] == 'following':
         # get posts by followed users, newer than timestamp
-        posts = Post.objects.filter(user__in=user.following.all()).filter(timestamp__gt=timestamp)
+        posts = Post.objects.filter(user__in=user.following.all()).filter(timestamp__gt=timestamp).count()
     if context['location'] == 'index':
-        posts = Post.objects.filter(timestamp__gt=timestamp)
+        posts = Post.objects.filter(timestamp__gt=timestamp).count()
     if context['location'] == 'mentions':
-        posts = Post.objects.filter(mentioned_users__in=[user], timestamp__gt=timestamp)
+        posts = Post.objects.filter(mentioned_users__in=[user], timestamp__gt=timestamp).count()
     if context['location'] == 'likes':
         post_user = get_user_from_username(context['username'])
-        posts = post_user.liked_posts.filter(timestamp__gt=timestamp)
+        posts = post_user.liked_posts.filter(timestamp__gt=timestamp).count()
     # if we haven't created posts yet, return an error
     if  posts:
         return posts.count()
@@ -257,30 +237,6 @@ def get_post_count_since_timestamp(request, timestamp, context):
         return 0
 
 
-# TODO by the time we're done optimising the code, this function should no longer exist!
-def get_posts(request, username=None, reply_to=None):
-    """RETURNS A PAGE OF POSTS FROM A USER"""
-    page = request.GET.get('page', 1)
-
-    if username == None and reply_to == None:
-        posts = Post.objects.all()
-    elif reply_to == None:
-        user = get_user_from_username(username)
-        posts = Post.objects.filter(user=user).all()
-    elif username == None:
-        posts = Post.objects.filter(reply_to=reply_to).all()
-
-    for post in posts:
-        get_post_additional_data(request, post)
-    p = Paginator(posts, PAGINATION_POST_COUNT)
-    return p.page(page)
-
-
-def get_user_from_id(id):
-    user = User.objects.get(id=id)
-    return user
-
-    
 def get_user_from_username(username):
     user = User.objects.get(username=username)
     # .prefetch_related(

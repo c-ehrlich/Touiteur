@@ -347,7 +347,13 @@ def register3(request):
 @login_required
 def settings(request):
     user = request.user
-    blocklist = user.blocked_users.all().order_by('username')
+    blocklist = user.blocked_users.only(
+        'username',
+        'displayname',
+        'avatar'
+    ).order_by(
+        'username'
+    )
 
     if request.method == "GET":
         return render(request, "network/settings.html", {
@@ -362,7 +368,7 @@ def settings(request):
             if form.is_valid():
                 user = authenticate(
                     request, 
-                    username=utils.get_user_from_id(request.user.id), 
+                    username = request.user,
                     password=form.cleaned_data["password"]
                 )
                 if user is None:
@@ -374,7 +380,7 @@ def settings(request):
                         "start_tab": "account",
                     })
                 if utils.check_username_validity(form.cleaned_data["username"]) == False:
-                    user = utils.get_user_from_id(request.user.id) # dirty hack to clean the username field NICE-TO-HAVE refactor
+                    user = User.objects.get(id=request.user.id)
                     # return an EditAccountForm with the user's original information
                     return render(request, "network/settings.html", {
                         "account_form": EditAccountForm(instance = user),
@@ -496,7 +502,7 @@ def user(request, username):
 def block_toggle(request, user_id):
     if request.method == "PUT":
         user = request.user
-        view_user = utils.get_user_from_id(user_id)
+        view_user = User.objects.get(id=id)
         data = json.loads(request.body)
         if data['intent'] == 'block':
             if not view_user in user.blocked_users.all():
@@ -749,6 +755,7 @@ def notifications(request):
     if request.method == "PUT":
         data = json.loads(request.body)
         datetime_obj = utils.convert_javascript_date_to_python(data['timestamp'])
+        # TODO factor this out
         new_post_count = utils.get_post_count_since_timestamp(request, datetime_obj, data['context'])
         user = request.user
         if user.is_authenticated:
