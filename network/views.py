@@ -67,6 +67,8 @@ def following(request):
         ).annotate(
             Count('users_who_liked'),
             Count('replies'),
+        ).order_by(
+            '-timestamp'
         )
 
         paginated = Paginator(posts, PAGINATION_POST_COUNT)
@@ -97,6 +99,8 @@ def index(request):
         ).annotate(
             Count('users_who_liked'),
             Count('replies'),
+        ).order_by(
+            '-timestamp',
         )
 
         paginated = Paginator(posts, PAGINATION_POST_COUNT)
@@ -129,14 +133,16 @@ def likes(request, username):
             posts = Post.objects.filter(
                 users_who_liked=view_user
             ).prefetch_related(
-                'author__blocked_users__id',
-                'author__blocked_by__id',
+                'author__blocked_users',
+                'author__blocked_by',
             ).select_related(
                 'author',
                 'reply_to',
             ).annotate(
                 Count('users_who_liked'),
                 Count('replies'),
+            ).order_by(
+                '-timestamp'
             )
 
             paginated = Paginator(posts, PAGINATION_POST_COUNT)
@@ -474,6 +480,8 @@ def user(request, username):
         ).annotate(
             Count('users_who_liked'),
             Count('replies'),
+        ).order_by(
+            '-timestamp'
         )
 
         paginated = Paginator(posts, PAGINATION_POST_COUNT)
