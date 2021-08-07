@@ -133,7 +133,7 @@
                     {% if user.is_authenticated %}
                         <div class="post-interaction-div-right {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                             <!-- edit button -->
-                            {% if post.user == user %}
+                            {% if post.author == user %}
                                 <div class="post-bottom-row-right-div">
                                     <div hidden class="post-edit-cancel-button" id="ecb-{{ post.id }}"><i class="fas fa-times"></i></div>
                                     <div hidden class="post-save-edits-button" id="seb-{{ post.id }}"><i class="fas fa-check"></i></i></div>
@@ -182,7 +182,7 @@
 
 {% block script %}
     {% if user.is_authenticated %}<script src="{% static 'network/posts-loggedin.js' %}"></script>{% endif %}
-    <script src="{% static 'network/user.js' %}"></script>
+    <script src="{% static 'network/post.js' %}"></script>
     <script src="{% static 'network/posts.js' %}"></script>
     <script src="{% static 'network/utils.js' %}"></script>
 {% endblock %}

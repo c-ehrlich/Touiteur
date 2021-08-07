@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   if (document.querySelector('#user-profile-dropdown-button')) {
     document.querySelector('#user-profile-dropdown-button').addEventListener('click', event => {
-      show_dropdown();
+      user_view_show_dropdown();
     })
   }
   window.addEventListener('click', event => {
@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
 })
 
 
-function show_dropdown() {
+function user_view_show_dropdown() {
   document.querySelector("#user-profile-dropdown-content").classList.toggle("show");
 }
 
