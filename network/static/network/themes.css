@@ -24,6 +24,11 @@
     --color-text-formlabel: black;
     --color-text-formerror: black;
 
+    /* --color-link-default: #99BDD9; */
+    /* --color-link-hover: white; */
+    --color-link-attention: #0000FF;
+    --color-link-attention-hover: #000099;
+
     --color-box-bg: white;
     --color-box-border: lightgrey;
     --color-box-bg-contrast: #eeeeee; /* probably same as box-border */
@@ -79,6 +84,8 @@
 
     --color-link-default: #99BDD9;
     --color-link-hover: white;
+    --color-link-attention: #6666FF;
+    --color-link-attention-hover: #BBBBFF;
 
     --color-box-bg: #4a525a;
     --color-box-border: #3A4856;

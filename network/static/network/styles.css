@@ -29,6 +29,12 @@ a {
 a:hover {
     color: var(--color-link-hover);
 }
+.link-attn {
+    color: var(--color-link-attention);
+}
+.link-attn:hover {
+    color: var(--color-link-attention-hover);
+}
 
 button,
 button:focus,
