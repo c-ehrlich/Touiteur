@@ -217,18 +217,18 @@ def get_post_count_since_timestamp(request, timestamp, context):
     user = request.user
     posts = {}
     if context['location'] == 'user':
-        post_user = get_user_from_username(context['username']).count()
+        post_user = User.objects.get(username=context['username'])
         # get posts by post_user, newer than timestamp
-        posts = Post.objects.filter(user=post_user, timestamp__gte=timestamp).count()
+        posts = Post.objects.filter(author=post_user, timestamp__gte=timestamp).count()
     if context['location'] == 'following':
         # get posts by followed users, newer than timestamp
-        posts = Post.objects.filter(user__in=user.following.all()).filter(timestamp__gt=timestamp).count()
+        posts = Post.objects.filter(author__in=user.following.all()).filter(timestamp__gt=timestamp).count()
     if context['location'] == 'index':
         posts = Post.objects.filter(timestamp__gt=timestamp).count()
     if context['location'] == 'mentions':
         posts = Post.objects.filter(mentioned_users__in=[user], timestamp__gt=timestamp).count()
     if context['location'] == 'likes':
-        post_user = get_user_from_username(context['username'])
+        post_user = User.objects.get(username=context['username'])
         posts = post_user.liked_posts.filter(timestamp__gt=timestamp).count()
     # if we haven't created posts yet, return an error
     if  posts:
