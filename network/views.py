@@ -378,7 +378,9 @@ def settings(request):
         })
 
     elif request.method == "POST":
+        context = {}
         if 'account-form-button' in request.POST:
+            context['start_tab'] = "account"
             form = EditAccountForm(request.POST, request.FILES, instance = user)
             if form.is_valid():
                 user = authenticate(
@@ -386,88 +388,47 @@ def settings(request):
                     username = request.user,
                     password=form.cleaned_data["password"]
                 )
-                if user is None:
-                    return render(request, "network/settings.html", {
-                        "account_form": EditAccountForm(instance = user),
-                        "preferences_form": RegisterAccountStage3Form(instance = user),
-                        "blocklist": blocklist,
-                        "message": _("Invalid password."),
-                        "start_tab": "account",
-                    })
-                if utils.check_username_validity(form.cleaned_data["username"]) == False:
-                    user = User.objects.get(id=request.user.id)
-                    # return an EditAccountForm with the user's original information
-                    return render(request, "network/settings.html", {
-                        "account_form": EditAccountForm(instance = user),
-                        "preferences_form": RegisterAccountStage3Form(instance = user),
-                        "blocklist": blocklist,
-                        "message": _("Username is not valid."),
-                        "start_tab": "account",
-                    })
-
-                # get new_password and new_pass_confirm from form
-                # check if they are the same, if so change the password
-                # if not, return an EditAccountForm with the user's original information
-                # and a message saying the passwords don't match
                 new_password = form.cleaned_data["new_password"]
                 new_password_confirm = form.cleaned_data["new_password_confirm"]
-                if new_password != new_password_confirm:
-                    return render(request, "network/settings.html", {
-                        "account_form": EditAccountForm(instance = user),
-                        "preferences_form": RegisterAccountStage3Form(instance = user),
-                        "blocklist": blocklist,
-                        "message": _("New passwords don't match."),
-                        "start_tab": "account",
-                    })
-                if new_password != None and new_password != "":
-                    user.set_password(new_password)
 
-                user.save()
-                form.save()
+                if user is None:
+                    context['message'] = "Poopykakalaka"
+                elif utils.check_username_validity(form.cleaned_data["username"]) == False:
+                    user = User.objects.get(id=request.user.id)
+                    context['message'] = _("Username is not valid.")
+                elif new_password != new_password_confirm:
+                    context['message'] = _("New passwords don't match.")
+                elif new_password != None and new_password != "":
+                    user.set_password(new_password)
+                    user.save()
 
             # form is not valid
             else:
-                print(form.data)
-                return render(request, "network/settings.html", {
-                    "account_form": EditAccountForm(instance = user),
-                    "preferences_form": RegisterAccountStage3Form(instance = user),
-                    "blocklist": blocklist,
-                    "message": _("Form data is invalid"),
-                    "start_tab": "account",
-                })
-
-            # Form is valid. This is the place we _want_ to end up.
-            user.refresh_from_db()
-            return render(request, "network/settings.html", {
-                "account_form": EditAccountForm(instance = user),
-                "preferences_form": RegisterAccountStage3Form(instance = user),
-                "blocklist": blocklist,
-                "start_tab": "account",
-            })
+                context['message'] = _("Form data is invalid.")
 
         elif 'preferences-form-button' in request.POST:
+            context['start_tab'] = "preferences"
             form = RegisterAccountStage3Form(request.POST, instance = user)
             if form.is_valid():
                 user.theme = form.cleaned_data['theme']
                 user.language = form.cleaned_data['language']
                 user.show_liked_posts = form.cleaned_data['show_liked_posts']
                 user.save()
-                print("preferences form good")
-                return render(request,"network/settings.html", {
-                    "account_form": EditAccountForm(instance = user),
-                    "preferences_form": RegisterAccountStage3Form(instance = user),
-                    "blocklist": blocklist,
-                    "start_tab": "preferences",
-                })
             else:
-                print("preferences form bad")
-                return render(request, "network/settings.html", {
-                    "account_form": EditAccountForm(instance = user),
-                    "preferences_form": RegisterAccountStage3Form(instance = user),
-                    "blocklist": blocklist,
-                    "message": _("Form data is invalid"),
-                    "start_tab": "preferences",
-                })
+                context['message'] = _("Form data is invalid")
+        else:
+            return HttpResponseBadRequest()
+            
+        if user is not None and form.is_valid():
+            user.refresh_from_db()
+            form.save()
+            context['account_form'] = EditAccountForm(instance = user)
+            context['preferences_form'] = RegisterAccountStage3Form(instance = user)
+        else:
+            context['account_form'] = EditAccountForm(instance = request.user)
+            context['preferences_form'] = RegisterAccountStage3Form(instance = request.user)
+        context['blocklist'] = blocklist
+        return render(request, "network/settings.html", context)
 
     else:
         return HttpResponseBadRequest()
