@@ -222,6 +222,9 @@ hr {
     padding: 12px;
     background-color: var(--color-box-bg);
 }
+.post-div-blocked-bugfix {
+    margin-bottom: -2px;
+}
 
 .post-reply-to-div {
     color: var(--color-text-medcontrast);

@@ -2,7 +2,7 @@
 
 <div id="posts-all-container-div">
     {% for post in posts %}
-        <div class="post-div" id="post-div{{ post.id }}">
+        <div class="post-div{% if post.user_blocked_by_author %} post-div-blocked-bugfix{% endif %}" id="post-div{{ post.id }}">
             {% if not post.author_blocked_by_author %}
                 {% if post.reply_to != None %}
                     <div class="post-reply-to-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
