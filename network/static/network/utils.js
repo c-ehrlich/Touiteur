@@ -1,4 +1,5 @@
 function block(user_id) {
+  console.log("running block(user_id in utils.js");
   fetch(`/block_toggle/${user_id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -12,11 +13,13 @@ function block(user_id) {
   .then(response => response.json())
   .then(json => {
     console.log(json);
+    location.reload();
   })
 }
 
 
 function unblock(user_id) {
+  console.log("running unblock(user_id) in utils.js");
   fetch(`/block_toggle/${user_id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -29,7 +32,8 @@ function unblock(user_id) {
   })
   .then(response => response.json())
   .then(json => {
-    return json;
+    console.log(json);
+    location.reload();
   })
 }
 

@@ -20,14 +20,14 @@
                     <i class="fas fa-ellipsis-v user-profile-hover-menu-icon"></i>
                 </div>
                 <div id="user-profile-dropdown-content">
-                    {% if user.is_authenticated and user != view_user and not view_user.has_user_blocked %}
-                        <a {% if view_user.blocked_by_user %}hidden {% endif %}href="{% url 'dm_thread' view_user %}">
+                    {% if user.is_authenticated and user != view_user and not user_blocked_by_author %}
+                        <a {% if author_blocked_by_user %}hidden {% endif %}href="{% url 'dm_thread' view_user %}">
                             <i class="far fa-envelope"></i> Message
                         </a>
-                        <div id="block-button" {% if view_user.blocked_by_user %}hidden {% endif %}href="">
+                        <div id="block-button" {% if author_blocked_by_user %}hidden {% endif %}href="">
                             <i class="far fa-eye-slash"></i> Block
                         </div>
-                        <div id="unblock-button" {% if not view_user.blocked_by_user %}hidden {% endif %}href="">
+                        <div id="unblock-button" {% if not author_blocked_by_user %}hidden {% endif %}href="">
                             <i class="far fa-eye"></i> Unblock
                         </div>
                     {% endif %}
@@ -36,7 +36,7 @@
                     </div>
                 </div>
             </div>
-            {% if not user == view_user and not view_user.blocked_by_user and not view_user.has_user_blocked %}
+            {% if not user == view_user and not author_blocked_by_user and not user_blocked_by_author %}
                 <div id="follow-button-div">
                     {% if view_user in user.following.all %}
                         <button id="unfollow-button" class="hero-button-bad">{% trans 'Unfollow' %}</button>

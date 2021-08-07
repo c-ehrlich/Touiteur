@@ -202,6 +202,8 @@ def mentions(request):
         ).annotate(
             Count('users_who_liked'),
             Count('replies'),
+        ).order_by(
+            '-timestamp'
         )
 
         paginated = Paginator(posts, PAGINATION_POST_COUNT)
@@ -232,15 +234,22 @@ def post(request, id):
         ).annotate(
             Count('users_who_liked'),
             Count('replies'),
+        ).order_by(
+            '-timestamp'
         )
 
         paginated = Paginator(replies, PAGINATION_POST_COUNT)
         page = request.GET.get('page', 1)
         replies = paginated.get_page(page)
 
+        for reply in replies:
+            utils.get_post_additional_data(request, reply)
+
         context = {
             'view_user': post.author,
             'post': post,
+            'user_blocked_by_author': request.user in post.author.blocked_users.all(),
+            'author_blocked_by_user': request.user in post.author.blocked_by.all(),
             'posts': replies, #call it that to make it work with posts.html
         }
 
@@ -466,8 +475,14 @@ def settings(request):
 
 def user(request, username):
     if request.method == "GET":
+        user = request.user
         view_user = User.objects.get(username=username)
+
         context = {}
+
+        if user.is_authenticated:
+            context['user_blocked_by_author'] = request.user in view_user.blocked_users.all()
+            context['author_blocked_by_user'] = request.user in view_user.blocked_by.all()
 
         posts = Post.objects.filter(
             author__username=username
@@ -510,7 +525,7 @@ def user(request, username):
 def block_toggle(request, user_id):
     if request.method == "PUT":
         user = request.user
-        view_user = User.objects.get(id=id)
+        view_user = User.objects.get(id=user_id)
         data = json.loads(request.body)
         if data['intent'] == 'block':
             if not view_user in user.blocked_users.all():

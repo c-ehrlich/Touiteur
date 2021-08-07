@@ -12,13 +12,16 @@
     <div id="user-id" style="display: none">{{ post.author.id }}</div>
     <!-- END DO NOT DELETE -->
 
+    {{ author_blocked_by_user }}
+    {{ user_blocked_by_author }}
+
     <div id="single-post-outer">
         <!-- maybe put a smaller version of the entire post we're replying to in here? -->
         
         <div id="single-post-view-container">
-            {% if not post.user_blocked_by_author %}
+            {% if not user_blocked_by_author %}
                 {% if post.reply_to != None %}
-                    <div id="single-post-view-reply-to-div" class="post-reply-to-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                    <div id="single-post-view-reply-to-div" class="post-reply-to-div {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                         <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
                             Reply to @{{ post.reply_to.user }}: {{ post.reply_to.text }}
                         </a>
@@ -38,32 +41,32 @@
                     @{{ post.author.username }}
                 </a>
             </div>
-            {% if post.user_blocked_by_author %}
+            {% if user_blocked_by_author %}
                 <div class="blocked-by-author single-post-view-text-container mb16"><i class="fas fa-ban"></i> {% trans 'The author of this post has blocked you.' %}</div>
             {% else %}
-                <div id="single-post-view-follow-div" class="{% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
-                    <div id="user-profile-hover-menu-div">
-                        <div class="dropbtn" id="user-profile-dropdown-button">
-                            <i class="fas fa-ellipsis-v user-profile-hover-menu-icon"></i>
+                <div id="single-post-view-follow-div" class="{% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                    <div id="post-view-hover-menu-div">
+                        <div class="dropbtn" id="post-view-dropdown-button">
+                            <i class="fas fa-ellipsis-v post-view-hover-menu-icon"></i>
                         </div>
-                        <div id="user-profile-dropdown-content">
-                            {% if user.is_authenticated and user != view_user and not post.user_blocked_by_author %}
-                                <a {% if post.author_blocked_by_user %}hidden {% endif %}href="{% url 'dm_thread' view_user %}">
+                        <div id="post-view-dropdown-content">
+                            {% if user.is_authenticated and user != view_user and not user_blocked_by_author %}
+                                <a {% if author_blocked_by_user %}hidden {% endif %}href="{% url 'dm_thread' view_user %}">
                                     <i class="far fa-envelope"></i> Message
                                 </a>
-                                <div id="block-button" {% if post.author_blocked_by_user %}hidden {% endif %}href="">
+                                <div id="block-button" {% if author_blocked_by_user %}hidden {% endif %}href="">
                                     <i class="far fa-eye-slash"></i> Block
                                 </div>
-                                <div id="unblock-button" {% if not post.author_blocked_by_user %}hidden {% endif %}href="">
+                                <div id="unblock-button" {% if not author_blocked_by_user %}hidden {% endif %}href="">
                                     <i class="far fa-eye"></i> Unblock
                                 </div>
                             {% endif %}
-                            <div id="share-profile-button" href="">
+                            <div id="share-post-button">
                                 <i class="fas fa-share-square"></i> Share
                             </div>
                         </div>
                     </div>
-                    {% if user.is_authenticated and user != post.author and not post.author_blocked_by_user %}
+                    {% if user.is_authenticated and user != post.author and not author_blocked_by_user %}
                         <div id="follow-button-div">
                             {% if post.author in user.following.all %}
                                 <button id="unfollow-button" class="hero-button-default">{% trans 'Unfollow' %}</button>
@@ -74,9 +77,9 @@
                     {% endif %}
                 </div>
                 <div id="post-text-container-{{ post.id }}" class="single-post-view-text-container">
-                    <div id="post-text-{{ post.id }}" class="single-post-view-text-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">{{ post.text }}</div>
-                    <textarea hidden maxlength="140" id="post-edit-input-{{ post.id }}" class="post-edit-input {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}"></textarea>
-                    {% if post.author_blocked_by_user %}
+                    <div id="post-text-{{ post.id }}" class="single-post-view-text-div {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">{{ post.text }}</div>
+                    <textarea hidden maxlength="140" id="post-edit-input-{{ post.id }}" class="post-edit-input {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}"></textarea>
+                    {% if author_blocked_by_user %}
                         <div class="blocked-by-user blk-info-{{ post.id }} fs15rem mb16">
                             <i class="fas fa-ban"></i> {% trans 'This post is hidden because you blocked the author.' %}
                         </div>
@@ -86,17 +89,17 @@
                     {% endif %}
                 </div>
                 {% if post.image %}
-                    <div id="single-post-view-image-div" {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}>
+                    <div id="single-post-view-image-div" class="{% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                         <img class="post-image" src="{{ post.image.url }}">
                     </div>
                 {% endif %}
             {% endif %}
-            <div id="single-post-view-timestamp-div">
+            <div id="single-post-view-timestamp-div" class="{% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                 {{ post.timestamp }} UTC
             </div>
-            {% if not post.user_blocked_by_author and not post.author_blocked_by_user %}
+            {% if not user_blocked_by_author and not author_blocked_by_user %}
                 {% if user.is_authenticated and post.user != user %}
-                    <div class="post-like-button-div single-post-view-like-button-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}" id="post-like-button-div-{{ post.id }}">
+                    <div class="post-like-button-div single-post-view-like-button-div {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}" id="post-like-button-div-{{ post.id }}">
                         {% if post in user.liked_posts.all %}
                             <button class="post-unlike-button single-page-like-button" id="post-like-button-{{ post.id }}">
                                 <div id="post-like-heart-{{ post.id }}" class="post-like-heart-liked">
@@ -131,7 +134,7 @@
                 {% endif %}
                 <div id="single-post-view-like-edit-div">
                     {% if user.is_authenticated %}
-                        <div class="post-interaction-div-right {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+                        <div class="post-interaction-div-right {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                             <!-- edit button -->
                             {% if post.author == user %}
                                 <div class="post-bottom-row-right-div">
@@ -153,7 +156,7 @@
     </div>
 
     <!-- reply box -->
-    <div class="margin-fix {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+    <div class="margin-fix {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
         <div id="prslide-{{ post.id }}" class="prslide">
             <div hidden class="post-reply-div" id="prd-{{ post.id }}">
                 <textarea class="post-reply-input form-control" id="pri-{{ post.id }}">@{{ post.author.username }} </textarea>
@@ -166,14 +169,14 @@
 
     <!-- replies header -->
     {% if post.replies.count > 0 %}
-        <div class="section-identifier {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+        <div class="section-identifier {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
             <div class="section-identifier-inner">
                 {{ post.replies.count }} replies
             </div>
         </div>
 
         <!-- replies -->
-        <div class="single-post-view-replies {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
+        <div class="single-post-view-replies {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
             {% include 'network/posts.html' %}
         </div>
     {% endif %}

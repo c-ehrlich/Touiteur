@@ -48,34 +48,28 @@ function user_view_show_dropdown() {
 function user_view_block() {
   const view_user_id = document.querySelector('#user-id').innerHTML;
   block(view_user_id);
-  window.location.reload();
 }
 
 
 function user_view_unblock() {
   const view_user_id = document.querySelector('#user-id').innerHTML;
   unblock(view_user_id);
-  window.location.reload();
 }
 
 
 function user_view_share_profile() {
-  var copy_dummy = document.createElement('input');
-  text = window.location.href;
+  const copy_dummy = document.createElement('input');
+  const text = window.location.href;
   document.body.appendChild(copy_dummy);
   copy_dummy.value = text;
   copy_dummy.select();
   document.execCommand('copy');
   document.body.removeChild(copy_dummy);
 
-  // Devide whether to say "User" or "Post in the Notify"
-  let section = text.split('/').slice(-2).reverse().pop();
-  section = section.charAt(0).toUpperCase() + section.slice(1);
-
   new Notify({
     status: 'success',
     // title: 'Notify Title',
-    text: `${section} link copied to clipboard.`,
+    text: 'User link copied to clipboard.',
     effect: 'fade',
     speed: 300,
     customClass: null,
@@ -99,8 +93,8 @@ function user_view_follow() {
   unfollow_button.innerHTML = "Unfollow";
   unfollow_button.id = "unfollow-button";
   unfollow_button.classList.add('hero-button-default');
-  unfollow_button.addEventListener('click', event => { user_view_unfollow() });
-  follow_button_div = document.querySelector('#follow-button-div');
+  unfollow_button.addEventListener('click', user_view_unfollow);
+  const follow_button_div = document.querySelector('#follow-button-div');
   follow_button_div.innerHTML = "";
   follow_button_div.append(unfollow_button);
   if (document.querySelector('#user-profile-follower-count') !== null) {
@@ -117,8 +111,8 @@ function user_view_unfollow() {
   follow_button.innerHTML = "Follow";
   follow_button.id = "follow-button";
   follow_button.classList.add('hero-button-default');
-  follow_button.addEventListener('click', event => { user_view_follow() });
-  follow_button_div = document.querySelector('#follow-button-div');
+  follow_button.addEventListener('click', user_view_follow);
+  const follow_button_div = document.querySelector('#follow-button-div');
   follow_button_div.innerHTML = "";
   follow_button_div.append(follow_button);
   if (document.querySelector('#user-profile-follower-count') !== null) {
