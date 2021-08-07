@@ -235,13 +235,3 @@ def get_post_count_since_timestamp(request, timestamp, context):
         return posts.count()
     else:
         return 0
-
-
-def get_user_from_username(username):
-    user = User.objects.get(username=username)
-    # .prefetch_related(
-    #     'liked_posts',
-    #     'blocked_users',
-    #     'blocked_by'
-    # )
-    return user

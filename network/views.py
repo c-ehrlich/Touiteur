@@ -35,7 +35,7 @@ def dms(request):
 
 @login_required
 def dm_thread(request, username):
-    convo_partner = utils.get_user_from_username(username)
+    convo_partner = User.objects.get(username=username)
     page = request.GET.get('page', 1)
     user_id = request.user.id
     convo_partner_id = convo_partner.id
@@ -570,7 +570,7 @@ def block_toggle_username(request, username):
     # REFACTOR: block_toggle should take user=None and username=None, then sees if at least one exist
     user = request.user
     if request.method == 'PUT':
-        view_user = utils.get_user_from_username(username)
+        view_user = User.objects.get(username=username)
         if not view_user in user.blocked_users.all():
             user.blocked_users.add(view_user)
         # end follow relation in both directions
