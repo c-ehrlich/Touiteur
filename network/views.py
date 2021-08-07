@@ -782,7 +782,6 @@ def notifications(request):
         new_post_count = utils.get_post_count_since_timestamp(request, datetime_obj, data['context'])
         user = request.user
         if user.is_authenticated:
-            print("user authenticated :)")
             new_mention_count = user.mentions_since_last_checked
             new_dm_count = user.DMs_since_last_checked
             return JsonResponse({

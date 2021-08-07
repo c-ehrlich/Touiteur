@@ -232,6 +232,6 @@ def get_post_count_since_timestamp(request, timestamp, context):
         posts = post_user.liked_posts.filter(timestamp__gt=timestamp).count()
     # if we haven't created posts yet, return an error
     if  posts:
-        return posts.count()
+        return posts
     else:
         return 0
