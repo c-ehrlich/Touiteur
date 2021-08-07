@@ -665,7 +665,7 @@ def edit(request, post_id):
                 "edited": False,
             }, status=400)
         post = utils.get_post_from_id(request, post_id)
-        if request.user == post.user:
+        if request.user == post.author:
             new_mentioned_users = utils.get_mentions_from_post(new_text)
             for user in new_mentioned_users:
                 post.mentioned_users.add(user)
