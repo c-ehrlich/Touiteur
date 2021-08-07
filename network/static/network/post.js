@@ -74,7 +74,7 @@ function post_view_follow() {
   let unfollow_button = document.createElement('button');
   unfollow_button.innerHTML = "Unfollow";
   unfollow_button.id = "unfollow-button";
-  unfollow_button.classList.add('hero-button-default');
+  unfollow_button.classList.add('hero-button-bad');
   unfollow_button.addEventListener('click', post_view_unfollow);
   let follow_button_div = document.querySelector('#follow-button-div');
   follow_button_div.innerHTML = "";
