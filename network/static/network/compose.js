@@ -9,13 +9,24 @@ document.addEventListener('DOMContentLoaded', () => {
       updatePostCharCounter('#compose-form-post-text', '#compose-form-character-count');
     });
   }
-  console.log("compose.js loaded");
+
+  if (document.querySelector('#compose-form')) {
+    const submitForm = document.querySelector('#compose-form');
+    submitForm.addEventListener('submit', () => {
+      submitButton = document.querySelector('#compose-form-submit-button');
+      submitButton.setAttribute('disabled', true)
+      console.log('disabled');
+      setTimeout(() => {
+        submitButton.removeAttribute('disabled')
+        console.log('enabled');
+      }, 3000);
+    })
+  }
 
   // editing
   document.querySelectorAll('.post-edit-input').forEach(element => {
     element.addEventListener('keyup', () => {
       let itemName = element.id;
-      console.log(itemName);
       updatePostCharCounter(`#${itemName}`, `#${itemName}-count`);
     })
   })
@@ -31,10 +42,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function updatePostCharCounter(inputElement, countElement) {
-  console.log(inputElement);
-  console.log(typeof(inputElement));
-  console.log(countElement);
-  console.log(typeof(countElement));
   let postLength = document.querySelector(inputElement).value.length;
   const startingColor = getComputedStyle(document.querySelector(inputElement)).backgroundColor; // hardcode #d43f3a
   let currentColor = calculateInBetweenColor(startingColor, END_COLOR, postLength, TWEET_CHARACTER_LIMIT);
