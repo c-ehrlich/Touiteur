@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   document.querySelectorAll('.post-like-button').forEach(button => {
     button.addEventListener('click', event => {
-      // TODO is there a better way to get the id?
       let post_id = button.id.split("-")[3];
       like_post(post_id);
     }, { once: true } );
@@ -42,13 +41,11 @@ document.addEventListener('DOMContentLoaded', function() {
       unlike_post(post_id);
     }, { once: true } );
   })
-  // TODO condense like and unlike into the same button / eventlistener
 });
 
 
 // Add links to mentions in post text
 function create_post_text_with_mention_links(post_text) {
-  // TODO make sure there are no invalid characters in the username
   post_text_words = post_text.split(" ");
   post_text_with_mention_links = "";
   for (let i = 0; i < post_text_words.length; i++) {
@@ -109,7 +106,23 @@ function edit_post_submit(post_id, original_text) {
       text_field.innerHTML = create_post_text_with_mention_links(new_text);
     } else {
       text_field.innerHTML = create_post_text_with_mention_links(original_text);
-      // TODO flash a banner saying editing failed
+      new Notify({
+        status: 'error',
+        title: 'Edit',
+        text: `Post Editing Failed`,
+        effect: 'fade',
+        speed: 300,
+        customClass: null,
+        customIcon: null,
+        showIcon: true,
+        showCloseButton: true,
+        autoclose: true,
+        autotimeout: 3000,
+        gap: 20,
+        distance: 20,
+        type: 1,
+        position: 'x-center top'
+      })
     }
     text_field.removeAttribute('hidden');
     document.querySelector(`#post-edit-container-${post_id}`).setAttribute('hidden', 'hidden');
@@ -119,7 +132,6 @@ function edit_post_submit(post_id, original_text) {
     document.querySelector(`#seb-${post_id}`).setAttribute('hidden', 'hidden');
     document.querySelector(`#eb-${post_id}`).removeAttribute('hidden');
   })
-  // TODO: do this without 'original_text' variable - use JSON from backend instead
 }
 
 

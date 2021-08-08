@@ -1,7 +1,5 @@
 "use-strict";
 
-// TODO: build this into live_notifications.js
-
 document.addEventListener('DOMContentLoaded', () => {
     // send a fetch request to /clear_mentions_count
     // This should ONLY run when the user wants to clear their mentions

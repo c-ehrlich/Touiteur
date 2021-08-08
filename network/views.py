@@ -107,7 +107,6 @@ def index(request):
         page = request.GET.get('page', 1)
         posts = paginated.get_page(page)
 
-        # TODO maybe loop inside the function instead of here?
         for post in posts:
             utils.get_post_additional_data(request, post)
 
@@ -739,7 +738,6 @@ def notifications(request):
     if request.method == "PUT":
         data = json.loads(request.body)
         datetime_obj = utils.convert_javascript_date_to_python(data['timestamp'])
-        # TODO factor this out
         new_post_count = utils.get_post_count_since_timestamp(request, datetime_obj, data['context'])
         user = request.user
         if user.is_authenticated:
