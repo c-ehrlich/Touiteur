@@ -18,8 +18,13 @@ function block(user_id) {
 }
 
 
-function unblock(user_id) {
+function unblock(user_id, refresh_page) {
+  // makes a backend request to unblock a user
+  // the page will refresh by default
+  // if false is passed to the optional refresh_page parameter, the page will not refresh
+  refresh_page = (typeof refresh_page !== 'undefined') ? refresh_page : true;
   console.log("running unblock(user_id) in utils.js");
+  console.log(refresh_page)
   fetch(`/block_toggle/${user_id}`, {
     method: 'PUT',
     body: JSON.stringify({
@@ -33,7 +38,9 @@ function unblock(user_id) {
   .then(response => response.json())
   .then(json => {
     console.log(json);
-    location.reload();
+    if (refresh_page !== true) {
+      location.reload();
+    }
   })
 }
 

@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     button.addEventListener('click', event => {
       let userId = button.getAttribute('userid');
       let userName = button.getAttribute('username');
-      unblock(userId);
+      unblock(userId, false);
       unblockSettingsDOMManipulation(userId, userName);
     })
   })
