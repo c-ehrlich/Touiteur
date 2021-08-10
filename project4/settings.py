@@ -68,6 +68,7 @@ MIDDLEWARE = [
     # Overrides other localization settings such as browser locale, and instead sets it based on a field in the user model, if available
     # Needs to be after AuthentificationMiddleware because that creates the user object
     'network.middleware.translation_middleware.UserPrefLocaleMiddleware',
+
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # this is custom! Should be the last middleware to load unless there's a very good reason to load something else later

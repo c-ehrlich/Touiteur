@@ -69,7 +69,7 @@ function user_view_share_profile() {
   new Notify({
     status: 'success',
     // title: 'Notify Title',
-    text: 'User link copied to clipboard.',
+    text: gettext('User link copied to clipboard.'),
     effect: 'fade',
     speed: 300,
     customClass: null,

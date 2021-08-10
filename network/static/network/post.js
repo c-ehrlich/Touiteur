@@ -52,7 +52,7 @@ function post_view_share_post() {
   new Notify({
     status: 'success',
     // title: 'Notify Title',
-    text: 'Post link copied to clipboard.',
+    text: gettext('Post link copied to clipboard.'),
     effect: 'fade',
     speed: 300,
     customClass: null,

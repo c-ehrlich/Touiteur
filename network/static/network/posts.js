@@ -109,7 +109,7 @@ function edit_post_submit(post_id, original_text) {
       new Notify({
         status: 'error',
         title: 'Edit',
-        text: `Post Editing Failed`,
+        text: gettext('Post Editing Failed'),
         effect: 'fade',
         speed: 300,
         customClass: null,

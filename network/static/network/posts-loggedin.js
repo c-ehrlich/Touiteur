@@ -79,15 +79,20 @@ function sendReply(postId) {
     replyCount = json.reply_count;
     if (document.querySelector(`#prsd-${postId}`)) {
       document.querySelector(`#prsd-${postId}`).removeAttribute('hidden');
-      if (replyCount == 1) {
-        document.querySelector(`#prl-${postId}`).innerHTML = '1 reply. Click to view.';
-      } else if (replyCount > 1) {
-        document.querySelector(`#prl-${postId}`).innerHTML = `${replyCount} replies. Click to view.`; 
-      }
+
+      const data = {'count': replyCount};
+      const formats = ngettext(
+        '%(count)s reply. Click to view.',
+        '%(count)s replies. Click to view.',
+        replyCount
+      );
+      const string = interpolate(formats, data, true);
+      document.querySelector(`prl-${postId}`).innerHTML = string;
+
       new Notify({
         status: 'success',
         // title: 'Notify Title',
-        text: 'Reply successfully posted.',
+        text: gettext('Reply successfully posted.'),
         effect: 'fade',
         speed: 300,
         customClass: null,

@@ -1,3 +1,4 @@
+
 document.addEventListener('DOMContentLoaded', () => {
   const accountTab = document.querySelector('#account-tab');
   const blocklistTab = document.querySelector('#blocklist-tab');
@@ -159,10 +160,13 @@ function blockSettingsDOMManipulation(userId, userName, displayName, userAvatar)
 
 function unblockSettingsDOMManipulation(userId, userName) {
   document.querySelector(`#unblock-row-${userId}`).remove();
+
+  // let i18nObject = { username: userName };
+
   new Notify({
     status: 'success',
     title: 'Blocklist',
-    text: `Successfully removed @${userName}`,
+    text: interpolate(gettext("Unblocked %(user)s.", {'user': userName}, true)),
     effect: 'fade',
     speed: 300,
     customClass: null,
