@@ -151,7 +151,6 @@ class RegisterAccountStage3Form(forms.ModelForm):
     language = forms.CharField(
         label = "Language",
         required = True,
-        # default = "en_US",
         widget = forms.Select(
             choices = User.LANGUAGES,
             # attrs = {

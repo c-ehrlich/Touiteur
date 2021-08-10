@@ -216,7 +216,7 @@ function update_post_like_status(json) {
   document.querySelector(`#post-like-count-${json.post_id}`).innerHTML = json.like_count;
 }
 
-console.log("loaded posts.js");
+console.log(gettext("loaded posts.js"));
 
 // check if a char is alphanumeric
 function is_alphanumeric(char) {

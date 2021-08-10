@@ -1,12 +1,19 @@
 from django.conf import settings
+from django.conf.urls.i18n import i18n_patterns
 from django.conf.urls.static import static
 from django.urls import include, path
+from django.views.i18n import JavaScriptCatalog
 
 import debug_toolbar
 
 from . import views
 
 urlpatterns = [
+    # Needed for locale change
+    path('i18n/', include('django.conf.urls.i18n')),
+]
+
+urlpatterns += [
     # View Routes
     path("", views.index, name="index"),
     path("dms", views.dms, name="dms"),
@@ -34,6 +41,9 @@ urlpatterns = [
     path("notifications", views.notifications, name="notifications"),
     path("reply/<int:post_id>", views.reply, name="reply"),
     path("thread_read_status/<int:thread_id>", views.thread_read_status, name="thread_read_status"),
+
+    # Needed for translations in JavaScript
+    path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
     # Debug Routes
     path('__debug__/', include(debug_toolbar.urls)),
