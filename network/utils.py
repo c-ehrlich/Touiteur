@@ -66,7 +66,7 @@ def get_display_time(request, datetime_input):
         language = request.user.language
     elif request.LANGUAGE_CODE and next((v[0] for i, v in enumerate(settings.LANGUAGES) if v[0] == request.LANGUAGE_CODE), None) != None:
         language = request.LANGUAGE_CODE
-    else: language = 'en_US'
+    else: language = 'en'
 
     utc = timezone('UTC')
     post = datetime_input
@@ -100,7 +100,7 @@ def get_display_time(request, datetime_input):
             return format_datetime(post, 'yyyy年M月d日', locale=language)
 
     else:
-        # default language is 'en_US'
+        # default language is 'en'
         if td_days == 0 and td_secs < 60:
             return "now"
         if td_days == 0 and td_secs < 3600:

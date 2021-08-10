@@ -126,7 +126,7 @@ class User(AbstractUser):
     )
 
     LANGUAGES = (
-        ('en_US', 'English'),
+        ('en', 'English'),
         ('de', 'Deutsch'),
         ('ja', '日本語'),
     )
@@ -191,7 +191,7 @@ class User(AbstractUser):
     language = models.CharField(
         max_length=10,
         choices=LANGUAGES,
-        default='en_US',
+        default='en',
         verbose_name='Language'
     )
     has_completed_onboarding = models.BooleanField(
