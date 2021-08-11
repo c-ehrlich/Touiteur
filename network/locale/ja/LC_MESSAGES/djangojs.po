@@ -1,0 +1,53 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-08-10 17:13+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: network/static/network/account.js:169
+msgid "Unblocked %(user)s."
+msgstr "@%(user)sさんはブロックが解除された。"
+
+#: network/static/network/live_notifications.js:44
+msgid "There is %(count)s new post. Click to refresh."
+msgid_plural "There are %(count)s new posts. click to refesh."
+msgstr[0] "%(count)s件の新規投稿がありました。クリックすると更新されます。"
+
+#: network/static/network/post.js:55
+msgid "Post link copied to clipboard."
+msgstr "投稿のリンクがクリップボードにコピーされました。"
+
+#: network/static/network/posts-loggedin.js:85
+msgid "%(count)s reply. Click to view."
+msgid_plural "%(count)s replies. Click to view."
+msgstr[0] "%(count)s件の返信があります。"
+
+#: network/static/network/posts-loggedin.js:95
+msgid "Reply successfully posted."
+msgstr "返信が正常に投稿されました。"
+
+#: network/static/network/posts.js:112
+msgid "Post Editing Failed"
+msgstr "投稿を編集できませんでした。"
+
+#: network/static/network/posts.js:219
+msgid "loaded posts.js"
+msgstr "TEST-JP"
+
+#: network/static/network/user.js:72
+msgid "User link copied to clipboard."
+msgstr "プロフィールのリンクがクリップボードにコピーされました。"
