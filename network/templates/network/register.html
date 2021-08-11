@@ -3,14 +3,14 @@
 {% load i18n %}
 
 {% block title %}
-    Register
+    {% translate 'Register' context 'description' %}
 {% endblock %}
 
 {% block body %}
 
     <div class="section-identifier">
         <div class="section-identifier-inner">
-            {% trans 'Register' %}
+            {% translate 'Register' context 'description' %}
         </div>
     </div>
 
@@ -52,7 +52,7 @@
                     <label for="{{ form.confirmation.id_for_label }}" class="formlabel-text">{{ form.confirmation.label }}</label>
                     {{ form.confirmation }}
                 </div>
-                <input class="btn btn-primary" type="submit" value="Register">
+                <input class="btn btn-primary" type="submit" value="{% translate 'Register' context 'action' %}">
             </form>
 
             <div class="login-helper-text">

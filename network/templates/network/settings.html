@@ -44,7 +44,7 @@
                 <div class="form-group w100 mb48">
                     <div class="margin-bottom-8 formlabel-text important-form-label">
                         <i class="fas fa-exclamation-triangle important-form-label-icon"></i> 
-                        {% translate "Current Password (required)" %}
+                        {{ account_form.password.label }}
                         <i class="fas fa-exclamation-triangle important-form-label-icon"></i> 
                     </div>
                     {% if account_form.password.errors %}
@@ -54,39 +54,39 @@
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.username.errors }}</div>
-                    <label for="{{ account_form.username.id_for_label }}" class="formlabel-text">{% translate "New " context "username" %}{{ account_form.username.label }}</label>
+                    <label for="{{ account_form.username.id_for_label }}" class="formlabel-text">{{ account_form.username.label }}</label>
                     <div class="input-with-at-sign">
                         {{ account_form.username }}
                     </div>
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.displayname.errors }}</div>
-                    <label for="{{ account_form.displayname.id_for_label }}" class="formlabel-text">{% translate "New " context "displayname" %}{{ account_form.displayname.label }}</label>
+                    <label for="{{ account_form.displayname.id_for_label }}" class="formlabel-text">{{ account_form.displayname.label }}</label>
                     {{ account_form.displayname }}
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.email.errors }}</div>
-                    <label for="{{ account_form.email.id_for_label }}" class="formlabel-text">{% translate "New " context "email" %}{{ account_form.email.label }}</label>
+                    <label for="{{ account_form.email.id_for_label }}" class="formlabel-text">{{ account_form.email.label }}</label>
                     {{ account_form.email }}
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.bio.errors }}</div>
-                    <label for="{{ account_form.bio.id_for_label }}">{% translate "New " context "bio" %}{{ account_form.bio.label }}</label>
+                    <label for="{{ account_form.bio.id_for_label }}">{{ account_form.bio.label }}</label>
                     {{ account_form.bio }}
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.new_password.errors }}</div>
-                    <label for="{{ account_form.new_password.id_for_label }}">{% translate 'New Password' %}</label>
+                    <label for="{{ account_form.new_password.id_for_label }}">{{ account_form.new_password.label }}</label>
                     {{ account_form.new_password }}
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.new_password_confirm.errors }}</div>
-                    <label for="{{ account_form.new_password_confirm.id_for_label }}">{% translate 'Confirm New Password' %}</label>
+                    <label for="{{ account_form.new_password_confirm.id_for_label }}">{{ account_form.new_password_confirm.label }}</label>
                     {{ account_form.new_password_confirm }}
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.avatar.errors }}</div>
-                    <label>New {{ account_form.avatar.label }}</label>
+                    <label>{{ account_form.avatar.label }}</label>
                     <div class="flex-row padding12 avatar-input-container">
                         <img class="profile-pic" id="profile-pic-preview-img" src="{{ request.user.avatar.url }}">
                         <div class="p-l-12">

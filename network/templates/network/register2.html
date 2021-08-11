@@ -47,7 +47,7 @@
                 </div>
                 {% csrf_token %}
                 <a class="btn btn-outline-secondary equal-width-button" href="{% url 'register3' %}">{% translate "Skip" %}</a>
-                <input class="btn btn-primary equal-width-button" type="submit" name="Update Information" value="Save">
+                <input class="btn btn-primary equal-width-button" type="submit" name="Update Information" value="{% translate 'Save' %}">
             </form>
         </div>
     </div>

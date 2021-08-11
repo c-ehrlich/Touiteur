@@ -8,39 +8,46 @@ from network.models import Post, User
 
 class EditAccountForm(forms.ModelForm):
     password = forms.CharField(
+        label = _("Current Password (required)"),
         required = True,
         # Label = "Current Password",
         widget = forms.PasswordInput(attrs={
             'class': 'form-control',
         }))
     username = forms.CharField(
+        label = _("New Username"),
         required=False,
         widget = forms.TextInput(attrs={
             'class': 'form-control form-control-left-padding-for-at-sign',
         }))
     displayname = forms.CharField(
+        label = _("New Display Name"),
         required=False,
         widget = forms.TextInput(attrs={
             'class': 'form-control',
         }))
     email = forms.EmailField(
+        label = _("New Email"),
         required=False,
         widget = forms.EmailInput(attrs={
             'class': 'form-control',
         }))
     bio = forms.CharField(
+        label = _("New Bio"),
         required=False,
         widget = forms.Textarea(attrs={
             'rows': 3,
             'class': 'form-control',
         }))
     new_password = forms.CharField(
+        label = _("New Password"),
         required=False,
         # Label = "New Password",
         widget = forms.PasswordInput(attrs={
             'class': 'form-control',
         }))
     new_password_confirm = forms.CharField(
+        label = _("Confirm New Password"),
         required=False,
         # Label = "Confirm New Password",
         widget = forms.PasswordInput(attrs={
