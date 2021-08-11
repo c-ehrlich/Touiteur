@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-11 11:39+0200\n"
+"POT-Creation-Date: 2021-08-11 12:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,9 +18,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: forms.py:94 models.py:150
+#: forms.py:63
+msgid "What's Happening?"
+msgstr ""
+
+#: forms.py:82
+msgid "Username"
+msgstr ""
+
+#: forms.py:86
+msgid "Up to 20 characters, alphanumeric"
+msgstr ""
+
+#: forms.py:92 models.py:150
 msgid "Display Name"
-msgstr "Anzeigename"
+msgstr ""
+
+#: forms.py:96
+msgid "Up to 50 characters"
+msgstr ""
+
+#: forms.py:101
+msgid "Email"
+msgstr ""
+
+#: forms.py:108
+msgid "Password"
+msgstr ""
+
+#: forms.py:115
+msgid "Confirm Password"
+msgstr ""
+
+#: forms.py:125 models.py:155
+msgid "Bio"
+msgstr ""
+
+#: forms.py:139 models.py:195
+msgid "Theme"
+msgstr ""
+
+#: forms.py:150 models.py:202
+msgid "Language"
+msgstr ""
+
+#: forms.py:161 models.py:179
+msgid "Show Liked Posts"
+msgstr ""
+
+#: forms.py:162
+msgid "Decide whether other users can see which posts you have liked."
+msgstr ""
 
 #: models.py:126
 msgid "Light Mode"
@@ -34,33 +82,19 @@ msgstr ""
 msgid "Avatar"
 msgstr ""
 
-#: models.py:155
-msgid "Bio"
-msgstr ""
-
 #: models.py:162 templates/network/following.html:6
 #: templates/network/following.html:13 templates/network/layout.html:51
 #: templates/network/user_profile.html:70
 msgid "Following"
-msgstr "Folge ich"
+msgstr ""
 
 #: models.py:168
-#, fuzzy
-#| msgid "Blocked Users"
 msgid "Blocked User"
-msgstr "Blockierte Benutzer"
+msgstr ""
 
 #: models.py:175
-#, fuzzy
-#| msgid "Liked Posts"
 msgid "Liked Post"
-msgstr "Gefällt Mir"
-
-#: models.py:179
-#, fuzzy
-#| msgid "Liked Posts"
-msgid "Show Liked Posts"
-msgstr "Gefällt Mir"
+msgstr ""
 
 #: models.py:184
 msgid "Mentions since last checked"
@@ -68,14 +102,6 @@ msgstr ""
 
 #: models.py:188
 msgid "DMs since last checked"
-msgstr ""
-
-#: models.py:195
-msgid "Theme"
-msgstr ""
-
-#: models.py:202
-msgid "Language"
 msgstr ""
 
 #: models.py:206
@@ -103,52 +129,44 @@ msgid "Text"
 msgstr ""
 
 #: models.py:280
-#, fuzzy
-#| msgid "Mentions"
 msgid "Mentioned User"
-msgstr "Erwähnungen"
+msgstr ""
 
 #: models.py:289
-#, fuzzy
-#| msgid "Reply"
 msgid "Reply To"
-msgstr "Antworten"
+msgstr ""
 
 #: models.py:293
 msgid "Image"
 msgstr ""
 
 #: models.py:342
-#, fuzzy
-#| msgid "Posts"
 msgid "Post"
-msgstr "Beiträge"
+msgstr ""
 
 #: models.py:343 templates/network/user_profile.html:57
 msgid "Posts"
-msgstr "Beiträge"
+msgstr ""
 
 #: templates/network/compose.html:26
 msgid "Submit"
-msgstr "Senden"
+msgstr ""
 
 #: templates/network/dm_thread.html:6 templates/network/dms.html:6
 msgid "DMs"
-msgstr "Nachrichten"
+msgstr ""
 
 #: templates/network/dm_thread.html:15 templates/network/dms.html:12
 msgid "Direct Messages"
-msgstr "Nachrichten"
+msgstr ""
 
 #: templates/network/dms.html:21
 msgid "New Conversation"
-msgstr "Neue Nachricht"
+msgstr ""
 
 #: templates/network/dms.html:32
 msgid "No new messages (you should not see this)"
 msgstr ""
-"Keine Neuen Nachrichten (Wenn Sie diese Nachricht sehen ist ein Fehler "
-"aufgetreten)"
 
 #: templates/network/dms.html:74
 msgid "You don\\"
@@ -159,132 +177,130 @@ msgstr ""
 #: templates/network/user.html:30
 msgid "No new posts (you should not see this)"
 msgstr ""
-"Keine neuen Beiträge (Wenn Sie diese Nachricht sehen ist ein Fehler "
-"aufgetreten)"
 
 #: templates/network/index.html:6 templates/network/index.html:18
 msgid "Public Timeline"
-msgstr "Alle Beiträge"
+msgstr ""
 
 #: templates/network/layout-nonav.html:8
 msgid "Registration"
-msgstr "Registrierung"
+msgstr ""
 
 #: templates/network/layout.html:47
 msgid "All Posts"
-msgstr "Alle Beiträge"
+msgstr ""
 
 #: templates/network/layout.html:55 templates/network/mentions.html:16
 msgid "Mentions"
-msgstr "Erwähnungen"
+msgstr ""
 
 #: templates/network/layout.html:83
 msgid "Log Out"
-msgstr "Ausloggen"
+msgstr ""
 
 #: templates/network/layout.html:87
 msgid "Log In"
-msgstr "Einloggen"
+msgstr ""
 
 #: templates/network/layout.html:90 templates/network/register.html:13
 msgid "Register"
-msgstr "Registrieren"
+msgstr ""
 
 #: templates/network/likes.html:6 templates/network/likes.html:17
 #, python-format
 msgid "@%(view_user.username)s's liked posts"
-msgstr "@%(view_user.username)s's Gefällt Mir-Beiträge"
+msgstr ""
 
 #: templates/network/likes.html:34
 #, python-format
 msgid "@%(view_user.username)s has set their likes to private."
-msgstr "@%(view_user.username)s's Gefällt Mir-Beiträge sind privat."
+msgstr ""
 
 #: templates/network/login.html:6 templates/network/login.html:13
 #: templates/network/login.html:31
 msgid "Login"
-msgstr "Einloggen"
+msgstr ""
 
 #: templates/network/login.html:35
 msgid "Don't have an account? "
-msgstr "Noch kein Konto? "
+msgstr ""
 
 #: templates/network/login.html:35
 msgid "Register here."
-msgstr "Hier registrieren."
+msgstr ""
 
 #: templates/network/post.html:6
 #, python-format
 msgid "Post by @%(post.author.username)s"
-msgstr "Beiträge von @%(post.author.username)s"
+msgstr ""
 
 #: templates/network/post.html:22
 #, python-format
 msgid "Reply to @%(post.reply_to.user)s: %(post.reply_to.text)s"
-msgstr "Antwort an @%(post.reply_to.user)s: %(post.reply_to.text)s"
+msgstr ""
 
 #: templates/network/post.html:41 templates/network/posts.html:38
 msgid "The author of this post has blocked you."
-msgstr "Der Autor diese Beitrages hat dich blockiert."
+msgstr ""
 
 #: templates/network/post.html:51 templates/network/user_profile.html:24
 msgid "Message"
-msgstr "Nachricht"
+msgstr ""
 
 #: templates/network/post.html:54 templates/network/settings.html:119
 #: templates/network/user_profile.html:27
 msgid "Block"
-msgstr "Blockieren"
+msgstr ""
 
 #: templates/network/post.html:57 templates/network/settings.html:127
 #: templates/network/user_profile.html:30
 msgid "Unblock"
-msgstr "Entblocken"
+msgstr ""
 
 #: templates/network/post.html:61 templates/network/user_profile.html:34
 msgid "Share"
-msgstr "Teilen"
+msgstr ""
 
 #: templates/network/post.html:68 templates/network/user_profile.html:41
 msgid "Unfollow"
-msgstr "Entfolgen"
+msgstr ""
 
 #: templates/network/post.html:70 templates/network/user_profile.html:43
 msgid "Follow"
-msgstr "Folgen"
+msgstr ""
 
 #: templates/network/post.html:80 templates/network/posts.html:42
 msgid "This post is hidden because you blocked the author."
-msgstr "Dieser Beitrag ist versteckt weil du den Autor blockiert hast"
+msgstr ""
 
 #: templates/network/post.html:83 templates/network/posts.html:129
 msgid "Show Post"
-msgstr "Beitrag Zeigen"
+msgstr ""
 
 #: templates/network/post.html:160 templates/network/posts.html:141
 msgid "Reply"
-msgstr "Antworten"
+msgstr ""
 
 #: templates/network/post.html:170
 #, python-format
 msgid "%(post.replies.count)s replies"
-msgstr "%(post.replies.count)s Antworten"
+msgstr ""
 
 #: templates/network/posts.html:10
 #, python-format
 msgid "Reply to @%(author)s: %(text)s"
-msgstr "Antwort an @%(author)s: %(text)s"
+msgstr ""
 
 #: templates/network/posts.html:119
 #, python-format
 msgid "1 reply. Click to view."
 msgid_plural "%(count)s replies. Click to view."
-msgstr[0] "Eine Antwort."
-msgstr[1] "%(count)s Antworten."
+msgstr[0] ""
+msgstr[1] ""
 
 #: templates/network/posts.html:149
 msgid "No posts found 🙁"
-msgstr "Keine Beiträge gefunden 🙁"
+msgstr ""
 
 #: templates/network/register.html:60
 #, python-format
@@ -296,29 +312,25 @@ msgstr ""
 #: templates/network/register2.html:6 templates/network/register2.html:14
 #: templates/network/register3.html:6 templates/network/register3.html:14
 msgid "Add Account Details"
-msgstr "Konto-Details Hinzufügen"
+msgstr ""
 
 #: templates/network/register2.html:17
 msgid ""
 "Here you can add additional information to your account. This is optional, "
 "and you can also do it later by visiting the account settings."
 msgstr ""
-"Hier kannst du zusätzliche Informationen zu deinem Konto hizufügen. Dies ist "
-"optionell, und du kannst es auch später in den Einstellungen ändern."
 
 #: templates/network/register2.html:40 templates/network/settings.html:97
 msgid "Upload new avatar"
-msgstr "Profilbild hochladen"
+msgstr ""
 
 #: templates/network/register2.html:43
 msgid "Note: The avatar won't be updated until you press \"Save\" "
 msgstr ""
-"Vorsicht: Das Profilbild wird erst gespeichert wenn du auf \"Speichern\" "
-"drückst."
 
 #: templates/network/register2.html:49 templates/network/register3.html:57
 msgid "Skip"
-msgstr "Überspringen"
+msgstr ""
 
 #: templates/network/register3.html:17
 msgid ""
@@ -326,224 +338,214 @@ msgid ""
 "This is optional, and you can also do it later by visiting the account "
 "settings."
 msgstr ""
-"Hier kannst du die Regions- Anzeige-, und Privatsphären-Einstellungen für "
-"deinKonto einstellen. Dies ist optionell, und du kannst es auch später in "
-"denEinstellungen ändern."
 
 #: templates/network/register3.html:25 templates/network/settings.html:137
 msgid "Display"
-msgstr "Anzeige"
+msgstr ""
 
 #: templates/network/register3.html:43 templates/network/settings.html:155
 msgid "Privacy"
-msgstr "Privatsphäre"
+msgstr ""
 
 #: templates/network/settings.html:6
 msgid "Settings"
-msgstr "Einstellungen"
+msgstr ""
 
 #: templates/network/settings.html:18
 msgid "Account"
-msgstr "Konto"
+msgstr ""
 
 #: templates/network/settings.html:22
 msgid "Blocklist"
-msgstr "Blockliste"
+msgstr ""
 
 #: templates/network/settings.html:26
 msgid "Preferences"
-msgstr "Einstellungen"
+msgstr ""
 
 #: templates/network/settings.html:47
 msgid "Current Password (required)"
-msgstr "Derzeitiges Passwort (erforderlich)"
+msgstr ""
 
 #: templates/network/settings.html:57
 msgctxt "username"
 msgid "New "
-msgstr "Neuer "
+msgstr ""
 
 #: templates/network/settings.html:64
 msgctxt "displayname"
 msgid "New "
-msgstr "Neuer "
+msgstr ""
 
 #: templates/network/settings.html:69
 msgctxt "email"
 msgid "New "
-msgstr "Neue "
+msgstr ""
 
 #: templates/network/settings.html:74
 msgctxt "bio"
 msgid "New "
-msgstr "Neue "
+msgstr ""
 
 #: templates/network/settings.html:79
 msgid "New Password"
-msgstr "Neues Passwort"
+msgstr ""
 
 #: templates/network/settings.html:84
 msgid "Confirm New Password"
-msgstr "Neues Passwort Bestätigen"
+msgstr ""
 
 #: templates/network/settings.html:100
 msgid "Note: The avatar won't be updated until you press \"Save\""
 msgstr ""
-"Vorsicht: Das Profilbild wird erst gespeichert wenn du auf \"Speichern\" "
-"drückst."
 
 #: templates/network/settings.html:107 templates/network/settings.html:169
 msgid "Cancel"
-msgstr "Abbrechen"
+msgstr ""
 
 #: templates/network/settings.html:108
 msgid "Save"
-msgstr "Speichern"
+msgstr ""
 
 #: templates/network/settings.html:116
 msgid "Add a user to blocklist"
-msgstr "Einen Benutzer zur Blockliste hinzufügen"
+msgstr ""
 
 #: templates/network/settings.html:121
 msgid "Blocked Users"
-msgstr "Blockierte Benutzer"
+msgstr ""
 
 #: templates/network/settings.html:130
 msgid "Blocklist is empty."
-msgstr "Blockliste ist leer."
+msgstr ""
 
 #: templates/network/user.html:23
 #, python-format
 msgid "Posts by @%(view_user.username)s"
-msgstr "Beiträge von @%(view_user.username)s"
+msgstr ""
 
 #: templates/network/user_profile.html:64
 msgid "Liked Posts"
-msgstr "Gefällt Mir"
+msgstr ""
 
 #: templates/network/user_profile.html:73
 msgid "Followers"
-msgstr "Folgen"
+msgstr ""
 
-#: views.py:177
+#: views.py:176
 msgid "Invalid username and/or password."
-msgstr "Benutzername und/oder Passwort ist ungültig."
+msgstr ""
 
-#: views.py:272
+#: views.py:271
 msgid "Passwords must match."
-msgstr "Passwörter müssen übereinstimmen"
+msgstr ""
 
-#: views.py:278 views.py:397
+#: views.py:277 views.py:396
 msgid "Username is not valid."
-msgstr "Benutzername ist nicht gültig"
+msgstr ""
 
-#: views.py:289
+#: views.py:288
 msgid "Username already taken."
-msgstr "Ein Konto mit diesem Benutzername existiert bereits."
+msgstr ""
 
-#: views.py:324 views.py:354 views.py:417
+#: views.py:323 views.py:353 views.py:416
 msgid "Form data is invalid"
-msgstr "Daten sind ungültig."
+msgstr ""
 
-#: views.py:394
+#: views.py:393
 msgid "Incorrect password."
-msgstr "Inkorrektes Passwort"
+msgstr ""
 
-#: views.py:399
+#: views.py:398
 msgid "New passwords don't match."
-msgstr "Die neuen Passwörter stimmen nicht überein."
+msgstr ""
 
-#: views.py:406
+#: views.py:405
 msgid "Form data is invalid."
-msgstr "Daten sind ungültig."
+msgstr ""
 
-#: views.py:518
+#: views.py:517
 msgid "User is already blocked."
-msgstr "Dieser Benutzer ist bereits blockiert."
+msgstr ""
 
-#: views.py:531
+#: views.py:530
 msgid "User is already not blocked."
-msgstr "Dieser Benutzer ist bereits nicht blockiert."
+msgstr ""
 
-#: views.py:538 views.py:681 views.py:713 views.py:783
+#: views.py:537 views.py:680 views.py:712 views.py:782
 msgid "PUT request required."
-msgstr "PUT request benötigt."
+msgstr ""
 
-#: views.py:601
+#: views.py:600
 msgid "You can't submit an empty post"
-msgstr "Du kannst keinen leeren Beitrag senden."
+msgstr ""
 
-#: views.py:613
+#: views.py:612
 msgid "Form data invalid"
-msgstr "Daten sind ungültig."
+msgstr ""
 
-#: views.py:624
+#: views.py:623
 msgid "Maximum post length is 140 characters"
-msgstr "Beiträge dürfen höchstens 140 Zeichen lang sein."
+msgstr ""
 
-#: views.py:635
+#: views.py:634
 msgid "Post edited successfully"
-msgstr "Beitrag erfolgreich bearbeitet"
+msgstr ""
 
-#: views.py:640
+#: views.py:639
 msgid "You are not authorized to edit this post"
-msgstr "Du hast nicht das Recht diesen Beitrag zu bearbeiten"
+msgstr ""
 
-#: views.py:652
+#: views.py:651
 msgid "You cannot follow your own account."
-msgstr "Du kannst dir nicht selbst folgen."
+msgstr ""
 
-#: views.py:662
+#: views.py:661
 msgid "You cannot follow this user because there is a block relationship."
 msgstr ""
-"Du kannst diesem Benutzer nicht folgen weil eine Block-Beziehung existiert."
 
-#: views.py:666
+#: views.py:665
 #, python-brace-format
 msgid "followed user {user_to_follow}"
-msgstr "{user_to_follow} wurde gefolgt"
+msgstr ""
 
-#: views.py:672
+#: views.py:671
 #, python-brace-format
 msgid "unfollowed user {user_to_follow}"
-msgstr "{user_to_follow} wurde entfolgt"
+msgstr ""
 
-#: views.py:676
+#: views.py:675
 msgid "follow intent does not match current follow state"
-msgstr "TKTKTK follow intent does not match follow state"
+msgstr ""
 
-#: views.py:694
+#: views.py:693
 msgid "You cannot like this post because there is a block relationship."
 msgstr ""
-"Du kannst diesen Beitrag nicht als \"Gefällt Mir\" markieren weil eine Block-"
-"Beziehung existiert."
 
-#: views.py:698
+#: views.py:697
 msgid "Post liked successfully"
-msgstr "Beitrag erfolgreich als \"Gefällt Mir\" markiert."
+msgstr ""
 
-#: views.py:706
+#: views.py:705
 msgid "Post unliked successfully"
-msgstr "Beitrag erfolgreich von \"Gefällt Mir\" entfernt."
+msgstr ""
 
-#: views.py:754
+#: views.py:753
 msgid "GET request required."
-msgstr "GET request benötigt."
+msgstr ""
 
-#: views.py:769
+#: views.py:768
 msgid "You cannot reply to this post because there is a block relationship."
 msgstr ""
-"Du kannst auf diesen Beitrag nicht antwoorten weil eine Block-Beziehung "
-"existiert."
 
-#: views.py:799
+#: views.py:798
 msgid "All posts marked as read"
-msgstr "Alle Beiträge als gesehen markiert."
+msgstr ""
 
-#: views.py:803
+#: views.py:802
 msgid "Error setting thread to read"
-msgstr "Fehler: Gespräch konnte nicht als gesehen markiert werden."
+msgstr ""
 
-#: views.py:807
+#: views.py:806
 msgid "PUT request required"
-msgstr "PUT request benötigt"
+msgstr ""
