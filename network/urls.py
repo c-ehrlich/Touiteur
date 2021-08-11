@@ -28,6 +28,7 @@ urlpatterns += [
     path("register2", views.register2, name="register2"),
     path("register3", views.register3, name="register3"),
     path("settings", views.settings, name="settings"),
+    path("settings/<str:page>", views.settings_page, name="settings_page"),
     path("user/<str:username>", views.user, name="user"),
 
     # API Routes

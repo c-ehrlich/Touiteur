@@ -140,7 +140,7 @@ function blockSettingsDOMManipulation(userId, userName, displayName, userAvatar)
   blockedUserButton.classList.add('blocklist-unblock-button', 'btn', 'btn-outline-light');
   blockedUserButton.setAttribute('userid', userId);
   blockedUserButton.setAttribute('username', userName);
-  blockedUserButton.innerHTML = 'Unblock';
+  blockedUserButton.innerHTML = gettext('Unblock');
   blockedUserButton.addEventListener('click', event => {
     let userId = event.target.getAttribute('userid');
     let userName = event.target.getAttribute('username');

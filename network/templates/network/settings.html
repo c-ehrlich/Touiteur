@@ -116,7 +116,7 @@
             <h4 class="mb12 mt4">{% translate "Add a user to blocklist" %}</h4>
             <div class="flex-row" id="add-to-blocklist">
                 <input type="text" id="add-to-blocklist-input" class="form-control">
-                <button id="add-to-blocklist-button" class="btn btn-primary">{% translate "Block" %}</button>
+                <button id="add-to-blocklist-button" class="btn btn-primary equal-width-button">{% translate "Block" %}</button>
             </div>
             <h4 class="mt32 mb0" id="blocked-users-header">{% translate "Blocked Users" %}</h4>
             {% for blocked_user in blocklist %}
@@ -167,7 +167,7 @@
 
                 {% csrf_token %}
                 <a class="btn btn-outline-light equal-width-button" href="{% url 'index' %}">{% translate 'Cancel' %}</a>
-                <input class="btn btn-primary equal-width-button" type="submit" name="preferences-form-button" value="Save">
+                <input class="btn btn-primary equal-width-button" type="submit" name="preferences-form-button" value="{% translate 'Save' %}">
             </form>
         </div>
     </div>

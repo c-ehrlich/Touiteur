@@ -72,11 +72,11 @@ msgstr "Email-Addresse"
 
 #: forms.py:115
 msgid "Password"
-msgstr "Neues Passwort"
+msgstr "Passwort"
 
 #: forms.py:122
 msgid "Confirm Password"
-msgstr "Neues Passwort Bestätigen"
+msgstr "Passwort Bestätigen"
 
 #: forms.py:132 models.py:155
 msgid "Bio"

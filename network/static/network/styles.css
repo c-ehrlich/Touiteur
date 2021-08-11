@@ -1286,7 +1286,7 @@ h4 {
     /* max-width: 400px; */
     display: grid;
     grid-template-rows: auto auto;
-    grid-template-columns: 64px auto 100px;
+    grid-template-columns: 64px auto 112px;
     grid-template-areas: 
         "avatar displayname button"
         "avatar username button";
@@ -1339,7 +1339,7 @@ h4 {
     gap: 12px;
     display: grid;
     grid-template-rows: auto;
-    grid-template-columns: auto 100px;
+    grid-template-columns: auto 112px;
     grid-template-areas: "input button";
 }
 #add-to-blocklist-input {

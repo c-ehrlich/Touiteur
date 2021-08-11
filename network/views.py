@@ -406,12 +406,12 @@ def settings(request):
 
         elif 'preferences-form-button' in request.POST:
             context['start_tab'] = "preferences"
+            language_check = user.language
             form = RegisterAccountStage3Form(request.POST, instance = user)
             if form.is_valid():
-                user.theme = form.cleaned_data['theme']
-                user.language = form.cleaned_data['language']
-                user.show_liked_posts = form.cleaned_data['show_liked_posts']
                 user.save()
+                if language_check != user.language:
+                    return HttpResponseRedirect(reverse("settings_page", args=['preferences'])) 
             else:
                 context['message'] = _("Form data is invalid")
         else:
@@ -428,6 +428,32 @@ def settings(request):
         context['blocklist'] = blocklist
         return render(request, "network/settings.html", context)
 
+    else:
+        return HttpResponseBadRequest()
+
+
+def settings_page(request, page):
+    """This entire function is a dirty hack to let us load the settings page via GET with a specific tab open
+
+    There's probably a better way of doing this
+    TODO figure it out
+    Example: maybe have an optional settings parameter in the regular settings view?
+    """
+    if request.method == "GET":
+        user = request.user
+        blocklist = user.blocked_users.only(
+            'username',
+            'displayname',
+            'avatar'
+        ).order_by(
+            'username'
+        )
+        return render(request, "network/settings.html", {
+            "account_form": EditAccountForm(instance = user),
+            "preferences_form": RegisterAccountStage3Form(instance = user),
+            "blocklist": blocklist,
+            "start_tab": page,
+        })
     else:
         return HttpResponseBadRequest()
 
