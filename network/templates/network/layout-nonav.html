@@ -25,10 +25,10 @@
             <div id="var-user-theme">{{ user.theme }}</div>
         </div>
         <div id="outermost-container" class="{{ user.theme|default:'_theme_light' }}">
-            <a class="navbar-brand" href="{% url 'index' %}">
+            <div class="nonav-header">
                 <img src="{% static 'network/logo-128.png' %}" id="header-logo-img">
                 <div id="header-type">Touiteur</div>
-            </a>
+            </div>
             
             <div class="body">
                 {% block body %}

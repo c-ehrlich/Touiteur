@@ -56,7 +56,7 @@ msgstr "Benutzername"
 
 #: forms.py:93
 msgid "Up to 20 characters, alphanumeric"
-msgstr "Maximal 20 Zeichen, alphanumerisch (keine Umlaute oder Sonderzeichen)"
+msgstr "Maximal 20 Zeichen, alphanumerisch"
 
 #: forms.py:99 models.py:150
 msgid "Display Name"

@@ -836,7 +836,8 @@ hr {
     }
 }
 .reg-login-form-item {
-    width: 300px;
+    width: 350px;
+    max-width: 90vw;
 }
 .login-form {
     display: flex;
@@ -927,7 +928,7 @@ hr {
 }
 
 .equal-width-button {
-    width: 80px;
+    width: 112px;
 }
 
 .hidden {
@@ -1173,6 +1174,10 @@ input[type="file"] {
 }
 .mt32 {
     margin-top: 32px;
+}
+
+pt12 {
+    padding-top: 12px;
 }
 
 label {
@@ -1445,4 +1450,15 @@ h4 {
     color: var(--color-text-default);
     border-color: var(--color-text-default);
     background-color: var(--color-box-bg-contrast);
+}
+
+.nonav-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    padding-top: 14px;
+    margin-bottom: 13px;
+    font-size: 1.25rem;
 }
