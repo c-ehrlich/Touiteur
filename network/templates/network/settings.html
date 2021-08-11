@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-    Edit Account
+    {% translate "Settings" %}
 {% endblock %}
 
 {% block body %}
@@ -15,15 +15,15 @@
         <ul>
             <li id="account-tab" class="settings-tab active-settings-tab">
                 <i class="account-tab-icon fas fa-user"></i>
-                <div class="account-tab-text">Account</div>
+                <div class="account-tab-text">{% translate "Account" %}</div>
             </li>
             <li id="blocklist-tab" class="settings-tab">
                 <i class="account-tab-icon fas fa-ban"></i>
-                <div class="account-tab-text">Blocklist</div>
+                <div class="account-tab-text">{% translate "Blocklist" %}</div>
             </li>
             <li id="preferences-tab" class="settings-tab">
                 <i class="account-tab-icon fas fa-cog"></i>
-                <div class="account-tab-text">Preferences</div>
+                <div class="account-tab-text">{% translate "Preferences" %}</div>
             </li>
         </ul>
     </div>
@@ -44,7 +44,7 @@
                 <div class="form-group w100 mb48">
                     <div class="margin-bottom-8 formlabel-text important-form-label">
                         <i class="fas fa-exclamation-triangle important-form-label-icon"></i> 
-                        Current Password (required)
+                        {% translate "Current Password (required)" %}
                         <i class="fas fa-exclamation-triangle important-form-label-icon"></i> 
                     </div>
                     {% if account_form.password.errors %}
@@ -54,34 +54,34 @@
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.username.errors }}</div>
-                    <label for="{{ account_form.username.id_for_label }}" class="formlabel-text">New {{ account_form.username.label }}</label>
+                    <label for="{{ account_form.username.id_for_label }}" class="formlabel-text">{% translate "New " context "username" %}{{ account_form.username.label }}</label>
                     <div class="input-with-at-sign">
                         {{ account_form.username }}
                     </div>
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.displayname.errors }}</div>
-                    <label for="{{ account_form.displayname.id_for_label }}" class="formlabel-text">New {{ account_form.displayname.label }}</label>
+                    <label for="{{ account_form.displayname.id_for_label }}" class="formlabel-text">{% translate "New " context "displayname" %}{{ account_form.displayname.label }}</label>
                     {{ account_form.displayname }}
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.email.errors }}</div>
-                    <label for="{{ account_form.email.id_for_label }}" class="formlabel-text">New {{ account_form.email.label }}</label>
+                    <label for="{{ account_form.email.id_for_label }}" class="formlabel-text">{% translate "New " context "email" %}{{ account_form.email.label }}</label>
                     {{ account_form.email }}
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.bio.errors }}</div>
-                    <label for="{{ account_form.bio.id_for_label }}">New {{ account_form.bio.label }}</label>
+                    <label for="{{ account_form.bio.id_for_label }}">{% translate "New " context "bio" %}{{ account_form.bio.label }}</label>
                     {{ account_form.bio }}
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.new_password.errors }}</div>
-                    <label for="{{ account_form.new_password.id_for_label }}">{% trans 'New Password' %}</label>
+                    <label for="{{ account_form.new_password.id_for_label }}">{% translate 'New Password' %}</label>
                     {{ account_form.new_password }}
                 </div>
                 <div class="form-group w100">
                     <div class="formerror-text">{{ account_form.new_password_confirm.errors }}</div>
-                    <label for="{{ account_form.new_password_confirm.id_for_label }}">{% trans 'Confirm New Password' %}</label>
+                    <label for="{{ account_form.new_password_confirm.id_for_label }}">{% translate 'Confirm New Password' %}</label>
                     {{ account_form.new_password_confirm }}
                 </div>
                 <div class="form-group w100">
@@ -94,17 +94,17 @@
                         </div>
                         <div class="flex-column-align-left margin-left-12">
                             <label for="{{ account_form.avatar.id_for_label }}" class="btn btn-sm btn-outline-primary">
-                                <i class="fa fa-cloud-upload"></i> {% trans 'Upload new avatar' %}
+                                <i class="fa fa-cloud-upload"></i> {% translate 'Upload new avatar' %}
                             </label>
                             <div class="custom-file-upload-helper-text formlabel-text" id="custom-file-upload-helper-text">
-                                {% trans 'Note: The avatar won\'t be updated until you press \"Save\"' %}
+                                {% blocktranslate %}Note: The avatar won't be updated until you press "Save"{% endblocktranslate %}
                             </div>
                         </div>
                     </div>
                 </div>
                 {% csrf_token %}
                 <div class="flex-row">
-                    <a class="btn btn-outline-light equal-width-button" href="{% url 'index' %}">{% trans 'Cancel' %}</a>
+                    <a class="btn btn-outline-light equal-width-button" href="{% url 'index' %}">{% translate 'Cancel' %}</a>
                     <input class="btn btn-primary equal-width-button margin-left-4" type="submit" name="account-form-button" value="{% trans 'Save' %}">
                 </div>
             </div>
@@ -113,28 +113,28 @@
 
     <div hidden id="blocklist-form" class="reg-login-outer">
         <div class="reg-login-inner" id="block-box">
-            <h4 class="mb12 mt4">Add a user to blocklist</h4>
+            <h4 class="mb12 mt4">{% translate "Add a user to blocklist" %}</h4>
             <div class="flex-row" id="add-to-blocklist">
                 <input type="text" id="add-to-blocklist-input" class="form-control">
-                <button id="add-to-blocklist-button" class="btn btn-primary">Block</button>
+                <button id="add-to-blocklist-button" class="btn btn-primary">{% translate "Block" %}</button>
             </div>
-            <h4 class="mt32 mb0" id="blocked-users-header">Blocked Users</h4>
+            <h4 class="mt32 mb0" id="blocked-users-header">{% translate "Blocked Users" %}</h4>
             {% for blocked_user in blocklist %}
                 <div class="blocklist-grid" id="unblock-row-{{ blocked_user.id }}">
                     <img class="blocklist-avatar-img" src="{{ blocked_user.avatar.url}}">
                     <div class="blocklist-displayname">{{ blocked_user.displayname }}</div>
                     <div class="blocklist-username">@{{ blocked_user.username }}</div>
-                    <button class="blocklist-unblock-button btn btn-outline-light" userid="{{ blocked_user.id }}" username="{{ blocked_user.username }}">Unblock</button>
+                    <button class="blocklist-unblock-button btn btn-outline-light" userid="{{ blocked_user.id }}" username="{{ blocked_user.username }}">{% translate "Unblock" %}</button>
                 </div>
             {% endfor %}
-            <div {% if blocklist.count != 0 %}hidden{% endif %} id="blocklist-empty">{% trans 'Blocklist is empty.' %}</div>
+            <div {% if blocklist.count != 0 %}hidden{% endif %} id="blocklist-empty">{% translate 'Blocklist is empty.' %}</div>
         </div>
     </div>
 
     <div hidden id="preferences-form" class="reg-login-outer">
         <div class="reg-login-inner">
             <form method="POST" action="" class="form-100-test">
-                <h4>Display</h4>
+                <h4>{% translate "Display" %}</h4>
                 <!-- Language -->
                 <div class="form-group mw350">
                     {{ preferences_form.language.errors }}
@@ -152,7 +152,7 @@
                     </div>
                 </div>
 
-                <h4>Privacy</h4>
+                <h4>{% translate "Privacy" %}</h4>
                 <!-- Show/hide likes -->
                 <div class="form-group mw350">
                     {{ preferences_form.show_liked_posts.errors }}
@@ -166,7 +166,7 @@
                 </div>
 
                 {% csrf_token %}
-                <a class="btn btn-outline-light equal-width-button" href="{% url 'index' %}">{% trans 'Cancel' %}</a>
+                <a class="btn btn-outline-light equal-width-button" href="{% url 'index' %}">{% translate 'Cancel' %}</a>
                 <input class="btn btn-primary equal-width-button" type="submit" name="preferences-form-button" value="Save">
             </form>
         </div>

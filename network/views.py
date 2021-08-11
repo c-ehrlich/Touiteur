@@ -9,8 +9,7 @@ from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.http.response import HttpResponseBadRequest
 from django.shortcuts import render
 from django.urls import reverse
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as _lazy
+from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_protect
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, RegisterAccountStage2Form, RegisterAccountStage3Form
@@ -391,7 +390,7 @@ def settings(request):
                 new_password_confirm = form.cleaned_data["new_password_confirm"]
 
                 if user is None:
-                    context['message'] = "Poopykakalaka"
+                    context['message'] = _("Incorrect password.")
                 elif utils.check_username_validity(form.cleaned_data["username"]) == False:
                     user = User.objects.get(id=request.user.id)
                     context['message'] = _("Username is not valid.")
@@ -667,7 +666,6 @@ def follow(request, user_id):
                 }, status=201)
             # good unfollow request
             if data['intent'] == 'unfollow' and user_to_follow in user.following.all():
-                print("you are currently following this user")
                 user.following.remove(user_to_follow)
                 return JsonResponse({
                     "message": _(f"unfollowed user {user_to_follow}")
@@ -710,7 +708,6 @@ def like(request, post_id):
                 "like_count": post.users_who_liked.count(),
                 }, status=201)
     else:
-        print("ERROR please only come here via PUT")
         return JsonResponse({
             "error": _("PUT request required.")
         }, status=400)

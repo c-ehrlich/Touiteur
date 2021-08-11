@@ -3,14 +3,14 @@
 {% load i18n %}
 
 {% block title %}
-    Login
+    {% translate "Login" %}
 {% endblock %}
 
 {% block body %}
 
     <div class="section-identifier">
         <div class="section-identifier-inner">
-            Login
+            {% translate "Login" %}
         </div>
     </div>
 
@@ -28,11 +28,11 @@
                 <div class="form-group reg-login-form-item">
                     <input class="form-control" type="password" name="password" placeholder="Password">
                 </div>
-                <input class="btn btn-primary" type="submit" value="Login">
+                <button class="btn btn-primary" type="submit" value="Login">{% translate "Login" %}</button>
             </form>
 
             <div class="login-helper-text">
-                {% trans 'Don\'t have an account? ' %}<a href="{% url 'register' %}" class="link-attn">{% trans 'Register here.' %}</a>
+                {% translate "Don't have an account? " %}<a href="{% url 'register' %}" class="link-attn">{% translate 'Register here.' %}</a>
             </div>
         </div>
     </div>

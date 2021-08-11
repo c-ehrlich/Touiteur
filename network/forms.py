@@ -1,8 +1,7 @@
 from django import forms
 from django.core.files.images import get_image_dimensions
 
-from django.utils.translation import ugettext as _
-from django.utils.translation import ugettext_lazy as _lazy
+from django.utils.translation import gettext_lazy as _
 
 from network.models import Post, User
 
@@ -55,18 +54,17 @@ class EditAccountForm(forms.ModelForm):
 
 class NewPostForm(forms.Form):
     text = forms.CharField(
-        # label = "New Post",
         max_length = 140,
         required = True,
         widget = forms.Textarea(attrs={
             'rows':4,
             'class': 'form-control',
             'id': 'compose-form-post-text',
-            'placeholder': "What's Happening?"
+            'placeholder': _("What's Happening?"),
         })
     )
     image = forms.ImageField(
-        label = "post_image",
+        label = "post_image", #DON'T TRANSLATE THIS - IT'S NOT VISIBLE ON THE PAGE AND REQUIRED FOR A DUMB HACK
         required = False,
         widget = forms.FileInput(attrs={
             'class': 'form-control',
@@ -81,7 +79,7 @@ class NewPostForm(forms.Form):
 
 class RegisterAccountForm(forms.Form):
     username = forms.CharField(
-        label = "Username",
+        label = _("Username"),
         max_length = 20,
         required = True,
         widget=forms.TextInput(attrs={
@@ -91,7 +89,7 @@ class RegisterAccountForm(forms.Form):
         })
     )
     displayname = forms.CharField(
-        label = "Display Name",
+        label = _("Display Name"),
         max_length = 50,
         required = True,
         widget=forms.TextInput(attrs={
@@ -100,21 +98,21 @@ class RegisterAccountForm(forms.Form):
         })
     )
     email = forms.EmailField(
-        label = "Email",
+        label = _("Email"),
         required = True,
         widget=forms.EmailInput(attrs={
             'class': 'form-control reg-login-form-item',
         })
     )
     password = forms.CharField(
-        label = "Password",
+        label = _("Password"),
         required = True,
         widget = forms.PasswordInput(attrs={
             'class': 'form-control reg-login-form-item',
         })
     )
     confirmation = forms.CharField(
-        label = "Confirm Password",
+        label = _("Confirm Password"),
         required = True,
         widget = forms.PasswordInput(attrs={
             'class': 'form-control reg-login-form-item',
@@ -124,7 +122,7 @@ class RegisterAccountForm(forms.Form):
 
 class RegisterAccountStage2Form(forms.ModelForm):
     bio = forms.CharField(
-        label = "Bio",
+        label = _("Bio"),
         required = False,
         widget = forms.Textarea(attrs={
             'rows': 3,
@@ -138,7 +136,7 @@ class RegisterAccountStage2Form(forms.ModelForm):
 class RegisterAccountStage3Form(forms.ModelForm):
     # Display settings
     theme = forms.CharField(
-        label = "Theme",
+        label = _("Theme"),
         required = True,
         # default = "_theme_light",
         widget = forms.Select(
@@ -149,7 +147,7 @@ class RegisterAccountStage3Form(forms.ModelForm):
         )
     )
     language = forms.CharField(
-        label = "Language",
+        label = _("Language"),
         required = True,
         widget = forms.Select(
             choices = User.LANGUAGES,
@@ -160,8 +158,8 @@ class RegisterAccountStage3Form(forms.ModelForm):
     )
 
     show_liked_posts = forms.BooleanField(
-        label = "Show Liked Posts",
-        help_text = "Decide whether other users can see which posts you have liked.",
+        label = _("Show Liked Posts"),
+        help_text = _("Decide whether other users can see which posts you have liked."),
         required = False,
         # default = True,
         widget = forms.CheckboxInput(attrs={

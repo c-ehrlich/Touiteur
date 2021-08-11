@@ -7,7 +7,9 @@
                 {% if post.reply_to != None %}
                     <div class="post-reply-to-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                         <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
-                            Reply to @{{ post.reply_to.author }}: {{ post.reply_to.text }}
+                            {% blocktranslate trimmed with author=post.reply_to.author text=post.reply_to.text %}
+                            Reply to @{{ author }}: {{ text }}
+                            {% endblocktranslate %}
                         </a>
                     </div>
                 {% endif %}
@@ -33,11 +35,11 @@
                         </div>
                     </div>
                     {% if post.user_blocked_by_author %}
-                        <div class="blocked-by-author"><i class="fas fa-ban"></i> {% trans 'The author of this post has blocked you.' %}</div>
+                        <div class="blocked-by-author"><i class="fas fa-ban"></i> {% translate 'The author of this post has blocked you.' %}</div>
                     {% else %}
                         {% if post.author_blocked_by_user %}
                             <div class="blocked-by-user blk-info-{{ post.id }}">
-                                <i class="fas fa-ban"></i> {% trans 'This post is hidden because you blocked the author.' %}
+                                <i class="fas fa-ban"></i> {% translate 'This post is hidden because you blocked the author.' %}
                             </div>
                         {% endif %}
                         <div id="post-text-container-{{ post.id }}" class="{% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
@@ -114,17 +116,17 @@
             {% if not post.user_blocked_by_author %}
                 <div {% if post.replies__count == 0 %}hidden{% endif %} class="post-replies-div {% if post.author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}" id="prsd-{{ post.id }}">
                     <a class="post-replies-link" id="prl-{{ post.id }}" href="{% url 'post' post.id %}">
-                        {% if post.replies__count == 1 %}
-                            1 reply. Click to view.
-                        {% elif post.replies__count > 1 %}
-                            {{ post.replies__count }} replies. Click to view.
-                        {% endif %}
+                        {% blocktranslate trimmed count count=post.replies__count %}
+                        1 reply. Click to view.
+                        {% plural %}
+                        {{ count }} replies. Click to view.
+                        {% endblocktranslate %}
                     </a>
                 </div>
             {% endif %}
             {% if post.author_blocked_by_user %}
                 <div class="blocked-by-user center-content blk-info-{{ post.id }}">
-                    <button class="blocked-by-user-reveal btn btn-outline-secondary" id="unhide-{{ post.id }}">Show Post</button>
+                    <button class="blocked-by-user-reveal btn btn-outline-secondary" id="unhide-{{ post.id }}">{% translate "Show Post" %}</button>
                 </div>
             {% endif %}
         </div>
@@ -136,7 +138,7 @@
                         <div id="pri-{{ post.id }}-count" class="post-character-count"></div>
                     </div>
                     <div class="flex-row-end">
-                        <button class="post-reply-submit hero-button-default" id="prs-{{ post.id }}">Reply</button>
+                        <button class="post-reply-submit hero-button-default" id="prs-{{ post.id }}">{% translate "Reply" %}</button>
                     </div>
                 </div>
             </div>
@@ -144,7 +146,7 @@
     {% empty %}
         <div class="section-identifier no-top-padding">
             <div class="no-posts-found">
-                {% trans 'No posts found 🙁' %}
+                {% translate "No posts found 🙁" %}
             </div>
         </div>
     {% endfor %}

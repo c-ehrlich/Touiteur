@@ -21,26 +21,26 @@
                 <div id="user-profile-dropdown-content">
                     {% if user.is_authenticated and user != view_user and not user_blocked_by_author %}
                         <a {% if author_blocked_by_user %}hidden {% endif %}href="{% url 'dm_thread' view_user %}">
-                            <i class="far fa-envelope"></i> Message
+                            <i class="far fa-envelope"></i> {% translate "Message" %}
                         </a>
                         <div id="block-button" {% if author_blocked_by_user %}hidden {% endif %}href="">
-                            <i class="far fa-eye-slash"></i> Block
+                            <i class="far fa-eye-slash"></i> {% translate "Block" %}
                         </div>
                         <div id="unblock-button" {% if not author_blocked_by_user %}hidden {% endif %}href="">
-                            <i class="far fa-eye"></i> Unblock
+                            <i class="far fa-eye"></i> {% translate "Unblock" %}
                         </div>
                     {% endif %}
                     <div id="share-profile-button" href="">
-                        <i class="fas fa-share-square"></i> Share
+                        <i class="fas fa-share-square"></i> {% translate "Share" %}
                     </div>
                 </div>
             </div>
             {% if not user == view_user and not author_blocked_by_user and not user_blocked_by_author %}
                 <div id="follow-button-div">
                     {% if view_user in user.following.all %}
-                        <button id="unfollow-button" class="hero-button-bad">{% trans 'Unfollow' %}</button>
+                        <button id="unfollow-button" class="hero-button-bad">{% translate 'Unfollow' %}</button>
                     {% else %}
-                        <button id="follow-button" class="hero-button-default">{% trans 'Follow' %}</button>
+                        <button id="follow-button" class="hero-button-default">{% translate 'Follow' %}</button>
                     {% endif %}
                 </div>
             {% endif %}
@@ -54,23 +54,23 @@
                 </a>
                 &nbsp;
                 <a href="{% url 'user' view_user %}" id="user-profile-post-count-label" class="flex-row">
-                    {% trans 'Posts' %}
+                    {% translate 'Posts' %}
                 </a>
                 <a href="{% url 'likes' view_user %}" id="user-profile-liked-posts-count" class="flex-row">
                     {{ view_user.liked_posts.count }} 
                 </a>
                 &nbsp;
                 <a href="{% url 'likes' view_user %}" id="user-profile-liked-posts-count-label" class="flex-row">
-                    {% trans 'Liked Posts' %}
+                    {% translate 'Liked Posts' %}
                 </a>
             </div>
             <div id="user-profile-follower-info-div">
                 <div id="user-profile-following-count">{{ view_user.following.count }}</div>
                 &nbsp;
-                <div id="user-profile-following-count-label">{% trans 'Following' %}</div>
+                <div id="user-profile-following-count-label">{% translate 'Following' %}</div>
                 <div id="user-profile-follower-count">{{ view_user.followed_by.count }}</div>
                 &nbsp;
-                <div id="user-profile-follower-count-label">{% trans 'Followers' %}</div>
+                <div id="user-profile-follower-count-label">{% translate 'Followers' %}</div>
             </div>
         </div>
     </div>

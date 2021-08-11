@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-11 12:20+0200\n"
+"POT-Creation-Date: 2021-08-11 11:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,134 +18,8 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: forms.py:63
-msgid "What's Happening?"
-msgstr ""
-
-#: forms.py:82
-msgid "Username"
-msgstr ""
-
-#: forms.py:86
-msgid "Up to 20 characters, alphanumeric"
-msgstr ""
-
-#: forms.py:92 models.py:150
+#: forms.py:94
 msgid "Display Name"
-msgstr ""
-
-#: forms.py:96
-msgid "Up to 50 characters"
-msgstr ""
-
-#: forms.py:101
-msgid "Email"
-msgstr ""
-
-#: forms.py:108
-msgid "Password"
-msgstr ""
-
-#: forms.py:115
-msgid "Confirm Password"
-msgstr ""
-
-#: forms.py:125 models.py:155
-msgid "Bio"
-msgstr ""
-
-#: forms.py:139 models.py:195
-msgid "Theme"
-msgstr ""
-
-#: forms.py:150 models.py:202
-msgid "Language"
-msgstr ""
-
-#: forms.py:161 models.py:179
-msgid "Show Liked Posts"
-msgstr ""
-
-#: forms.py:162
-msgid "Decide whether other users can see which posts you have liked."
-msgstr ""
-
-#: models.py:126
-msgid "Light Mode"
-msgstr ""
-
-#: models.py:127
-msgid "Dark Mode"
-msgstr ""
-
-#: models.py:143
-msgid "Avatar"
-msgstr ""
-
-#: models.py:162 templates/network/following.html:6
-#: templates/network/following.html:13 templates/network/layout.html:51
-#: templates/network/user_profile.html:70
-msgid "Following"
-msgstr ""
-
-#: models.py:168
-msgid "Blocked User"
-msgstr ""
-
-#: models.py:175
-msgid "Liked Post"
-msgstr ""
-
-#: models.py:184
-msgid "Mentions since last checked"
-msgstr ""
-
-#: models.py:188
-msgid "DMs since last checked"
-msgstr ""
-
-#: models.py:206
-msgid "Has Completed Initial Onboarding"
-msgstr ""
-
-#: models.py:210
-msgid "User"
-msgstr ""
-
-#: models.py:211
-msgid "Users"
-msgstr ""
-
-#: models.py:263
-msgid "Author"
-msgstr ""
-
-#: models.py:267
-msgid "Timestamp"
-msgstr ""
-
-#: models.py:272
-msgid "Text"
-msgstr ""
-
-#: models.py:280
-msgid "Mentioned User"
-msgstr ""
-
-#: models.py:289
-msgid "Reply To"
-msgstr ""
-
-#: models.py:293
-msgid "Image"
-msgstr ""
-
-#: models.py:342
-msgid "Post"
-msgstr ""
-
-#: models.py:343 templates/network/user_profile.html:57
-msgid "Posts"
 msgstr ""
 
 #: templates/network/compose.html:26
@@ -170,6 +44,11 @@ msgstr ""
 
 #: templates/network/dms.html:74
 msgid "You don\\"
+msgstr ""
+
+#: templates/network/following.html:6 templates/network/following.html:13
+#: templates/network/layout.html:51 templates/network/user_profile.html:70
+msgid "Following"
 msgstr ""
 
 #: templates/network/following.html:20 templates/network/index.html:25
@@ -296,7 +175,6 @@ msgstr ""
 msgid "1 reply. Click to view."
 msgid_plural "%(count)s replies. Click to view."
 msgstr[0] ""
-msgstr[1] ""
 
 #: templates/network/posts.html:149
 msgid "No posts found 🙁"
@@ -424,6 +302,10 @@ msgstr ""
 msgid "Posts by @%(view_user.username)s"
 msgstr ""
 
+#: templates/network/user_profile.html:57
+msgid "Posts"
+msgstr ""
+
 #: templates/network/user_profile.html:64
 msgid "Liked Posts"
 msgstr ""
@@ -432,120 +314,120 @@ msgstr ""
 msgid "Followers"
 msgstr ""
 
-#: views.py:176
+#: views.py:177
 msgid "Invalid username and/or password."
 msgstr ""
 
-#: views.py:271
+#: views.py:272
 msgid "Passwords must match."
 msgstr ""
 
-#: views.py:277 views.py:396
+#: views.py:278 views.py:397
 msgid "Username is not valid."
 msgstr ""
 
-#: views.py:288
+#: views.py:289
 msgid "Username already taken."
 msgstr ""
 
-#: views.py:323 views.py:353 views.py:416
+#: views.py:324 views.py:354 views.py:417
 msgid "Form data is invalid"
 msgstr ""
 
-#: views.py:393
+#: views.py:394
 msgid "Incorrect password."
 msgstr ""
 
-#: views.py:398
+#: views.py:399
 msgid "New passwords don't match."
 msgstr ""
 
-#: views.py:405
+#: views.py:406
 msgid "Form data is invalid."
 msgstr ""
 
-#: views.py:517
+#: views.py:518
 msgid "User is already blocked."
 msgstr ""
 
-#: views.py:530
+#: views.py:531
 msgid "User is already not blocked."
 msgstr ""
 
-#: views.py:537 views.py:680 views.py:712 views.py:782
+#: views.py:538 views.py:681 views.py:713 views.py:783
 msgid "PUT request required."
 msgstr ""
 
-#: views.py:600
+#: views.py:601
 msgid "You can't submit an empty post"
 msgstr ""
 
-#: views.py:612
+#: views.py:613
 msgid "Form data invalid"
 msgstr ""
 
-#: views.py:623
+#: views.py:624
 msgid "Maximum post length is 140 characters"
 msgstr ""
 
-#: views.py:634
+#: views.py:635
 msgid "Post edited successfully"
 msgstr ""
 
-#: views.py:639
+#: views.py:640
 msgid "You are not authorized to edit this post"
 msgstr ""
 
-#: views.py:651
+#: views.py:652
 msgid "You cannot follow your own account."
 msgstr ""
 
-#: views.py:661
+#: views.py:662
 msgid "You cannot follow this user because there is a block relationship."
 msgstr ""
 
-#: views.py:665
+#: views.py:666
 #, python-brace-format
 msgid "followed user {user_to_follow}"
 msgstr ""
 
-#: views.py:671
+#: views.py:672
 #, python-brace-format
 msgid "unfollowed user {user_to_follow}"
 msgstr ""
 
-#: views.py:675
+#: views.py:676
 msgid "follow intent does not match current follow state"
 msgstr ""
 
-#: views.py:693
+#: views.py:694
 msgid "You cannot like this post because there is a block relationship."
 msgstr ""
 
-#: views.py:697
+#: views.py:698
 msgid "Post liked successfully"
 msgstr ""
 
-#: views.py:705
+#: views.py:706
 msgid "Post unliked successfully"
 msgstr ""
 
-#: views.py:753
+#: views.py:754
 msgid "GET request required."
 msgstr ""
 
-#: views.py:768
+#: views.py:769
 msgid "You cannot reply to this post because there is a block relationship."
 msgstr ""
 
-#: views.py:798
+#: views.py:799
 msgid "All posts marked as read"
 msgstr ""
 
-#: views.py:802
+#: views.py:803
 msgid "Error setting thread to read"
 msgstr ""
 
-#: views.py:806
+#: views.py:807
 msgid "PUT request required"
 msgstr ""

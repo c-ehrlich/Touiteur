@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-    {% trans 'Add Account Details' %}
+    {% translate 'Add Account Details' %}
 {% endblock %}
 
 {% block body %}
@@ -11,10 +11,10 @@
     <div class="section-identifier">
         <div class="section-identifier-inner">
             <div>
-                {% trans 'Add Account Details' %}
+                {% translate 'Add Account Details' %}
             </div>
             <div class="section-identifier-additional-text">
-                {% trans 'Here you can select region, theme, and privacy settings for your account. This is optional, and you can also do it later by visiting the account settings.' %}
+                {% translate 'Here you can select region, theme, and privacy settings for your account. This is optional, and you can also do it later by visiting the account settings.' %}
             </div>
         </div>
     </div>
@@ -22,7 +22,7 @@
     <div class="reg-login-outer">
         <div class="reg-login-inner">
             <form method="POST" action="" class="form-100-test">
-                <h4>Display</h4>
+                <h4>{% translate "Display" %}</h4>
                 <!-- Language -->
                 <div class="form-group mw350">
                     {{ form.language.errors | safe }}
@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <h4>Privacy</h4>
+                <h4>{% translate "Privacy" %}</h4>
                 <!-- Show/hide likes -->
                 <div class="form-group mw350">
                     {{ form.show_liked_posts.errors | safe }}
@@ -54,7 +54,7 @@
                 </div>
 
                 {% csrf_token %}
-                <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">Skip</a>
+                <a class="btn btn-outline-secondary equal-width-button" href="{% url 'index' %}">{% translate "Skip" %}</a>
                 <input class="btn btn-primary equal-width-button" type="submit" name="Update Information" value="Save">
             </form>
         </div>

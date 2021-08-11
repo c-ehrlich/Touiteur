@@ -10,6 +10,8 @@ import sys
 from datetime import timezone
 import datetime
 
+from django.utils.translation import gettext_lazy as _
+
 
 class Conversation(models.Model):
     user_ids = ArrayField(
@@ -121,8 +123,8 @@ class CustomUserManager(UserManager):
 
 class User(AbstractUser):
     THEMES = (
-        ('_theme_light', 'Light Mode'),
-        ('_theme_dark', 'Dark Mode'),
+        ('_theme_light', _('Light Mode')),
+        ('_theme_dark', _('Dark Mode')),
     )
 
     LANGUAGES = (
@@ -138,70 +140,75 @@ class User(AbstractUser):
         null=True,
         blank=True,
         editable=True,
-        verbose_name="Avatar",
+        verbose_name=_("Avatar"),
         upload_to="avatars",
     )
 
     displayname = models.TextField(
         default = "",
-        max_length = 100
+        max_length = 100,
+        verbose_name=_("Display Name"),
     )
     bio = models.TextField(
         default = f"",
-        max_length = 500
+        max_length = 500,
+        verbose_name=_("Bio"),
     )
 
     following = models.ManyToManyField(
         "User",
         related_name="followed_by",
-        blank=True
+        blank=True,
+        verbose_name=_("Following"),
     )
     blocked_users = models.ManyToManyField(
         "User",
         related_name="blocked_by",
-        blank=True
+        blank=True,
+        verbose_name=_("Blocked User"),
     )
     # likes
     liked_posts = models.ManyToManyField(
         "Post",
         related_name="users_who_liked",
-        blank=True
+        blank=True,
+        verbose_name=_("Liked Post"),
     )
     show_liked_posts = models.BooleanField(
         default=True,
-        verbose_name="Show Liked Posts"
+        verbose_name=_("Show Liked Posts"),
     )
 
     mentions_since_last_checked = models.PositiveIntegerField(
         default=0,
-        verbose_name="Mentions since last checked"
+        verbose_name=_("Mentions since last checked"),
     )
     DMs_since_last_checked = models.PositiveIntegerField(
         default=0,
-        verbose_name="DMs since last checked",
+        verbose_name=_("DMs since last checked"),
     )
 
     theme = models.CharField(
         max_length=20,
         choices=THEMES,
         default='_theme_light',
-        verbose_name="Theme"
+        verbose_name=_("Theme"),
     )
 
     language = models.CharField(
         max_length=10,
         choices=LANGUAGES,
         default='en',
-        verbose_name='Language'
+        verbose_name=_('Language'),
     )
     has_completed_onboarding = models.BooleanField(
         default=False,
-        verbose_name="Has Completed Initial Onboarding"
+        verbose_name=_("Has Completed Initial Onboarding"),
     )
 
     class Meta:
-        verbose_name = 'User'
-        verbose_name_plural = 'Users'
+        verbose_name = _('User'),
+        verbose_name_plural = _('Users'),
 
     def save(self, *args, **kwargs):
         try:
@@ -252,21 +259,25 @@ class Post(models.Model):
     author = models.ForeignKey(
         "User",
         on_delete=models.CASCADE,
-        related_name="posts"
+        related_name="posts",
+        verbose_name=_("Author"),
     )
     timestamp = models.DateTimeField(
-        auto_now_add=True
+        auto_now_add=True,
+        verbose_name=_("Timestamp"),
     )
     text = models.TextField(
         default = "error: post initialized without text",
-        max_length = 140
+        max_length = 140,
+        verbose_name=_("Text"),
     )
 
     mentioned_users = models.ManyToManyField(
         "User",
         related_name="mentions",
         blank=True,
-        editable=False
+        editable=False,
+        verbose_name=_("Mentioned User"),
     )
     reply_to = models.ForeignKey(
         "Post",
@@ -275,10 +286,11 @@ class Post(models.Model):
         default=None,
         blank=True,
         null=True,
+        verbose_name=_("Reply To"),
     )
     image = models.ImageField(
         upload_to="post-images",
-        verbose_name="Image",
+        verbose_name=_("Image"),
         default=None,
         blank=True,
         null=True,
@@ -327,8 +339,8 @@ class Post(models.Model):
     class Meta:
         get_latest_by = '-timestamp'
         ordering = ['-timestamp']
-        verbose_name = 'Post'
-        verbose_name_plural = 'Posts'
+        verbose_name = _('Post')
+        verbose_name_plural = _('Posts')
 
     def __str__(self):
         post = (self.text[:50] + '..') if len(self.text) > 50 else self.text

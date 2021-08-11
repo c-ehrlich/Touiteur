@@ -251,6 +251,3 @@ msgstr ""
 #: network/views.py:386
 msgid "GET request required."
 msgstr ""
-
-#~ msgid "testmsg"
-#~ msgstr "test EN"

@@ -56,7 +56,10 @@
             </form>
 
             <div class="login-helper-text">
-                Already have an account? <a href="{% url 'login' %}" class="link-attn">Log In here.</a>
+                {% url 'login' as login_url %}
+                {% blocktranslate trimmed %}
+                Already have an account? <a href="{{ login_url }}" class="link-attn">Log In Here.</a>
+                {% endblocktranslate %}
             </div>
         </div>
     </div>

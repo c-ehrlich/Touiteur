@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-    @{{ view_user.username }}'s liked posts
+    {% blocktranslate %}@{{ view_user.username }}'s liked posts{% endblocktranslate %}
 {% endblock %}
 
 {% block body %}
@@ -14,7 +14,7 @@
         {% if view_user.show_liked_posts == True %}
             <div class="section-identifier no-top-padding">
                 <div class="section-identifier-inner">
-                    @{{ view_user.username }}'s liked posts
+                    {% blocktranslate %}@{{ view_user.username }}'s liked posts{% endblocktranslate %}
                 </div>
             </div>
 
@@ -30,7 +30,9 @@
         {% else %}
             <div class="section-identifier no-top-padding">
                 <div class="section-identifier-inner">
-                    <div>This user has set their likes to private.</div>
+                    <div>
+                        {% blocktranslate %}@{{ view_user.username }} has set their likes to private.{% endblocktranslate %}
+                    </div>
                 </div>
             </div>
         {% endif %}

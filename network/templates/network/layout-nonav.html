@@ -5,7 +5,7 @@
 <html lang="en">
     <head>
         <script src="{% url 'javascript-catalog' %}"></script>
-        <title>{% block title %}{% trans 'Social Network' %}{% endblock %}</title>
+        <title>{% block title %}{% trans 'Registration' %}{% endblock %}</title>
         <link rel="shortcut icon" type="image/png" href="{% static 'network/favicon.ico' %}"/>
         <script src="https://kit.fontawesome.com/8309b215cf.js" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
@@ -25,10 +25,10 @@
             <div id="var-user-theme">{{ user.theme }}</div>
         </div>
         <div id="outermost-container" class="{{ user.theme|default:'_theme_light' }}">
-            <nav class="navbar navbar-expand-md navbar-override-bg-color {% if user.theme == '_theme_dark' %}navbar-dark bg-dark{% else %}navbar-light bg-white
-            {% endif %}">
-                <a class="navbar-brand">{% trans 'Network' %}</a>
-            </nav>
+            <a class="navbar-brand" href="{% url 'index' %}">
+                <img src="{% static 'network/logo-128.png' %}" id="header-logo-img">
+                <div id="header-type">Touiteur</div>
+            </a>
             
             <div class="body">
                 {% block body %}

@@ -3,7 +3,7 @@
 {% load i18n %}
 
 {% block title %}
-    {% trans 'Add Account Details' %}
+    {% translate "Add Account Details" %}
 {% endblock %}
 
 {% block body %}
@@ -11,10 +11,10 @@
     <div class="section-identifier">
         <div class="section-identifier-inner">
             <div>
-                {% trans 'Add Account Details' %}
+                {% translate "Add Account Details" %}
             </div>
             <div class="section-identifier-additional-text">
-                {% trans 'Here you can add additional information to your account. This is optional, and you can also do it later by visiting the account settings.' %}
+                {% translate "Here you can add additional information to your account. This is optional, and you can also do it later by visiting the account settings." %}
             </div>
         </div>
     </div>
@@ -37,16 +37,16 @@
                         </div>
                         <div class="flex-column-align-left margin-left-12">
                             <label for="{{ form.avatar.id_for_label }}" class="btn btn-sm btn-outline-primary">
-                                <i class="fa fa-cloud-upload"></i> {% trans 'Upload new avatar' %}
+                                <i class="fa fa-cloud-upload"></i> {% translate "Upload new avatar" %}
                             </label>
                             <div class="custom-file-upload-helper-text" id="custom-file-upload-helper-text">
-                                {% trans 'Note: The avatar won\t be updated until you press \"Save\"' %}
+                                {% blocktranslate %}Note: The avatar won't be updated until you press "Save" {% endblocktranslate %}
                             </div>
                         </div>
                     </div>
                 </div>
                 {% csrf_token %}
-                <a class="btn btn-outline-secondary equal-width-button" href="{% url 'register3' %}">Skip</a>
+                <a class="btn btn-outline-secondary equal-width-button" href="{% url 'register3' %}">{% translate "Skip" %}</a>
                 <input class="btn btn-primary equal-width-button" type="submit" name="Update Information" value="Save">
             </form>
         </div>

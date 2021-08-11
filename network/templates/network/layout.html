@@ -5,7 +5,7 @@
 <html lang="en">
     <head>
         <script src="{% url 'javascript-catalog' %}"></script>
-        <title>{% block title %}{% trans 'Social Network' %}{% endblock %}</title>
+        <title>{% block title %}Touiteur{% endblock %}</title>
         <link rel="shortcut icon" type="image/png" href="{% static 'network/favicon.ico' %}"/>
         <script src="{% static 'network/lib/notify/notify.js' %}"></script>
         <link rel="stylesheet" href="{% static 'network/lib/notify/notify.css' %}">
@@ -67,7 +67,7 @@
                         {% if user.is_authenticated %}
                             <li class="nav-item">
                                 <a class="nav-link align-row-vertical" href="{% url 'dms' %}" id="navbar-DMs">
-                                    <div>{% trans 'DMs' %}</div>
+                                    <div><i class="far fa-envelope"></i></div>
                                     <div id="new-DMs-count"
                                         {% if user.DMs_since_last_checked == 0 %}
                                             hidden
@@ -77,7 +77,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{% url 'settings' %}" id="navbar-account">{% trans 'Settings' %}</a>
+                                <a class="nav-link" href="{% url 'settings' %}" id="navbar-account"><i class="fas fa-cog"></i></a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{% url 'logout' %}">{% trans 'Log Out' %}</a>
