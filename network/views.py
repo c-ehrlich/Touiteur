@@ -13,7 +13,7 @@ from django.utils.translation import gettext as _
 from django.views.decorators.csrf import csrf_protect
 
 from network.forms import EditAccountForm, NewPostForm, RegisterAccountForm, RegisterAccountStage2Form, RegisterAccountStage3Form
-from network.models import User, Post, Conversation
+from network.models import User, Post
 from network import utils
 
 PAGINATION_POST_COUNT = 10
@@ -23,31 +23,6 @@ PAGINATION_POST_COUNT = 10
 # +-----------------------------------------+
 # |        VIEWS THAT RETURN PAGES          |
 # +-----------------------------------------+
-
-@login_required
-def dms(request):
-    threads = utils.get_dm_threads_paginated(request)
-    return render(request, "network/dms.html", {
-        "threads": threads,
-    })
-
-
-@login_required
-def dm_thread(request, username):
-    convo_partner = User.objects.get(username=username)
-    page = request.GET.get('page', 1)
-    user_id = request.user.id
-    convo_partner_id = convo_partner.id
-    conversation = Conversation.objects.get(
-        user_ids=[user_id, convo_partner_id]
-    )
-    thread = conversation.messages.all()
-    p = Paginator(thread, PAGINATION_POST_COUNT)
-    # TODO if thread doesn't exist, give error
-    return render(request, "network/dm_thread.html", {
-        "thread": p.page(page),
-        "thread_id": conversation.id,
-    })
 
 
 @login_required
@@ -746,7 +721,6 @@ def notifications(request):
         * new posts in the current view
     * only for logged in users:
         * new mentions
-        * new DMs
 
     expects a json object in the request. that object should contain a 'context' variable. inside that variable:
         'location': can be 'public_feed', 'user', or 'following' (can add more later for different views)
@@ -756,7 +730,6 @@ def notifications(request):
     Returns a JsonResponse with the following fields:
         'new_post_count': the number of new posts in the current view
         'new_mention_count': the number of new mentions (only for logged in users)
-        'new_dm_count': the number of new DMs (only for logged in users)
     """
     if request.method == "PUT":
         data = json.loads(request.body)
@@ -765,11 +738,9 @@ def notifications(request):
         user = request.user
         if user.is_authenticated:
             new_mention_count = user.mentions_since_last_checked
-            new_dm_count = user.DMs_since_last_checked
             return JsonResponse({
                 "new_post_count": new_post_count,
                 "new_mention_count": new_mention_count,
-                "new_dm_count": new_dm_count,
                 }, status=200)
         return JsonResponse({
             "new_post_count": new_post_count,
@@ -806,28 +777,4 @@ def reply(request, post_id):
     else:
         return JsonResponse({
             "error": _("PUT request required.")
-        }, status=400)
-
-
-@csrf_protect
-def thread_read_status(request, thread_id):
-    """marks all unread DMs in a thread as read"""
-    if request.method == "PUT":
-        thread = Conversation.objects.get(id=thread_id)
-        # TODO make sure the user is actually in the thread
-        try:
-            for message in thread.messages.all():
-                if message.recipient == request.user and message.is_read == False:
-                    message.is_read = True
-                    message.save()
-            return JsonResponse({
-                "message": _("All posts marked as read")
-            }, status=201)
-        except Exception:
-            return JsonResponse({
-                "error": _("Error setting thread to read")
-            }, status=500)
-    else:
-        return JsonResponse({
-            "error": _("PUT request required")
         }, status=400)

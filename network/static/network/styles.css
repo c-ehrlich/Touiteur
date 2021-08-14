@@ -560,7 +560,7 @@ hr {
     top: 44px;
     font-size: 1rem;
     background-color: var(--color-box-bg-contrast);
-    width: 120px;
+    width: 140px;
     z-index: 1;
     border: 1px solid var(--color-box-border-contrast);
 }

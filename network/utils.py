@@ -1,4 +1,4 @@
-from .models import User, Post, Conversation
+from .models import User, Post
 from babel.dates import format_date, format_datetime, format_time
 from django.conf import settings
 from django.core.paginator import Paginator

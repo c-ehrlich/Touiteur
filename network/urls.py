@@ -16,8 +16,6 @@ urlpatterns = [
 urlpatterns += [
     # View Routes
     path("", views.index, name="index"),
-    path("dms", views.dms, name="dms"),
-    path("dm_thread/<str:username>", views.dm_thread, name="dm_thread"),
     path("following", views.following, name="following"),
     path("likes/<str:username>", views.likes, name="likes"),
     path("login", views.login_view, name="login"),
@@ -41,7 +39,6 @@ urlpatterns += [
     path("like/<int:post_id>", views.like, name="like"),
     path("notifications", views.notifications, name="notifications"),
     path("reply/<int:post_id>", views.reply, name="reply"),
-    path("thread_read_status/<int:thread_id>", views.thread_read_status, name="thread_read_status"),
 
     # Needed for translations in JavaScript
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),

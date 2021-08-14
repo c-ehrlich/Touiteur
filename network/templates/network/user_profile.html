@@ -20,9 +20,6 @@
                 </div>
                 <div id="user-profile-dropdown-content">
                     {% if user.is_authenticated and user != view_user and not user_blocked_by_author %}
-                        <a {% if author_blocked_by_user %}hidden {% endif %}href="{% url 'dm_thread' view_user %}">
-                            <i class="far fa-envelope"></i> {% translate "Message" %}
-                        </a>
                         <div id="block-button" {% if author_blocked_by_user %}hidden {% endif %}href="">
                             <i class="far fa-eye-slash"></i> {% translate "Block" %}
                         </div>

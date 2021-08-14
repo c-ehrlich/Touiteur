@@ -47,9 +47,6 @@
                         </div>
                         <div id="post-view-dropdown-content">
                             {% if user.is_authenticated and user != view_user and not user_blocked_by_author %}
-                                <a {% if author_blocked_by_user %}hidden {% endif %}href="{% url 'dm_thread' view_user %}">
-                                    <i class="far fa-envelope"></i> {% translate "Message" %}
-                                </a>
                                 <div id="block-button" {% if author_blocked_by_user %}hidden {% endif %}href="">
                                     <i class="far fa-eye-slash"></i> {% translate "Block" %}
                                 </div>
@@ -77,7 +74,7 @@
                     <textarea hidden maxlength="140" id="post-edit-input-{{ post.id }}" class="post-edit-input {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}"></textarea>
                     {% if author_blocked_by_user %}
                         <div class="blocked-by-user blk-info-{{ post.id }} fs15rem mb16">
-                            <i class="fas fa-ban"></i> {% translate "This post is hidden because you blocked the author."" %}
+                            <i class="fas fa-ban"></i> {% translate "This post is hidden because you blocked the author." %}
                         </div>
                         <div class="blocked-by-user center-content blk-info-{{ post.id }}">
                             <button class="blocked-by-user-reveal btn btn-outline-secondary" id="unhide-{{ post.id }}">{% translate 'Show Post' %}</button>
