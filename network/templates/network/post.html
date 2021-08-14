@@ -3,7 +3,9 @@
 {% load i18n %}
 
 {% block title %}
-    {% blocktranslate %}Post by @{{ post.author.username }}{% endblocktranslate %}
+    {% blocktranslate trimmed with username=post.author.username %}
+    Post by @{{ username }}
+    {% endblocktranslate %}
 {% endblock %}
 
 {% block body %}
@@ -19,7 +21,9 @@
                 {% if post.reply_to != None %}
                     <div id="single-post-view-reply-to-div" class="post-reply-to-div {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
                         <a class="post-reply-to-link" href="{% url 'post' post.reply_to.id %}">
-                            {% blocktranslate %}Reply to @{{ post.reply_to.user }}: {{ post.reply_to.text }}{% endblocktranslate %}
+                            {% blocktranslate trimmed with username=post.reply_to.user text=post.reply_to.text %}
+                            Reply to @{{ username }}: {{ text }}
+                            {% endblocktranslate %}
                         </a>
                     </div>
                 {% endif %}
@@ -167,7 +171,9 @@
     {% if post.replies.count > 0 %}
         <div class="section-identifier {% if author_blocked_by_user %}blocked-by-user-hidden blk-hidden-{{ post.id }}{% endif %}">
             <div class="section-identifier-inner">
-                {% blocktranslate %}{{ post.replies.count }} replies{% endblocktranslate %}
+                {% blocktranslate trimmed with replycount=post.replies.count %}
+                {{ replycount }} replies
+                {% endblocktranslate %}
             </div>
         </div>
 

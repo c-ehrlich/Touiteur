@@ -3,7 +3,9 @@
 {% load i18n %}
 
 {% block title %}
-    {% blocktranslate %}@{{ view_user.username }}'s liked posts{% endblocktranslate %}
+    {% blocktranslate trimmed with username=view_user.username %}
+    @{{ username }}'s liked posts
+    {% endblocktranslate %}
 {% endblock %}
 
 {% block body %}
@@ -14,7 +16,9 @@
         {% if view_user.show_liked_posts == True %}
             <div class="section-identifier no-top-padding">
                 <div class="section-identifier-inner">
-                    {% blocktranslate %}@{{ view_user.username }}'s liked posts{% endblocktranslate %}
+                    {% blocktranslate trimmed with username=view_user.username %}
+                    @{{ username }}'s liked posts
+                    {% endblocktranslate %}
                 </div>
             </div>
 
@@ -31,7 +35,9 @@
             <div class="section-identifier no-top-padding">
                 <div class="section-identifier-inner">
                     <div>
-                        {% blocktranslate %}@{{ view_user.username }} has set their likes to private.{% endblocktranslate %}
+                        {% blocktranslate trimmed with username=view_user.username %}
+                        @{{ username }} has set their likes to private.
+                        {% endblocktranslate %}
                     </div>
                 </div>
             </div>

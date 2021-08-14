@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-14 13:54+0200\n"
+"POT-Creation-Date: 2021-08-14 20:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,143 +100,143 @@ msgstr ""
 
 #: models.py:31
 msgid "Light Mode"
-msgstr ""
+msgstr "ライトモード"
 
 #: models.py:32
 msgid "Dark Mode"
-msgstr ""
+msgstr "ダークモード"
 
 #: models.py:48
 msgid "Avatar"
-msgstr ""
+msgstr "プロフィール画像"
 
 #: models.py:67 templates/network/following.html:6
 #: templates/network/following.html:13 templates/network/layout.html:51
 #: templates/network/user_profile.html:67
 msgid "Following"
-msgstr ""
+msgstr "フォロー中"
 
 #: models.py:73
 msgid "Blocked User"
-msgstr ""
+msgstr "ブロックされたユーザー"
 
 #: models.py:80
 msgid "Liked Post"
-msgstr ""
+msgstr "いいね！を押した投稿"
 
 #: models.py:89
 msgid "Mentions since last checked"
-msgstr ""
+msgstr "前回チェックしてからのメンション数"
 
 #: models.py:93
 msgid "DMs since last checked"
-msgstr ""
+msgstr "前回チェックしてからのメッセージ"
 
 #: models.py:111
 msgid "Has Completed Initial Onboarding"
-msgstr ""
+msgstr "アカウントの初期設定が完了していること。"
 
 #: models.py:115
 msgid "User"
-msgstr ""
+msgstr "ユーザー"
 
 #: models.py:116
 msgid "Users"
-msgstr ""
+msgstr "ユーザー"
 
 #: models.py:168
 msgid "Author"
-msgstr ""
+msgstr "投稿者"
 
 #: models.py:172
 msgid "Timestamp"
-msgstr ""
+msgstr "タイムスタンプ"
 
 #: models.py:177
 msgid "Text"
-msgstr ""
+msgstr "テキスト"
 
 #: models.py:185
 msgid "Mentioned User"
-msgstr ""
+msgstr "言及されたユーザー"
 
 #: models.py:194
 msgid "Reply To"
-msgstr ""
+msgstr "返信へ"
 
 #: models.py:198
 msgid "Image"
-msgstr ""
+msgstr "画像"
 
 #: models.py:247
 msgid "Post"
-msgstr ""
+msgstr "ポスト"
 
 #: models.py:248 templates/network/user_profile.html:54
 msgid "Posts"
-msgstr ""
+msgstr "ポスト"
 
 #: templates/network/compose.html:26
 msgid "Submit"
-msgstr ""
+msgstr "投稿する"
 
 #: templates/network/following.html:20 templates/network/index.html:25
-#: templates/network/likes.html:24 templates/network/mentions.html:23
+#: templates/network/likes.html:28 templates/network/mentions.html:23
 #: templates/network/user.html:32
 msgid "No new posts (you should not see this)"
-msgstr ""
+msgstr "新規投稿がない（表示されないはずです)"
 
 #: templates/network/index.html:6 templates/network/index.html:18
 msgid "Public Timeline"
-msgstr ""
+msgstr "全ての投稿"
 
 #: templates/network/layout-nonav.html:8
 msgid "Registration"
-msgstr ""
+msgstr "登録"
 
 #: templates/network/layout.html:47
 msgid "All Posts"
-msgstr ""
+msgstr "全ての投稿"
 
 #: templates/network/layout.html:55 templates/network/mentions.html:16
 msgid "Mentions"
-msgstr ""
+msgstr "言及"
 
 #: templates/network/layout.html:72
 msgid "Log Out"
-msgstr ""
+msgstr "ログアウト"
 
 #: templates/network/layout.html:76
 msgid "Log In"
-msgstr ""
+msgstr "ログイン"
 
 #: templates/network/layout.html:79
 msgid "Register"
-msgstr ""
+msgstr "投稿"
 
-#: templates/network/likes.html:6 templates/network/likes.html:17
+#: templates/network/likes.html:6 templates/network/likes.html:19
 #, python-format
-msgid "@%(view_user.username)s's liked posts"
-msgstr ""
+msgid "@%(username)s's liked posts"
+msgstr "@%(username)sさんがいいね！を押した投稿"
 
-#: templates/network/likes.html:34
+#: templates/network/likes.html:38
 #, python-format
-msgid "@%(view_user.username)s has set their likes to private."
-msgstr ""
+msgid "@%(username)s has set their likes to private."
+msgstr "@%(username)sさんは自分の「いいね！」を非公開にしています。"
 
 #: templates/network/login.html:6 templates/network/login.html:13
 #: templates/network/login.html:31
 msgid "Login"
-msgstr ""
+msgstr "ログイン"
 
 #: templates/network/login.html:26
 msgid "username"
-msgstr ""
+msgstr "ユーザー名"
 
 #: templates/network/login.html:29
 msgctxt "login"
 msgid "Password"
-msgstr ""
+msgstr "パスワード"
 
 #: templates/network/login.html:36
 #, python-format
@@ -244,84 +244,87 @@ msgid ""
 "Don't have an account yet? <a href=\"%(register_url)s\" class=\"link-attn"
 "\">Register here.</a>"
 msgstr ""
+"まだアカウントをお持ちでない方は、<a href=\"%(register_url)s\" class=\"link-"
+"attn\">こちらからご登録いただけます。</a>"
 
 #: templates/network/post.html:6
 #, python-format
-msgid "Post by @%(post.author.username)s"
-msgstr ""
+msgid "Post by @%(username)s"
+msgstr "@%(username)sさんの投稿"
 
-#: templates/network/post.html:22
+#: templates/network/post.html:24
 #, python-format
-msgid "Reply to @%(post.reply_to.user)s: %(post.reply_to.text)s"
-msgstr ""
+msgid "Reply to @%(username)s: %(text)s"
+msgstr "@%(username)sさんへの返信： @%(text)s"
 
-#: templates/network/post.html:41 templates/network/posts.html:38
+#: templates/network/post.html:45 templates/network/posts.html:38
 msgid "The author of this post has blocked you."
-msgstr ""
+msgstr "この投稿の著者はあなたをブロックしました。"
 
-#: templates/network/post.html:51 templates/network/settings.html:119
+#: templates/network/post.html:55 templates/network/settings.html:119
 #: templates/network/user_profile.html:24
 msgid "Block"
-msgstr ""
+msgstr "ブロックする"
 
-#: templates/network/post.html:54 templates/network/settings.html:127
+#: templates/network/post.html:58 templates/network/settings.html:127
 #: templates/network/user_profile.html:27
 msgid "Unblock"
-msgstr ""
+msgstr "アンブロックする"
 
-#: templates/network/post.html:58 templates/network/user_profile.html:31
+#: templates/network/post.html:62 templates/network/user_profile.html:31
 msgid "Share"
 msgstr ""
 
-#: templates/network/post.html:65 templates/network/user_profile.html:38
+#: templates/network/post.html:69 templates/network/user_profile.html:38
 msgid "Unfollow"
 msgstr ""
 
-#: templates/network/post.html:67 templates/network/user_profile.html:40
+#: templates/network/post.html:71 templates/network/user_profile.html:40
 msgid "Follow"
 msgstr ""
 
-#: templates/network/post.html:77 templates/network/posts.html:42
+#: templates/network/post.html:84 templates/network/posts.html:42
 msgid "This post is hidden because you blocked the author."
 msgstr ""
 
-#: templates/network/post.html:80 templates/network/posts.html:129
+#: templates/network/post.html:87 templates/network/posts.html:129
 msgid "Show Post"
-msgstr ""
+msgstr "シェアする"
 
-#: templates/network/post.html:157 templates/network/posts.html:141
+#: templates/network/post.html:164 templates/network/posts.html:141
 msgid "Reply"
-msgstr ""
+msgstr "返信する"
 
-#: templates/network/post.html:167
+#: templates/network/post.html:174
 #, python-format
-msgid "%(post.replies.count)s replies"
-msgstr ""
+msgid "%(replycount)s replies"
+msgstr "%(replycount)s件の返信があります。"
 
 #: templates/network/posts.html:10
 #, python-format
 msgid "Reply to @%(author)s: %(text)s"
-msgstr ""
+msgstr "@%(author)sさんへの返信：%(text)s"
 
 #: templates/network/posts.html:119
 #, python-format
 msgid "1 reply. Click to view."
 msgid_plural "%(count)s replies. Click to view."
-msgstr[0] ""
+msgstr[0] "1件の返信があります。こちらをクリックするとご覧いただけます。"
+msgstr[1] "%(count)s件の返信があります。こちらをクリックするとご覧いただけます。"
 
 #: templates/network/posts.html:149
 msgid "No posts found 🙁"
-msgstr ""
+msgstr "投稿がありません 🙁"
 
 #: templates/network/register.html:6 templates/network/register.html:13
 msgctxt "description"
 msgid "Register"
-msgstr ""
+msgstr "登録"
 
 #: templates/network/register.html:55
 msgctxt "action"
 msgid "Register"
-msgstr ""
+msgstr "登録する"
 
 #: templates/network/register.html:60
 #, python-format
@@ -329,34 +332,38 @@ msgid ""
 "Already have an account? <a href=\"%(login_url)s\" class=\"link-attn\">Log "
 "In Here.</a>"
 msgstr ""
+"すでにアカウントをお持ちの方は、<a href=\"%(login_url)s\" class=\"link-attn\">"
+"こちらからログインできます。</a>"
 
 #: templates/network/register2.html:6 templates/network/register2.html:14
 #: templates/network/register3.html:6 templates/network/register3.html:14
 msgid "Add Account Details"
-msgstr ""
+msgstr "アカウント情報の追加"
 
 #: templates/network/register2.html:17
 msgid ""
 "Here you can add additional information to your account. This is optional, "
 "and you can also do it later by visiting the account settings."
 msgstr ""
+"ここでは、アカウントに追加情報を加えることができます。これは任意であり、"
+"後でアカウント設定にアクセスして行うこともできます。"
 
 #: templates/network/register2.html:40 templates/network/settings.html:97
 msgid "Upload new avatar"
-msgstr ""
+msgstr "新しいプロフィール画像をアップロードする"
 
 #: templates/network/register2.html:43
 msgid "Note: The avatar won't be updated until you press \"Save\" "
-msgstr ""
+msgstr "「保存」ボタンを押すまで、プロフィール画像は更新されません。"
 
 #: templates/network/register2.html:49 templates/network/register3.html:57
 msgid "Skip"
-msgstr ""
+msgstr "スキップ"
 
 #: templates/network/register2.html:50 templates/network/register3.html:58
 #: templates/network/settings.html:108 templates/network/settings.html:170
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: templates/network/register3.html:17
 msgid ""
@@ -364,107 +371,109 @@ msgid ""
 "This is optional, and you can also do it later by visiting the account "
 "settings."
 msgstr ""
+"ここでは、アカウントの地域、テーマ、プライバシー設定を選択できます。"
+"この設定は任意であり、後からアカウント設定にアクセスして行うこともできます。"
 
 #: templates/network/register3.html:25 templates/network/settings.html:137
 msgid "Display"
-msgstr ""
+msgstr "ディスプレイ"
 
 #: templates/network/register3.html:43 templates/network/settings.html:155
 msgid "Privacy"
-msgstr ""
+msgstr "プライバシー"
 
 #: templates/network/settings.html:6
 msgid "Settings"
-msgstr ""
+msgstr "設定"
 
 #: templates/network/settings.html:18
 msgid "Account"
-msgstr ""
+msgstr "アカウント"
 
 #: templates/network/settings.html:22
 msgid "Blocklist"
-msgstr ""
+msgstr "ブロックリスト"
 
 #: templates/network/settings.html:26
 msgid "Preferences"
-msgstr ""
+msgstr "プリファレンス"
 
 #: templates/network/settings.html:100
 msgid "Note: The avatar won't be updated until you press \"Save\""
-msgstr ""
+msgstr "「保存」ボタンを押すまで、プロフィール画像は更新されません。""
 
 #: templates/network/settings.html:107 templates/network/settings.html:169
 msgid "Cancel"
-msgstr ""
+msgstr "キャンセル"
 
 #: templates/network/settings.html:116
 msgid "Add a user to blocklist"
-msgstr ""
+msgstr "ユーザーをブロックリストに追加する"
 
 #: templates/network/settings.html:121
 msgid "Blocked Users"
-msgstr ""
+msgstr "ブロックさせたユーザー"
 
 #: templates/network/settings.html:130
 msgid "Blocklist is empty."
-msgstr ""
+msgstr "ブロックリストは空です。"
 
 #: templates/network/user.html:23
 #, python-format
 msgid "Posts by @%(username)s"
-msgstr ""
+msgstr "@%(username)sさんの投稿"
 
 #: templates/network/user_profile.html:61
 msgid "Liked Posts"
-msgstr ""
+msgstr "いいね！を押した投稿"
 
 #: templates/network/user_profile.html:70
 msgid "Followers"
-msgstr ""
+msgstr "フォロワー"
 
 #: views.py:151
 msgid "Invalid username and/or password."
-msgstr ""
+msgstr "無効なユーザー名やパスワード。"
 
 #: views.py:246
 msgid "Passwords must match."
-msgstr ""
+msgstr "パスワードが一致すること。"
 
 #: views.py:252 views.py:371
 msgid "Username is not valid."
-msgstr ""
+msgstr "ユーザー名が有効ではない。"
 
 #: views.py:263
 msgid "Username already taken."
-msgstr ""
+msgstr "選ばれたユーザー名がすでに使われています。"
 
 #: views.py:298 views.py:328 views.py:391
 msgid "Form data is invalid"
-msgstr ""
+msgstr "フォームデータが無効です。"
 
 #: views.py:368
 msgid "Incorrect password."
-msgstr ""
+msgstr "パスワードが間違っています。"
 
 #: views.py:373
 msgid "New passwords don't match."
-msgstr ""
+msgstr "新しいパスワードが一致しません。"
 
 #: views.py:380
 msgid "Form data is invalid."
-msgstr ""
+msgstr "フォームデータが無効です。"
 
 #: views.py:518
 msgid "User is already blocked."
-msgstr ""
+msgstr "このユーザーはすでにブロックされています。"
 
 #: views.py:531
 msgid "User is already not blocked."
-msgstr ""
+msgstr "このユーザーはすでにブロックされていません。"
 
 #: views.py:538 views.py:681 views.py:713 views.py:779
 msgid "PUT request required."
-msgstr ""
+msgstr "PUTリクエストが必要"
 
 #: views.py:601
 msgid "You can't submit an empty post"
@@ -472,58 +481,58 @@ msgstr ""
 
 #: views.py:613
 msgid "Form data invalid"
-msgstr ""
+msgstr "フォームデータが無効です。"
 
 #: views.py:624
 msgid "Maximum post length is 140 characters"
-msgstr ""
+msgstr "最大投稿文字数は140文字です。"
 
 #: views.py:635
 msgid "Post edited successfully"
-msgstr ""
+msgstr "投稿編集成功。"
 
 #: views.py:640
 msgid "You are not authorized to edit this post"
-msgstr ""
+msgstr "この投稿を編集する権限がありません。"
 
 #: views.py:652
 msgid "You cannot follow your own account."
-msgstr ""
+msgstr "自分のアカウントをフォローすることはできません。"
 
 #: views.py:662
 msgid "You cannot follow this user because there is a block relationship."
-msgstr ""
+msgstr "ブロック関係にあるため、このユーザーをフォローすることはできません。"
 
 #: views.py:666
 #, python-brace-format
 msgid "followed user {user_to_follow}"
-msgstr ""
+msgstr "{user_to_follow}さんをフォローしました。"
 
 #: views.py:672
 #, python-brace-format
 msgid "unfollowed user {user_to_follow}"
-msgstr ""
+msgstr "{user_to_follow}さんをアンフォローしました。"
 
 #: views.py:676
 msgid "follow intent does not match current follow state"
-msgstr ""
+msgstr "フォローの意図が現在のフォロー状態と一致しない。"
 
 #: views.py:694
 msgid "You cannot like this post because there is a block relationship."
-msgstr ""
+msgstr "ブロック関係があるので、この投稿に「いいね！」はできません。"
 
 #: views.py:698
 msgid "Post liked successfully"
-msgstr ""
+msgstr "「いいね！」を押しました。"
 
 #: views.py:706
 msgid "Post unliked successfully"
-msgstr ""
+msgstr "「いいね！」は失敗しました。"
 
 #: views.py:750
 msgid "GET request required."
-msgstr ""
+msgstr "GETリクエストが必要"
 
 #: views.py:765
 msgid "You cannot reply to this post because there is a block relationship."
-msgstr ""
+msgstr "ブロック関係があるため、この投稿には返信できません。"

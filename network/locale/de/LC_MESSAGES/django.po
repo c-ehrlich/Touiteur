@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-14 13:48+0200\n"
+"POT-Creation-Date: 2021-08-14 20:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -183,7 +183,7 @@ msgid "Submit"
 msgstr "Senden"
 
 #: templates/network/following.html:20 templates/network/index.html:25
-#: templates/network/likes.html:24 templates/network/mentions.html:23
+#: templates/network/likes.html:28 templates/network/mentions.html:23
 #: templates/network/user.html:32
 msgid "No new posts (you should not see this)"
 msgstr ""
@@ -218,15 +218,15 @@ msgstr "Einloggen"
 msgid "Register"
 msgstr "Registrieren"
 
-#: templates/network/likes.html:6 templates/network/likes.html:17
+#: templates/network/likes.html:6 templates/network/likes.html:19
 #, python-format
-msgid "@%(view_user.username)s's liked posts"
-msgstr "@%(view_user.username)s's Gefällt Mir-Beiträge"
+msgid "@%(username)s's liked posts"
+msgstr "@%(username)s's Gefällt Mir-Beiträge"
 
-#: templates/network/likes.html:34
+#: templates/network/likes.html:38
 #, python-format
-msgid "@%(view_user.username)s has set their likes to private."
-msgstr "@%(view_user.username)s's Gefällt Mir-Beiträge sind privat."
+msgid "@%(username)s has set their likes to private."
+msgstr "@%(username)s's Gefällt Mir-Beiträge sind privat."
 
 #: templates/network/login.html:6 templates/network/login.html:13
 #: templates/network/login.html:31
@@ -252,57 +252,58 @@ msgstr ""
 "class=\"link-attn\">hier registrieren.</a>"
 
 #: templates/network/post.html:6
-#, python-format
-msgid "Post by @%(post.author.username)s"
-msgstr "Beiträge von @%(post.author.username)s"
+#, fuzzy, python-format
+#| msgid "Posts by @%(username)s"
+msgid "Post by @%(username)s"
+msgstr "Beiträge von @%(username)s"
 
-#: templates/network/post.html:22
+#: templates/network/post.html:24
 #, python-format
-msgid "Reply to @%(post.reply_to.user)s: %(post.reply_to.text)s"
-msgstr "Antwort an @%(post.reply_to.user)s: %(post.reply_to.text)s"
+msgid "Reply to @%(username)s: %(text)s"
+msgstr "Antwort an @%(username)s: %(text)s"
 
-#: templates/network/post.html:41 templates/network/posts.html:38
+#: templates/network/post.html:45 templates/network/posts.html:38
 msgid "The author of this post has blocked you."
 msgstr "Der Autor diese Beitrages hat dich blockiert."
 
-#: templates/network/post.html:51 templates/network/settings.html:119
+#: templates/network/post.html:55 templates/network/settings.html:119
 #: templates/network/user_profile.html:24
 msgid "Block"
 msgstr "Blockieren"
 
-#: templates/network/post.html:54 templates/network/settings.html:127
+#: templates/network/post.html:58 templates/network/settings.html:127
 #: templates/network/user_profile.html:27
 msgid "Unblock"
 msgstr "Entblocken"
 
-#: templates/network/post.html:58 templates/network/user_profile.html:31
+#: templates/network/post.html:62 templates/network/user_profile.html:31
 msgid "Share"
 msgstr "Teilen"
 
-#: templates/network/post.html:65 templates/network/user_profile.html:38
+#: templates/network/post.html:69 templates/network/user_profile.html:38
 msgid "Unfollow"
 msgstr "Entfolgen"
 
-#: templates/network/post.html:67 templates/network/user_profile.html:40
+#: templates/network/post.html:71 templates/network/user_profile.html:40
 msgid "Follow"
 msgstr "Folgen"
 
-#: templates/network/post.html:77 templates/network/posts.html:42
+#: templates/network/post.html:84 templates/network/posts.html:42
 msgid "This post is hidden because you blocked the author."
 msgstr "Dieser Beitrag ist versteckt weil du den Autor blockiert hast"
 
-#: templates/network/post.html:80 templates/network/posts.html:129
+#: templates/network/post.html:87 templates/network/posts.html:129
 msgid "Show Post"
 msgstr "Beitrag Zeigen"
 
-#: templates/network/post.html:157 templates/network/posts.html:141
+#: templates/network/post.html:164 templates/network/posts.html:141
 msgid "Reply"
 msgstr "Antworten"
 
-#: templates/network/post.html:167
+#: templates/network/post.html:174
 #, python-format
-msgid "%(post.replies.count)s replies"
-msgstr "%(post.replies.count)s Antworten"
+msgid "%(replycount)s replies"
+msgstr "%(replycount)s Antworten"
 
 #: templates/network/posts.html:10
 #, python-format
@@ -429,7 +430,6 @@ msgstr "Blockliste ist leer."
 
 #: templates/network/user.html:23
 #, python-format
-#| msgid "Posts by @%(view_user.username)s"
 msgid "Posts by @%(username)s"
 msgstr "Beiträge von @%(username)s"
 
@@ -552,55 +552,6 @@ msgstr ""
 "Du kannst auf diesen Beitrag nicht antwoorten weil eine Block-Beziehung "
 "existiert."
 
-#~ msgid "DMs"
-#~ msgstr "Nachrichten"
-
-#~ msgid "Direct Messages"
-#~ msgstr "Nachrichten"
-
-#~ msgid "New Conversation"
-#~ msgstr "Neue Nachricht"
-
-#~ msgid "No new messages (you should not see this)"
-#~ msgstr ""
-#~ "Keine Neuen Nachrichten (Wenn Sie diese Nachricht sehen ist ein Fehler "
-#~ "aufgetreten)"
-
-#~ msgid "Message"
-#~ msgstr "Nachricht"
-
-#~ msgid "All posts marked as read"
-#~ msgstr "Alle Beiträge als gesehen markiert."
-
-#~ msgid "Error setting thread to read"
-#~ msgstr "Fehler: Gespräch konnte nicht als gesehen markiert werden."
-
-#~ msgid "PUT request required"
-#~ msgstr "PUT request benötigt"
-
-#~ msgid "Don't have an account? "
-#~ msgstr "Noch kein Konto? "
-
-#~ msgid "Register here."
-#~ msgstr "Hier registrieren."
-
-#~ msgctxt "username"
-#~ msgid "New "
-#~ msgstr "Neuer "
-
-#~ msgctxt "displayname"
-#~ msgid "New "
-#~ msgstr "Neuer "
-
-#~ msgctxt "email"
-#~ msgid "New "
-#~ msgstr "Neue "
-
-#~ msgctxt "bio"
-#~ msgid "New "
-#~ msgstr "Neue "
-
-#, fuzzy
-#~| msgid "Current Password (required)"
-#~ msgid "Current Password"
-#~ msgstr "Derzeitiges Passwort (erforderlich)"
+#, python-format
+#~ msgid "Post by @%(post.author.username)s"
+#~ msgstr "Beiträge von @%(post.author.username)s"
