@@ -20,7 +20,9 @@
 
         <div class="section-identifier no-top-padding">
             <div class="section-identifier-inner">
-                {% blocktranslate %}Posts by @{{ view_user.username }}{% endblocktranslate %}
+                {% blocktranslate trimmed with username=view_user.username %}
+                Posts by @{{ username }}
+                {% endblocktranslate %}
             </div>
         </div>
 
