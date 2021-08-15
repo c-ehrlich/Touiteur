@@ -36,11 +36,11 @@ msgstr "新規メールアドレス"
 
 #: forms.py:36
 msgid "New Bio"
-msgstr "新生バイオグラフィー"
+msgstr "新規バイオグラフィー"
 
 #: forms.py:43
 msgid "New Password"
-msgstr "新生パスワード"
+msgstr "新規パスワード"
 
 #: forms.py:50
 msgid "Confirm New Password"
@@ -108,7 +108,7 @@ msgstr "ダークモード"
 
 #: models.py:48
 msgid "Avatar"
-msgstr "プロフィール画像"
+msgstr "アバター"
 
 #: models.py:67 templates/network/following.html:6
 #: templates/network/following.html:13 templates/network/layout.html:51
@@ -350,11 +350,11 @@ msgstr ""
 
 #: templates/network/register2.html:40 templates/network/settings.html:97
 msgid "Upload new avatar"
-msgstr "新しいプロフィール画像をアップロードする"
+msgstr "新しいアバターをアップロードする"
 
 #: templates/network/register2.html:43
 msgid "Note: The avatar won't be updated until you press \"Save\" "
-msgstr "「保存」ボタンを押すまで、プロフィール画像は更新されません。"
+msgstr "「保存」ボタンを押すまで、アバターは更新されません。"
 
 #: templates/network/register2.html:49 templates/network/register3.html:57
 msgid "Skip"
@@ -400,7 +400,7 @@ msgstr "プリファレンス"
 
 #: templates/network/settings.html:100
 msgid "Note: The avatar won't be updated until you press \"Save\""
-msgstr "「保存」ボタンを押すまで、プロフィール画像は更新されません。""
+msgstr "「保存」ボタンを押すまで、アバターは更新されません。"
 
 #: templates/network/settings.html:107 templates/network/settings.html:169
 msgid "Cancel"

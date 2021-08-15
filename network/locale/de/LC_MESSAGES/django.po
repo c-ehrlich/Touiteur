@@ -252,7 +252,7 @@ msgstr ""
 "class=\"link-attn\">hier registrieren.</a>"
 
 #: templates/network/post.html:6
-#, fuzzy, python-format
+#, python-format
 #| msgid "Posts by @%(username)s"
 msgid "Post by @%(username)s"
 msgstr "Beiträge von @%(username)s"
