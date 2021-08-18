@@ -55,11 +55,10 @@ class User(AbstractUser):
         verbose_name=_("Display Name"),
     )
     bio = models.TextField(
-        default = f"",
+        default = "",
         max_length = 500,
         verbose_name=_("Bio"),
     )
-
     following = models.ManyToManyField(
         "User",
         related_name="followed_by",
@@ -72,7 +71,6 @@ class User(AbstractUser):
         blank=True,
         verbose_name=_("Blocked User"),
     )
-    # likes
     liked_posts = models.ManyToManyField(
         "Post",
         related_name="users_who_liked",
@@ -83,7 +81,6 @@ class User(AbstractUser):
         default=True,
         verbose_name=_("Show Liked Posts"),
     )
-
     mentions_since_last_checked = models.PositiveIntegerField(
         default=0,
         verbose_name=_("Mentions since last checked"),
@@ -99,7 +96,6 @@ class User(AbstractUser):
         default='_theme_light',
         verbose_name=_("Theme"),
     )
-
     language = models.CharField(
         max_length=10,
         choices=LANGUAGES,
@@ -176,7 +172,6 @@ class Post(models.Model):
         max_length = 140,
         verbose_name=_("Text"),
     )
-
     mentioned_users = models.ManyToManyField(
         "User",
         related_name="mentions",
