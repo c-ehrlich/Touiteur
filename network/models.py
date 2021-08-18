@@ -9,6 +9,8 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 import sys
 from datetime import timezone
 import datetime
+from django.templatetags.static import static
+
 
 from django.utils.translation import gettext_lazy as _
 
@@ -41,7 +43,7 @@ class User(AbstractUser):
     avatar = models.ImageField(
         # height_field="avatar_height",
         # width_field="avatar_width",
-        default="avatars/default/default_avatar.jpg",
+        default=static("avatars/default/default_avatar.jpg"),
         null=True,
         blank=True,
         editable=True,
