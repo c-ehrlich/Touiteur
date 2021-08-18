@@ -2,6 +2,8 @@
 
 (introduction + key features)
 
+[Live Demo on Heroku](#https://touiteur-app.herokuapp.com/)
+
 ## Table of Contents
 
 *   [Installation](#installation)
@@ -31,4 +33,4 @@
 
 ## Potential Improvements
 
-*   Currently everything is being run from the main Postgres database. This is not ideal in terms of scaling as for example getting live notifications is quite db intensive. A better design would be to have a separate database, which is optimised for performance (for example Redis), for things that need to be accessed frequently.
+* Currently everything is being run from the main Postgres database. This is not ideal in terms of scaling as for example getting live notifications is quite db intensive. A better design would be to have a separate database, which is optimised for performance (for example Redis), for things that need to be accessed frequently.
