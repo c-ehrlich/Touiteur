@@ -45,7 +45,6 @@ ALLOWED_HOSTS = [
 # Application definition
 
 INSTALLED_APPS = [
-    # stock
     'network',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -53,10 +52,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    # custom
-    # 'debug_toolbar',
-    'sorl.thumbnail',
+    'cloudinary_storage', #custom
+    # 'debug_toolbar', #custom
+    'sorl.thumbnail', #custom
+    'cloudinary', #custom
 ]
 
 MIDDLEWARE = [
@@ -188,3 +187,9 @@ MEDIA_URL = '/media/'
 INTERNAL_IPS = [
     '127.0.0.1',
 ]
+# COUDINARY_STORAGE = {
+#     'CLOUD_NAME': 'hptitepok',
+#     'API_KEY': '',
+#     'API_SECRET': '',
+# }
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
