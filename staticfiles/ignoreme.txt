@@ -1,0 +1,1 @@
+this file is necessary because git does not support empty directories
