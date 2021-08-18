@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+import django_heroku
 
 ########################################
 #                                      #
@@ -36,13 +37,15 @@ SECRET_KEY = '13kl@xtukpwe&xj2xoysxe9_6=tf@f8ewxer5n&ifnd46+6$%8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'touiteur-app.herokuapp.com'
+]
 
 
 # Application definition
 
 INSTALLED_APPS = [
-    # stoack
+    # stock
     'network',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -52,7 +55,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # custom
-    'debug_toolbar',
+    # 'debug_toolbar',
     'sorl.thumbnail',
 ]
 
@@ -71,7 +74,7 @@ MIDDLEWARE = [
 
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware', # this is custom! Should be the last middleware to load unless there's a very good reason to load something else later
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware', # this is custom! Should be the last middleware to load unless there's a very good reason to load something else later
 ]
 
 ROOT_URLCONF = 'project4.urls'
@@ -109,11 +112,15 @@ WSGI_APPLICATION = 'project4.wsgi.application'
 
 DATABASES = {
     'default': {
+        # to anyone reading this code: i'm aware that it's not good practice to put
+        # DB credentials in plain text. however this is just for test deployment to a
+        # heroku container that will be deleted after initial testing. no real user
+        # information will ever be in the database.
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'cehrlich',
-        'USER': 'cehrlich',
-        'PASSWORD': '',
-        'HOST': 'localhost',
+        'NAME': 'ddhn0srsct6ho6',
+        'USER': 'tvtnqnautyvsvy',
+        'PASSWORD': 'd9a6334671f4a6c329dae7d6f6e6cf931e77fbcdefecd68bc0bba69af55bb827',
+        'HOST': 'ec2-52-214-178-113.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
 }
@@ -167,7 +174,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
+django_heroku.settings(locals())
 
 # where our uploaded files are located on the filesystem
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
