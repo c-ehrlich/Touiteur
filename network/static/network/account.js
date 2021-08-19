@@ -161,12 +161,12 @@ function blockSettingsDOMManipulation(userId, userName, displayName, userAvatar)
 function unblockSettingsDOMManipulation(userId, userName) {
   document.querySelector(`#unblock-row-${userId}`).remove();
 
-  // let i18nObject = { username: userName };
+  const unblockedString = gettext("Unblocked %s");
 
   new Notify({
     status: 'success',
     title: 'Blocklist',
-    text: interpolate(gettext("Unblocked %(user)s.", {'user': userName}, true)),
+    text: interpolate(unblockedString, [userName]),
     effect: 'fade',
     speed: 300,
     customClass: null,

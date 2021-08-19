@@ -87,7 +87,7 @@ function sendReply(postId) {
         replyCount
       );
       const string = interpolate(formats, data, true);
-      document.querySelector(`prl-${postId}`).innerHTML = string;
+      document.querySelector(`#prl-${postId}`).innerHTML = string;
 
       new Notify({
         status: 'success',
