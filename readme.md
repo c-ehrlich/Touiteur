@@ -2,7 +2,7 @@
 
 Touiteur is a feature-rich Twitter clone with Django + Postgres in the backend and 
 
-[Live Demo on Heroku](#https://touiteur-app.herokuapp.com/)
+[Live Demo on Heroku](https://touiteur-app.herokuapp.com/)
 
 ## Table of Contents
 
