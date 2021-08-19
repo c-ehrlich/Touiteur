@@ -96,7 +96,7 @@ msgstr "「いいね！」を押した記事を表示する"
 
 #: forms.py:169
 msgid "Decide whether other users can see which posts you have liked."
-msgstr ""
+msgstr "自分が「いいね！」を押した投稿を他のユーザーに見せるかどうかを決めます。"
 
 #: models.py:31
 msgid "Light Mode"
@@ -309,7 +309,7 @@ msgstr "@%(author)sさんへの返信：%(text)s"
 #, python-format
 msgid "1 reply. Click to view."
 msgid_plural "%(count)s replies. Click to view."
-msgstr[0] "1件の返信があります。こちらをクリックするとご覧いただけます。"
+msgstr[0] "%(count)s件の返信があります。こちらをクリックするとご覧いただけます。"
 msgstr[1] "%(count)s件の返信があります。こちらをクリックするとご覧いただけます。"
 
 #: templates/network/posts.html:149

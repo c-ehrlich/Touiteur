@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-08-10 17:13+0200\n"
+"POT-Creation-Date: 2021-08-19 11:42+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,14 +18,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: network/static/network/account.js:169
-msgid "Unblocked %(user)s."
-msgstr "@%(user)sさんはブロックが解除された。"
+#: network/static/network/account.js:143
+msgid "Unblock"
+msgstr "アンブロックする"
+
+#: network/static/network/account.js:164
+#, javascript-format
+#| msgid "Unblocked %s."
+msgid "Unblocked %s"
+msgstr "@%sさんはブロックが解除された。"
 
 #: network/static/network/live_notifications.js:44
 msgid "There is %(count)s new post. Click to refresh."
 msgid_plural "There are %(count)s new posts. click to refesh."
 msgstr[0] "%(count)s件の新規投稿がありました。クリックすると更新されます。"
+msgstr[1] "%(count)s件の新規投稿がありました。クリックすると更新されます。"
 
 #: network/static/network/post.js:55
 msgid "Post link copied to clipboard."
@@ -35,6 +42,7 @@ msgstr "投稿のリンクがクリップボードにコピーされました。
 msgid "%(count)s reply. Click to view."
 msgid_plural "%(count)s replies. Click to view."
 msgstr[0] "%(count)s件の返信があります。"
+msgstr[1] "%(count)s件の返信があります。"
 
 #: network/static/network/posts-loggedin.js:95
 msgid "Reply successfully posted."
