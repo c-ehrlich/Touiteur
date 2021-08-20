@@ -8,6 +8,7 @@ Touiteur is a feature-rich Twitter clone with Django + Postgres in the backend a
 
 ## Table of Contents
 
+*   [Notes](#notes)
 *   [Installation](#installation)
 *   [Features and Design Considerations](#features-and-design-considerations)
     *   [Front-End](#front-end)
@@ -15,6 +16,10 @@ Touiteur is a feature-rich Twitter clone with Django + Postgres in the backend a
     *   [Database](#database)
 *   [Screenshots](#screenshots)
 *   [Potential Improvements](#potential-improvements)
+
+## Notes
+
+This app is the outcome of Harvard's CS50web Project 4, taken significantly beyond the minimum requirements. The distribution code for that project is essentially just an empty Django project. For more information and access to the distribution code, see: [CS50 Web - Project 4](https://cs50.harvard.edu/web/2020/projects/4/network/).
 
 ## Installation
 
@@ -26,7 +31,7 @@ Touiteur is a feature-rich Twitter clone with Django + Postgres in the backend a
 
 ### Deployment
 - The project can easily be deployed with Docker. This requires taking it out of debug mode, disabling Django Debug Toolbar, setting up static file serving, and creating separate containers for the app/db, as well as a (nginx-based) server for static files. 
-- While it is possible to get it running on an Alpine image, I would recommend the standard Python image as this includes most of the dependencies.
+- While it is possible to get it running on an Alpine image, I would recommend the standard Python image as dealing with setting up the dependencies on Alpine is probably not worth it for a this type of project.
 
 ## Features and Design Considerations
 
