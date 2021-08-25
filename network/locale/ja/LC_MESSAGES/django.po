@@ -264,28 +264,28 @@ msgstr "この投稿の著者はあなたをブロックしました。"
 #: templates/network/post.html:55 templates/network/settings.html:119
 #: templates/network/user_profile.html:24
 msgid "Block"
-msgstr "ブロックする"
+msgstr "ブロック"
 
 #: templates/network/post.html:58 templates/network/settings.html:127
 #: templates/network/user_profile.html:27
 msgid "Unblock"
-msgstr "アンブロックする"
+msgstr "アンブロック"
 
 #: templates/network/post.html:62 templates/network/user_profile.html:31
 msgid "Share"
-msgstr ""
+msgstr "シェア"
 
 #: templates/network/post.html:69 templates/network/user_profile.html:38
 msgid "Unfollow"
-msgstr ""
+msgstr "アンフオロー"
 
 #: templates/network/post.html:71 templates/network/user_profile.html:40
 msgid "Follow"
-msgstr ""
+msgstr "フォロー"
 
 #: templates/network/post.html:84 templates/network/posts.html:42
 msgid "This post is hidden because you blocked the author."
-msgstr ""
+msgstr "この投稿は、あなたが作者をブロックしたため、隠されています。"
 
 #: templates/network/post.html:87 templates/network/posts.html:129
 msgid "Show Post"
@@ -477,7 +477,7 @@ msgstr "PUTリクエストが必要"
 
 #: views.py:601
 msgid "You can't submit an empty post"
-msgstr ""
+msgstr "空の投稿はできません。"
 
 #: views.py:613
 msgid "Form data invalid"
