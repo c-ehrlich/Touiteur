@@ -52,7 +52,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # custom
-    'debug_toolbar',
+    # 'debug_toolbar',
     'sorl.thumbnail',
 ]
 
@@ -71,7 +71,7 @@ MIDDLEWARE = [
 
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware', # this is custom! Should be the last middleware to load unless there's a very good reason to load something else later
+    # 'debug_toolbar.middleware.DebugToolbarMiddleware', # this is custom! Should be the last middleware to load unless there's a very good reason to load something else later
 ]
 
 ROOT_URLCONF = 'project4.urls'

@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
 
-import debug_toolbar
+# import debug_toolbar
 
 from . import views
 
@@ -44,7 +44,7 @@ urlpatterns += [
     path('jsi18n/', JavaScriptCatalog.as_view(), name='javascript-catalog'),
 
     # Debug Routes
-    path('__debug__/', include(debug_toolbar.urls)),
+    # path('__debug__/', include(debug_toolbar.urls)),
 ] 
 
 if settings.DEBUG:
