@@ -1,6 +1,6 @@
 # Touiteur
 
-<img src="https://i.imgur.com/6H4AK3z.png" width="500">
+<img src="https://i.imgur.com/yglbghe.png" width="500">
 
 Touiteur is a feature-rich Twitter clone with Django + Postgres in the backend and HTML + CSS + JS + a small amount of Bootstrap in the frontend.
 
