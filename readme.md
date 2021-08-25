@@ -8,7 +8,6 @@ Touiteur is a feature-rich Twitter clone with Django + Postgres in the backend a
 
 ## Table of Contents
 
-*   [Notes](#notes)
 *   [Installation](#installation)
 *   [Features and Design Considerations](#features-and-design-considerations)
     *   [Front-End](#front-end)
@@ -17,10 +16,6 @@ Touiteur is a feature-rich Twitter clone with Django + Postgres in the backend a
 *   [Potential Improvements](#potential-improvements)
 *   [Screenshots](#screenshots)
 
-
-## Notes
-
-This app is the outcome of Harvard's CS50web Project 4, taken significantly beyond the minimum requirements. The distribution code for that project is essentially just an empty Django project. For more information and access to the distribution code, see: [CS50 Web - Project 4](https://cs50.harvard.edu/web/2020/projects/4/network/).
 
 ## Installation
 
