@@ -289,7 +289,7 @@ msgstr "この投稿は、あなたが作者をブロックしたため、隠さ
 
 #: templates/network/post.html:87 templates/network/posts.html:129
 msgid "Show Post"
-msgstr "シェアする"
+msgstr "表示する"
 
 #: templates/network/post.html:164 templates/network/posts.html:141
 msgid "Reply"
