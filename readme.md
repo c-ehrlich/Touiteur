@@ -1,25 +1,21 @@
 # Touiteur
 
+<img src="https://i.imgur.com/yglbghe.png" width="500">
+
 Touiteur is a feature-rich Twitter clone with Django + Postgres in the backend and HTML + CSS + JS + a small amount of Bootstrap in the frontend.
 
 [Demo video](https://www.youtube.com/watch?v=2aNYwn2iMns)
 
-[Live Demo on Heroku](https://touiteur-app.herokuapp.com/) (existing images might be broken as Heroku regularly deletes static/media files, also don't expect great performance as this is on a free heroku instance)
-
 ## Table of Contents
 
-*   [Notes](#notes)
 *   [Installation](#installation)
 *   [Features and Design Considerations](#features-and-design-considerations)
     *   [Front-End](#front-end)
     *   [Back-End](#back-end)
     *   [Database](#database)
-*   [Screenshots](#screenshots)
 *   [Potential Improvements](#potential-improvements)
+*   [Screenshots](#screenshots)
 
-## Notes
-
-This app is the outcome of Harvard's CS50web Project 4, taken significantly beyond the minimum requirements. The distribution code for that project is essentially just an empty Django project. For more information and access to the distribution code, see: [CS50 Web - Project 4](https://cs50.harvard.edu/web/2020/projects/4/network/).
 
 ## Installation
 
@@ -62,9 +58,6 @@ This app is the outcome of Harvard's CS50web Project 4, taken significantly beyo
 - [x] The database is normalized to 3NF
 - [x] All ORM queries use Django features such as prefetch_related, select_related, annotate, etc. to improve performance. The SQL queries to load a page of posts including images, follow and block relationship information, reply counts, etc. typically take between 20-30ms.
 
-## Screenshots
-- Coming soon!
-
 ## Potential Improvements
 - Currently everything is being run from the main Postgres database. This is not ideal in terms of scaling as for example getting live notifications is quite db intensive. A better design would be to have a separate database, which is optimised for performance (for example Redis), for things that need to be accessed frequently.
 - Adding a Redis database would also allow some additional features that rely on very fast db queries, such as autocomplete/suggestions on usernames.
@@ -73,3 +66,10 @@ This app is the outcome of Harvard's CS50web Project 4, taken significantly beyo
   - Letting admins ban users without having to delete the entire account
   - Switching from Pagination to infinite scrolling (the decision to use Pagination was based on the CS50web requirements)
 - Vanilla JS is not the best choice in terms of maintainability for the front-end, but it was chosen due to the self-teaching aspect of the project.
+
+## Screenshots
+![Touiteur Screenshot 2](https://i.imgur.com/3ixlhcv.png)
+![Touiteur Screenshot 3](https://i.imgur.com/KT1Z5u3.png)
+![Touiteur Screenshot 4](https://i.imgur.com/n8BiEs3.png)
+![Touiteur Screenshot 5](https://i.imgur.com/J01Ytod.png)
+![Touiteur Screenshot 6](https://i.imgur.com/S9l1nw8.png)
