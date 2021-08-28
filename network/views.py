@@ -27,7 +27,10 @@ PAGINATION_POST_COUNT = 10
 
 @login_required
 def following(request):
-    if request.method == "GET":
+    if not request.method == "GET":
+        return HttpResponseBadRequest()
+
+    else:
         user = request.user
 
         posts = Post.objects.filter(
@@ -56,14 +59,13 @@ def following(request):
 
         return render(request, "network/following.html", context)
 
-    else:
-        return HttpResponseBadRequest()
-
 
 def index(request):
     """RETURNS THE INDEX PAGE"""
-    if request.method == "GET":
-            
+    if not request.method == "GET":
+        return HttpResponseBadRequest()
+
+    else: 
         posts = Post.objects.all().prefetch_related(
             'author__blocked_users',
             'author__blocked_by',
@@ -91,13 +93,13 @@ def index(request):
 
         return render(request, "network/index.html", context)
 
-    else:
-        return HttpResponseBadRequest()
-
 
 def likes(request, username):
     """RETURNS THE LIKED POSTS PAGE"""
-    if request.method == "GET":
+    if not request.method == "GET":
+        return HttpResponseBadRequest()
+
+    else:
         view_user = User.objects.get(username=username)
         context = {'view_user': view_user}
 
@@ -129,14 +131,13 @@ def likes(request, username):
 
         return render(request, "network/likes.html", context)
 
-    else:
-        return HttpResponseBadRequest()
-
 
 def login_view(request):
     """RETURNS THE LOGIN VIEW"""
-    if request.method == "POST":
+    if not request.method == "POST":
+        return render(request, "network/login.html")
 
+    else:
         # Attempt to sign user in
         username = request.POST["username"]
         password = request.POST["password"]
@@ -150,8 +151,6 @@ def login_view(request):
             return render(request, "network/login.html", {
                 "message": _("Invalid username and/or password."),
             })
-    else:
-        return render(request, "network/login.html")
 
 
 def logout_view(request):
@@ -161,7 +160,10 @@ def logout_view(request):
 
 @login_required
 def mentions(request):
-    if request.method == "GET":
+    if not request.method == "GET":
+        return HttpResponseRedirect(reverse("index"))
+
+    else:
         user = request.user
 
         posts = Post.objects.filter(
@@ -190,12 +192,12 @@ def mentions(request):
 
         return render(request, "network/mentions.html", context)
 
-    else:
-        return HttpResponseRedirect(reverse("index"))
-
 
 def post(request, id):
-    if request.method == "GET":
+    if not request.method == "GET":
+        return HttpResponseBadRequest()
+
+    else:
         post = Post.objects.get(id=id)
         replies = post.replies.all(
         ).prefetch_related(
@@ -228,12 +230,17 @@ def post(request, id):
 
         return render(request, "network/post.html", context)
     
-    else:
-        return HttpResponseBadRequest()
-
 
 def register(request):
-    if request.method == "POST":
+    if not request.method == "GET" and request.method == "POST":
+        return HttpResponseBadRequest()
+    
+    elif request.method == "GET":
+        return render(request, "network/register.html", {
+            "form": RegisterAccountForm()
+        })
+
+    else: #POST
         username = request.POST["username"]
         displayname = request.POST["displayname"]
         email = request.POST["email"]
@@ -266,26 +273,23 @@ def register(request):
         login(request, user)
         return HttpResponseRedirect(reverse("register2"))
 
-    elif request.method == "GET":
-        return render(request, "network/register.html", {
-            "form": RegisterAccountForm()
-        })
-
-    else:
-        return HttpResponseBadRequest()
-
 
 @login_required
 def register2(request):
     user = request.user
-    if request.method == "GET":
+
+    if not request.method == "GET" and request.method == "POST":
+        return HttpResponseBadRequest()
+        
+    elif request.method == "GET":
         if not user.has_completed_onboarding:
             return render(request, "network/register2.html", {
                 "form": RegisterAccountStage2Form(instance = user)
             })
         else:
             return HttpResponseRedirect(reverse("index"))
-    elif request.method == "POST":
+
+    else: # POST
         form = RegisterAccountStage2Form(request.POST, request.FILES, instance = user)
         if form.is_valid():
             user.bio = form.cleaned_data['bio']
@@ -298,14 +302,15 @@ def register2(request):
                 "message": _("Form data is invalid")
             })
             
-    else:
-        return HttpResponseBadRequest()
-
 
 @login_required
 def register3(request):
     user = request.user
-    if request.method == "GET":
+
+    if not request.method == "GET" and request.method == "POST":
+        return HttpResponseBadRequest()
+
+    elif request.method == "GET":
         if user.has_completed_onboarding:
             return render(request, "network/register3.html", {
                 "form": RegisterAccountStage3Form(instance = user)
@@ -313,7 +318,7 @@ def register3(request):
         else:
             return HttpResponseRedirect(reverse("index"))
 
-    elif request.method == "POST":
+    else: # POST
         form = RegisterAccountStage3Form(request.POST, instance = user)
         if form.is_valid():
             user.theme = form.cleaned_data['theme']
@@ -328,9 +333,6 @@ def register3(request):
                 "message": _("Form data is invalid")
             })
 
-    else:
-        return HttpResponseBadRequest()
-
 
 @login_required
 def settings(request):
@@ -343,14 +345,17 @@ def settings(request):
         'username'
     )
 
-    if request.method == "GET":
+    if not request.method == "GET" and request.method == "POST":
+        return HttpResponseBadRequest()
+
+    elif request.method == "GET":
         return render(request, "network/settings.html", {
             "account_form": EditAccountForm(instance = user),
             "preferences_form": RegisterAccountStage3Form(instance = user),
             "blocklist": blocklist,
         })
 
-    elif request.method == "POST":
+    else: # POST
         context = {}
         if 'account-form-button' in request.POST:
             context['start_tab'] = "account"
@@ -403,9 +408,6 @@ def settings(request):
         context['blocklist'] = blocklist
         return render(request, "network/settings.html", context)
 
-    else:
-        return HttpResponseBadRequest()
-
 
 def settings_page(request, page):
     """This entire function is a dirty hack to let us load the settings page via GET with a specific tab open
@@ -414,7 +416,10 @@ def settings_page(request, page):
     TODO figure it out
     Example: maybe have an optional settings parameter in the regular settings view?
     """
-    if request.method == "GET":
+    if not request.method == "GET":
+        return HttpResponseBadRequest()
+
+    else:
         user = request.user
         blocklist = user.blocked_users.only(
             'username',
@@ -429,12 +434,13 @@ def settings_page(request, page):
             "blocklist": blocklist,
             "start_tab": page,
         })
-    else:
-        return HttpResponseBadRequest()
 
 
 def user(request, username):
-    if request.method == "GET":
+    if not request.method == "GET":
+        return HttpResponseBadRequest()
+        
+    else:
         user = request.user
         view_user = User.objects.get(username=username)
 
@@ -474,20 +480,24 @@ def user(request, username):
 
         return render(request, "network/user.html", context)
 
-    else:
-        return HttpResponseBadRequest()
-
 
 # +-----------------------------------------+
 # |        VIEWS THAT RETURN JSON           |
 # +-----------------------------------------+
 @csrf_protect
 def block_toggle(request, user_id):
-    if request.method == "PUT":
+    if not request.method == "PUT":
+        return JsonResponse({"error": _("PUT request required.")}, status=400)
+
+    else:
         user = request.user
         view_user = User.objects.get(id=user_id)
         data = json.loads(request.body)
-        if data['intent'] == 'block':
+
+        if not data['intent'] == 'block' and data['intent'] == 'unblock':
+            return HttpResponseBadRequest()
+
+        elif data['intent'] == 'block':
             if not view_user in user.blocked_users.all():
                 user.blocked_users.add(view_user)
                 # end follow relation in both directions
@@ -517,7 +527,7 @@ def block_toggle(request, user_id):
                     "success": False,
                     "message": _("User is already blocked."),
                 }, status=400)
-        elif data['intent'] == 'unblock':
+        else: # data['intent'] == 'unblock':
             if view_user in user.blocked_users.all():
                 user.blocked_users.remove(view_user)
                 return JsonResponse({
@@ -530,13 +540,6 @@ def block_toggle(request, user_id):
                     "success": False,
                     "message": _("User is already not blocked."),
                 }, status=400)
-        else:
-            return HttpResponseBadRequest()
-
-    else:
-        return JsonResponse({
-            "error": _("PUT request required.")
-        }, status=400)
 
 
 @csrf_protect
@@ -544,7 +547,10 @@ def block_toggle_username(request, username):
     # NICE-TO-HAVE this is not very DRY! (a lot of code is repeated from block_toggle)
     # REFACTOR: block_toggle should take user=None and username=None, then sees if at least one exist
     user = request.user
-    if request.method == 'PUT':
+    if not request.method == 'PUT':
+        return HttpResponseBadRequest()
+
+    else:
         view_user = User.objects.get(username=username)
         if not view_user in user.blocked_users.all():
             user.blocked_users.add(view_user)
@@ -570,13 +576,14 @@ def block_toggle_username(request, username):
                 "id": view_user.id
             }
         }, status=200)
-    else:
-        return HttpResponseBadRequest()
 
 
 @csrf_protect
 def clear_mentions_count(request):
-    if request.method == "PUT":
+    if not request.method == "PUT":
+        return HttpResponseBadRequest()
+
+    else:
         data = json.loads(request.body)
         if data['intent'] == 'clear_mentions_count':
             user = request.user
@@ -586,14 +593,14 @@ def clear_mentions_count(request):
         else:
             print(data['intent'])
             return HttpResponse(status=400)
-    else:
-        return HttpResponse(status=405)
 
 
 @csrf_protect
 def compose(request):
     print(request.headers)
     form = NewPostForm(request.POST, request.FILES)
+    if not form.is_valid():
+        return JsonResponse({"message": _("Form data invalid")}, status=400)
     if form.is_valid():
         post_text = form.cleaned_data["text"]
         if post_text == "":
@@ -608,15 +615,14 @@ def compose(request):
         for user in mentioned_users:
             post.mentioned_users.add(user)
         return HttpResponseRedirect(request.headers['Referer'])
-    else:
-        return JsonResponse({
-            "message": _("Form data invalid")
-        }, status=400)
 
 
 @csrf_protect
 def edit(request, post_id):
-    if request.method == "PUT":
+    if not request.method == "PUT":
+        return JsonResponse({"error": "PUT request required."}, status=400)
+
+    else:
         data = json.loads(request.body)
         new_text = data['new_text']
         if len(new_text) > 140:
@@ -644,7 +650,10 @@ def edit(request, post_id):
 
 @csrf_protect
 def follow(request, user_id):
-    if request.method == "PUT":
+    if not request.method == "PUT":
+        return JsonResponse({"error": _("PUT request required.")}, status=400)
+
+    else:
         user = request.user
         # user is trying to follow themselves
         if user_id == user.id:
@@ -675,20 +684,28 @@ def follow(request, user_id):
             return JsonResponse({
                 "error": _("follow intent does not match current follow state")
             }, status=400)
-    # user did not make a put request
-    else:
-        return JsonResponse({
-            "error": _("PUT request required.")
-        }, status=400)
 
 
 @csrf_protect
 def like(request, post_id):
-    if request.method == "PUT":
+    """
+    Likes or unlikes a post
+    expects either 'like' or 'unlike' in data
+    """
+    if not request.method == "PUT":
+        return JsonResponse({
+            "error": _("PUT request required.")
+        }, status=400)
+
+    else:
         data = json.loads(request.body)
         user = request.user
         post = utils.get_post_from_id(request, post_id)
-        if data['like']:
+
+        if not data['like'] and data['unlike']:
+            return JsonResponse({"error": _("intent data needs to include 'like' or 'unlike'")}, status=400)
+
+        elif data['like']:
             if user in post.author.blocked_users.all() or post.author in user.blocked_users.all():
                 return JsonResponse({
                     "error": _("You cannot like this post because there is a block relationship.")
@@ -700,7 +717,8 @@ def like(request, post_id):
                 "is_liked": True,
                 "like_count": post.users_who_liked.count(),
                 }, status=201)
-        elif not data['like']:
+
+        else: # data['unlike']
             user.liked_posts.remove(post)
             return JsonResponse({
                 "message": _("Post unliked successfully"),
@@ -708,10 +726,6 @@ def like(request, post_id):
                 "is_liked": False,
                 "like_count": post.users_who_liked.count(),
                 }, status=201)
-    else:
-        return JsonResponse({
-            "error": _("PUT request required.")
-        }, status=400)
 
 
 @csrf_protect
@@ -731,7 +745,9 @@ def notifications(request):
         'new_post_count': the number of new posts in the current view
         'new_mention_count': the number of new mentions (only for logged in users)
     """
-    if request.method == "PUT":
+    if not request.method == "PUT":
+        return JsonResponse({"error": _("GET request required.")}, status=400)
+    else:
         data = json.loads(request.body)
         datetime_obj = utils.convert_javascript_date_to_python(data['timestamp'])
         new_post_count = utils.get_post_count_since_timestamp(request, datetime_obj, data['context'])
@@ -745,16 +761,14 @@ def notifications(request):
         return JsonResponse({
             "new_post_count": new_post_count,
             }, status=200)
-    else:
-        return JsonResponse({
-            "error": _("GET request required.")
-            }, status=400)
 
 
 @csrf_protect
 def reply(request, post_id):
     print(request.headers)
-    if request.method == "PUT":
+    if not request.method == "PUT":
+        return JsonResponse({"error": _("PUT request required.")}, status=400)
+    else:
         data = json.loads(request.body)
         text = data["text"]
         user = request.user
@@ -774,7 +788,3 @@ def reply(request, post_id):
         return JsonResponse({
             "reply_count": reply_count,
         }, status=201)
-    else:
-        return JsonResponse({
-            "error": _("PUT request required.")
-        }, status=400)
