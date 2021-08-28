@@ -38,7 +38,7 @@ function unblock(user_id, refresh_page) {
   .then(response => response.json())
   .then(json => {
     console.log(json);
-    if (refresh_page !== true) {
+    if (!refresh_page) {
       location.reload();
     }
   })

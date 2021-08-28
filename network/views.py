@@ -102,7 +102,7 @@ def likes(request, username):
         context = {'view_user': view_user}
 
         # create posts object (paginated)
-        if view_user.show_liked_posts == True:
+        if view_user.show_liked_posts:
             posts = Post.objects.filter(
                 users_who_liked=view_user
             ).prefetch_related(
@@ -279,7 +279,7 @@ def register(request):
 def register2(request):
     user = request.user
     if request.method == "GET":
-        if user.has_completed_onboarding == False:
+        if not user.has_completed_onboarding:
             return render(request, "network/register2.html", {
                 "form": RegisterAccountStage2Form(instance = user)
             })
@@ -306,7 +306,7 @@ def register2(request):
 def register3(request):
     user = request.user
     if request.method == "GET":
-        if user.has_completed_onboarding == False:
+        if user.has_completed_onboarding:
             return render(request, "network/register3.html", {
                 "form": RegisterAccountStage3Form(instance = user)
             })
@@ -366,7 +366,7 @@ def settings(request):
 
                 if user is None:
                     context['message'] = _("Incorrect password.")
-                elif utils.check_username_validity(form.cleaned_data["username"]) == False:
+                elif not utils.check_username_validity(form.cleaned_data["username"]):
                     user = User.objects.get(id=request.user.id)
                     context['message'] = _("Username is not valid.")
                 elif new_password != new_password_confirm:
@@ -688,7 +688,7 @@ def like(request, post_id):
         data = json.loads(request.body)
         user = request.user
         post = utils.get_post_from_id(request, post_id)
-        if data['like'] == True:
+        if data['like']:
             if user in post.author.blocked_users.all() or post.author in user.blocked_users.all():
                 return JsonResponse({
                     "error": _("You cannot like this post because there is a block relationship.")
@@ -700,7 +700,7 @@ def like(request, post_id):
                 "is_liked": True,
                 "like_count": post.users_who_liked.count(),
                 }, status=201)
-        elif data['like'] == False:
+        elif not data['like']:
             user.liked_posts.remove(post)
             return JsonResponse({
                 "message": _("Post unliked successfully"),

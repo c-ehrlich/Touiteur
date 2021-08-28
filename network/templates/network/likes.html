@@ -13,7 +13,7 @@
 
         {% include 'network/user_profile.html' %}
 
-        {% if view_user.show_liked_posts == True %}
+        {% if view_user.show_liked_posts %}
             <div class="section-identifier no-top-padding">
                 <div class="section-identifier-inner">
                     {% blocktranslate trimmed with username=view_user.username %}

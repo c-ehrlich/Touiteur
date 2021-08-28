@@ -102,7 +102,7 @@ function edit_post_submit(post_id, original_text) {
   })
   .then(response => response.json())
   .then(json => {
-    if (json.edited === true) {
+    if (json.edited) {
       text_field.innerHTML = create_post_text_with_mention_links(new_text);
     } else {
       text_field.innerHTML = create_post_text_with_mention_links(original_text);
@@ -193,7 +193,7 @@ function unlike_post(post_id) {
 // Updates a post in the view
 function update_post_like_status(json) {
   const like_button = document.querySelector(`#post-like-button-${json.post_id}`);
-  if (json.is_liked == true) {
+  if (json.is_liked) {
     // remove class "like-button"
     like_button.classList.remove('post-like-button');
     // add class "unlike-button"
