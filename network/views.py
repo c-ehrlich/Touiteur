@@ -30,11 +30,80 @@ def following(request):
     if not request.method == "GET":
         return HttpResponseBadRequest()
 
-    else:
-        user = request.user
+    user = request.user
 
+    posts = Post.objects.filter(
+        author__in=user.following.all()
+    ).prefetch_related(
+        'author__blocked_users',
+        'author__blocked_by',
+    ).select_related(
+        'author',
+        'reply_to',
+    ).annotate(
+        Count('users_who_liked'),
+        Count('replies'),
+    ).order_by(
+        '-timestamp'
+    )
+
+    paginated = Paginator(posts, PAGINATION_POST_COUNT)
+    page = request.GET.get('page', 1)
+    posts = paginated.get_page(page)
+
+    for post in posts:
+        utils.get_post_additional_data(request, post)
+
+    context = {'posts': posts}
+
+    return render(request, "network/following.html", context)
+
+
+def index(request):
+    """RETURNS THE INDEX PAGE"""
+    if not request.method == "GET":
+        return HttpResponseBadRequest()
+
+    posts = Post.objects.all().prefetch_related(
+        'author__blocked_users',
+        'author__blocked_by',
+    ).select_related(
+        'author',
+        'reply_to'
+    ).annotate(
+        Count('users_who_liked'),
+        Count('replies'),
+    ).order_by(
+        '-timestamp',
+    )
+
+    paginated = Paginator(posts, PAGINATION_POST_COUNT)
+    page = request.GET.get('page', 1)
+    posts = paginated.get_page(page)
+
+    for post in posts:
+        utils.get_post_additional_data(request, post)
+
+    context = {
+        'posts': posts,
+        'new_post_form': NewPostForm(auto_id=True),
+    }
+
+    return render(request, "network/index.html", context)
+
+
+def likes(request, username):
+    """RETURNS THE LIKED POSTS PAGE"""
+    if not request.method == "GET":
+        return HttpResponseBadRequest()
+
+    view_user = User.objects.get(username=username)
+    context = {'view_user': view_user}
+
+    # create posts object (paginated)
+    if view_user.show_liked_posts:
         posts = Post.objects.filter(
-            author__in=user.following.all()
+            users_who_liked=view_user
         ).prefetch_related(
             'author__blocked_users',
             'author__blocked_by',
@@ -55,81 +124,9 @@ def following(request):
         for post in posts:
             utils.get_post_additional_data(request, post)
 
-        context = {'posts': posts}
+        context['posts'] = posts
 
-        return render(request, "network/following.html", context)
-
-
-def index(request):
-    """RETURNS THE INDEX PAGE"""
-    if not request.method == "GET":
-        return HttpResponseBadRequest()
-
-    else: 
-        posts = Post.objects.all().prefetch_related(
-            'author__blocked_users',
-            'author__blocked_by',
-        ).select_related(
-            'author',
-            'reply_to'
-        ).annotate(
-            Count('users_who_liked'),
-            Count('replies'),
-        ).order_by(
-            '-timestamp',
-        )
-
-        paginated = Paginator(posts, PAGINATION_POST_COUNT)
-        page = request.GET.get('page', 1)
-        posts = paginated.get_page(page)
-
-        for post in posts:
-            utils.get_post_additional_data(request, post)
-
-        context = {
-            'posts': posts,
-            'new_post_form': NewPostForm(auto_id=True),
-        }
-
-        return render(request, "network/index.html", context)
-
-
-def likes(request, username):
-    """RETURNS THE LIKED POSTS PAGE"""
-    if not request.method == "GET":
-        return HttpResponseBadRequest()
-
-    else:
-        view_user = User.objects.get(username=username)
-        context = {'view_user': view_user}
-
-        # create posts object (paginated)
-        if view_user.show_liked_posts:
-            posts = Post.objects.filter(
-                users_who_liked=view_user
-            ).prefetch_related(
-                'author__blocked_users',
-                'author__blocked_by',
-            ).select_related(
-                'author',
-                'reply_to',
-            ).annotate(
-                Count('users_who_liked'),
-                Count('replies'),
-            ).order_by(
-                '-timestamp'
-            )
-
-            paginated = Paginator(posts, PAGINATION_POST_COUNT)
-            page = request.GET.get('page', 1)
-            posts = paginated.get_page(page)
-
-            for post in posts:
-                utils.get_post_additional_data(request, post)
-
-            context['posts'] = posts
-
-        return render(request, "network/likes.html", context)
+    return render(request, "network/likes.html", context)
 
 
 def login_view(request):
@@ -137,20 +134,19 @@ def login_view(request):
     if not request.method == "POST":
         return render(request, "network/login.html")
 
-    else:
-        # Attempt to sign user in
-        username = request.POST["username"]
-        password = request.POST["password"]
-        user = authenticate(request, username=username, password=password)
+    # Attempt to sign user in
+    username = request.POST["username"]
+    password = request.POST["password"]
+    user = authenticate(request, username=username, password=password)
 
-        # Check if authentication successful
-        if user is not None:
-            login(request, user)
-            return HttpResponseRedirect(reverse("index"))
-        else:
-            return render(request, "network/login.html", {
-                "message": _("Invalid username and/or password."),
-            })
+    # Check if authentication successful
+    if user is not None:
+        login(request, user)
+        return HttpResponseRedirect(reverse("index"))
+    else:
+        return render(request, "network/login.html", {
+            "message": _("Invalid username and/or password."),
+        })
 
 
 def logout_view(request):
@@ -163,72 +159,70 @@ def mentions(request):
     if not request.method == "GET":
         return HttpResponseRedirect(reverse("index"))
 
-    else:
-        user = request.user
+    user = request.user
 
-        posts = Post.objects.filter(
-            mentioned_users__in=[user]
-        ).prefetch_related(
-            'author__blocked_users',
-            'author__blocked_by',
-        ).select_related(
-            'author',
-            'reply_to',
-        ).annotate(
-            Count('users_who_liked'),
-            Count('replies'),
-        ).order_by(
-            '-timestamp'
-        )
+    posts = Post.objects.filter(
+        mentioned_users__in=[user]
+    ).prefetch_related(
+        'author__blocked_users',
+        'author__blocked_by',
+    ).select_related(
+        'author',
+        'reply_to',
+    ).annotate(
+        Count('users_who_liked'),
+        Count('replies'),
+    ).order_by(
+        '-timestamp'
+    )
 
-        paginated = Paginator(posts, PAGINATION_POST_COUNT)
-        page = request.GET.get('page', 1)
-        posts = paginated.get_page(page)
+    paginated = Paginator(posts, PAGINATION_POST_COUNT)
+    page = request.GET.get('page', 1)
+    posts = paginated.get_page(page)
 
-        for post in posts:
-            utils.get_post_additional_data(request, post)
+    for post in posts:
+        utils.get_post_additional_data(request, post)
 
-        context = {'posts': posts}
+    context = {'posts': posts}
 
-        return render(request, "network/mentions.html", context)
+    return render(request, "network/mentions.html", context)
 
 
 def post(request, id):
     if not request.method == "GET":
         return HttpResponseBadRequest()
 
-    else:
-        post = Post.objects.get(id=id)
-        replies = post.replies.all(
-        ).prefetch_related(
-            'author__blocked_users',
-            'author__blocked_by',
-        ).select_related(
-            'author',
-            'reply_to',
-        ).annotate(
-            Count('users_who_liked'),
-            Count('replies'),
-        ).order_by(
-            '-timestamp'
-        )
+    post = Post.objects.get(id=id)
+    replies = post.replies.all(
+    ).prefetch_related(
+        'author__blocked_users',
+        'author__blocked_by',
+    ).select_related(
+        'author',
+        'reply_to',
+    ).annotate(
+        Count('users_who_liked'),
+        Count('replies'),
+    ).order_by(
+        '-timestamp'
+    )
 
-        paginated = Paginator(replies, PAGINATION_POST_COUNT)
-        page = request.GET.get('page', 1)
-        replies = paginated.get_page(page)
+    paginated = Paginator(replies, PAGINATION_POST_COUNT)
+    page = request.GET.get('page', 1)
+    replies = paginated.get_page(page)
 
-        for reply in replies:
-            utils.get_post_additional_data(request, reply)
+    for reply in replies:
+        utils.get_post_additional_data(request, reply)
 
-        context = {
-            'view_user': post.author,
-            'post': post,
-            'user_blocked_by_author': request.user in post.author.blocked_users.all(),
-            'author_blocked_by_user': request.user in post.author.blocked_by.all(),
-            'posts': replies, #call it that to make it work with posts.html
-        }
+    context = {
+        'view_user': post.author,
+        'post': post,
+        'user_blocked_by_author': request.user in post.author.blocked_users.all(),
+        'author_blocked_by_user': request.user in post.author.blocked_by.all(),
+        'posts': replies, #call it that to make it work with posts.html
+    }
 
-        return render(request, "network/post.html", context)
+    return render(request, "network/post.html", context)
     
 
 def register(request):
@@ -419,66 +413,64 @@ def settings_page(request, page):
     if not request.method == "GET":
         return HttpResponseBadRequest()
 
-    else:
-        user = request.user
-        blocklist = user.blocked_users.only(
-            'username',
-            'displayname',
-            'avatar'
-        ).order_by(
-            'username'
-        )
-        return render(request, "network/settings.html", {
-            "account_form": EditAccountForm(instance = user),
-            "preferences_form": RegisterAccountStage3Form(instance = user),
-            "blocklist": blocklist,
-            "start_tab": page,
-        })
+    user = request.user
+    blocklist = user.blocked_users.only(
+        'username',
+        'displayname',
+        'avatar'
+    ).order_by(
+        'username'
+    )
+    return render(request, "network/settings.html", {
+        "account_form": EditAccountForm(instance = user),
+        "preferences_form": RegisterAccountStage3Form(instance = user),
+        "blocklist": blocklist,
+        "start_tab": page,
+    })
 
 
 def user(request, username):
     if not request.method == "GET":
         return HttpResponseBadRequest()
         
-    else:
-        user = request.user
-        view_user = User.objects.get(username=username)
+    user = request.user
+    view_user = User.objects.get(username=username)
 
-        context = {}
+    context = {}
 
-        if user.is_authenticated:
-            context['user_blocked_by_author'] = request.user in view_user.blocked_users.all()
-            context['author_blocked_by_user'] = request.user in view_user.blocked_by.all()
+    if user.is_authenticated:
+        context['user_blocked_by_author'] = request.user in view_user.blocked_users.all()
+        context['author_blocked_by_user'] = request.user in view_user.blocked_by.all()
 
-        posts = Post.objects.filter(
-            author__username=username
-        ).prefetch_related(
-            'author__blocked_users',
-            'author__blocked_by',
-        ).select_related(
-            'author',
-            'reply_to',
-        ).annotate(
-            Count('users_who_liked'),
-            Count('replies'),
-        ).order_by(
-            '-timestamp'
-        )
+    posts = Post.objects.filter(
+        author__username=username
+    ).prefetch_related(
+        'author__blocked_users',
+        'author__blocked_by',
+    ).select_related(
+        'author',
+        'reply_to',
+    ).annotate(
+        Count('users_who_liked'),
+        Count('replies'),
+    ).order_by(
+        '-timestamp'
+    )
 
-        paginated = Paginator(posts, PAGINATION_POST_COUNT)
-        page = request.GET.get('page', 1)
-        posts = paginated.get_page(page)
+    paginated = Paginator(posts, PAGINATION_POST_COUNT)
+    page = request.GET.get('page', 1)
+    posts = paginated.get_page(page)
 
-        for post in posts:
-            utils.get_post_additional_data(request, post)
+    for post in posts:
+        utils.get_post_additional_data(request, post)
 
-        context['view_user'] = view_user
-        context['posts'] = posts
+    context['view_user'] = view_user
+    context['posts'] = posts
 
-        if request.user == view_user:
-            context['new_post_form'] = NewPostForm()
+    if request.user == view_user:
+        context['new_post_form'] = NewPostForm()
 
-        return render(request, "network/user.html", context)
+    return render(request, "network/user.html", context)
 
 
 # +-----------------------------------------+
@@ -489,57 +481,56 @@ def block_toggle(request, user_id):
     if not request.method == "PUT":
         return JsonResponse({"error": _("PUT request required.")}, status=400)
 
-    else:
-        user = request.user
-        view_user = User.objects.get(id=user_id)
-        data = json.loads(request.body)
+    user = request.user
+    view_user = User.objects.get(id=user_id)
+    data = json.loads(request.body)
 
-        if not data['intent'] == 'block' and data['intent'] == 'unblock':
-            return HttpResponseBadRequest()
+    if not data['intent'] == 'block' and data['intent'] == 'unblock':
+        return HttpResponseBadRequest()
 
-        elif data['intent'] == 'block':
-            if not view_user in user.blocked_users.all():
-                user.blocked_users.add(view_user)
-                # end follow relation in both directions
-                if view_user in user.following.all():
-                    user.following.remove(view_user)
-                if user in view_user.following.all():
-                    view_user.following.remove(user)
-                # remove post likes in both directions
-                for post in user.posts.all():
-                    if view_user in post.users_who_liked.all():
-                        post.users_who_liked.remove(view_user)
-                for post in view_user.posts.all():
-                    if user in post.users_who_liked.all():
-                        post.users_who_liked.remove(user)
-                return JsonResponse({
-                    "intent": "block",
-                    "success": True,
-                    "user": {
-                        "username": view_user.username,
-                        "avatar": view_user.avatar.url,
-                        "id": view_user.id
-                    }
-                }, status=200)
-            else:
-                return JsonResponse({
-                    "intent": "block",
-                    "success": False,
-                    "message": _("User is already blocked."),
-                }, status=400)
-        else: # data['intent'] == 'unblock':
-            if view_user in user.blocked_users.all():
-                user.blocked_users.remove(view_user)
-                return JsonResponse({
-                    "intent": "unblock",
-                    "success": True,
-                }, status=200)
-            else:
-                return JsonResponse({
-                    "intent": "unblock",
-                    "success": False,
-                    "message": _("User is already not blocked."),
-                }, status=400)
+    elif data['intent'] == 'block':
+        if not view_user in user.blocked_users.all():
+            user.blocked_users.add(view_user)
+            # end follow relation in both directions
+            if view_user in user.following.all():
+                user.following.remove(view_user)
+            if user in view_user.following.all():
+                view_user.following.remove(user)
+            # remove post likes in both directions
+            for post in user.posts.all():
+                if view_user in post.users_who_liked.all():
+                    post.users_who_liked.remove(view_user)
+            for post in view_user.posts.all():
+                if user in post.users_who_liked.all():
+                    post.users_who_liked.remove(user)
+            return JsonResponse({
+                "intent": "block",
+                "success": True,
+                "user": {
+                    "username": view_user.username,
+                    "avatar": view_user.avatar.url,
+                    "id": view_user.id
+                }
+            }, status=200)
+        else:
+            return JsonResponse({
+                "intent": "block",
+                "success": False,
+                "message": _("User is already blocked."),
+            }, status=400)
+    else: # data['intent'] == 'unblock':
+        if view_user in user.blocked_users.all():
+            user.blocked_users.remove(view_user)
+            return JsonResponse({
+                "intent": "unblock",
+                "success": True,
+            }, status=200)
+        else:
+            return JsonResponse({
+                "intent": "unblock",
+                "success": False,
+                "message": _("User is already not blocked."),
+            }, status=400)
 
 
 @csrf_protect
@@ -550,32 +541,31 @@ def block_toggle_username(request, username):
     if not request.method == 'PUT':
         return HttpResponseBadRequest()
 
-    else:
-        view_user = User.objects.get(username=username)
-        if not view_user in user.blocked_users.all():
-            user.blocked_users.add(view_user)
-        # end follow relation in both directions
-        if view_user in user.following.all():
-            user.following.remove(view_user)
-        if user in view_user.following.all():
-            view_user.following.remove(user)
-        # remove post likes in both directions
-        for post in user.posts.all():
-            if view_user in post.users_who_liked.all():
-                post.users_who_liked.remove(view_user)
-        for post in view_user.posts.all():
-            if user in post.users_who_liked.all():
-                post.users_who_liked.remove(user)
-        return JsonResponse({
-            "intent": "block",
-            "success": True,
-            "user": {
-                "username": view_user.username,
-                "displayname": view_user.displayname,
-                "avatar": view_user.avatar.url,
-                "id": view_user.id
-            }
-        }, status=200)
+    view_user = User.objects.get(username=username)
+    if not view_user in user.blocked_users.all():
+        user.blocked_users.add(view_user)
+    # end follow relation in both directions
+    if view_user in user.following.all():
+        user.following.remove(view_user)
+    if user in view_user.following.all():
+        view_user.following.remove(user)
+    # remove post likes in both directions
+    for post in user.posts.all():
+        if view_user in post.users_who_liked.all():
+            post.users_who_liked.remove(view_user)
+    for post in view_user.posts.all():
+        if user in post.users_who_liked.all():
+            post.users_who_liked.remove(user)
+    return JsonResponse({
+        "intent": "block",
+        "success": True,
+        "user": {
+            "username": view_user.username,
+            "displayname": view_user.displayname,
+            "avatar": view_user.avatar.url,
+            "id": view_user.id
+        }
+    }, status=200)
 
 
 @csrf_protect
@@ -583,16 +573,15 @@ def clear_mentions_count(request):
     if not request.method == "PUT":
         return HttpResponseBadRequest()
 
+    data = json.loads(request.body)
+    if data['intent'] == 'clear_mentions_count':
+        user = request.user
+        user.mentions_since_last_checked = 0
+        user.save()
+        return HttpResponse(status=200)
     else:
-        data = json.loads(request.body)
-        if data['intent'] == 'clear_mentions_count':
-            user = request.user
-            user.mentions_since_last_checked = 0
-            user.save()
-            return HttpResponse(status=200)
-        else:
-            print(data['intent'])
-            return HttpResponse(status=400)
+        print(data['intent'])
+        return HttpResponse(status=400)
 
 
 @csrf_protect
@@ -601,20 +590,20 @@ def compose(request):
     form = NewPostForm(request.POST, request.FILES)
     if not form.is_valid():
         return JsonResponse({"message": _("Form data invalid")}, status=400)
-    if form.is_valid():
-        post_text = form.cleaned_data["text"]
-        if post_text == "":
-            return JsonResponse({
-                "message": _("You can't submit an empty post")
-            }, status=400)
-        user=request.user
-        mentioned_users = utils.get_mentions_from_post(post_text)
-        image = form.cleaned_data['image']
-        post = Post(author=user, text=post_text, image=image)
-        post.save()
-        for user in mentioned_users:
-            post.mentioned_users.add(user)
-        return HttpResponseRedirect(request.headers['Referer'])
+        
+    post_text = form.cleaned_data["text"]
+    if post_text == "":
+        return JsonResponse({
+            "message": _("You can't submit an empty post")
+        }, status=400)
+    user=request.user
+    mentioned_users = utils.get_mentions_from_post(post_text)
+    image = form.cleaned_data['image']
+    post = Post(author=user, text=post_text, image=image)
+    post.save()
+    for user in mentioned_users:
+        post.mentioned_users.add(user)
+    return HttpResponseRedirect(request.headers['Referer'])
 
 
 @csrf_protect
@@ -622,30 +611,27 @@ def edit(request, post_id):
     if not request.method == "PUT":
         return JsonResponse({"error": "PUT request required."}, status=400)
 
-    else:
-        data = json.loads(request.body)
-        new_text = data['new_text']
-        if len(new_text) > 140:
-            return JsonResponse({
-                "message": _("Maximum post length is 140 characters"),
-                "edited": False,
-            }, status=400)
-        post = utils.get_post_from_id(request, post_id)
-        if request.user == post.author:
-            new_mentioned_users = utils.get_mentions_from_post(new_text)
-            for user in new_mentioned_users:
-                post.mentioned_users.add(user)
-            post.text = new_text
-            post.save()
-            return JsonResponse({
-                "message": _("Post edited successfully"),
-                "edited": True,
-            }, status=201)
-        else:
-            return JsonResponse({
-                "message": _("You are not authorized to edit this post"),
-                "edited": False,
-            }, status=400)
+    data = json.loads(request.body)
+    new_text = data['new_text']
+    if len(new_text) > 140:
+        return JsonResponse({
+            "message": _("Maximum post length is 140 characters"),
+            "edited": False,
+        }, status=400)
+    post = utils.get_post_from_id(request, post_id)
+
+    if not request.user == post.author:
+        return JsonResponse({"message": _("You are not authorized to edit this post"), "edited": False}, status=400)
+
+    new_mentioned_users = utils.get_mentions_from_post(new_text)
+    for user in new_mentioned_users:
+        post.mentioned_users.add(user)
+    post.text = new_text
+    post.save()
+    return JsonResponse({
+        "message": _("Post edited successfully"),
+        "edited": True,
+    }, status=201)
 
 
 @csrf_protect
@@ -653,37 +639,37 @@ def follow(request, user_id):
     if not request.method == "PUT":
         return JsonResponse({"error": _("PUT request required.")}, status=400)
 
-    else:
-        user = request.user
-        # user is trying to follow themselves
-        if user_id == user.id:
+    user = request.user
+
+    # user is trying to follow themselves
+    if user_id == user.id:
+        return JsonResponse({
+            "error": _("You cannot follow your own account.")
+        }, status=400)
+
+    data = json.loads(request.body)
+    user_to_follow = User.objects.get(id=user_id) 
+    # good follow request
+    if data['intent'] == 'follow' and user_to_follow not in user.following.all():
+        # check for block relationship
+        if user_to_follow in user.blocked_users.all() or user in user_to_follow.blocked_users.all():
             return JsonResponse({
-                "error": _("You cannot follow your own account.")
+                "error": _("You cannot follow this user because there is a block relationship.")
             }, status=400)
-        else: 
-            data = json.loads(request.body)
-            user_to_follow = User.objects.get(id=user_id) 
-            # good follow request
-            if data['intent'] == 'follow' and user_to_follow not in user.following.all():
-                # check for block relationship
-                if user_to_follow in user.blocked_users.all() or user in user_to_follow.blocked_users.all():
-                    return JsonResponse({
-                        "error": _("You cannot follow this user because there is a block relationship.")
-                    }, status=400)
-                user.following.add(user_to_follow)
-                return JsonResponse({
-                    "message": _(f"followed user {user_to_follow}")
-                }, status=201)
-            # good unfollow request
-            if data['intent'] == 'unfollow' and user_to_follow in user.following.all():
-                user.following.remove(user_to_follow)
-                return JsonResponse({
-                    "message": _(f"unfollowed user {user_to_follow}")
-                }, status=201)
-            # We reach this page if the intent does not match the current follow status
-            return JsonResponse({
-                "error": _("follow intent does not match current follow state")
-            }, status=400)
+        user.following.add(user_to_follow)
+        return JsonResponse({
+            "message": _(f"followed user {user_to_follow}")
+        }, status=201)
+    # good unfollow request
+    if data['intent'] == 'unfollow' and user_to_follow in user.following.all():
+        user.following.remove(user_to_follow)
+        return JsonResponse({
+            "message": _(f"unfollowed user {user_to_follow}")
+        }, status=201)
+    # We reach this page if the intent does not match the current follow status
+    return JsonResponse({
+        "error": _("follow intent does not match current follow state")
+    }, status=400)
 
 
 @csrf_protect
@@ -697,35 +683,34 @@ def like(request, post_id):
             "error": _("PUT request required.")
         }, status=400)
 
-    else:
-        data = json.loads(request.body)
-        user = request.user
-        post = utils.get_post_from_id(request, post_id)
+    data = json.loads(request.body)
+    user = request.user
+    post = utils.get_post_from_id(request, post_id)
 
-        if not data['like'] and data['unlike']:
-            return JsonResponse({"error": _("intent data needs to include 'like' or 'unlike'")}, status=400)
+    if not data['like'] and data['unlike']:
+        return JsonResponse({"error": _("intent data needs to include 'like' or 'unlike'")}, status=400)
 
-        elif data['like']:
-            if user in post.author.blocked_users.all() or post.author in user.blocked_users.all():
-                return JsonResponse({
-                    "error": _("You cannot like this post because there is a block relationship.")
-                }, status=400)
-            user.liked_posts.add(post)
+    elif data['like']:
+        if user in post.author.blocked_users.all() or post.author in user.blocked_users.all():
             return JsonResponse({
-                "message": _("Post liked successfully"),
-                "post_id": post_id,
-                "is_liked": True,
-                "like_count": post.users_who_liked.count(),
-                }, status=201)
+                "error": _("You cannot like this post because there is a block relationship.")
+            }, status=400)
+        user.liked_posts.add(post)
+        return JsonResponse({
+            "message": _("Post liked successfully"),
+            "post_id": post_id,
+            "is_liked": True,
+            "like_count": post.users_who_liked.count(),
+            }, status=201)
 
-        else: # data['unlike']
-            user.liked_posts.remove(post)
-            return JsonResponse({
-                "message": _("Post unliked successfully"),
-                "post_id": post_id,
-                "is_liked": False,
-                "like_count": post.users_who_liked.count(),
-                }, status=201)
+    else: # data['unlike']
+        user.liked_posts.remove(post)
+        return JsonResponse({
+            "message": _("Post unliked successfully"),
+            "post_id": post_id,
+            "is_liked": False,
+            "like_count": post.users_who_liked.count(),
+            }, status=201)
 
 
 @csrf_protect
@@ -747,20 +732,20 @@ def notifications(request):
     """
     if not request.method == "PUT":
         return JsonResponse({"error": _("GET request required.")}, status=400)
-    else:
-        data = json.loads(request.body)
-        datetime_obj = utils.convert_javascript_date_to_python(data['timestamp'])
-        new_post_count = utils.get_post_count_since_timestamp(request, datetime_obj, data['context'])
-        user = request.user
-        if user.is_authenticated:
-            new_mention_count = user.mentions_since_last_checked
-            return JsonResponse({
-                "new_post_count": new_post_count,
-                "new_mention_count": new_mention_count,
-                }, status=200)
+
+    data = json.loads(request.body)
+    datetime_obj = utils.convert_javascript_date_to_python(data['timestamp'])
+    new_post_count = utils.get_post_count_since_timestamp(request, datetime_obj, data['context'])
+    user = request.user
+    if user.is_authenticated:
+        new_mention_count = user.mentions_since_last_checked
         return JsonResponse({
             "new_post_count": new_post_count,
+            "new_mention_count": new_mention_count,
             }, status=200)
+    return JsonResponse({
+        "new_post_count": new_post_count,
+        }, status=200)
 
 
 @csrf_protect
@@ -768,23 +753,23 @@ def reply(request, post_id):
     print(request.headers)
     if not request.method == "PUT":
         return JsonResponse({"error": _("PUT request required.")}, status=400)
-    else:
-        data = json.loads(request.body)
-        text = data["text"]
-        user = request.user
-        post = utils.get_post_from_id(request, post_id)
-        # check for a block relationship
-        if user in post.author.blocked_users.all() or post.author in user.blocked_users.all():
-            return JsonResponse({
-                "error": _("You cannot reply to this post because there is a block relationship.")
-            }, status=400)
-        reply = Post(author=user, text=text, reply_to=post)
-        reply.save()
-        mentioned_users = utils.get_mentions_from_post(text)
-        for user in mentioned_users:
-            reply.mentioned_users.add(user)
-        # this is the reply count that updates on the website, for the post that is being replied to
-        reply_count = post.replies.count()
+
+    data = json.loads(request.body)
+    text = data["text"]
+    user = request.user
+    post = utils.get_post_from_id(request, post_id)
+    # check for a block relationship
+    if user in post.author.blocked_users.all() or post.author in user.blocked_users.all():
         return JsonResponse({
-            "reply_count": reply_count,
-        }, status=201)
+            "error": _("You cannot reply to this post because there is a block relationship.")
+        }, status=400)
+    reply = Post(author=user, text=text, reply_to=post)
+    reply.save()
+    mentioned_users = utils.get_mentions_from_post(text)
+    for user in mentioned_users:
+        reply.mentioned_users.add(user)
+    # this is the reply count that updates on the website, for the post that is being replied to
+    reply_count = post.replies.count()
+    return JsonResponse({
+        "reply_count": reply_count,
+    }, status=201)
